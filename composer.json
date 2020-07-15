@@ -1,0 +1,21 @@
+{
+    "name": "woo-composite-and-bundle-products",
+    "description": "CS WooCommerce Composite and bundle Products",
+    "type": "composer-plugin",
+    "license": "mit",
+    "authors": [
+        {
+            "name": "M.Tuhin",
+            "email": "info@codesolz.net"
+        }
+    ],
+    "autoload": {
+        "psr-4" : {
+            "RealTimeAutoFindReplace\\" : "core/"
+        }
+    },
+    "require": {
+        "php" : ">=7.0.0"
+    },
+    "minimum-stability": "dev"
+}
