@@ -10,7 +10,6 @@
         <img alt="undefined" src="https://api.codeclimate.com/v1/badges/53342611d39bf5044b5f/maintainability">
     </a>
     <img alt="undefined" src="https://img.shields.io/github/languages/code-size/tuhin18003/WooCommerce-AltCoin-Payment-Gateway.svg"> <br>
-    
     <a href="https://wordpress.org/plugins/real-time-auto-find-and-replace">
         <img alt="undefined" src="https://img.shields.io/wordpress/plugin/wp-version/real-time-auto-find-and-replace.svg">
     </a>
