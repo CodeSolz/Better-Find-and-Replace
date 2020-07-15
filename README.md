@@ -5,11 +5,8 @@
 </p>
 
 <p align="center">
-    <img alt="undefined" src="https://img.shields.io/github/last-commit/tuhin18003/WooCommerce-AltCoin-Payment-Gateway.svg">
-    <a href="https://codeclimate.com/github/tuhin18003/WooCommerce-AltCoin-Payment-Gateway">
-        <img alt="undefined" src="https://api.codeclimate.com/v1/badges/53342611d39bf5044b5f/maintainability">
-    </a>
-    <img alt="undefined" src="https://img.shields.io/github/languages/code-size/tuhin18003/WooCommerce-AltCoin-Payment-Gateway.svg"> <br>
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/CodeSolz/real-time-auto-find-and-replace">
+    <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/CodeSolz/real-time-auto-find-and-replace"><br>
     <a href="https://wordpress.org/plugins/real-time-auto-find-and-replace">
         <img alt="undefined" src="https://img.shields.io/wordpress/plugin/wp-version/real-time-auto-find-and-replace.svg">
     </a>
@@ -33,7 +30,7 @@
         <img alt="Wordpress Plugin Active Installs" src="https://img.shields.io/wordpress/plugin/installs/real-time-auto-find-and-replace.svg">
     </a>
     <a href="https://wordpress.org/plugins/real-time-auto-find-and-replace">
-        <img src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2FCodeSolz%2FWooCommerce-AltCoin-Payment-Gateway%2Fblob%2Fmaster%2FREADME.md" alt="Hits">
+        <img src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2FCodeSolz%2Freal-time-auto-find-and-replace" alt="Hits">
     </a>
     <br><br>
     <a href="https://codesolz.net">
