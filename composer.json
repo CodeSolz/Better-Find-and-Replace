@@ -1,6 +1,6 @@
 {
-    "name": "woo-composite-and-bundle-products",
-    "description": "CS WooCommerce Composite and bundle Products",
+    "name": "tuhin18003/real-time-auto-find-and-replace",
+    "description": "Real Time Auto Find and Replace - Wordpress plugin",
     "type": "composer-plugin",
     "license": "mit",
     "authors": [

@@ -1,22 +1,22 @@
 <?php namespace RealTimeAutoFindReplace\admin\options\pages;
 
 /**
- * Class: Add New Coin
+ * Class: Replace in db
  * 
  * @package Admin
- * @since 1.2.4
- * @author CodeSolz <customer-support@codesolz.net>
+ * @since 1.0.0
+ * @author M.Tuhin <info@codesolz.net>
  */
 
-if ( ! defined( 'CS_RTAAFR_VERSION' ) ) {
+if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
     die();
 }
 
 use RealTimeAutoFindReplace\lib\Util;
-use RealTimeAutoFindReplace\admin\builders\FarFormBuilder;
-use RealTimeAutoFindReplace\admin\builders\FarAdminPageBuilder;
+use RealTimeAutoFindReplace\admin\builders\FormBuilder;
+use RealTimeAutoFindReplace\admin\builders\AdminPageBuilder;
 
-class DefaultSettings {
+class ReplaceInDB {
     
     /**
      * Hold page generator class
@@ -33,11 +33,11 @@ class DefaultSettings {
     private $Form_Generator;
     
     
-    public function __construct(FarAdminPageBuilder $AdminPageGenerator) {
+    public function __construct(AdminPageBuilder $AdminPageGenerator) {
         $this->Admin_Page_Generator = $AdminPageGenerator;
         
         /*create obj form generator*/
-        $this->Form_Generator = new FarFormBuilder();
+        $this->Form_Generator = new FormBuilder();
         
         add_action( 'admin_footer', array( $this, 'default_page_scripts'));
     }
@@ -55,20 +55,20 @@ class DefaultSettings {
         
         $fields = array(
             'cs_db_string_replace[find]'=> array(
-                'title'            => __( 'Replacement Rule', 'woo-altcoin-payment-gateway' ),
+                'title'            => __( 'Find', 'real-time-auto-find-and-replace' ),
                 'type'             => 'textarea',
                 'class'            => "form-control",
-                'value'            => FarFormBuilder::get_value( 'description', $option, 'Make your payment directly into our AltCoin address. Your order won’t be shipped until the funds have cleared in our account.'), 
-                'placeholder'      => __( 'Enter your payment gateway description', 'woo-altcoin-payment-gateway' ),
-                'desc_tip'         => __( 'Enter your payment gateway description. It will show in checkout page.', 'woo-altcoin-payment-gateway' ),
+                'value'            => '', 
+                'placeholder'      => __( 'Enter word to find ', 'real-time-auto-find-and-replace' ),
+                'desc_tip'         => __( 'Enter a word you want to find in Database. e.g: _test ', 'real-time-auto-find-and-replace' ),
             ),
             'cs_db_string_replace[replace]'=> array(
-                'title'            => __( 'Replacement Rule', 'woo-altcoin-payment-gateway' ),
-                'type'             => 'textarea',
+                'title'            => __( 'Replace With', 'real-time-auto-find-and-replace' ),
+                'type'             => 'text',
                 'class'            => "form-control",
-                'value'            => FarFormBuilder::get_value( 'description', $option, 'Make your payment directly into our AltCoin address. Your order won’t be shipped until the funds have cleared in our account.'), 
-                'placeholder'      => __( 'Enter your payment gateway description', 'woo-altcoin-payment-gateway' ),
-                'desc_tip'         => __( 'Enter your payment gateway description. It will show in checkout page.', 'woo-altcoin-payment-gateway' ),
+                'value'            => '', 
+                'placeholder'      => __( 'Enter word to replace with', 'real-time-auto-find-and-replace' ),
+                'desc_tip'         => __( 'Enter word you want to replace with. e.g : test', 'real-time-auto-find-and-replace' ),
             ),
         );
         
@@ -93,10 +93,10 @@ class DefaultSettings {
         $args['show_btn'] = true;
         $args['body_class'] = 'no-bottom-margin';
         $args['well'] = "<ul>
-                        <li> <b>Basic Hints</b>
+                        <li> <b>Warning!</b>
                             <ol>
                                 <li>
-                                    Followings options are the basic settings of the altcoin payment gateway.
+                                    Replacement in database is permanent. You can't un-done it, once it get replaced.
                                 </li>
                             </ol>
                         </li>
@@ -111,9 +111,7 @@ class DefaultSettings {
     public function default_page_scripts(){
         ?>
             <script>
-                jQuery(document).ready(function($){
-                    $.wpMediaUploader( { buttonClass : '.button-secondary' } );
-                });
+                
             </script>
         <?php
     }

@@ -1,66 +1,39 @@
-<?php namespace WooGateWayCoreLib\install;
+<?php namespace RealTimeAutoFindReplace\install;
 /**
- * Installation Functions
+ * Installation
  * 
- * @package DB
- * @since 1.0.8
- * @author CodeSolz <customer-service@codesolz.com>
+ * @package Install
+ * @since 1.0.0
+ * @author M.Tuhin <info@codesolz.com>
  */
 
-if ( ! defined( 'CS_WAPG_VERSION' ) ) {
-   exit;
+if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
+	exit;
 }
 
-use WooGateWayCoreLib\admin\functions\CsAdminQuery;
-use WooGateWayCoreLib\admin\functions\WooFunctions;
-use WooGateWayCoreLib\admin\functions\CsPaymentGateway;
+use RealTimeAutoFindReplace\admin\functions\Masking;
+
+if( ! \class_exists( 'Activate' ) ){ 
 
 class Activate{
-    
-    /**
-     * On install Create table
-     * 
-     * @global type $wpdb
-     */
-    public static function on_activate(){
-        global $wpdb, $wapg_tables;
+	
+
+	/**
+	 * Install DB 
+	 *
+	 * @return void
+	 */
+	public static function on_activate(){
+		global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
         
         $sqls = array(
-            "CREATE TABLE IF NOT EXISTS `{$wapg_tables['coins']}`(
+            "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}rtafar_rules`(
             `id` int(11) NOT NULL auto_increment,
-            `name` varchar(56),
-            `coin_web_id` varchar(56),
-            `symbol` varchar(20),
-            `coin_type` varchar(1) DEFAULT 1,
-            `checkout_type` char(1),
-            `status` char(1),
-            PRIMARY KEY ( `id`)
-            ) $charset_collate",
-            "CREATE TABLE IF NOT EXISTS `{$wapg_tables['addresses']}`(
-            `id` int(11) NOT NULL auto_increment,
-            `coin_id` int(11),
-            `address` varchar(1024),
-            `lock_status` char(1),  
-            PRIMARY KEY ( `id`)
-            ) $charset_collate",
-            "CREATE TABLE IF NOT EXISTS `{$wapg_tables['offers']}`(
-            `id` int(11) NOT NULL auto_increment,
-            `coin_id` int(11),
-            `offer_amount` int(11),
-            `offer_type` char(1),
-            `offer_status` char(1),  
-            `offer_show_on_product_page` char(1),  
-            `offer_start` datetime,  
-            `offer_end` datetime,  
-            PRIMARY KEY ( `id`)
-            ) $charset_collate",
-            "CREATE TABLE IF NOT EXISTS `{$wapg_tables['coin_trxids']}`(
-            `id` bigint(20) NOT NULL auto_increment,
-            `cart_hash` varchar(128),
-            `transaction_id` varchar(1024),
-            `secret_word` varchar(1024),
-            `used_in` datetime,  
+            `find` text,
+            `replace` mediumtext,
+            `type` varchar(56),
+            `where_to_replace` varchar(128),
             PRIMARY KEY ( `id`)
             ) $charset_collate"
         );
@@ -72,11 +45,64 @@ class Activate{
         }    
         
         //add db version to db
-        add_option( 'wapg_db_version', CS_WAPG_DB_VERSION );
-        
-    }
-    
+        add_option( 'rtafar_db_version', CS_RTAFAR_DB_VERSION );
+        add_option( 'rtafar_plugin_version', CS_RTAFAR_VERSION );
+        add_option( 'rtafar_plugin_install_date', date('Y-m-d H:i:s') );
+	}
+
+	/**
+	 * Check DB Status
+	 *
+	 * @return void
+	 */
+	public static function check_db_status(){
+		$import_old_settings = false;
+		$get_installed_db_version = get_site_option( 'rtafar_db_version' );
+		$get_installed_plugin_version = get_site_option( 'rtafar_plugin_version' );
+        if( empty( $get_installed_db_version ) ){
+            self::on_activate();
+			$import_old_settings = true;
+		}
+		
+
+		if( true === $import_old_settings ){
+			self::import_old_settings();
+		}
+			
+		return true;
+	}
+
+	/**
+	 * Import old settings
+	 *
+	 * @return void
+	 */
+	private static function import_old_settings(){
+		$get_Rtfar = get_option( 'rtafar_settings' );
+		if ( !empty( $get_Rtfar ) && is_array( $get_Rtfar ) ) {
+			$Masking = new Masking();
+            foreach ( $get_Rtfar as $find=>$replace ){
+				$Masking->insert_masking_rules( $find, $replace, 'plain', 'all', '');
+			}
+			delete_option( 'rtafar_settings' );
+		}
+
+		return true;
+	}
+
+
+    /**
+	 * Remove custom urls on detactive
+	 *
+	 * @return void
+	 */
+	public static function on_deactivate() {
+		// remove notice status
+		delete_option( CS_NOTICE_ID . 'ed_Activated' );
+		return true;
+	}
 
     
 }
 
+}

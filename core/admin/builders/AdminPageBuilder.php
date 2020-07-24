@@ -7,11 +7,13 @@
  * @author CodeSolz <info@codesolz.com>
  */
 
-if ( ! defined( 'CS_RTAAFR_VERSION' ) ) {
+if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
     exit;
 }
 
-class FarAdminPageBuilder {
+if( ! \class_exists( 'AdminPageBuilder' ) ){ 
+
+class AdminPageBuilder {
     
     /**
      * Hold admin pages
@@ -167,4 +169,6 @@ class FarAdminPageBuilder {
             <p>Thank you for choosing us! <a href="https://www.codesolz.net" target="_blank">codesolz.net</a></p>
         </div>';
     }
+}
+
 }

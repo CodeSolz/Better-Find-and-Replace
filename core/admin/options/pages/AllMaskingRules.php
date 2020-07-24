@@ -1,4 +1,4 @@
-<?php namespace WooGateWayCoreLib\admin\options\pages;
+<?php namespace RealTimeAutoFindReplace\admin\options\pages;
 
 /**
  * Class: Coin LIst
@@ -8,15 +8,17 @@
  * @author CodeSolz <customer-support@codesolz.net>
  */
 
-if ( ! defined( 'CS_WAPG_VERSION' ) ) {
+if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
     die();
 }
 
-use WooGateWayCoreLib\admin\builders\CsAdminPageBuilder;
-use WooGateWayCoreLib\admin\options\Coin_List;
-use WooGateWayCoreLib\lib\Util;
+use RealTimeAutoFindReplace\lib\Util;
+use RealTimeAutoFindReplace\admin\builders\AdminPageBuilder;
+use RealTimeAutoFindReplace\admin\options\functions\AllMaskingRulesList;
 
-class AllCoins {
+if( ! \class_exists( 'AllMaskingRules' ) ) { 
+
+class AllMaskingRules {
     
     /**
      * Hold page generator class
@@ -25,7 +27,7 @@ class AllCoins {
      */
     private $Admin_Page_Generator;
     
-    public function __construct(CsAdminPageBuilder $AdminPageGenerator) {
+    public function __construct(AdminPageBuilder $AdminPageGenerator) {
         $this->Admin_Page_Generator = $AdminPageGenerator;
     }
     
@@ -35,7 +37,7 @@ class AllCoins {
      * @param type $args
      * @return type
      */
-    public function generate_coin_list( $args ){
+    public function generate_page( $args ){
         
         $page = isset($_GET['page']) ? Util::check_evil_script($_GET['page']) : '';
         if (isset($_GET['s']) && !empty($_GET['s'])) {
@@ -44,11 +46,11 @@ class AllCoins {
         }
         
         ob_start();
-        $adCodeList = new Coin_List();
+        $adCodeList = new AllMaskingRulesList();
         $adCodeList->prepare_items();
         echo '<form id="plugins-filter" method="get"><input type="hidden" name="page" value="'.$page.'" />';
         $adCodeList->views();
-        $adCodeList->search_box( __('Search Coin', 'woo-altcoin-payment-gateway'), '' );
+        $adCodeList->search_box( __('Search Coin', 'real-time-auto-find-and-replace'), '' );
         $adCodeList->display();
         echo "</form>";        
         $html = ob_get_clean();
@@ -60,4 +62,6 @@ class AllCoins {
     }
     
     
+}
+
 }

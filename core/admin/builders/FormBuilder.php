@@ -7,12 +7,13 @@
  * @author CodeSolz <info@codesolz.com>
  */
 
-if ( ! defined( 'CS_RTAAFR_VERSION' ) ) {
+if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
     exit;
 }
 
+if( ! \class_exists( 'FormBuilder' ) ){ 
 
-class FarFormBuilder {
+class FormBuilder {
     
     /**
      * Generate html form fields
@@ -313,19 +314,27 @@ class FarFormBuilder {
             unset($field['value']);
         }
         
+        // pre_print( $field['options'] );
+
         $cus_val = $field;
         $cus_val['value'] = $value;
         $disabled_field_val = $this->get_disabled_field_val( $field_name, $cus_val, $field_id );
         
         $input_item = $this->generate_attribute($field_name, $field, $field_id);
         $input = "<select  {$input_item} >";
-        $input .= '<option value="" disabled>==================== '.$field['placeholder'].' ====================</option>';
+        $input .= '<option value="" disabled class="placeholder" >==================== '.$field['placeholder'].' ====================</option>';
         foreach( $field['options'] as $key => $val ){
             $selected = '';
             if( (is_array( $value ) && in_array( $key, $value ) ) || $key == $value ){
                 $selected = 'selected="selected"';
             }
-            $input .= '<option value ="'.$key.'" '.$selected.' >'.$val.'</option>';
+
+            $disabled = '';
+            if( \strpos( $key, '_disabled') !== false ){
+                $disabled = 'disabled';
+            }
+
+            $input .= '<option value ="'.$key.'" '.$selected.' '. $disabled .' >'.$val.'</option>';
         }
         $input .= "</select>";
         
@@ -376,6 +385,9 @@ class FarFormBuilder {
      * @return string
      */
     private function attr_value( $value ){
+        if( is_array( $value ) ){
+            return ' value = "invalid value" ';
+        }
         return ' value = "' . $value . '" ';
     }
     
@@ -461,4 +473,6 @@ class FarFormBuilder {
         return '';
     }
     
+}
+
 }
