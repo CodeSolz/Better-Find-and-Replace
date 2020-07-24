@@ -61,14 +61,14 @@ To use this plugin just follow the following steps.
 * **Improvement:** Find-Replace speed up
 * Brand new user-interface
 
-**1.0.1**
+= 1.0.1 = 
 *Improvement*: Imporved some codings
 Fix a bug.
 
-**1.0.0**
+= 1.0.0 = 
 Fix a bug.
 
-**0.5**
+= 0.5 = 
 Initial release.
 
 
