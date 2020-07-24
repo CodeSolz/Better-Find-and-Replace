@@ -57,6 +57,7 @@ It's works as masking a word with different word.
 = Version: 1.0.2 =
 * **Fet:** Replace in Database
 * **Improvement:** Find-Replace speed up
+* Brand new user-interface
 
 = Version: 1.0.1 =
 * **Improvement:** Imporved some codings

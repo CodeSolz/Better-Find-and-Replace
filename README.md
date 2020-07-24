@@ -56,6 +56,11 @@ To use this plugin just follow the following steps.
 
 **Changelog**
 
+= 1.0.2 =
+* **Fet:** Replace in Database
+* **Improvement:** Find-Replace speed up
+* Brand new user-interface
+
 **1.0.1**
 *Improvement*: Imporved some codings
 Fix a bug.
