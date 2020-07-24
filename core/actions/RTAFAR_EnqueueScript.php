@@ -12,26 +12,26 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 	die();
 }
 
-if( ! \class_exists( 'RTAFAR_EnqueueScript' ) ) { 
+if ( ! \class_exists( 'RTAFAR_EnqueueScript' ) ) {
 
-class RTAFAR_EnqueueScript {
+	class RTAFAR_EnqueueScript {
 
-	function __construct() {
+		function __construct() {
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'rtrar_action_admin_enqueue_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'rtrar_action_admin_enqueue_scripts' ) );
+		}
+
+		/**
+		 * Enqueue admin scripts
+		 *
+		 * @return void
+		 */
+		public function rtrar_action_admin_enqueue_scripts() {
+			wp_enqueue_script( 'jquery' );
+			wp_enqueue_script( 'admin.app.global', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.admin.global.min.js', false );
+		}
+
 	}
-
-	/**
-	 * Enqueue admin scripts
-	 *
-	 * @return void
-	 */
-	public function rtrar_action_admin_enqueue_scripts() {
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'admin.app.global', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.admin.global.min.js', false );
-	}
-
-}
 }
 
 

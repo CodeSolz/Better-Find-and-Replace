@@ -9,6 +9,12 @@
             "email": "info@codesolz.net"
         }
     ],
+    "scripts": {
+        "build" : "composer install --no-dev",
+        "phpcs" : "bash ./vendor/bin/phpcs -i ",
+        "phpcsCheckError" : "bash ./vendor/bin/phpcs --standard=WordPress .",
+        "phpcsFixError" : "bash ./vendor/bin/phpcbf --standard=WordPress ."
+    },
     "autoload": {
         "psr-4" : {
             "RealTimeAutoFindReplace\\" : "core/"
@@ -17,5 +23,9 @@
     "require": {
         "php" : ">=7.0.0"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "require-dev": {
+        "wp-coding-standards/wpcs": "dev-master",
+        "dealerdirect/phpcodesniffer-composer-installer": "dev-master"
+    }
 }
