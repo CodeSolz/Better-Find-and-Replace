@@ -88,7 +88,7 @@ if (!class_exists('Real_Time_Auto_Find_And_Replace')) {
             $constants = array(
                 'CS_RTAFAR_VERSION' => self::$version, //Define current version
                 'CS_RTAFAR_DB_VERSION' => self::$db_version, //Define current db version
-                'CS_RTAFAR_HOOKS_DIR' => untrailingslashit(plugin_dir_path(__FILE__)) . "/core/Actions/", //plugin hooks dir
+                'CS_RTAFAR_HOOKS_DIR' => untrailingslashit(plugin_dir_path(__FILE__)) . "/core/actions/", //plugin hooks dir
                 'CS_RTAFAR_BASE_DIR_PATH' => untrailingslashit(plugin_dir_path(__FILE__)) . '/', //Hold plugins base dir path
                 'CS_RTAFAR_PLUGIN_ASSET_URI' => plugin_dir_url(__FILE__) . 'assets/', //Define asset uri
                 'CS_RTAFAR_PLUGIN_LIB_URI' => plugin_dir_url(__FILE__) . 'lib/', //Library uri
