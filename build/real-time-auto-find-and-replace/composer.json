@@ -1,0 +1,21 @@
+{
+    "name": "tuhin18003/real-time-auto-find-and-replace",
+    "description": "Real Time Auto Find and Replace - Wordpress plugin",
+    "type": "composer-plugin",
+    "license": "mit",
+    "authors": [
+        {
+            "name": "M.Tuhin",
+            "email": "info@codesolz.net"
+        }
+    ],
+    "autoload": {
+        "psr-4" : {
+            "RealTimeAutoFindReplace\\" : "core/"
+        }
+    },
+    "require": {
+        "php" : ">=7.0.0"
+    },
+    "minimum-stability": "dev"
+}

@@ -139,7 +139,7 @@ class RTAFAR_RegisterMenu {
             'sub_title' => __('These will not replace in database. Following find replace rules will take place before website render to browser.', 'real-time-auto-find-and-replace'),
         );
 
-        if ( current_user_can( 'manage_options' ) || current_user_can('administrator') ) {
+        if ( current_user_can( 'manage_options' ) ) {
             $AddNewRule = $this->pages->AddNewRule();
             if (is_object($AddNewRule)) {
                 echo $AddNewRule->generate_page(array_merge_recursive( $page_info, array('gateway_settings' => array() )), $option );
@@ -163,7 +163,7 @@ class RTAFAR_RegisterMenu {
             'sub_title' => __('Following find replace rules will take place before website render to browser.', 'real-time-auto-find-and-replace'),
         );
 
-        if ( current_user_can( 'manage_options' ) || current_user_can('administrator') ) {
+        if ( current_user_can( 'manage_options' ) ) {
             $AllMaskingRules = $this->pages->AllMaskingRules();
             if (is_object($AllMaskingRules)) {
                 echo $AllMaskingRules->generate_page(array_merge_recursive( $page_info, array('gateway_settings' => array() )));
@@ -194,7 +194,7 @@ class RTAFAR_RegisterMenu {
             'sub_title' => __('Instantly & permanently replace string from database table\'s. It will take effect in WordPress\'s table\'s only.', 'real-time-auto-find-and-replace'),
         );
 
-        if ( current_user_can( 'manage_options' ) || current_user_can('administrator') ) {
+        if ( current_user_can( 'manage_options' ) ) {
             $Default_Settings = $this->pages->ReplaceInDB();
             if (is_object($Default_Settings)) {
                 echo $Default_Settings->generate_default_settings(array_merge_recursive( $page_info, array('gateway_settings' => array() )));
