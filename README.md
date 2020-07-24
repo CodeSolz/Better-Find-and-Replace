@@ -44,15 +44,32 @@
 This plugin will automatically find a specific word and will replace by your own word. This changes will be automatically done before the the post go to the browser’s. It doesn’t affect to any other files or your other settings.
 To use this plugin just follow the following steps.
 
-To use this plugin just follow the following steps.
+### Key Features
 
-1.Write your specific word on the find box which you want to find. You can use any type of combination and regular expression as well.
+* Easy to use and user-friendly options
+* Lighting first find-replacement in Database table's ( posts, postmeta, options )
+* Create word masking with find-replace over the whole website
+* Create find-replace temp rules which doesn't effect database.
 
-2.In the replace box write your word which you want to replace. You can use alphanumeric or regular expression.
+### Forum and Feature Request
 
-3.For add more find & replace box just use the add more button. You can add as many as you want. There is no limit to add word.
+<blockquote>
+*For Quick Support, feature request and bug reporting*
+<ul>
+    <li> Visit our website <a target="_blank" href="https://codesolz.net/?utm_source=wordpress.org&utm_medium=README&utm_campaign=woo-altcoin-payment-gateway">To Get Instant Support</a></li>
+    <li> For more dedicated support or feature request write to us at <a target="_blank" href="mailto:support@codesolz.net">support@codesolz.net</a> or create a ticket <a href="http://support.codesolz.net/public/create-ticket" target="_blank"> Support Center</a></li>
+</ul>
 
-4.Finally click update button bellow of the box to save or update your find and replace rules.
+*Visit our forum to share your experience or request features*
+<ul>
+    <li> Visit our <a target="_blank" href="https://forum.codesolz.net/?utm_source=wordpress.org&utm_medium=README&utm_campaign=woo-altcoin-payment-gateway">forum</a></li>
+</ul>
+
+= As it's open source, check our github development Status = 
+<ul>
+    <li> Check development status or issues in <a target="_blank" href="https://github.com/CodeSolz/real-time-auto-find-and-replace" > github.com/CodeSolz/real-time-auto-find-and-replace </a>
+</ul>
+</blockquote>
 
 **Changelog**
 
@@ -62,14 +79,14 @@ To use this plugin just follow the following steps.
 * Brand new user-interface
 
 = 1.0.1 = 
-*Improvement*: Imporved some codings
+* Improvement*: Imporved some codings
 Fix a bug.
 
 = 1.0.0 = 
-Fix a bug.
+* Fix a bug.
 
 = 0.5 = 
-Initial release.
+* Initial release.
 
 
 ### useful links
