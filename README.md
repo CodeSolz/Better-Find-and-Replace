@@ -54,6 +54,7 @@ To use this plugin just follow the following steps.
 ### Forum and Feature Request
 
 <blockquote>
+
 *For Quick Support, feature request and bug reporting*
 <ul>
     <li> Visit our website <a target="_blank" href="https://codesolz.net/?utm_source=wordpress.org&utm_medium=README&utm_campaign=woo-altcoin-payment-gateway">To Get Instant Support</a></li>
@@ -65,7 +66,7 @@ To use this plugin just follow the following steps.
     <li> Visit our <a target="_blank" href="https://forum.codesolz.net/?utm_source=wordpress.org&utm_medium=README&utm_campaign=woo-altcoin-payment-gateway">forum</a></li>
 </ul>
 
-= As it's open source, check our github development Status = 
+*As it's open source, check our github development Status* 
 <ul>
     <li> Check development status or issues in <a target="_blank" href="https://github.com/CodeSolz/real-time-auto-find-and-replace" > github.com/CodeSolz/real-time-auto-find-and-replace </a>
 </ul>
