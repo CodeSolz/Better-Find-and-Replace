@@ -25,8 +25,6 @@ if ( ! \class_exists( 'Scripts_Settings' ) ) {
 			wp_enqueue_style( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.css', false );
 			wp_enqueue_script( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.min.js', false );
 
-			wp_enqueue_script( 'jquery-typehead-js', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/jquery-typeahead/jquery.typeahead.min.js', false );
-
 			wp_enqueue_style( 'wapg', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-style.min.css', false );
 
 			return;
