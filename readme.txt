@@ -1,6 +1,6 @@
 === Real Time Auto Find and Replace ===
 Contributors: CodeSolz, m.tuhin
-Tags: find, replace, auto find, auto replace
+Tags: find, replace, search, find and replace, search and replace, auto find, auto replace
 Donate link: https://www.paypal.me/wooAltCoinPayGatewy
 Requires at least: 4.0
 Tested up to: 5.4
@@ -8,18 +8,25 @@ Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin will allow to setup unlimited word to find and automatically replace before render in browser or publish in social media by backend call.
+Find and replace text, HTML code, image's url, footer credits or anything in the website without touching database.
 
 == Description ==
-This plugin will automatically find a specific word and will replace by your own word. This changes will be automatically done before the the website render to the browser's. It doesn't affect to any other files or your database.
-It's works as masking a word with different word. 
+This plugin will automatically find a specific word and will replace by your own word. The changes will be automatically done before the the website render to the browser's. It doesn't effect to any other plugins files or your database.
+
+Easily Find and replace text, HTML code, image's url, footer credits or anything in the website without touching database. Also, you can find and replace permanently in Database too. 
 
 == Key Features ==
 
 * Easy to use and user-friendly options
 * Lighting first find-replacement in Database table's ( posts, postmeta, options )
 * Create word masking with find-replace over the whole website
-* Create find-replace temp rules which doesn't effect database.
+* Create find-replace temp rules without touching database.
+* Remove or change footer credit without touching database or HTML code
+* Replace anything in HTML code
+* Replace images in real-time rendering
+* Mask bad words posted in comments 
+* Change different language's content to your own language
+
 
 = Forum and Feature Request = 
 
