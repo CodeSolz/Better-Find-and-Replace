@@ -109,11 +109,7 @@ class ReplaceInDB {
 	 * Add custom scripts
 	 */
 	public function default_page_scripts() {
-		?>
-			<script>
-				
-			</script>
-		<?php
+		
 	}
 
 }

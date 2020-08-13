@@ -62,6 +62,36 @@ if ( ! \class_exists( 'Util' ) ) {
 		}
 
 		/**
+		 * Add slashes
+		 *
+		 * @param [type] $value
+		 * @return void
+		 */
+		public static function cs_addslashes( $value ) {
+			return wp_slash( stripslashes_deep( trim( $value ) ) );
+		}
+
+		/**
+		 * Strip slashes
+		 *
+		 * @param [type] $value
+		 * @return void
+		 */
+		public static function cs_esc_html( $value ) {
+			return esc_html( stripslashes_deep( trim( $value ) ) );
+		}
+
+		/**
+		 * Strip slashes
+		 *
+		 * @param [type] $value
+		 * @return void
+		 */
+		public static function cs_stripslashes( $value ) {
+			return stripslashes_deep( trim( $value ) );
+		}
+
+		/**
 		 * generate admin page url
 		 *
 		 * @return string

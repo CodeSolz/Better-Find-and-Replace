@@ -52,11 +52,20 @@ if ( ! \class_exists( 'Masking' ) ) {
 		 */
 		public function insert_masking_rules( $find, $replace, $type, $replace_where, $id = '' ) {
 			global $wpdb;
+
+			if ( $type == 'regex' ) {
+				$find    = Util::cs_addslashes( $find );
+				$replace = Util::cs_addslashes( $replace );
+			} else {
+				$find    = Util::check_evil_script( $find );
+				$replace = Util::check_evil_script( $replace );
+			}
+
 			$userData = array(
-				'find'             => util::check_evil_script( $find ),
-				'replace'          => util::check_evil_script( $replace ),
-				'type'             => util::check_evil_script( $type ),
-				'where_to_replace' => util::check_evil_script( $replace_where ),
+				'find'             => $find,
+				'replace'          => $replace,
+				'type'             => Util::check_evil_script( $type ),
+				'where_to_replace' => Util::check_evil_script( $replace_where ),
 			);
 
 			$isExists = $wpdb->get_var(

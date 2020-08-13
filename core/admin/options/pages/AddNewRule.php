@@ -76,8 +76,9 @@ if ( ! \class_exists( 'AddNewRule' ) ) {
 					'required'    => true,
 					'placeholder' => __( 'Please select rules type', 'real-time-auto-find-and-replace' ),
 					'options'     => array(
-						'plain'         => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
-						'regx_disabled' => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
+						'plain'                => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
+						'regex'                => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
+						'ajaxContent_disabled' => __( 'Content Loaded by jQuery / Ajax', 'real-time-auto-find-and-replace' ),
 					),
 					'value'       => FormBuilder::get_value( 'type', $option, '' ),
 					'desc_tip'    => __( 'Select rule\'s type. e.g : Plain Text', 'real-time-auto-find-and-replace' ),

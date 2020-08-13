@@ -12,6 +12,7 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 	die();
 }
 
+use RealTimeAutoFindReplace\lib\Util;
 use RealTimeAutoFindReplace\admin\functions\Masking;
 
 if ( ! \class_exists( 'RTAFAR_WP_Hooks' ) ) {
@@ -19,7 +20,6 @@ if ( ! \class_exists( 'RTAFAR_WP_Hooks' ) ) {
 	class RTAFAR_WP_Hooks {
 
 		function __construct() {
-
 			add_action( 'template_redirect', array( $this, 'rtafar_filter_contents' ) );
 		}
 
@@ -47,15 +47,35 @@ if ( ! \class_exists( 'RTAFAR_WP_Hooks' ) ) {
 					if ( false !== stripos( $item->find, ',' ) ) {
 						$finds = explode( ',', $item->find );
 						foreach ( $finds as $find ) {
-							$buffer = str_replace( $find, $item->replace, $buffer );
+							$buffer = $this->replace( $item, $buffer, $find );
 						}
 					} else {
-						$buffer = str_replace( $item->find, $item->replace, $buffer );
+						$buffer = $this->replace( $item, $buffer );
 					}
 				}
 			}
 
 			return $buffer;
+		}
+
+
+		/**
+		 * Replace
+		 *
+		 * @param [type]  $item
+		 * @param [type]  $buffer
+		 * @param boolean $find
+		 * @return void
+		 */
+		private function replace( $item, $buffer, $find = false ) {
+			$find = false !== $find ? $find : $item->find;
+			if ( $item->type == 'regex' ) {
+				$find    = '<' . Util::cs_stripslashes( $find ) . '>';
+				$replace = Util::cs_stripslashes( $item->replace );
+				return preg_replace( $find, $replace, $buffer );
+			} else {
+				return str_replace( $find, $item->replace, $buffer );
+			}
 		}
 
 	}

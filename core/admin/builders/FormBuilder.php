@@ -11,6 +11,8 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 	exit;
 }
 
+use RealTimeAutoFindReplace\lib\Util;
+
 if ( ! \class_exists( 'FormBuilder' ) ) {
 
 	class FormBuilder {
@@ -461,9 +463,9 @@ if ( ! \class_exists( 'FormBuilder' ) ) {
 		 */
 		public static function get_value( $id, $values = array(), $default_value = '' ) {
 			if ( isset( $values[ $id ] ) && ! empty( $values[ $id ] ) ) {
-				return $values[ $id ];
+				return Util::cs_esc_html( $values[ $id ] );
 			} elseif ( ! empty( $default_value ) ) {
-				return $default_value;
+				return Util::cs_esc_html( $default_value );
 			}
 			return '';
 		}

@@ -13,7 +13,8 @@
         "build" : "composer install --no-dev",
         "phpcs" : "bash ./vendor/bin/phpcs -i ",
         "phpcsCheckError" : "bash ./vendor/bin/phpcs --standard=WordPress .",
-        "phpcsFixError" : "bash ./vendor/bin/phpcbf --standard=WordPress ."
+        "phpcsFixError" : "bash ./vendor/bin/phpcbf --standard=WordPress ./core",
+        "phpcsCheckPHPDetail" : "bash ./vendor/bin/phpcs --standard=PHPCompatibilityWP -p ./core --runtime-set testVersion 7.0-"
     },
     "autoload": {
         "psr-4" : {
@@ -26,6 +27,8 @@
     "minimum-stability": "dev",
     "require-dev": {
         "wp-coding-standards/wpcs": "dev-master",
-        "dealerdirect/phpcodesniffer-composer-installer": "dev-master"
+        "dealerdirect/phpcodesniffer-composer-installer": "dev-master",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpcompatibility/phpcompatibility-wp": "^2.1"
     }
 }

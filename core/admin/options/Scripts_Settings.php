@@ -75,7 +75,7 @@ if ( ! \class_exists( 'Scripts_Settings' ) ) {
 							processData: false
 						})
 						.done(function( data ) {
-							// console.log( data );
+							console.log( data );
 							if( true === data.status ){
 								swal( { title: data.title, text: data.text, type : "success", html: true, timer: 5000 });
 								if( typeof data.redirect_url !== 'undefined' ){
