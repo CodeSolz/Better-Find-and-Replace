@@ -69,6 +69,8 @@ if ( ! \class_exists( 'Activate' ) ) {
 				self::import_old_settings();
 			}
 
+			update_option( 'rtafar_plugin_version', CS_RTAFAR_VERSION );
+
 			return true;
 		}
 
