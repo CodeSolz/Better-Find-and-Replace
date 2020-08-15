@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://www.paypal.me/wooAltCoinPayGatewy
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,9 @@ Easily Find and replace text, HTML code, image's url, footer credits or anything
 3. Replace in Database
 
 == Changelog ==
+
+= Version: 1.0.4 =
+* **Fix:** Notification issues
 
 = Version: 1.0.3 =
 * **Fet:** RegEx Supoorted
