@@ -26,7 +26,11 @@ Easily Find and replace text, HTML code, image's url, footer credits or anything
 * Replace images in real-time rendering
 * Mask bad words posted in comments 
 * Change different language's content to your own language
+* RegEx supported
+* Replace any HTML tag or attribute
 
+== Setup Video Guide - How to install and setup search and replace rules == 
+[youtube https://www.youtube.com/watch?v=nDv6T72sRfc]
 
 = Forum and Feature Request = 
 
@@ -60,6 +64,9 @@ Easily Find and replace text, HTML code, image's url, footer credits or anything
 3. Replace in Database
 
 == Changelog ==
+
+= Version: 1.0.3 =
+* **Fet:** RegEx Supoorted
 
 = Version: 1.0.2 =
 * **Fet:** Replace in Database
