@@ -37,7 +37,7 @@
         <img alt="undefined" src="https://img.shields.io/badge/Created%20By-M.Tuhin-brightgreen.svg">
     </a>
 </p>
-<h2 align="center">Real Time Auto Find and Replace - Wordpress plugin</h2>
+<h2 align="center">Better Find and Replace - Wordpress plugin</h2>
 
 ### Description 
 
