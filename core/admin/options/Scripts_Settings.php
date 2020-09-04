@@ -22,8 +22,25 @@ if ( ! \class_exists( 'Scripts_Settings' ) ) {
 		 * load admin settings scripts
 		 */
 		public static function load_admin_settings_scripts( $page_id, $rtafr_menus ) {
-			wp_enqueue_style( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.css', false );
-			wp_enqueue_script( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.min.js', false );
+			wp_enqueue_style( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.css', array(), CS_RTAFAR_VERSION );
+			wp_enqueue_script( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.min.js', array(), CS_RTAFAR_VERSION, true );
+			
+			if( $page_id === $rtafr_menus['replace_in_db'] ){
+				wp_enqueue_style( 
+					'select2', 
+					CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/select2/css/select2.min.css', 
+					array(), 
+					CS_RTAFAR_VERSION 
+				);
+				wp_enqueue_script( 
+					'select2', 
+					CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/select2/js/select2.min.js', 
+					array(), 
+					CS_RTAFAR_VERSION, 
+					true 
+				);
+
+			}
 
 			wp_enqueue_style( 'wapg', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-style.min.css', false );
 

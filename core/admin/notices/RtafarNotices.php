@@ -44,19 +44,25 @@ if ( ! \class_exists( 'RtafarNotices' ) ) {
 		 *
 		 * @return void
 		 */
-		public static function feeback() {
+		public static function feedback() {
 			$notice        = NoticeBuilder::get_instance();
-			$message       = __( '', 'real-time-auto-find-and-replace' );
+			$message       = __( 'You are using our plugin more then 2 weeks. If you are enjoying it, would you mind to give us a 5 stars (%s) review?
+								It will inspire us to make it more better.', 'real-time-auto-find-and-replace' );
 			$register_link = admin_url( 'admin.php?page=cs-igt-test-url-slug-settings' );
 			$default_link  = site_url( '' );
 			$message       = sprintf(
 				$message,
+				'<span class="dashicons dashicons-star-filled">
+				</span><span class="dashicons dashicons-star-filled">
+				</span><span class="dashicons dashicons-star-filled"></span>
+				<span class="dashicons dashicons-star-filled"></span>
+				<span class="dashicons dashicons-star-filled"></span>',
 				'<a href="' . $register_link . '"><strong>',
 				'</strong></a>',
 				'<a target="_blank" href="' . $default_link . '"><strong>',
 				'</strong></a>'
 			);
-			$notice->info( $message, 'Activated' );
+			$notice->info( $message, 'Feedback' );
 		}
 
 

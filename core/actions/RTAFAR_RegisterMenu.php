@@ -16,7 +16,6 @@ use RealTimeAutoFindReplace\admin\functions\Masking;
 use RealTimeAutoFindReplace\admin\options\Scripts_Settings;
 use RealTimeAutoFindReplace\admin\builders\AdminPageBuilder;
 
-if ( ! \class_exists( 'RTAFAR_RegisterMenu' ) ) {
 
 	class RTAFAR_RegisterMenu {
 
@@ -238,4 +237,3 @@ if ( ! \class_exists( 'RTAFAR_RegisterMenu' ) ) {
 
 	}
 
-}

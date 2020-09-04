@@ -83,6 +83,20 @@ class AllMaskingRulesList extends \WP_List_Table {
 		echo Util::cs_esc_html( $item->replace );
 	}
 
+	public function column_type( $item ) {
+		if( $item->type == 'plain' ){
+			return __( 'Plain Text', 'real-time-auto-find-and-replace' );
+		}
+		elseif( $item->type == 'regex' ){
+			return __( 'Regular Expression', 'real-time-auto-find-and-replace' );
+		}
+		elseif( $item->type == 'ajaxContent' ){
+			return sprintf( __( 'jQuery / Ajax %s Delay Time : %s ', 'real-time-auto-find-and-replace' ),
+				'<br>', $item->delay .' seconds' 
+			);
+		}
+	}
+
 	public function column_where_to_replace( $item ) {
 		// pre_print( $item );
 		if ( strtolower( $item->where_to_replace ) == 'all' ) {

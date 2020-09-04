@@ -14,8 +14,6 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 
 use RealTimeAutoFindReplace\admin\functions\Masking;
 
-if ( ! \class_exists( 'Activate' ) ) {
-
 	class Activate {
 
 
@@ -30,13 +28,14 @@ if ( ! \class_exists( 'Activate' ) ) {
 
 			$sqls = array(
 				"CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}rtafar_rules`(
-            `id` int(11) NOT NULL auto_increment,
-            `find` text,
-            `replace` mediumtext,
-            `type` varchar(56),
-            `where_to_replace` varchar(128),
-            PRIMARY KEY ( `id`)
-            ) $charset_collate",
+				`id` int(11) NOT NULL auto_increment,
+				`find` text,
+				`replace` mediumtext,
+				`type` varchar(56),
+				`delay` float,
+				`where_to_replace` varchar(128),
+				PRIMARY KEY ( `id`)
+				) $charset_collate",
 			);
 
 			foreach ( $sqls as $sql ) {
@@ -64,14 +63,37 @@ if ( ! \class_exists( 'Activate' ) ) {
 				self::on_activate();
 				$import_old_settings = true;
 			}
+			elseif ( \version_compare( $get_installed_db_version, CS_RTAFAR_DB_VERSION, '!=' ) ) {
+				
+				global $wpdb;
+				
+				$update_sqls = array();
+				
+				if ( \version_compare( $get_installed_db_version, '1.0.1', '<' ) ) {
+					$update_sqls = array(
+						"ALTER TABLE `{$wpdb->prefix}rtafar_rules` ADD COLUMN delay FLOAT DEFAULT 0 AFTER type",
+					);
+				}
+				
+				// update db
+				foreach ( $update_sqls as $sql ) {
+					if ( $wpdb->query( $sql ) === false ) {
+						continue;
+					}
+				}
+
+				//update plugin db version
+				update_option( 'rtafar_db_version', CS_RTAFAR_DB_VERSION );
+
+			}
 
 			if ( true === $import_old_settings ) {
 				self::import_old_settings();
 			}
 
+			//update plugin version
 			update_option( 'rtafar_plugin_version', CS_RTAFAR_VERSION );
 
-			return true;
 		}
 
 		/**
@@ -106,5 +128,3 @@ if ( ! \class_exists( 'Activate' ) ) {
 
 
 	}
-
-}

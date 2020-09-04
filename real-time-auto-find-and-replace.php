@@ -5,7 +5,7 @@
  * Plugin Name:       Real Time Auto Find and Replace
  * Plugin URI:        https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/
  * Description:       The plugin automatically find the specific words and replace by your own. you can setup your own rules for find and replace. It will execute before rendering page in browser's as well as background calls by any other social plugins.
- * Version:           1.0.4
+ * Version:           1.0.5
  * Author:            CodeSolz
  * Author URI:        https://www.codesolz.net
  * License:           GPLv3
@@ -38,14 +38,14 @@ if (!class_exists('Real_Time_Auto_Find_And_Replace')) {
          *
          * @var String
          */
-        private static $version = '1.0.4';
+        private static $version = '1.0.5';
 
         /**
          * Hold version
          *
          * @var String
          */
-        private static $db_version = '1.0.0';
+        private static $db_version = '1.0.1';
 
         /**
          * Hold nameSpace
@@ -174,7 +174,8 @@ if (!class_exists('Real_Time_Auto_Find_And_Replace')) {
          */
         public static function rtaafr_init_function(){
             //show activation notice
-            \RealTimeAutoFindReplace\admin\notices\RtafarNotices::activated();
+            // \RealTimeAutoFindReplace\admin\notices\RtafarNotices::activated();
+            // \RealTimeAutoFindReplace\admin\notices\RtafarNotices::feedback();
         }
 
         /**

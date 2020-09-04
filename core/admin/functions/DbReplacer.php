@@ -12,8 +12,6 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 	exit;
 }
 
-
-
 class DbReplacer {
 
 	/**
@@ -23,10 +21,11 @@ class DbReplacer {
 	 * @return void
 	 */
 	public function db_string_replace( $user_query ) {
-		if ( ! isset( $user_query['cs_db_string_replace']['find'] ) ||
-			empty( $find = $user_query['cs_db_string_replace']['find'] ) ||
-			! isset( $user_query['cs_db_string_replace']['replace'] ) ||
-			empty( $replace = $user_query['cs_db_string_replace']['replace'] )
+		$userInput = $user_query['cs_db_string_replace'];
+		if ( ! isset( $userInput['find'] ) ||
+			empty( $find = $userInput['find'] ) ||
+			! isset( $userInput['replace'] ) ||
+			empty( $replace = $userInput['replace'] )
 		) {
 			return wp_send_json(
 				array(
@@ -40,18 +39,43 @@ class DbReplacer {
 		$find    = $this->format_find( $find );
 		$replace = $this->format_replace( $replace );
 
+		$whereToReplace = $userInput['where_to_replace'];
+		
+		
 		global $wpdb;
+		
+		$i  = 0; $replaceType = '';
+		//replace type is table
+		if( $whereToReplace == 'tables' ){
+			$tables = isset($user_query['db_tables']) ? $user_query['db_tables'] : '';
+			$replaceType = 'text';
+			
+			
+			if( !empty($tables) && in_array( 'posts', $tables) ){
+				$i += $this->tbl_post( $find, $replace );
+			}
+			
+			if( !empty($tables) && in_array('postmeta', $tables) ){
+				$i += $this->tbl_postmeta( $find, $replace );
+			}
+			
+			if( !empty($tables) && in_array( 'options',$tables) ){
+				$i += $this->tbl_options( $find, $replace );
+			}
+			
+		}
+		else if( $whereToReplace == 'urls' ){
+			$inWhichUrl = isset($user_query['url_options']) ? $user_query['url_options'] : '';
+			$replaceType = 'URLs';
+			$i += $this->replace_urls( $find, $replace, $inWhichUrl );
+		}
 
-		$i  = 0;
-		$i += $this->tbl_post( $find, $replace );
-		$i += $this->tbl_postmeta( $find, $replace );
-		$i += $this->tbl_options( $find, $replace );
 
 		return wp_send_json(
 			array(
 				'status' => true,
 				'title'  => 'Success!',
-				'text'   => __( 'Thank you! replacement completed!. Total replaced : ' . $i, 'real-time-auto-find-and-replace' ),
+				'text'   => sprintf( __( 'Thank you! replacement completed!. Total %s replaced : %d', 'real-time-auto-find-and-replace' ), $replaceType, $i ),
 			)
 		);
 	}
@@ -78,6 +102,7 @@ class DbReplacer {
 					array( 'ID' => $item->ID )
 				);
 
+				
 				if ( true === $is_replaced ) {
 					$i++;
 				}
@@ -91,11 +116,11 @@ class DbReplacer {
 					'post_content',
 					array( 'ID' => $item->ID )
 				);
-
+				
 				if ( true === $is_replaced ) {
 					$i++;
 				}
-
+				
 				// replace in post_excerpt
 				$is_replaced = $this->replace(
 					$find,
@@ -105,24 +130,11 @@ class DbReplacer {
 					'post_excerpt',
 					array( 'ID' => $item->ID )
 				);
-
+				
 				if ( true === $is_replaced ) {
 					$i++;
 				}
 
-				// replace in guid
-				$is_replaced = $this->replace(
-					$find,
-					$replace,
-					$item->guid,
-					'posts',
-					'guid',
-					array( 'ID' => $item->ID )
-				);
-
-				if ( true === $is_replaced ) {
-					$i++;
-				}
 			}
 		}
 		return $i;
@@ -187,6 +199,163 @@ class DbReplacer {
 		}
 		return $i;
 	}
+
+	/**
+	 * URL replacer
+	 *
+	 * @param [type] $find
+	 * @param [type] $replace
+	 * @param [type] $inWhichUrl
+	 * @return void
+	 */
+	private function replace_urls($find, $replace, $inWhichUrl){
+		$r = 0;
+		
+		if( !empty( $inWhichUrl) && in_array( 'posts', $inWhichUrl) ){
+			$r += $this->post_urls($find, $replace);
+		}
+		if( !empty( $inWhichUrl) && in_array( 'pages', $inWhichUrl) ){
+			$r += $this->page_urls($find, $replace);
+			
+		}
+		if( !empty( $inWhichUrl) && in_array( 'media', $inWhichUrl)){
+			$r += $this->media_urls($find, $replace);
+		}
+
+		//if url replaced flash url permalink
+		if( $r > 0 ){
+			\flush_rewrite_rules();
+		}
+
+		return $r;
+	}
+
+	/**
+	 * Replace post urls
+	 *
+	 * @param [type] $find
+	 * @param [type] $replace
+	 * @return void
+	 */
+	private function post_urls($find, $replace){
+		global $wpdb;
+		$i        = 0;
+		$get_data = $wpdb->get_results( "select * from {$wpdb->posts} where post_type = 'post' " );
+		if ( $get_data ) {
+			foreach ( $get_data as $item ) {
+
+				// replace in guid
+				$is_replaced = $this->replace(
+					$find,
+					$replace,
+					$item->guid,
+					'posts',
+					'guid',
+					array( 'ID' => $item->ID )
+				);
+
+				// replace in post name
+				$is_replaced = $this->replace(
+					$find,
+					$replace,
+					$item->post_name,
+					'posts',
+					'post_name',
+					array( 'ID' => $item->ID )
+				);
+
+				if ( true === $is_replaced ) {
+					$i++;
+				}
+			}
+		}
+		return $i;
+	}
+
+	/**
+	 * Replace page urls
+	 *
+	 * @param [type] $find
+	 * @param [type] $replace
+	 * @return void
+	 */
+	private function page_urls($find, $replace){
+		global $wpdb;
+		$i        = 0;
+		$get_data = $wpdb->get_results( "select * from {$wpdb->posts} where post_type = 'page' " );
+		if ( $get_data ) {
+			foreach ( $get_data as $item ) {
+				
+				// replace in guid
+				$is_replaced = $this->replace(
+					$find,
+					$replace,
+					$item->guid,
+					'posts',
+					'guid',
+					array( 'ID' => $item->ID )
+				);
+
+				// replace in post name
+				$is_replaced = $this->replace(
+					$find,
+					$replace,
+					$item->post_name,
+					'posts',
+					'post_name',
+					array( 'ID' => $item->ID )
+				);
+
+				if ( true === $is_replaced ) {
+					$i++;
+				}
+			}
+		}
+		return $i;
+	}
+
+	/**
+	 * Replace Media URLs
+	 *
+	 * @param [type] $find
+	 * @param [type] $replace
+	 * @return void
+	 */
+	private function media_urls($find, $replace){
+		global $wpdb;
+		$i        = 0;
+		$get_data = $wpdb->get_results( "select * from {$wpdb->posts} where post_type = 'attachment' " );
+		if ( $get_data ) {
+			foreach ( $get_data as $item ) {
+
+				// replace in guid
+				$is_replaced = $this->replace(
+					$find,
+					$replace,
+					$item->guid,
+					'posts',
+					'guid',
+					array( 'ID' => $item->ID )
+				);
+
+				// replace in post name
+				$is_replaced = $this->replace(
+					$find,
+					$replace,
+					$item->post_name,
+					'posts',
+					'post_name',
+					array( 'ID' => $item->ID )
+				);
+
+				if ( true === $is_replaced ) {
+					$i++;
+				}
+			}
+		}
+		return $i;
+	}
+
 
 	/**
 	 * Replace String In DB

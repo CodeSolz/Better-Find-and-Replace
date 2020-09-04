@@ -17,8 +17,6 @@ use RealTimeAutoFindReplace\admin\functions\Masking;
 use RealTimeAutoFindReplace\admin\builders\FormBuilder;
 use RealTimeAutoFindReplace\admin\builders\AdminPageBuilder;
 
-if ( ! \class_exists( 'AddNewRule' ) ) {
-
 	class AddNewRule {
 
 		/**
@@ -42,6 +40,10 @@ if ( ! \class_exists( 'AddNewRule' ) ) {
 			/*create obj form generator*/
 			$this->Form_Generator = new FormBuilder();
 
+			/**
+			 *	Admin scripts
+			 */
+			add_action( 'admin_footer', array( $this, 'rtafarAddNewRuleScripts') );
 		}
 
 		/**
@@ -51,6 +53,12 @@ if ( ! \class_exists( 'AddNewRule' ) ) {
 		 * @return type
 		 */
 		public function generate_page( $args, $option ) {
+
+			$delayTimer = 'force-hidden';
+			$ruleType = FormBuilder::get_value( 'type', $option, '' );
+			if( $ruleType == 'ajaxContent' ){
+				$delayTimer = '';
+			}
 
 			$fields = array(
 				'cs_masking_rule[find]'             => array(
@@ -72,16 +80,29 @@ if ( ! \class_exists( 'AddNewRule' ) ) {
 				'cs_masking_rule[type]'             => array(
 					'title'       => __( 'Rule\'s Type', 'real-time-auto-find-and-replace' ),
 					'type'        => 'select',
-					'class'       => 'form-control coin-type-select',
+					'class'       => 'form-control rule-type',
 					'required'    => true,
 					'placeholder' => __( 'Please select rules type', 'real-time-auto-find-and-replace' ),
 					'options'     => array(
 						'plain'                => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
 						'regex'                => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
-						'ajaxContent_disabled' => __( 'Content Loaded by jQuery / Ajax', 'real-time-auto-find-and-replace' ),
+						'ajaxContent' => __( 'jQuery / Ajax', 'real-time-auto-find-and-replace' ),
 					),
 					'value'       => FormBuilder::get_value( 'type', $option, '' ),
 					'desc_tip'    => __( 'Select rule\'s type. e.g : Plain Text', 'real-time-auto-find-and-replace' ),
+				),
+				'cs_masking_rule[delay]'             => array(
+					'wrapper_class'    => "delay-time {$delayTimer}",
+					'title'       => __( 'Delay Time', 'real-time-auto-find-and-replace' ),
+					'type'        => 'number',
+					'class'       => 'form-control width-100',
+					'value'       => FormBuilder::get_value( 'delay', $option, 2 ),
+					'placeholder' => __( 'Set delay time in seconds. e.g : 2', 'real-time-auto-find-and-replace' ),
+					'desc_tip'    => __( 'Set delay time in seconds. e.g: 2. If your text still not replace then increase the delay time. ', 'real-time-auto-find-and-replace' ),
+					'custom_attributes'      => array(
+						'min'    => 1,
+						'max' => 10,
+					),
 				),
 				'cs_masking_rule[where_to_replace]' => array(
 					'title'       => __( 'Where To Replace', 'real-time-auto-find-and-replace' ),
@@ -145,6 +166,26 @@ if ( ! \class_exists( 'AddNewRule' ) ) {
 			return $this->Admin_Page_Generator->generate_page( $args );
 		}
 
+		/**
+		 * Admin footer scripts
+		 *
+		 * @return void
+		 */
+		public function rtafarAddNewRuleScripts(){
+			?>
+				<script type="text/javascript">
+					jQuery(document).ready(function(){
+						jQuery("body").on('change', '.rule-type', function(){
+							jQuery(".delay-time").addClass('force-hidden');
+							if( jQuery(this).val() === 'ajaxContent' ){
+								jQuery(".delay-time").removeClass('force-hidden');
+							}
+						});
+					});
+				</script>
+			<?php
+		}
+
 	}
 
-}
+

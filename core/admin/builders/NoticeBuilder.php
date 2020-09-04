@@ -81,8 +81,7 @@ if ( ! \class_exists( 'NoticeBuilder' ) ) {
 
 					if ( ! get_option( CS_NOTICE_ID . "ed_{$admin_notice->dismiss_option}" ) ) {
 
-						?><div class="notice cs-notice notice-
-						<?php
+						?><div class="notice cs-notice notice-<?php
 						echo $type;
 
 						if ( $admin_notice->dismiss_option ) {

@@ -13,8 +13,6 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 
 use RealTimeAutoFindReplace\lib\Util;
 
-if ( ! \class_exists( 'FormBuilder' ) ) {
-
 	class FormBuilder {
 
 		/**
@@ -472,4 +470,3 @@ if ( ! \class_exists( 'FormBuilder' ) ) {
 
 	}
 
-}

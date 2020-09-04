@@ -14,7 +14,6 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 
 use RealTimeAutoFindReplace\lib\Util;
 
-if ( ! \class_exists( 'Masking' ) ) {
 
 	class Masking {
 
@@ -26,14 +25,16 @@ if ( ! \class_exists( 'Masking' ) ) {
 		 */
 		public function add_masking_rule( $user_query ) {
 
-			$find          = $user_query['cs_masking_rule']['find'];
-			$replace       = $user_query['cs_masking_rule']['replace'];
-			$type          = $user_query['cs_masking_rule']['type'];
-			$replace_where = $user_query['cs_masking_rule']['where_to_replace'];
+			$user_query = $user_query['cs_masking_rule'];
+			$find          = isset($user_query['find']) ? $user_query['find'] : '';
+			$replace       = isset($user_query['replace']) ? $user_query['replace'] : '';
+			$type          = isset($user_query['type']) ? $user_query['type'] : '';
+			$replace_where = isset($user_query['where_to_replace']) ? $user_query['where_to_replace'] : '';
+			$delay_time = isset($user_query['delay']) ? (float) $user_query['delay'] : '';
 
-			$id = isset( $user_query['cs_masking_rule']['id'] ) ? $user_query['cs_masking_rule']['id'] : '';
+			$id = isset( $user_query['id'] ) ? $user_query['id'] : '';
 
-			$msg = $this->insert_masking_rules( $find, $replace, $type, $replace_where, $id );
+			$msg = $this->insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time );
 
 			return wp_send_json(
 				array(
@@ -50,7 +51,7 @@ if ( ! \class_exists( 'Masking' ) ) {
 		 *
 		 * @return void
 		 */
-		public function insert_masking_rules( $find, $replace, $type, $replace_where, $id = '' ) {
+		public function insert_masking_rules( $find, $replace, $type, $replace_where, $id = '', $delay_time ) {
 			global $wpdb;
 
 			if ( $type == 'regex' ) {
@@ -66,6 +67,7 @@ if ( ! \class_exists( 'Masking' ) ) {
 				'replace'          => $replace,
 				'type'             => Util::check_evil_script( $type ),
 				'where_to_replace' => Util::check_evil_script( $replace_where ),
+				'delay' => $delay_time
 			);
 
 			$isExists = $wpdb->get_var(
@@ -92,7 +94,7 @@ if ( ! \class_exists( 'Masking' ) ) {
 		 *
 		 * @return void
 		 */
-		public static function get_rules( $rule_type = 'all', $id = '' ) {
+		public static function get_rules( $where_to_replace = 'all', $id = '', $rule_type = false ) {
 			global $wpdb;
 
 			$where_id = '';
@@ -100,10 +102,15 @@ if ( ! \class_exists( 'Masking' ) ) {
 				$where_id = "and id = {$id}";
 			}
 
+			$ruleType = '';
+			if( $rule_type ){
+				$ruleType = " and type = '{$rule_type}' ";
+			}
+
 			$get_rules = $wpdb->get_results(
 				$wpdb->prepare(
-					"select * from {$wpdb->prefix}rtafar_rules where where_to_replace = '%s' {$where_id} order by id asc",
-					$rule_type
+					"select * from {$wpdb->prefix}rtafar_rules where where_to_replace = '%s' {$where_id} {$ruleType} order by id asc",
+					$where_to_replace
 				)
 			);
 			if ( $get_rules ) {
@@ -114,5 +121,4 @@ if ( ! \class_exists( 'Masking' ) ) {
 
 	}
 
-}
 
