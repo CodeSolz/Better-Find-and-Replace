@@ -71,10 +71,10 @@ class RtafarNotices {
 			'<a href="' . $review_link . '" target="_blank"><strong>',
 			'</strong></a>',
 			'<span class="dashicons dashicons-star-filled">
-				</span><span class="dashicons dashicons-star-filled">
-				</span><span class="dashicons dashicons-star-filled"></span>
-				<span class="dashicons dashicons-star-filled"></span>
-				<span class="dashicons dashicons-star-filled"></span>',
+			</span><span class="dashicons dashicons-star-filled">
+			</span><span class="dashicons dashicons-star-filled"></span>
+			<span class="dashicons dashicons-star-filled"></span>
+			<span class="dashicons dashicons-star-filled"></span>'
 		);
 		$notice->info( $message, 'Feedback' );
 	}
