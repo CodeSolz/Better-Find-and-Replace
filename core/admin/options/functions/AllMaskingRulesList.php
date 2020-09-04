@@ -19,8 +19,6 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
-
-
 class AllMaskingRulesList extends \WP_List_Table {
 	var $item_per_page = 10;
 	var $total_post;
@@ -84,15 +82,16 @@ class AllMaskingRulesList extends \WP_List_Table {
 	}
 
 	public function column_type( $item ) {
-		if( $item->type == 'plain' ){
+		if ( $item->type == 'plain' ) {
 			return __( 'Plain Text', 'real-time-auto-find-and-replace' );
-		}
-		elseif( $item->type == 'regex' ){
+		} elseif ( $item->type == 'regex' ) {
 			return __( 'Regular Expression', 'real-time-auto-find-and-replace' );
-		}
-		elseif( $item->type == 'ajaxContent' ){
-			return sprintf( __( 'jQuery / Ajax %s Delay Time : %s ', 'real-time-auto-find-and-replace' ),
-				'<br>', $item->delay .' seconds' 
+		} elseif ( $item->type == 'ajaxContent' ) {
+			return sprintf(
+				__( 'jQuery / Ajax %1$s Delay Time : %2$s Tag selector : %3$s', 'real-time-auto-find-and-replace' ),
+				'<br>',
+				$item->delay . ' seconds <br>',
+				$item->tag_selector
 			);
 		}
 	}

@@ -40,42 +40,38 @@ class DbReplacer {
 		$replace = $this->format_replace( $replace );
 
 		$whereToReplace = $userInput['where_to_replace'];
-		
-		
+
 		global $wpdb;
-		
-		$i  = 0; $replaceType = '';
-		//replace type is table
-		if( $whereToReplace == 'tables' ){
-			$tables = isset($user_query['db_tables']) ? $user_query['db_tables'] : '';
+
+		$i           = 0;
+		$replaceType = '';
+		// replace type is table
+		if ( $whereToReplace == 'tables' ) {
+			$tables      = isset( $user_query['db_tables'] ) ? $user_query['db_tables'] : '';
 			$replaceType = 'text';
-			
-			
-			if( !empty($tables) && in_array( 'posts', $tables) ){
+
+			if ( ! empty( $tables ) && in_array( 'posts', $tables ) ) {
 				$i += $this->tbl_post( $find, $replace );
 			}
-			
-			if( !empty($tables) && in_array('postmeta', $tables) ){
+
+			if ( ! empty( $tables ) && in_array( 'postmeta', $tables ) ) {
 				$i += $this->tbl_postmeta( $find, $replace );
 			}
-			
-			if( !empty($tables) && in_array( 'options',$tables) ){
+
+			if ( ! empty( $tables ) && in_array( 'options', $tables ) ) {
 				$i += $this->tbl_options( $find, $replace );
 			}
-			
-		}
-		else if( $whereToReplace == 'urls' ){
-			$inWhichUrl = isset($user_query['url_options']) ? $user_query['url_options'] : '';
+		} elseif ( $whereToReplace == 'urls' ) {
+			$inWhichUrl  = isset( $user_query['url_options'] ) ? $user_query['url_options'] : '';
 			$replaceType = 'URLs';
-			$i += $this->replace_urls( $find, $replace, $inWhichUrl );
+			$i          += $this->replace_urls( $find, $replace, $inWhichUrl );
 		}
-
 
 		return wp_send_json(
 			array(
 				'status' => true,
 				'title'  => 'Success!',
-				'text'   => sprintf( __( 'Thank you! replacement completed!. Total %s replaced : %d', 'real-time-auto-find-and-replace' ), $replaceType, $i ),
+				'text'   => sprintf( __( 'Thank you! replacement completed!. Total %1$s replaced : %2$d', 'real-time-auto-find-and-replace' ), $replaceType, $i ),
 			)
 		);
 	}
@@ -102,7 +98,6 @@ class DbReplacer {
 					array( 'ID' => $item->ID )
 				);
 
-				
 				if ( true === $is_replaced ) {
 					$i++;
 				}
@@ -116,11 +111,11 @@ class DbReplacer {
 					'post_content',
 					array( 'ID' => $item->ID )
 				);
-				
+
 				if ( true === $is_replaced ) {
 					$i++;
 				}
-				
+
 				// replace in post_excerpt
 				$is_replaced = $this->replace(
 					$find,
@@ -130,11 +125,10 @@ class DbReplacer {
 					'post_excerpt',
 					array( 'ID' => $item->ID )
 				);
-				
+
 				if ( true === $is_replaced ) {
 					$i++;
 				}
-
 			}
 		}
 		return $i;
@@ -208,22 +202,22 @@ class DbReplacer {
 	 * @param [type] $inWhichUrl
 	 * @return void
 	 */
-	private function replace_urls($find, $replace, $inWhichUrl){
+	private function replace_urls( $find, $replace, $inWhichUrl ) {
 		$r = 0;
-		
-		if( !empty( $inWhichUrl) && in_array( 'posts', $inWhichUrl) ){
-			$r += $this->post_urls($find, $replace);
+
+		if ( ! empty( $inWhichUrl ) && in_array( 'posts', $inWhichUrl ) ) {
+			$r += $this->post_urls( $find, $replace );
 		}
-		if( !empty( $inWhichUrl) && in_array( 'pages', $inWhichUrl) ){
-			$r += $this->page_urls($find, $replace);
-			
+		if ( ! empty( $inWhichUrl ) && in_array( 'pages', $inWhichUrl ) ) {
+			$r += $this->page_urls( $find, $replace );
+
 		}
-		if( !empty( $inWhichUrl) && in_array( 'media', $inWhichUrl)){
-			$r += $this->media_urls($find, $replace);
+		if ( ! empty( $inWhichUrl ) && in_array( 'media', $inWhichUrl ) ) {
+			$r += $this->media_urls( $find, $replace );
 		}
 
-		//if url replaced flash url permalink
-		if( $r > 0 ){
+		// if url replaced flash url permalink
+		if ( $r > 0 ) {
 			\flush_rewrite_rules();
 		}
 
@@ -237,7 +231,7 @@ class DbReplacer {
 	 * @param [type] $replace
 	 * @return void
 	 */
-	private function post_urls($find, $replace){
+	private function post_urls( $find, $replace ) {
 		global $wpdb;
 		$i        = 0;
 		$get_data = $wpdb->get_results( "select * from {$wpdb->posts} where post_type = 'post' " );
@@ -279,13 +273,13 @@ class DbReplacer {
 	 * @param [type] $replace
 	 * @return void
 	 */
-	private function page_urls($find, $replace){
+	private function page_urls( $find, $replace ) {
 		global $wpdb;
 		$i        = 0;
 		$get_data = $wpdb->get_results( "select * from {$wpdb->posts} where post_type = 'page' " );
 		if ( $get_data ) {
 			foreach ( $get_data as $item ) {
-				
+
 				// replace in guid
 				$is_replaced = $this->replace(
 					$find,
@@ -321,7 +315,7 @@ class DbReplacer {
 	 * @param [type] $replace
 	 * @return void
 	 */
-	private function media_urls($find, $replace){
+	private function media_urls( $find, $replace ) {
 		global $wpdb;
 		$i        = 0;
 		$get_data = $wpdb->get_results( "select * from {$wpdb->posts} where post_type = 'attachment' " );

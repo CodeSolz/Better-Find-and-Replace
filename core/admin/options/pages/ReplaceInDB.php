@@ -54,20 +54,20 @@ class ReplaceInDB {
 		$option   = isset( $settings->defaultOptn ) ? $settings->defaultOptn : '';
 
 		$fields = array(
-			'cs_db_string_replace[find]'    => array(
+			'cs_db_string_replace[find]'             => array(
 				'title'       => __( 'Find', 'real-time-auto-find-and-replace' ),
 				'type'        => 'textarea',
 				'class'       => 'form-control',
-				'required'       => true,
+				'required'    => true,
 				'value'       => '',
 				'placeholder' => __( 'Enter word to find ', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Enter a word you want to find in Database. e.g: _test ', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_db_string_replace[replace]' => array(
+			'cs_db_string_replace[replace]'          => array(
 				'title'       => __( 'Replace With', 'real-time-auto-find-and-replace' ),
 				'type'        => 'text',
 				'class'       => 'form-control',
-				'required'       => true,
+				'required'    => true,
 				'value'       => '',
 				'placeholder' => __( 'Enter word to replace with', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Enter word you want to replace with. e.g : test', 'real-time-auto-find-and-replace' ),
@@ -78,40 +78,40 @@ class ReplaceInDB {
 				'class'       => 'form-control where-to-replace',
 				'required'    => true,
 				'options'     => array(
-					'tables'                => __( 'Database Tables', 'real-time-auto-find-and-replace' ),
-					'urls'                => __( 'URLs', 'real-time-auto-find-and-replace' )
+					'tables' => __( 'Database Tables', 'real-time-auto-find-and-replace' ),
+					'urls'   => __( 'URLs', 'real-time-auto-find-and-replace' ),
 				),
 				'placeholder' => __( 'Select where to find and replace', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Select where to find and replace. e.g : Database Tables', 'real-time-auto-find-and-replace' ),
 			),
-			'db_tables[]'                   => array(
-				'wrapper_class'	  => 'no-border db-tables-wrap',
-				'title'       => __( 'Select tables', 'woo-altcoin-payment-gateway' ),
-				'type'        => 'select',
-				'class'       => 'form-control db-tables',
-				'multiple'    => true,
-				'required'       => true,
-				'placeholder' => __( 'Please select tables', 'woo-altcoin-payment-gateway' ),
-				'options'     => array(
-					'posts' => __( 'Posts', 'real-time-auto-find-and-replace' ),
+			'db_tables[]'                            => array(
+				'wrapper_class' => 'no-border db-tables-wrap',
+				'title'         => __( 'Select tables', 'woo-altcoin-payment-gateway' ),
+				'type'          => 'select',
+				'class'         => 'form-control db-tables',
+				'multiple'      => true,
+				'required'      => true,
+				'placeholder'   => __( 'Please select tables', 'woo-altcoin-payment-gateway' ),
+				'options'       => array(
+					'posts'    => __( 'Posts', 'real-time-auto-find-and-replace' ),
 					'postmeta' => __( 'Postmeta', 'real-time-auto-find-and-replace' ),
-					'options' => __( 'Options', 'real-time-auto-find-and-replace' ),
+					'options'  => __( 'Options', 'real-time-auto-find-and-replace' ),
 				),
-				'desc_tip'    => __( 'Select / Enter table name where you want to replace. e.g : post.', 'woo-altcoin-payment-gateway' ),
+				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post.', 'woo-altcoin-payment-gateway' ),
 			),
-			'url_options[]'                   => array(
-				'wrapper_class'	  => 'url-options force-hidden',
-				'title'       => __( 'Select which url', 'woo-altcoin-payment-gateway' ),
-				'type'        => 'select',
-				'class'       => 'form-control in-which-url',
-				'multiple'    => true,
-				'placeholder' => __( 'Please select options', 'woo-altcoin-payment-gateway' ),
-				'options'     => array(
+			'url_options[]'                          => array(
+				'wrapper_class' => 'url-options force-hidden',
+				'title'         => __( 'Select which url', 'woo-altcoin-payment-gateway' ),
+				'type'          => 'select',
+				'class'         => 'form-control in-which-url',
+				'multiple'      => true,
+				'placeholder'   => __( 'Please select options', 'woo-altcoin-payment-gateway' ),
+				'options'       => array(
 					'posts' => __( 'Post URLs', 'real-time-auto-find-and-replace' ),
 					'pages' => __( 'Page URLs', 'real-time-auto-find-and-replace' ),
-					'media' => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' )
+					'media' => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' ),
 				),
-				'desc_tip'    => __( 'Select / Enter table name where you want to replace. e.g : post', 'woo-altcoin-payment-gateway' ),
+				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post', 'woo-altcoin-payment-gateway' ),
 			),
 		);
 

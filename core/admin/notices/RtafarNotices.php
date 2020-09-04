@@ -15,57 +15,71 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 use RealTimeAutoFindReplace\lib\Util;
 use RealTimeAutoFindReplace\admin\builders\NoticeBuilder;
 
-if ( ! \class_exists( 'RtafarNotices' ) ) {
 
-	class RtafarNotices {
+class RtafarNotices {
 
-		/**
-		 * Activated Notice
-		 *
-		 * @return String
-		 */
-		public static function activated() {
-			$notice        = NoticeBuilder::get_instance();
-			$message       = __( 'Thank you for choosing us. Let\'s %1$s set some find & replace rules. %2$s', 'real-time-auto-find-and-replace' );
-			$register_link = admin_url( 'admin.php?page=cs-add-replacement-rule' );
-			$default_link  = site_url( '' );
-			$message       = sprintf(
-				$message,
-				'<a href="' . $register_link . '"><strong>',
-				'</strong></a>',
-				'<a target="_blank" href="' . $default_link . '"><strong>',
-				'</strong></a>'
-			);
-			$notice->info( $message, 'Activated' );
+	public static function init() {
+		$notice = NoticeBuilder::get_instance();
+		self::activated( $notice );
+		self::feedback( $notice );
+	}
+
+	/**
+	 * Activated Notice
+	 *
+	 * @return String
+	 */
+	public static function activated( $notice ) {
+		$message       = __( 'Thank you for choosing us. Let\'s %1$s set some find & replace rules. %2$s', 'real-time-auto-find-and-replace' );
+		$register_link = admin_url( 'admin.php?page=cs-add-replacement-rule' );
+		$default_link  = site_url( '' );
+		$message       = sprintf(
+			$message,
+			'<a href="' . $register_link . '"><strong>',
+			'</strong></a>',
+			'<a target="_blank" href="' . $default_link . '"><strong>',
+			'</strong></a>'
+		);
+		$notice->info( $message, 'Activated' );
+	}
+
+	/**
+	 * Feedback
+	 *
+	 * @return void
+	 */
+	public static function feedback( $notice ) {
+		// check installed time
+		$installedOn = get_option( 'rtafar_plugin_install_date' );
+		$date1       = new \DateTime( date( 'Y-m-d', \strtotime( $installedOn ) ) );
+		$date2       = new \DateTime( date( 'Y-m-d' ) );
+		if ( $date1->diff( $date2 )->days < 14 ) {
+			return false;
 		}
-
-		/**
-		 * Feedback
-		 *
-		 * @return void
-		 */
-		public static function feedback() {
-			$notice        = NoticeBuilder::get_instance();
-			$message       = __( 'You are using our plugin more then 2 weeks. If you are enjoying it, would you mind to give us a 5 stars (%s) review?
-								It will inspire us to make it more better.', 'real-time-auto-find-and-replace' );
-			$register_link = admin_url( 'admin.php?page=cs-igt-test-url-slug-settings' );
-			$default_link  = site_url( '' );
-			$message       = sprintf(
-				$message,
-				'<span class="dashicons dashicons-star-filled">
+		$timeDiff    = \human_time_diff( \strtotime( $installedOn ), current_time( 'U' ) );
+		$message     = __(
+			'You are using our plugin more then %s. If you are enjoying it, %s would you mind%s to %s give us a 5 stars %s (%s) review?
+			%2$s Your valuable review %3$s will %2$sinspire us %3$s to make it more better.',
+			'real-time-auto-find-and-replace'
+		);
+		$review_link = 'https://wordpress.org/support/plugin/real-time-auto-find-and-replace/reviews/?filter=5';
+		$message     = sprintf(
+			$message,
+			$timeDiff,
+			'<b>',
+			'</b>',
+			'<a href="' . $review_link . '" target="_blank"><strong>',
+			'</strong></a>',
+			'<span class="dashicons dashicons-star-filled">
 				</span><span class="dashicons dashicons-star-filled">
 				</span><span class="dashicons dashicons-star-filled"></span>
 				<span class="dashicons dashicons-star-filled"></span>
 				<span class="dashicons dashicons-star-filled"></span>',
-				'<a href="' . $register_link . '"><strong>',
-				'</strong></a>',
-				'<a target="_blank" href="' . $default_link . '"><strong>',
-				'</strong></a>'
-			);
-			$notice->info( $message, 'Feedback' );
-		}
-
-
+		);
+		$notice->info( $message, 'Feedback' );
 	}
 
+
 }
+
+

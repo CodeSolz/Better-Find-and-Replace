@@ -1,32 +1,37 @@
-=== Real Time Auto Find and Replace ===
+=== Better Find and Replace ===
 Contributors: CodeSolz, m.tuhin
 Tags: find, replace, search, find and replace, search and replace, auto find, auto replace
 Donate link: https://www.paypal.me/wooAltCoinPayGatewy
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Find and replace text, HTML code, image's url, footer credits or anything in the website without touching database.
+Find and replace text, HTML code, image's url, footer credits, jQuery / Ajax loaded text or anything in the website without touching database.
 
 == Description ==
 This plugin will automatically find a specific word and will replace by your own word. The changes will be automatically done before the the website render to the browser's. It doesn't effect to any other plugins files or your database.
 
-Easily Find and replace text, HTML code, image's url, footer credits or anything in the website without touching database. Also, you can find and replace permanently in Database too. 
+Easily Find and replace text, HTML code, image's url, footer credits or anything in the website without touching database. Also, you can search and replace permanently in Database too. 
 
 == Key Features ==
 
 * Easy to use and user-friendly options
+* Search and replace text loaded by **Ajax / jQuery**
+* Search and replace any text
 * Lighting first find-replacement in Database table's ( posts, postmeta, options )
+* Select a specific database table to replace content
+* Find and **replace URLs**
+* Search and **replace images, attchment URLs etc..**
 * Create word masking with find-replace over the whole website
 * Create find-replace temp rules without touching database.
 * Remove or change footer credit without touching database or HTML code
 * Replace anything in HTML code
-* Replace images in real-time rendering
+* **Replace images** in real-time rendering
 * Mask bad words posted in comments 
 * Change different language's content to your own language
-* RegEx supported
+* **RegEx** supported
 * Replace any HTML tag or attribute
 
 == Setup Video Guide - How to install and setup search and replace rules == 
@@ -64,6 +69,12 @@ Easily Find and replace text, HTML code, image's url, footer credits or anything
 3. Replace in Database
 
 == Changelog ==
+
+= Version: 1.0.5 =
+* **Change:** Plugin name changed - *Real Time Auto Find and Replace* to **Better Find and Replace**
+* **Feat:** jQuery / Ajax loaded text replacement
+* **Feat:** Database table selection / filter
+* **Feat:** URLs replacement with filtering options
 
 = Version: 1.0.4 =
 * **Fix:** Notification issues
