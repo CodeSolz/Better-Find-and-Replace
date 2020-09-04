@@ -64,9 +64,12 @@ Easily Find and replace text, HTML code, image's url, footer credits or anything
 
 == Screenshots ==
 
-1. Add Masking Rule
-2. List of All Masking Rules
-3. Replace in Database
+1. Add Find Rule - Plain Text
+2. Add Find Rule - RegEx
+3. Add Find Rule - jQuery / Ajax Text
+4. List of All Masking Rules
+5. URLs replacement in Database
+6. Media replacement in Database
 
 == Changelog ==
 
