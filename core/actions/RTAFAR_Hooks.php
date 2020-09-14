@@ -20,10 +20,10 @@ class RTAFAR_Hooks {
 
 		/*** update url options */
 		add_filter( 'bfrp_urlOptions', array( $this, 'getAllProUrlOptions' ), 10 );
-		
+
 		/*** table list options */
 		add_filter( 'bfrp_selectTables', array( $this, 'getAllTblList' ), 10 );
-		
+
 	}
 
 	/**
@@ -32,17 +32,17 @@ class RTAFAR_Hooks {
 	 * @param [type] $args
 	 * @return void
 	 */
-	public function getAllProUrlOptions( $args ){
+	public function getAllProUrlOptions( $args ) {
 		return ProActions::getAllProUrlOptions( $args, 'selectOptions' );
 	}
-	
+
 	/**
 	 * Get all table list
 	 *
 	 * @param [type] $args
 	 * @return void
 	 */
-	public function getAllTblList( $args ){
+	public function getAllTblList( $args ) {
 		return ProActions::getAllTblList( $args );
 	}
 

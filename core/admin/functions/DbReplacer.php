@@ -22,21 +22,21 @@ class DbReplacer {
 	 *
 	 * @var array
 	 */
-	private $settings = [];
+	private $settings = array();
 
 	/**
 	 * Hold Dry Run Report
 	 *
 	 * @var array
 	 */
-	public $dryRunReport = [];
+	public $dryRunReport = array();
 
 	/**
-	 * Init 
+	 * Init
 	 *
 	 * @param array $settings
 	 */
-	public function __construct( $settings = [] ){
+	public function __construct( $settings = array() ) {
 		$this->settings = $settings;
 	}
 
@@ -62,12 +62,13 @@ class DbReplacer {
 			);
 		}
 
-		$find    = $this->format_find( $find );
-		$replace = $this->format_replace( $replace );
+		$find           = $this->format_find( $find );
+		$replace        = $this->format_replace( $replace );
 		$this->settings = Util::check_evil_script( $user_query );
 
 		$whereToReplace = $userInput['where_to_replace'];
 
+		global $wpdb;
 		$i           = 0;
 		$replaceType = '';
 		// replace type is table
@@ -75,38 +76,54 @@ class DbReplacer {
 			$tables      = isset( $user_query['db_tables'] ) ? $user_query['db_tables'] : '';
 			$replaceType = 'text';
 
-			if ( ! empty( $tables ) && in_array( 'posts', $tables ) ) {
+			if ( ! empty( $tables ) && in_array( $wpdb->base_prefix . 'posts', $tables ) ) {
 				$i += $this->tbl_post( $find, $replace );
+				if ( ( $key = array_search( $wpdb->base_prefix . 'posts', $tables ) ) !== false ) {
+					unset( $tables[ $key ] );
+				}
 			}
 
-			if ( ! empty( $tables ) && in_array( 'postmeta', $tables ) ) {
+			if ( ! empty( $tables ) && in_array( $wpdb->base_prefix . 'postmeta', $tables ) ) {
 				$i += $this->tbl_postmeta( $find, $replace );
+				if ( ( $key = array_search( $wpdb->base_prefix . 'postmeta', $tables ) ) !== false ) {
+					unset( $tables[ $key ] );
+				}
 			}
 
-			if ( ! empty( $tables ) && in_array( 'options', $tables ) ) {
+			if ( ! empty( $tables ) && in_array( $wpdb->base_prefix . 'options', $tables ) ) {
 				$i += $this->tbl_options( $find, $replace );
+				if ( ( $key = array_search( $wpdb->base_prefix . 'options', $tables ) ) !== false ) {
+					unset( $tables[ $key ] );
+				}
 			}
+
+			$res = apply_filters( 'bfrp_custom_tables', $this->settings, $tables );
+
+			$i                 += isset( $res['i'] ) ? (int) $res['i'] : 0;
+			$this->dryRunReport = isset( $res['dryRunReport'] ) ? \array_merge_recursive( $this->dryRunReport, $res['dryRunReport'] ) : $this->dryRunReport;
+
 		} elseif ( $whereToReplace == 'urls' ) {
 			$inWhichUrl  = isset( $user_query['url_options'] ) ? $user_query['url_options'] : '';
 			$replaceType = 'URLs';
 			$i          += $this->replace_urls( $find, $replace, $inWhichUrl );
 		}
 
-		$dryRunReport = [];
-		if( isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
+		$dryRunReport = array();
+		if ( isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
 			$dryRunReport = array(
 				'show_custom_content' => true,
-				'replacement' => $i,
-				'replacementInTable' => count( $this->dryRunReport ),
-				'dryRunReport' => $this->dryRunReport
+				'replacement'         => $i,
+				'replacementInTable'  => count( $this->dryRunReport ),
+				'dryRunReport'        => $this->dryRunReport,
 			);
 		}
 
 		return wp_send_json(
 			array(
-				'status' => true,
-				'title'  => 'Success!',
-				'text'   => sprintf( __( 'Thank you! replacement completed!. Total %1$s replaced : %2$d', 'real-time-auto-find-and-replace' ), $replaceType, $i ),
+				'status'        => true,
+				'title'         => 'Success!',
+				'text'          => sprintf( __( 'Thank you! replacement completed!. Total %1$s replaced : %2$d', 'real-time-auto-find-and-replace' ), $replaceType, $i ),
+				'nothing_found' => __( 'Sorry! Nothing Found!', 'real-time-auto-find-and-replace' ),
 			) + $dryRunReport
 		);
 	}
@@ -121,6 +138,7 @@ class DbReplacer {
 		$i        = 0;
 		$get_data = $wpdb->get_results( "select * from {$wpdb->posts} " );
 		if ( $get_data ) {
+
 			foreach ( $get_data as $item ) {
 
 				// replace in post_title
@@ -128,9 +146,9 @@ class DbReplacer {
 					$find,
 					$replace,
 					$item->post_title,
-					'posts',
-					$item->ID, //row id
-					'post_title', 
+					$wpdb->base_prefix . 'posts',
+					$item->ID, // row id
+					'post_title',
 					array( 'ID' => $item->ID )
 				);
 
@@ -143,7 +161,7 @@ class DbReplacer {
 					$find,
 					$replace,
 					$item->post_content,
-					'posts',
+					$wpdb->base_prefix . 'posts',
 					$item->ID,
 					'post_content',
 					array( 'ID' => $item->ID )
@@ -158,7 +176,7 @@ class DbReplacer {
 					$find,
 					$replace,
 					$item->post_excerpt,
-					'posts',
+					$wpdb->base_prefix . 'posts',
 					$item->ID,
 					'post_excerpt',
 					array( 'ID' => $item->ID )
@@ -188,7 +206,7 @@ class DbReplacer {
 					$find,
 					$replace,
 					$item->meta_value,
-					'postmeta',
+					$wpdb->base_prefix . 'postmeta',
 					$item->meta_id,
 					'meta_value',
 					array( 'meta_id' => $item->meta_id )
@@ -220,7 +238,7 @@ class DbReplacer {
 					$find,
 					$replace,
 					$item->option_value,
-					'options',
+					$wpdb->base_prefix . 'options',
 					$item->option_id,
 					'option_value',
 					array( 'option_id' => $item->option_id )
@@ -243,51 +261,43 @@ class DbReplacer {
 	 * @return void
 	 */
 	private function replace_urls( $find, $replace, $inWhichUrl ) {
-		$r = 0;
-		$urlTypes = [];
+		$r        = 0;
+		$urlTypes = array();
 
-		if( $inWhichUrl ){
-			if( \in_array( 'post', $inWhichUrl) ){
+		if ( $inWhichUrl ) {
+			if ( \in_array( 'post', $inWhichUrl ) ) {
 				$urlTypes[] = "post_type = 'post' ";
-				if (($key = array_search( 'post', $inWhichUrl)) !== false) {
-                    unset($inWhichUrl[$key]);
-                }
+				if ( ( $key = array_search( 'post', $inWhichUrl ) ) !== false ) {
+					unset( $inWhichUrl[ $key ] );
+				}
 			}
 
-			if( \in_array( 'page', $inWhichUrl) ){
+			if ( \in_array( 'page', $inWhichUrl ) ) {
 				$urlTypes[] = "post_type = 'page' ";
-				if (($key = array_search( 'page', $inWhichUrl)) !== false) {
-                    unset($inWhichUrl[$key]);
-                }
+				if ( ( $key = array_search( 'page', $inWhichUrl ) ) !== false ) {
+					unset( $inWhichUrl[ $key ] );
+				}
 			}
 
-			if( \in_array( 'attachment', $inWhichUrl) ){
+			if ( \in_array( 'attachment', $inWhichUrl ) ) {
 				$urlTypes[] = "post_type = 'attachment' ";
-				if (($key = array_search( 'attachment', $inWhichUrl)) !== false) {
-                    unset($inWhichUrl[$key]);
-                }
+				if ( ( $key = array_search( 'attachment', $inWhichUrl ) ) !== false ) {
+					unset( $inWhichUrl[ $key ] );
+				}
 			}
-        }
+		}
 
-		//find & replace in db
-		$r = $this->urlFromPostTables( $find, $replace, $urlTypes  );
-		
-		//replace custom urls - category / taxonomy etc
+		// find & replace in db
+		$r = $this->urlFromPostTables( $find, $replace, $urlTypes );
+
+		// replace custom urls - category / taxonomy etc
 		$res = apply_filters( 'bfrp_url_replacer', $this->settings, $inWhichUrl );
 
-		$r += isset( $res['i'] ) ? (int) $res['i'] : '';
+		$r                 += isset( $res['i'] ) ? (int) $res['i'] : 0;
 		$this->dryRunReport = isset( $res['dryRunReport'] ) ? \array_merge_recursive( $this->dryRunReport, $res['dryRunReport'] ) : $this->dryRunReport;
-		
-		//TODO: create function to replace category in pro plugins hook
-		
-		// if( isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
-		// 	return $this->dryRunReport;
-		// }
-
-		// pre_print( $this->dryRunReport );
 
 		// if url replaced flash url permalink
-		if ( $r > 0 && ! isset( $this->settings['cs_db_string_replace']['dry_run'] )  ) {
+		if ( $r > 0 && ! isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
 			\flush_rewrite_rules();
 		}
 
@@ -303,15 +313,23 @@ class DbReplacer {
 	 */
 	public function urlFromPostTables( $find, $replace, $urlTypes ) {
 		global $wpdb;
-		$i        = 0;
+		$i = 0;
 
-		//make search con
-		if( empty( $urlTypes ) ){
+		// make search con
+		if ( empty( $urlTypes ) ) {
 			return $i;
 		}
 
-		$con = \implode( ' OR ', $urlTypes );
-		$get_data = $wpdb->get_results( "SELECT * FROM {$wpdb->posts} WHERE {$con} " );
+		$wpdb->flush();
+
+		$con      = \implode( ' OR ', $urlTypes );
+		$get_data = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT * FROM {$wpdb->posts} WHERE (guid like %s OR post_name like %s ) AND ( {$con} ) ",
+				"%$find%",
+				"%$find%"
+			)
+		);
 
 		if ( $get_data ) {
 			foreach ( $get_data as $item ) {
@@ -321,7 +339,7 @@ class DbReplacer {
 					$find,
 					$replace,
 					$item->guid,
-					'posts',
+					$wpdb->base_prefix . 'posts',
 					$item->ID,
 					'guid',
 					array( 'ID' => $item->ID )
@@ -336,7 +354,7 @@ class DbReplacer {
 					$find,
 					$replace,
 					$item->post_name,
-					'posts',
+					$wpdb->base_prefix . 'posts',
 					$item->ID,
 					'post_name',
 					array( 'ID' => $item->ID )
@@ -345,7 +363,6 @@ class DbReplacer {
 				if ( true === $is_replaced_name ) {
 					$i++;
 				}
-
 			}
 		}
 
@@ -366,41 +383,43 @@ class DbReplacer {
 	 */
 	public function bfrReplace( $find, $replace, $old_value, $tbl, $row_id, $update_col, $update_con ) {
 
-		//check for case-sensitive
-		if( ! isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
+		// check for case-sensitive
+		$isCaseInsensitive = false;
+		if ( ! isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
 			$new_string = \str_replace( $find, $replace, $old_value );
-		}else{
-			$new_string = \str_ireplace( $find, $replace, $old_value );
+		} else {
+			$new_string        = \str_ireplace( $find, $replace, $old_value );
+			$isCaseInsensitive = true;
 		}
-		
+
 		$is_updated = false;
 		if ( $new_string != $old_value ) {
 			global $wpdb;
-			
-			//check for dry run
-			if( ! isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
-				// pre_print( $this->settings );
-				$wpdb->update( $wpdb->prefix . $tbl, array( $update_col => $new_string ), $update_con );
-			}
-			else if( $this->settings['cs_db_string_replace']['dry_run'] == 'on' ) {
 
-				$displayReplace = $this->highlightDisplayFindReplace( $find, $replace, $old_value, $new_string );
+			// check for dry run
+			if ( ! isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
+				// pre_print( $this->settings );
+				$wpdb->update( $tbl, array( $update_col => $new_string ), $update_con );
+			} elseif ( $this->settings['cs_db_string_replace']['dry_run'] == 'on' ) {
+
+				$displayReplace = $this->highlightDisplayFindReplace( $find, $replace, $old_value, $new_string, $tbl, $isCaseInsensitive );
 
 				$reportRow = array(
-					'row_id' => $row_id,
-					'col' => $update_col,
-					'find' => $find,
-					'replace' => $replace,
-					'old_val' => $old_value,
-					'new_val' => $new_string,
-					'dis_find' => $displayReplace['find'],
-					'dis_replace' => $displayReplace['replace']
+					'row_id'            => $row_id,
+					'col'               => $update_col,
+					'find'              => $find,
+					'replace'           => $replace,
+					'old_val'           => $old_value,
+					'new_val'           => $new_string,
+					'dis_find'          => $displayReplace['find'],
+					'dis_replace'       => $displayReplace['replace'],
+					'isCaseInsensitive' => $isCaseInsensitive,
 				);
-				
-				if( isset( $this->dryRunReport[ $wpdb->prefix . $tbl ] ) ){
-					$this->dryRunReport[ $wpdb->prefix . $tbl ] = array_merge( $this->dryRunReport[ $wpdb->prefix . $tbl ], array($reportRow) );
-				}else{
-					$this->dryRunReport[ $wpdb->prefix . $tbl ] = array($reportRow);
+
+				if ( isset( $this->dryRunReport[ $tbl ] ) ) {
+					$this->dryRunReport[ $tbl ] = array_merge( $this->dryRunReport[ $tbl ], array( $reportRow ) );
+				} else {
+					$this->dryRunReport[ $tbl ] = array( $reportRow );
 				}
 			}
 
@@ -411,26 +430,26 @@ class DbReplacer {
 	}
 
 	/**
-  	  * Highlight find & replace text
-	  *
-	  * @param [type] $find
-	  * @param [type] $replace
-	  * @param [type] $old_value
-	  * @param [type] $new_string
-	  * @return array
-	  */
-	private function highlightDisplayFindReplace(  $find, $replace, $old_value, $new_string  ){
-		$firstOccu = \strpos( $old_value, $find );
-		
+	 * Highlight find & replace text
+	 *
+	 * @param [type] $find
+	 * @param [type] $replace
+	 * @param [type] $old_value
+	 * @param [type] $new_string
+	 * @return array
+	 */
+	private function highlightDisplayFindReplace( $find, $replace, $old_value, $new_string, $tbl, $isCaseInsensitive ) {
+		$firstOccu = \strpos( strtolower( $old_value ), strtolower( $find ) );
+
 		$findNewDisStr = Util::insertWordInStringPos( $old_value, '<span class="find">', $firstOccu );
-		$findNewDisStr = Util::insertWordInStringPos( $findNewDisStr, '</span>',  $firstOccu + Util::charCount( $find ) + 19 );
-		
+		$findNewDisStr = Util::insertWordInStringPos( $findNewDisStr, '</span>', $firstOccu + Util::charCount( $find ) + 19 );
+
 		$replaceNewDisStr = Util::insertWordInStringPos( $new_string, '<span class="replace">', $firstOccu );
 		$replaceNewDisStr = Util::insertWordInStringPos( $replaceNewDisStr, '</span>', $firstOccu + Util::charCount( $replace ) + 22 );
 
 		return array(
-			'find' => $findNewDisStr,
-			'replace' => $replaceNewDisStr
+			'find'    => $findNewDisStr,
+			'replace' => $replaceNewDisStr,
 		);
 	}
 

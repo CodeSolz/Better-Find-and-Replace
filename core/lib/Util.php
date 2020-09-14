@@ -143,8 +143,8 @@ class Util {
 	 * @param [type] $newWord
 	 * @return void
 	 */
-	public static function insertWordInStringPos( $val, $newWord, $pos ){
-		return \substr_replace($val, $newWord, $pos, 0);
+	public static function insertWordInStringPos( $val, $newWord, $pos ) {
+		return \substr_replace( $val, $newWord, $pos, 0 );
 	}
 
 	/**
@@ -153,7 +153,7 @@ class Util {
 	 * @param [type] $word
 	 * @return void
 	 */
-	public static function charCount( $word ){
+	public static function charCount( $word ) {
 		return (int) \strlen( $word );
 	}
 }

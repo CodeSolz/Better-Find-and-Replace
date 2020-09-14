@@ -102,7 +102,7 @@ class RTAFAR_WP_Hooks {
 	}
 
 	/**
-	 * Add function after 
+	 * Add function after
 	 * plugin upgrade
 	 *
 	 * @return void

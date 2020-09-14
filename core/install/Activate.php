@@ -77,7 +77,7 @@ class Activate {
 			}
 
 			// update db
-			if( ! empty( $update_sqls ) ){
+			if ( ! empty( $update_sqls ) ) {
 				foreach ( $update_sqls as $sql ) {
 					if ( $wpdb->query( $sql ) === false ) {
 						continue;

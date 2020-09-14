@@ -63,10 +63,10 @@ class ReplaceInDB {
 				'placeholder' => __( 'Enter word to find ', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Enter a word you want to find in Database. e.g: _test ', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_db_string_replace[case_insensitive]'             => array(
-				'title'       => __( 'Case-Insensitive', 'real-time-auto-find-and-replace' ),
-				'type'        => 'checkbox',
-				'desc_tip'    => __( 'Check this checkbox if you want to find case insensitive or keep it un-check to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as same if you check this checkbox.', 'real-time-auto-find-and-replace' ),
+			'cs_db_string_replace[case_insensitive]' => array(
+				'title'    => __( 'Case-Insensitive', 'real-time-auto-find-and-replace' ),
+				'type'     => 'checkbox',
+				'desc_tip' => __( 'Check this checkbox if you want to find case insensitive or keep it un-check to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as same if you check this checkbox.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[replace]'          => array(
 				'title'       => __( 'Replace With', 'real-time-auto-find-and-replace' ),
@@ -97,7 +97,7 @@ class ReplaceInDB {
 				'multiple'      => true,
 				'required'      => true,
 				'placeholder'   => __( 'Please select tables', 'real-time-auto-find-and-replace' ),
-				'options'       => apply_filters( 'bfrp_selectTables', array()),
+				'options'       => apply_filters( 'bfrp_selectTables', array() ),
 				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post.', 'real-time-auto-find-and-replace' ),
 			),
 			'url_options[]'                          => array(
@@ -107,51 +107,68 @@ class ReplaceInDB {
 				'class'         => 'form-control in-which-url',
 				'multiple'      => true,
 				'placeholder'   => __( 'Please select options', 'real-time-auto-find-and-replace' ),
-				'options'       => apply_filters( "bfrp_urlOptions", array(
-					'post' => __( 'Post URLs', 'real-time-auto-find-and-replace' ),
-					'page' => __( 'Page URLs', 'real-time-auto-find-and-replace' ),
-					'attachment' => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' ),
-				)),
+				'options'       => apply_filters(
+					'bfrp_urlOptions',
+					array(
+						'post'       => __( 'Post URLs', 'real-time-auto-find-and-replace' ),
+						'page'       => __( 'Page URLs', 'real-time-auto-find-and-replace' ),
+						'attachment' => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' ),
+					)
+				),
 				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_db_string_replace[dry_run]'             => array(
-				'title'       => __( 'Dry run', 'real-time-auto-find-and-replace' ),
-				'type'        => 'checkbox',
-				'desc_tip'    => __( 'If If checked, no changes will be made to the database, allowing you to check the results beforehand.', 'real-time-auto-find-and-replace' ),
+			'cs_db_string_replace[dry_run]'          => array(
+				'title'    => __( 'Dry run', 'real-time-auto-find-and-replace' ),
+				'type'     => 'checkbox',
+				'desc_tip' => __( 'If If checked, no changes will be made to the database, allowing you to check the results beforehand.', 'real-time-auto-find-and-replace' ),
 			),
 		);
 
 		$args['content'] = $this->Form_Generator->generate_html_fields( $fields );
 
 		$hidden_fields = array(
-			'method'     => array(
+			'method'           => array(
 				'id'    => 'method',
 				'type'  => 'hidden',
 				'value' => "admin\\functions\\DbReplacer@db_string_replace",
 			),
-			'swal_title' => array(
+			'swal_title'       => array(
 				'id'    => 'swal_title',
 				'type'  => 'hidden',
 				'value' => 'Finding & Replacing..',
+			),
+			'swal_des'         => array(
+				'id'    => 'swal_des',
+				'type'  => 'hidden',
+				'value' => __( 'Please wait a while...', 'real-time-auto-find-and-replace' ),
+			),
+			'swal_loading_gif' => array(
+				'id'    => 'swal_loading_gif',
+				'type'  => 'hidden',
+				'value' => CS_RTAFAR_PLUGIN_ASSET_URI . 'img/loading-timer.gif',
+			),
+			'swal_error'       => array(
+				'id'    => 'swal_error',
+				'type'  => 'hidden',
+				'value' => __( 'Something went wrong! Please try again by refreshing the page.', 'real-time-auto-find-and-replace' ),
 			),
 
 		);
 		$args['hidden_fields'] = $this->Form_Generator->generate_hidden_fields( $hidden_fields );
 
-		$args['btn_text']   = 'Find & Replace';
-		$args['show_btn']   = true;
-		$args['body_class'] = 'no-bottom-margin';
-		$args['well']       = "<ul>
-                        <li> <b>Warning!</b>
+		$args['btn_text']       = __( 'Find & Replace', 'real-time-auto-find-and-replace' );
+		$args['show_btn']       = true;
+		$args['body_class']     = 'no-bottom-margin';
+		$args['well']           = '<ul>
+                        <li> <b>' . __( 'Warning!', 'real-time-auto-find-and-replace' ) . '</b>
                             <ol>
-                                <li>
-                                    Replacement in database is permanent. You can't un-done it, once it get replaced.
-                                </li>
+                                <li>'
+									. __( 'Replacement in database is permanent. You can\'t un-done it, once it get replaced.', 'real-time-auto-find-and-replace' )
+								. '</li>
                             </ol>
                         </li>
-					</ul>";
-		$args['hidden_content'] = $this->popupHtml();		
-
+					</ul>';
+		$args['hidden_content'] = $this->popupHtml();
 
 		return $this->Admin_Page_Generator->generate_page( $args );
 	}
@@ -198,38 +215,6 @@ class ReplaceInDB {
 
 					});
 				});
-
-
-				function displayCustomContent( modalData ){
-					jQuery("#popup1").addClass('show-popup');
-					jQuery("#popup1 > .popup > .content").removeClass('hidden');
-				
-					jQuery(".popup > .title ").text('Find & Replace Report');
-					
-					jQuery(".popup > .sub-title ")
-						.text('Total replacement found : ' + modalData.replacement + ' in ' + modalData.replacementInTable + ' tables');
-					//create table rows
-					var actionBtn = '<button class="button-secondary" type="button" title="Pro version required!" disabled>Replace - Pro </button>';
-					if( typeof rtafr.is_pro_activate !== 'undefined' && rtafr.is_pro_activate != '' ){
-						actionBtn = '<button class="button-primary" type="button">Replace</button>';
-					}
-
-					var tbl = '<table id="bfr-results-table" class="widefat">';
-					tbl += '<thead class="bfr-res-head"><tr><th width="2%">Row</th><th width="12%" class="col-stripe">Column</th><th width="30%">Old Value</th><th  class="col-stripe">New Value</th><th width="5%"></th></tr></thead>';
-					var flagKey = '';
-					for ( const [key, item ] of Object.entries( modalData.dryRunReport ) ) {
-						if( flagKey !== key ){
-							tbl += '<tbody><tr class="tbl-name"><td colspan="5"> Table : '+key+'</td></tr>';
-						}
-						flagKey = key;
-						for( const [ k, val] of Object.entries ( item ) ){
-							tbl += '<tr><td width="2%">'+val.row_id+'</td><td width="12%" class="col-stripe">'+val.col+'</td><td width="30%">'+val.dis_find
-									+'</td><td  class="col-stripe">'+val.dis_replace+'</td><td width="5%">'+actionBtn+'</td></tr>';
-						}
-					}
-					tbl += '</tbody></table>';
-					jQuery(".content").html( tbl );
-				}
 						
 			</script>
 		<?php
@@ -240,18 +225,18 @@ class ReplaceInDB {
 	 *
 	 * @return void
 	 */
-	private function popupHtml(){
+	private function popupHtml() {
 		$html = \ob_start();
 		?>
 			<div id="popup1" class="overlay">
-                <div class="popup">
-                    <h2 class="title">---</h2>
+				<div class="popup">
+					<h2 class="title">---</h2>
 					<p class="sub-title">--</p>
-                    <a class="close" >&times;</a>
-                    <div id="bfrModalContent" class="content"><!-- Content --></div>
-                    <div class="apiResponse"></div>
-                </div>
-            </div>
+					<a class="close" >&times;</a>
+					<div id="bfrModalContent" class="content"><!-- Content --></div>
+					<div class="apiResponse"></div>
+				</div>
+			</div>
 		<?php
 		$html = ob_get_clean();
 

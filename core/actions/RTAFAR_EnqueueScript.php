@@ -39,7 +39,7 @@ class RTAFAR_EnqueueScript {
 			'admin.app.global',
 			'rtafr',
 			array(
-				'is_pro_activate' => is_plugin_active( 'better-find-replace-pro/better-find-replace-pro.php' )
+				'is_pro_activate' => is_plugin_active( 'better-find-replace-pro/better-find-replace-pro.php' ),
 			)
 		);
 	}

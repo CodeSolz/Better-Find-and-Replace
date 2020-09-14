@@ -20,11 +20,11 @@ class Scripts_Settings {
 	/**
 	 * load admin settings scripts
 	 */
-	public static function load_admin_settings_scripts( $page_id, $rtafr_menus ) {
+	public static function load_admin_settings_scripts( $page_id, $rtafr_menu ) {
 		wp_enqueue_style( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.css', array(), CS_RTAFAR_VERSION );
 		wp_enqueue_script( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.min.js', array(), CS_RTAFAR_VERSION, true );
 
-		if ( $page_id === $rtafr_menus['replace_in_db'] ) {
+		if ( $page_id === $rtafr_menu['replace_in_db'] ) {
 			wp_enqueue_style(
 				'select2',
 				CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/select2/css/select2.min.css',
@@ -39,6 +39,18 @@ class Scripts_Settings {
 				true
 			);
 
+		}
+
+		if ( $page_id == $rtafr_menu['add_masking_rule'] ||
+				$page_id == $rtafr_menu['replace_in_db']
+			) {
+				wp_enqueue_script(
+					'rtafar.app.admin.min',
+					CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.app.admin.min.js',
+					array(),
+					CS_RTAFAR_VERSION,
+					true
+				);
 		}
 
 		wp_enqueue_style( 'wapg', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-style.min.css', false );
@@ -60,70 +72,12 @@ class Scripts_Settings {
 		if ( $page_id == $rtafr_menu['add_masking_rule'] ||
 		$page_id == $rtafr_menu['replace_in_db']
 		) {
-			self::form_submitter();
+			// self::form_submitter();
 		}
 
 		Util::markup_tag( __( 'admin footer script end', 'real-time-auto-find-and-replace' ) );
 
 		return;
-	}
-
-	/**
-	 * load admin scripts to footer
-	 */
-	public static function form_submitter() {
-		?>
-			<script type="text/javascript">
-				jQuery(document).ready(function( $ ){
-					$("form").submit(function(e){
-						e.preventDefault();
-						var $this = $(this);
-						var formData = new FormData( $this[0] );
-						formData.append( "action", "rtafar_ajax" );
-						formData.append( "method", $this.find('#cs_field_method').val() );
-						swal({ title: $this.find('#cs_field_swal_title').val(), text: 'Please wait a while...', timer: 200000, imageUrl: '<?php echo CS_RTAFAR_PLUGIN_ASSET_URI . 'img/loading-timer.gif'; ?>', showConfirmButton: false, html :true });
-						$.ajax({
-							url: ajaxurl,
-							type: 'POST',
-							data: formData,
-							contentType: false,
-							cache: false,
-							processData: false
-						})
-						.done(function( data ) {
-							console.log( data );
-							if( true === data.status ){
-
-								if( typeof data.show_custom_content === 'undefined' ){
-									swal( { title: data.title, text: data.text, type : "success", html: true, timer: 5000 });
-								}
-
-								if( typeof data.redirect_url !== 'undefined' ){
-									window.location.href = data.redirect_url;
-								}
-
-								if( typeof data.show_custom_content !== 'undefined' ){
-									swal.close();
-									//display custom content
-									displayCustomContent( data );
-								}
-
-							}else if( false === data.status ){
-								swal({ title: data.title, text: data.text, type : "error", html: true, timer: 5000 });
-							}else{
-								swal( { title: 'OOPS!', text: 'Something went wrong! Please try again by refreshing the page.', type : "error", html: true, timer: 5000 });
-							}
-						})
-						.fail(function( errorThrown ) {
-							console.log( 'Error: ' + errorThrown.responseText );
-							swal( 'Response Error', errorThrown.responseText + '('+errorThrown.statusText +') ' , "error" );
-						});
-						return false;
-					});
-					
-				});
-			</script>
-			<?php
 	}
 
 }
