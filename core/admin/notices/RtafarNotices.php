@@ -59,7 +59,7 @@ class RtafarNotices {
 		$timeDiff    = \human_time_diff( \strtotime( $installedOn ), current_time( 'U' ) );
 		$message     = __(
 			'You are using our plugin more then %s. If you are enjoying it, %s would you mind%s to %s give us a 5 stars %s (%s) review?
-			%2$s Your valuable review %3$s will %2$sinspire us %3$s to make it more better.',
+			%2$s Your valuable review %3$s will %2$s inspire us %3$s to make it more better.',
 			'real-time-auto-find-and-replace'
 		);
 		$review_link = 'https://wordpress.org/support/plugin/real-time-auto-find-and-replace/reviews/?filter=5';

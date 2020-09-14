@@ -67,7 +67,7 @@ class AddNewRule {
 				'class'       => 'form-control',
 				'value'       => FormBuilder::get_value( 'find', $option, '' ),
 				'placeholder' => __( 'Set find rules', 'real-time-auto-find-and-replace' ),
-				'desc_tip'    => __( 'Enter your word (case-sensitive) what do you want to find.  Add single or comma separated multiple words. e.g: Shop, Store', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Enter your word what do you want to find.  Add single or comma separated multiple words. e.g: Shop, Store', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[replace]'          => array(
 				'title'       => __( 'Replace With', 'real-time-auto-find-and-replace' ),
@@ -182,20 +182,22 @@ class AddNewRule {
 	 */
 	public function rtafarAddNewRuleScripts() {
 		?>
-				<script type="text/javascript">
-					jQuery(document).ready(function(){
-						jQuery("body").on('change', '.rule-type', function(){
-							jQuery(".delay-time, .tag-selector").addClass('force-hidden');
-							jQuery(".delay-time-input, .tag-selector-input").removeAttr('required');
-							if( jQuery(this).val() === 'ajaxContent' ){
-								jQuery(".delay-time, .tag-selector").removeClass('force-hidden');
-								jQuery(".delay-time-input, .tag-selector-input").attr('required', 'required');
-							}
-						});
+			<script type="text/javascript">
+				jQuery(document).ready(function(){
+					jQuery("body").on('change', '.rule-type', function(){
+						jQuery(".delay-time, .tag-selector").addClass('force-hidden');
+						jQuery(".delay-time-input, .tag-selector-input").removeAttr('required');
+						if( jQuery(this).val() === 'ajaxContent' ){
+							jQuery(".delay-time, .tag-selector").removeClass('force-hidden');
+							jQuery(".delay-time-input, .tag-selector-input").attr('required', 'required');
+						}
 					});
-				</script>
+				});
+			</script>
 		<?php
 	}
+
+
 
 }
 

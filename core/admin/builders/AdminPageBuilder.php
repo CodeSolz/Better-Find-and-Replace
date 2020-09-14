@@ -85,6 +85,7 @@ class AdminPageBuilder {
 		}
 
 		$content .= isset( $argc['content'] ) ? $argc['content'] : '----';
+		$content .= isset( $argc['hidden_content'] ) ? $argc['hidden_content'] : '';
 
 		return sprintf(
 			$this->page_wrapper( $argc ),
@@ -118,7 +119,7 @@ class AdminPageBuilder {
         <div class=\"container\"> %s 
         </div></div> %s %s
         {$form_end}
-        </div></div></div>";
+		</div></div></div>";
 	}
 
 	/**

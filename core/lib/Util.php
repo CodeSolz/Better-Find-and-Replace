@@ -34,12 +34,12 @@ class Util {
 		 echo sprintf( "\n<!--%s - %s-->\n", CS_RTAFAR_PLUGIN_NAME, $tagline );
 	}
 
-			/**
-			 * Check Evil Script Into User Input
-			 *
-			 * @param array|string $user_input
-			 * @return type
-			 */
+	/**
+	 * Check Evil Script Into User Input
+	 *
+	 * @param array|string $user_input
+	 * @return type
+	 */
 	public static function check_evil_script( $user_input, $textarea = false ) {
 		if ( is_array( $user_input ) ) {
 			$user_input = self::cs_sanitize_recursive( $user_input, $textarea );
@@ -133,6 +133,28 @@ class Util {
 	public static function generate_back_btn( $back_to, $class ) {
 		$back_url = self::cs_generate_admin_url( $back_to );
 		return "<a href='{$back_url}' class='{$class}'>" . __( '<< Back', 'real-time-auto-find-and-replace' ) . '</a>';
+	}
+
+	/**
+	 * Insert Word in a speific position
+	 *
+	 * @param [type] $val
+	 * @param [type] $pos
+	 * @param [type] $newWord
+	 * @return void
+	 */
+	public static function insertWordInStringPos( $val, $newWord, $pos ){
+		return \substr_replace($val, $newWord, $pos, 0);
+	}
+
+	/**
+	 * Char Count
+	 *
+	 * @param [type] $word
+	 * @return void
+	 */
+	public static function charCount( $word ){
+		return (int) \strlen( $word );
 	}
 }
 

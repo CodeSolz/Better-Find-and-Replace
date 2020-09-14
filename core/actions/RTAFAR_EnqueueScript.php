@@ -33,6 +33,15 @@ class RTAFAR_EnqueueScript {
 	public function rtrar_action_admin_enqueue_scripts() {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'admin.app.global', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.admin.global.min.js', array(), CS_RTAFAR_VERSION, true );
+
+		// register custom data
+		wp_localize_script(
+			'admin.app.global',
+			'rtafr',
+			array(
+				'is_pro_activate' => is_plugin_active( 'better-find-replace-pro/better-find-replace-pro.php' )
+			)
+		);
 	}
 
 	/**

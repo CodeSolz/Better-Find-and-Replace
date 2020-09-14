@@ -63,6 +63,11 @@ class ReplaceInDB {
 				'placeholder' => __( 'Enter word to find ', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Enter a word you want to find in Database. e.g: _test ', 'real-time-auto-find-and-replace' ),
 			),
+			'cs_db_string_replace[case_insensitive]'             => array(
+				'title'       => __( 'Case-Insensitive', 'real-time-auto-find-and-replace' ),
+				'type'        => 'checkbox',
+				'desc_tip'    => __( 'Check this checkbox if you want to find case insensitive or keep it un-check to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as same if you check this checkbox.', 'real-time-auto-find-and-replace' ),
+			),
 			'cs_db_string_replace[replace]'          => array(
 				'title'       => __( 'Replace With', 'real-time-auto-find-and-replace' ),
 				'type'        => 'text',
@@ -86,32 +91,33 @@ class ReplaceInDB {
 			),
 			'db_tables[]'                            => array(
 				'wrapper_class' => 'no-border db-tables-wrap',
-				'title'         => __( 'Select tables', 'woo-altcoin-payment-gateway' ),
+				'title'         => __( 'Select tables', 'real-time-auto-find-and-replace' ),
 				'type'          => 'select',
 				'class'         => 'form-control db-tables',
 				'multiple'      => true,
 				'required'      => true,
-				'placeholder'   => __( 'Please select tables', 'woo-altcoin-payment-gateway' ),
-				'options'       => array(
-					'posts'    => __( 'Posts', 'real-time-auto-find-and-replace' ),
-					'postmeta' => __( 'Postmeta', 'real-time-auto-find-and-replace' ),
-					'options'  => __( 'Options', 'real-time-auto-find-and-replace' ),
-				),
-				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post.', 'woo-altcoin-payment-gateway' ),
+				'placeholder'   => __( 'Please select tables', 'real-time-auto-find-and-replace' ),
+				'options'       => apply_filters( 'bfrp_selectTables', array()),
+				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post.', 'real-time-auto-find-and-replace' ),
 			),
 			'url_options[]'                          => array(
 				'wrapper_class' => 'url-options force-hidden',
-				'title'         => __( 'Select which url', 'woo-altcoin-payment-gateway' ),
+				'title'         => __( 'Select which url', 'real-time-auto-find-and-replace' ),
 				'type'          => 'select',
 				'class'         => 'form-control in-which-url',
 				'multiple'      => true,
-				'placeholder'   => __( 'Please select options', 'woo-altcoin-payment-gateway' ),
-				'options'       => array(
-					'posts' => __( 'Post URLs', 'real-time-auto-find-and-replace' ),
-					'pages' => __( 'Page URLs', 'real-time-auto-find-and-replace' ),
-					'media' => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' ),
-				),
-				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post', 'woo-altcoin-payment-gateway' ),
+				'placeholder'   => __( 'Please select options', 'real-time-auto-find-and-replace' ),
+				'options'       => apply_filters( "bfrp_urlOptions", array(
+					'post' => __( 'Post URLs', 'real-time-auto-find-and-replace' ),
+					'page' => __( 'Page URLs', 'real-time-auto-find-and-replace' ),
+					'attachment' => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' ),
+				)),
+				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post', 'real-time-auto-find-and-replace' ),
+			),
+			'cs_db_string_replace[dry_run]'             => array(
+				'title'       => __( 'Dry run', 'real-time-auto-find-and-replace' ),
+				'type'        => 'checkbox',
+				'desc_tip'    => __( 'If If checked, no changes will be made to the database, allowing you to check the results beforehand.', 'real-time-auto-find-and-replace' ),
 			),
 		);
 
@@ -143,7 +149,9 @@ class ReplaceInDB {
                                 </li>
                             </ol>
                         </li>
-                    </ul>";
+					</ul>";
+		$args['hidden_content'] = $this->popupHtml();		
+
 
 		return $this->Admin_Page_Generator->generate_page( $args );
 	}
@@ -176,9 +184,78 @@ class ReplaceInDB {
 
 					});
 
+					jQuery("body").on('click', 'a.close', function(){
+						$("#popup1").removeClass('show-popup');
+					});
+
+					jQuery("#bfrModalContent").scroll(function () {
+						var pos = $(this).scrollTop();
+						if( pos >= 1 ){
+							jQuery( ".bfr-res-head").addClass('change-tbl-head-bg');
+						}else{
+							jQuery( ".bfr-res-head").removeClass('change-tbl-head-bg');
+						}
+
+					});
 				});
+
+
+				function displayCustomContent( modalData ){
+					jQuery("#popup1").addClass('show-popup');
+					jQuery("#popup1 > .popup > .content").removeClass('hidden');
+				
+					jQuery(".popup > .title ").text('Find & Replace Report');
+					
+					jQuery(".popup > .sub-title ")
+						.text('Total replacement found : ' + modalData.replacement + ' in ' + modalData.replacementInTable + ' tables');
+					//create table rows
+					var actionBtn = '<button class="button-secondary" type="button" title="Pro version required!" disabled>Replace - Pro </button>';
+					if( typeof rtafr.is_pro_activate !== 'undefined' && rtafr.is_pro_activate != '' ){
+						actionBtn = '<button class="button-primary" type="button">Replace</button>';
+					}
+
+					var tbl = '<table id="bfr-results-table" class="widefat">';
+					tbl += '<thead class="bfr-res-head"><tr><th width="2%">Row</th><th width="12%" class="col-stripe">Column</th><th width="30%">Old Value</th><th  class="col-stripe">New Value</th><th width="5%"></th></tr></thead>';
+					var flagKey = '';
+					for ( const [key, item ] of Object.entries( modalData.dryRunReport ) ) {
+						if( flagKey !== key ){
+							tbl += '<tbody><tr class="tbl-name"><td colspan="5"> Table : '+key+'</td></tr>';
+						}
+						flagKey = key;
+						for( const [ k, val] of Object.entries ( item ) ){
+							tbl += '<tr><td width="2%">'+val.row_id+'</td><td width="12%" class="col-stripe">'+val.col+'</td><td width="30%">'+val.dis_find
+									+'</td><td  class="col-stripe">'+val.dis_replace+'</td><td width="5%">'+actionBtn+'</td></tr>';
+						}
+					}
+					tbl += '</tbody></table>';
+					jQuery(".content").html( tbl );
+				}
+						
 			</script>
 		<?php
+	}
+
+	/**
+	 * Custom Modal
+	 *
+	 * @return void
+	 */
+	private function popupHtml(){
+		$html = \ob_start();
+		?>
+			<div id="popup1" class="overlay">
+                <div class="popup">
+                    <h2 class="title">---</h2>
+					<p class="sub-title">--</p>
+                    <a class="close" >&times;</a>
+                    <div id="bfrModalContent" class="content"><!-- Content --></div>
+                    <div class="apiResponse"></div>
+                </div>
+            </div>
+		<?php
+		$html = ob_get_clean();
+
+		return $html;
 	}
 
 }

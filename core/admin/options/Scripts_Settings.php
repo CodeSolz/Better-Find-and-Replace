@@ -93,10 +93,21 @@ class Scripts_Settings {
 						.done(function( data ) {
 							console.log( data );
 							if( true === data.status ){
-								swal( { title: data.title, text: data.text, type : "success", html: true, timer: 5000 });
+
+								if( typeof data.show_custom_content === 'undefined' ){
+									swal( { title: data.title, text: data.text, type : "success", html: true, timer: 5000 });
+								}
+
 								if( typeof data.redirect_url !== 'undefined' ){
 									window.location.href = data.redirect_url;
 								}
+
+								if( typeof data.show_custom_content !== 'undefined' ){
+									swal.close();
+									//display custom content
+									displayCustomContent( data );
+								}
+
 							}else if( false === data.status ){
 								swal({ title: data.title, text: data.text, type : "error", html: true, timer: 5000 });
 							}else{

@@ -122,7 +122,7 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 		 * load core framework
 		 */
 		private static function load_core_framework() {
-			 require_once CS_RTAFAR_BASE_DIR_PATH . 'vendor/autoload.php';
+			require_once CS_RTAFAR_BASE_DIR_PATH . 'vendor/autoload.php';
 		}
 
 		/**
