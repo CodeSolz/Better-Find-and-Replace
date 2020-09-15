@@ -72,7 +72,7 @@ class Scripts_Settings {
 		if ( $page_id == $rtafr_menu['add_masking_rule'] ||
 		$page_id == $rtafr_menu['replace_in_db']
 		) {
-			// self::form_submitter();
+			// custom scripts here
 		}
 
 		Util::markup_tag( __( 'admin footer script end', 'real-time-auto-find-and-replace' ) );

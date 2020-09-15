@@ -18,7 +18,7 @@ class RTAFAR_EnqueueScript {
 
 	function __construct() {
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'rtrar_action_admin_enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'rtrar_action_admin_enqueue_scripts' ), 10 );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'rtrarAppRegisterVars' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'rtrarAppEnqueueScripts' ), 90 );
@@ -40,6 +40,16 @@ class RTAFAR_EnqueueScript {
 			'rtafr',
 			array(
 				'is_pro_activate' => is_plugin_active( 'better-find-replace-pro/better-find-replace-pro.php' ),
+				'baT' => __( 'Bulk Action', 'real-time-auto-find-and-replace' ),
+				'rT' => __( 'Replace', 'real-time-auto-find-and-replace' ),
+				'fT' => __( 'Find', 'real-time-auto-find-and-replace' ),
+				'aTp' => __( 'Apply', 'real-time-auto-find-and-replace' ),
+				'aT' => __( 'Apply - Pro version only', 'real-time-auto-find-and-replace' ),
+				'pvt' => __( 'Pro version required!', 'real-time-auto-find-and-replace' ),
+				'rBt' => __( 'Replace - Pro', 'real-time-auto-find-and-replace' ),
+				'drT' => __( 'Creating Reports..', 'real-time-auto-find-and-replace' ),
+				'frBnT' => __( 'Find & Replace', 'real-time-auto-find-and-replace' ),
+				'frDrBnT' => __( 'Create Reports', 'real-time-auto-find-and-replace' ),
 			)
 		);
 	}

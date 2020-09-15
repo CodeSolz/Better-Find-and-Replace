@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://www.paypal.me/wooAltCoinPayGatewy
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,11 @@ Easily Find and replace text, HTML code, image's url, footer credits or anything
 6. Media replacement in Database
 
 == Changelog ==
+
+= Version: 1.0.6 =
+* **Feat:** Dry run on database search
+* **Feat:** Reports on dry run search
+* **Feat:** Case-insensitive search in database 
 
 = Version: 1.0.5 =
 * **Change:** Plugin name changed - *Real Time Auto Find and Replace* to **Better Find and Replace**

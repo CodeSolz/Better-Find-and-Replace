@@ -162,6 +162,21 @@ class AddNewRule {
 					'type'  => 'hidden',
 					'value' => $swal_title,
 				),
+				'swal_des'         => array(
+					'id'    => 'swal_des',
+					'type'  => 'hidden',
+					'value' => __( 'Please wait a while...', 'real-time-auto-find-and-replace' ),
+				),
+				'swal_loading_gif' => array(
+					'id'    => 'swal_loading_gif',
+					'type'  => 'hidden',
+					'value' => CS_RTAFAR_PLUGIN_ASSET_URI . 'img/loading-timer.gif',
+				),
+				'swal_error'       => array(
+					'id'    => 'swal_error',
+					'type'  => 'hidden',
+					'value' => __( 'Something went wrong! Please try again by refreshing the page.', 'real-time-auto-find-and-replace' ),
+				),
 			),
 			$update_hidden_fields
 		);

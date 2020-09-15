@@ -234,6 +234,7 @@ class ReplaceInDB {
 					<p class="sub-title">--</p>
 					<a class="close" >&times;</a>
 					<div id="bfrModalContent" class="content"><!-- Content --></div>
+					<div class="after-content"><!-- after content elements --> </div>
 					<div class="apiResponse"></div>
 				</div>
 			</div>

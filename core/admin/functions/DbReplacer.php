@@ -148,6 +148,7 @@ class DbReplacer {
 					$item->post_title,
 					$wpdb->base_prefix . 'posts',
 					$item->ID, // row id
+					'ID', //primary key
 					'post_title',
 					array( 'ID' => $item->ID )
 				);
@@ -163,6 +164,7 @@ class DbReplacer {
 					$item->post_content,
 					$wpdb->base_prefix . 'posts',
 					$item->ID,
+					'ID', //primary key
 					'post_content',
 					array( 'ID' => $item->ID )
 				);
@@ -178,6 +180,7 @@ class DbReplacer {
 					$item->post_excerpt,
 					$wpdb->base_prefix . 'posts',
 					$item->ID,
+					'ID', //primary key
 					'post_excerpt',
 					array( 'ID' => $item->ID )
 				);
@@ -208,6 +211,7 @@ class DbReplacer {
 					$item->meta_value,
 					$wpdb->base_prefix . 'postmeta',
 					$item->meta_id,
+					'meta_id', //primary key
 					'meta_value',
 					array( 'meta_id' => $item->meta_id )
 				);
@@ -240,6 +244,7 @@ class DbReplacer {
 					$item->option_value,
 					$wpdb->base_prefix . 'options',
 					$item->option_id,
+					'option_id', //primary key
 					'option_value',
 					array( 'option_id' => $item->option_id )
 				);
@@ -341,6 +346,7 @@ class DbReplacer {
 					$item->guid,
 					$wpdb->base_prefix . 'posts',
 					$item->ID,
+					'ID',
 					'guid',
 					array( 'ID' => $item->ID )
 				);
@@ -356,6 +362,7 @@ class DbReplacer {
 					$item->post_name,
 					$wpdb->base_prefix . 'posts',
 					$item->ID,
+					'ID', 
 					'post_name',
 					array( 'ID' => $item->ID )
 				);
@@ -381,7 +388,7 @@ class DbReplacer {
 	 * @param [type] $update_con
 	 * @return void
 	 */
-	public function bfrReplace( $find, $replace, $old_value, $tbl, $row_id, $update_col, $update_con ) {
+	public function bfrReplace( $find, $replace, $old_value, $tbl, $row_id, $primary_col, $update_col, $update_con ) {
 
 		// check for case-sensitive
 		$isCaseInsensitive = false;
@@ -405,15 +412,16 @@ class DbReplacer {
 				$displayReplace = $this->highlightDisplayFindReplace( $find, $replace, $old_value, $new_string, $tbl, $isCaseInsensitive );
 
 				$reportRow = array(
-					'row_id'            => $row_id,
+					'rid'            	=> $row_id,
+					'pCol'				=> $primary_col, // primary col
 					'col'               => $update_col,
 					'find'              => $find,
 					'replace'           => $replace,
+					'ici' 				=> $isCaseInsensitive,
 					'old_val'           => $old_value,
 					'new_val'           => $new_string,
 					'dis_find'          => $displayReplace['find'],
 					'dis_replace'       => $displayReplace['replace'],
-					'isCaseInsensitive' => $isCaseInsensitive,
 				);
 
 				if ( isset( $this->dryRunReport[ $tbl ] ) ) {
