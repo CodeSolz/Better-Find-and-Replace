@@ -34,12 +34,15 @@ class RTAFAR_EnqueueScript {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'admin.app.global', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.admin.global.min.js', array(), CS_RTAFAR_VERSION, true );
 
+		wp_enqueue_style( 'wapg-global', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-global-style.min.css', false );
+
+
 		// register custom data
 		wp_localize_script(
 			'admin.app.global',
 			'rtafr',
 			array(
-				'is_pro_activate' => is_plugin_active( 'better-find-replace-pro/better-find-replace-pro.php' ),
+				'is_pro_activate' => is_plugin_active( 'better-find-and-replace-pro/better-find-and-replace-pro.php' ),
 				'baT' => __( 'Bulk Action', 'real-time-auto-find-and-replace' ),
 				'rT' => __( 'Replace', 'real-time-auto-find-and-replace' ),
 				'fT' => __( 'Find', 'real-time-auto-find-and-replace' ),

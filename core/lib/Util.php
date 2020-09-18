@@ -156,5 +156,41 @@ class Util {
 	public static function charCount( $word ) {
 		return (int) \strlen( $word );
 	}
+
+	/**
+	 * Sanitize external link
+	 *
+	 * @param [type] $link
+	 * @return void
+	 */
+	public static function cs_get_pro_link( $link ) {
+		static $theme_name = false;
+
+		if ( ! $theme_name ) {
+			$theme_obj = wp_get_theme();
+			if ( $theme_obj->parent() ) {
+				$theme_name = $theme_obj->parent()->get( 'Name' );
+			} else {
+				$theme_name = $theme_obj->get( 'Name' );
+			}
+
+			$theme_name = sanitize_key( $theme_name );
+		}
+
+		$link = add_query_arg( 'utm_term', $theme_name, $link );
+
+		return $link;
+	}
+
+	/**
+	 * Check has pro or not
+	 *
+	 * @return boolean
+	 */
+	public static function has_pro(){
+		$v = get_option('bfarp_plugin_version');
+		return empty($v) ? false : true;
+	}
+
 }
 

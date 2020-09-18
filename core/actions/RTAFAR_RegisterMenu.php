@@ -15,6 +15,7 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 use RealTimeAutoFindReplace\admin\functions\Masking;
 use RealTimeAutoFindReplace\admin\options\Scripts_Settings;
 use RealTimeAutoFindReplace\admin\builders\AdminPageBuilder;
+use RealTimeAutoFindReplace\lib\Util;
 
 
 class RTAFAR_RegisterMenu {
@@ -44,6 +45,8 @@ class RTAFAR_RegisterMenu {
 	 * @var [type]
 	 */
 	public $rtafr_menus;
+
+	private static $_instance;
 
 	public function __construct() {
 		 // call WordPress admin menu hook
@@ -101,6 +104,21 @@ class RTAFAR_RegisterMenu {
 			'cs-replace-in-database',
 			array( $this, 'rtafr_page_replace_in_db' )
 		);
+
+		if( true === Util::has_pro() ) {
+
+		}else{
+			$this->rtafr_menus['go_pro'] = add_submenu_page(
+				CS_RTAFAR_PLUGIN_IDENTIFIER,
+				__( 'Go Pro', 'real-time-auto-find-and-replace' ),
+				'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . __( 'Go Pro', 'real-time-auto-find-and-replace' ),
+				'manage_options',
+				'cs-bfar-go-pro',
+				array( $this, 'rtafar_handle_external_redirects' )
+			);
+		}
+
+
 
 		// load script
 		add_action( "load-{$this->rtafr_menus['add_masking_rule']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
@@ -206,6 +224,18 @@ class RTAFAR_RegisterMenu {
 	}
 
 	/**
+	 * generate instance
+	 *
+	 * @return void
+	 */
+	public static function get_instance() {
+		if ( ! ( self::$_instance instanceof self ) ) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+
+	/**
 	 * load funnel builder scripts
 	 */
 	public function rtafr_register_admin_settings_scripts() {
@@ -232,6 +262,23 @@ class RTAFAR_RegisterMenu {
 	 */
 	public function rtafar_load_admin_footer_script() {
 		return Scripts_Settings::load_admin_footer_script( $this->current_screen->id, $this->rtafr_menus );
+	}
+
+
+	/**
+	 * Handler expernal redirect
+	 *
+	 * @return void
+	 */
+	public function rtafar_handle_external_redirects() {
+		if ( empty( $_GET['page'] ) ) {
+			return;
+		}
+
+		if ( 'cs-bfar-go-pro' === $_GET['page'] ) {
+			wp_redirect( Util::cs_get_pro_link( 'https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' ) );
+			die;
+		}
 	}
 
 

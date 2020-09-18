@@ -9,6 +9,7 @@ module.exports = {
     "./assets/js/rtafar.app.admin": "./assets/js/src/app.js",
     "./assets/js/rtafar.admin.global": "./assets/js/src/app.global.js",
     "./assets/css/rtafar-admin-style": "./assets/css/src/app.scss",
+    "./assets/css/rtafar-admin-global-style": "./assets/css/src/global.scss",
     "./assets/js/rtafar.app": "./assets/js/src/ajaxContentReplacer.js",
   },
   output: {

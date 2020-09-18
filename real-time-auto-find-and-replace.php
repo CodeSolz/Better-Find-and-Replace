@@ -170,6 +170,7 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 		 * @return void
 		 */
 		public static function rtaafr_init_function() {
+
 			// init notices
 			\RealTimeAutoFindReplace\admin\notices\RtafarNotices::init();
 		}
