@@ -81,6 +81,7 @@ Join the elite web professionals who enjoy [Better Find And Replace Pro!](https:
 4. List of All Masking Rules
 5. URLs replacement in Database
 6. Media replacement in Database
+7. Dry run report
 
 == Changelog ==
 
