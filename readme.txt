@@ -22,6 +22,7 @@ Easily Find and replace text, HTML code, image's url, footer credits or anything
 * Search and replace any text
 * Lighting first find-replacement in Database table's ( posts, postmeta, options )
 * Select a specific database table to replace content
+* **Dry Run** to see what will be change on database
 * Find and **replace URLs**
 * Search and **replace images, attchment URLs etc..**
 * Create word masking with find-replace over the whole website
@@ -34,6 +35,16 @@ Easily Find and replace text, HTML code, image's url, footer credits or anything
 * **RegEx** supported
 * Replace any HTML tag or attribute
 
+
+== Pro Features ==
+* Powerful search and replace in database
+* Replace each item by reviewing on dry run report's
+* Bulk replace on dry run reports 
+* All tables in database
+* Additional filterting options
+
+Join the elite web professionals who enjoy [Better Find And Replace Pro!](https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README)
+
 == Setup Video Guide - How to install and setup search and replace rules == 
 [youtube https://www.youtube.com/watch?v=nDv6T72sRfc]
 
@@ -42,13 +53,13 @@ Easily Find and replace text, HTML code, image's url, footer credits or anything
 <blockquote>
 = For Quick Support, feature request and bug reporting = 
 <ul>
-    <li> Visit our website <a target="_blank" href="https://codesolz.net/?utm_source=wordpress.org&utm_medium=README&utm_campaign=woo-altcoin-payment-gateway">To Get Instant Support</a></li>
+    <li> Visit our website <a target="_blank" href="https://codesolz.net/?utm_source=wordpress.org&utm_medium=README&utm_campaign=real-time-auto-find-and-replace">To Get Instant Support</a></li>
     <li> For more dedicated support or feature request write to us at <a target="_blank" href="mailto:support@codesolz.net">support@codesolz.net</a> or create a ticket <a href="http://support.codesolz.net/public/create-ticket" target="_blank"> Support Center</a></li>
 </ul>
 
 = Visit our forum to share your experience or request features = 
 <ul>
-    <li> Visit our <a target="_blank" href="https://forum.codesolz.net/?utm_source=wordpress.org&utm_medium=README&utm_campaign=woo-altcoin-payment-gateway">forum</a></li>
+    <li> Visit our <a target="_blank" href="https://forum.codesolz.net/?utm_source=wordpress.org&utm_medium=README&utm_campaign=real-time-auto-find-and-replace">forum</a></li>
 </ul>
 
 = As it's open source, check our github development Status = 
