@@ -187,9 +187,47 @@ class Util {
 	 *
 	 * @return boolean
 	 */
-	public static function has_pro(){
-		$v = get_option('bfarp_plugin_version');
-		return empty($v) ? false : true;
+	public static function has_pro() {
+		$v = get_option( 'bfarp_plugin_version' );
+		return empty( $v ) ? false : true;
+	}
+
+	/**
+	 * Wp remote call
+	 *
+	 * @param type $url
+	 * @param type $method
+	 * @return type
+	 */
+	public static function remote_call( $url, $method = 'GET', $params = array() ) {
+		if ( $method == 'GET' ) {
+			$response = wp_remote_get(
+				$url,
+				array(
+					'timeout'     => 120,
+					'httpversion' => '1.1',
+				)
+			);
+		} elseif ( $method == 'POST' ) {
+			$response = wp_remote_post(
+				$url,
+				array(
+					'method'      => 'POST',
+					'timeout'     => 120,
+					'httpversion' => '1.1',
+					'body'        => isset( $params['body'] ) ? $params['body'] : '',
+				)
+			);
+		}
+
+		if ( is_wp_error( $response ) ) {
+			return array(
+				'error'    => true,
+				'response' => $response->get_error_message(),
+			);
+		}
+
+		return wp_remote_retrieve_body( $response );
 	}
 
 }

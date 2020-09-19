@@ -105,20 +105,14 @@ class RTAFAR_RegisterMenu {
 			array( $this, 'rtafr_page_replace_in_db' )
 		);
 
-		if( true === Util::has_pro() ) {
-
-		}else{
-			$this->rtafr_menus['go_pro'] = add_submenu_page(
-				CS_RTAFAR_PLUGIN_IDENTIFIER,
-				__( 'Go Pro', 'real-time-auto-find-and-replace' ),
-				'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . __( 'Go Pro', 'real-time-auto-find-and-replace' ),
-				'manage_options',
-				'cs-bfar-go-pro',
-				array( $this, 'rtafar_handle_external_redirects' )
-			);
-		}
-
-
+		$this->rtafr_menus['go_pro'] = add_submenu_page(
+			CS_RTAFAR_PLUGIN_IDENTIFIER,
+			__( 'Go Pro', 'real-time-auto-find-and-replace' ),
+			'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . __( 'Go Pro', 'real-time-auto-find-and-replace' ),
+			'manage_options',
+			'cs-bfar-go-pro',
+			array( $this, 'rtafar_handle_external_redirects' )
+		);
 
 		// load script
 		add_action( "load-{$this->rtafr_menus['add_masking_rule']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
@@ -130,6 +124,7 @@ class RTAFAR_RegisterMenu {
 		// init pages
 		$this->pages = new AdminPageBuilder();
 		$rtafr_menu  = $this->rtafr_menus;
+
 	}
 
 	/**
@@ -239,6 +234,7 @@ class RTAFAR_RegisterMenu {
 	 * load funnel builder scripts
 	 */
 	public function rtafr_register_admin_settings_scripts() {
+
 		// register scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'rtafar_load_settings_scripts' ) );
 

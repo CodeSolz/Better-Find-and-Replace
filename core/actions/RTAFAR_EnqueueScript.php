@@ -36,23 +36,22 @@ class RTAFAR_EnqueueScript {
 
 		wp_enqueue_style( 'wapg-global', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-global-style.min.css', false );
 
-
 		// register custom data
 		wp_localize_script(
 			'admin.app.global',
 			'rtafr',
 			array(
 				'is_pro_activate' => is_plugin_active( 'better-find-and-replace-pro/better-find-and-replace-pro.php' ),
-				'baT' => __( 'Bulk Action', 'real-time-auto-find-and-replace' ),
-				'rT' => __( 'Replace', 'real-time-auto-find-and-replace' ),
-				'fT' => __( 'Find', 'real-time-auto-find-and-replace' ),
-				'aTp' => __( 'Apply', 'real-time-auto-find-and-replace' ),
-				'aT' => __( 'Apply - Pro version only', 'real-time-auto-find-and-replace' ),
-				'pvt' => __( 'Pro version required!', 'real-time-auto-find-and-replace' ),
-				'rBt' => __( 'Replace - Pro', 'real-time-auto-find-and-replace' ),
-				'drT' => __( 'Creating Reports..', 'real-time-auto-find-and-replace' ),
-				'frBnT' => __( 'Find & Replace', 'real-time-auto-find-and-replace' ),
-				'frDrBnT' => __( 'Create Reports', 'real-time-auto-find-and-replace' ),
+				'baT'             => __( 'Bulk Action', 'real-time-auto-find-and-replace' ),
+				'rT'              => __( 'Replace', 'real-time-auto-find-and-replace' ),
+				'fT'              => __( 'Find', 'real-time-auto-find-and-replace' ),
+				'aTp'             => __( 'Apply', 'real-time-auto-find-and-replace' ),
+				'aT'              => __( 'Apply - Pro version only', 'real-time-auto-find-and-replace' ),
+				'pvt'             => __( 'Pro version required!', 'real-time-auto-find-and-replace' ),
+				'rBt'             => __( 'Replace - Pro', 'real-time-auto-find-and-replace' ),
+				'drT'             => __( 'Creating Reports..', 'real-time-auto-find-and-replace' ),
+				'frBnT'           => __( 'Find & Replace', 'real-time-auto-find-and-replace' ),
+				'frDrBnT'         => __( 'Create Reports', 'real-time-auto-find-and-replace' ),
 			)
 		);
 	}

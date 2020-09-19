@@ -104,7 +104,7 @@ class FormBuilder {
 			$input .= $field['input_field_wrap_start'];
 		}
 
-		if ( $field['type'] == 'text' || $field['type'] == 'number' || $field['type'] == 'password' ) {
+		if ( $field['type'] == 'text' || $field['type'] == 'email' || $field['type'] == 'number' || $field['type'] == 'password' ) {
 			$input .= $this->generate_text_field( $field_name, $field, $field_id );
 		}
 		if ( $field['type'] == 'textarea' ) {
@@ -115,7 +115,7 @@ class FormBuilder {
 			$input .= $this->generate_checkbox_field( $field_name, $field, $field_id );
 		} elseif ( $field['type'] == 'miscellaneous' ) {
 			foreach ( $field['options'] as $item_name => $item_assets ) {
-				if ( $item_assets['type'] == 'text' || $item_assets['type'] == 'number' || $item_assets['type'] == 'password' ) {
+				if ( $item_assets['type'] == 'text' || $field['type'] == 'email' || $item_assets['type'] == 'number' || $item_assets['type'] == 'password' ) {
 					$input .= $this->generate_text_field( $item_name, $item_assets, 'mis_' . $field_id );
 				} elseif ( $item_assets['type'] == 'select' ) {
 					$input .= $this->generate_select_field( $item_name, $item_assets, 'mis_' . $field_id );

@@ -152,12 +152,12 @@ class AddNewRule {
 
 		$hidden_fields = array_merge_recursive(
 			array(
-				'method'     => array(
+				'method'           => array(
 					'id'    => 'method',
 					'type'  => 'hidden',
 					'value' => "admin\\functions\\Masking@add_masking_rule",
 				),
-				'swal_title' => array(
+				'swal_title'       => array(
 					'id'    => 'swal_title',
 					'type'  => 'hidden',
 					'value' => $swal_title,

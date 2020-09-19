@@ -21,12 +21,13 @@ class Scripts_Settings {
 	 * load admin settings scripts
 	 */
 	public static function load_admin_settings_scripts( $page_id, $rtafr_menu ) {
+
+		$rtafr_menu = apply_filters( 'rtafar_menu_scripts', $rtafr_menu );
+
 		wp_enqueue_style( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.css', array(), CS_RTAFAR_VERSION );
 		wp_enqueue_script( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.min.js', array(), CS_RTAFAR_VERSION, true );
 
-		// pre_print( $page_id );
-
-		if ( $page_id === $rtafr_menu['replace_in_db'] ) {
+		if ( isset( $rtafr_menu['replace_in_db'] ) && $page_id === $rtafr_menu['replace_in_db'] ) {
 			wp_enqueue_style(
 				'select2',
 				CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/select2/css/select2.min.css',
@@ -43,8 +44,9 @@ class Scripts_Settings {
 
 		}
 
-		if ( $page_id == $rtafr_menu['add_masking_rule'] ||
-				$page_id == $rtafr_menu['replace_in_db']
+		if ( ( isset( $rtafr_menu['add_masking_rule'] ) && $page_id == $rtafr_menu['add_masking_rule'] ) ||
+				( isset( $rtafr_menu['replace_in_db'] ) && $page_id == $rtafr_menu['replace_in_db'] ) ||
+				( isset( $rtafr_menu['brafp_license'] ) && $page_id == $rtafr_menu['brafp_license'] )
 			) {
 				wp_enqueue_script(
 					'rtafar.app.admin.min',
@@ -71,8 +73,8 @@ class Scripts_Settings {
 		Util::markup_tag( __( 'admin footer script start', 'real-time-auto-find-and-replace' ) );
 
 		// load form submit script on footer
-		if ( $page_id == $rtafr_menu['add_masking_rule'] ||
-		$page_id == $rtafr_menu['replace_in_db']
+		if ( ( isset( $rtafr_menu['add_masking_rule'] ) && $page_id == $rtafr_menu['add_masking_rule'] ) ||
+		 ( isset( $rtafr_menu['replace_in_db'] ) && $page_id == $rtafr_menu['replace_in_db'] )
 		) {
 			// custom scripts here
 		}
