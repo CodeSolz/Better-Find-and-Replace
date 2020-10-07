@@ -52,11 +52,11 @@ class RTAFAR_DB {
 			}
 		}
 
-		$all_selector = [
-			'all' => __( 'All', 'real-time-auto-find-and-replace' )
-		];
-		
-		return \array_merge_recursive( $all_selector , $active, $sizes );
+		$all_selector = array(
+			'all' => __( 'All', 'real-time-auto-find-and-replace' ),
+		);
+
+		return \array_merge_recursive( $all_selector, $active, $sizes );
 	}
 
 	/**
