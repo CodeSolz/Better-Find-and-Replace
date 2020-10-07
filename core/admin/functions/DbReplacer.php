@@ -447,12 +447,12 @@ class DbReplacer {
 	 * @return array
 	 */
 	private function highlightDisplayFindReplace( $find, $replace, $old_value, $new_string, $tbl, $isCaseInsensitive ) {
-		$firstOccu = \strpos( strtolower( $old_value ), strtolower( $find ) );
+		$firstOccu = \strpos( strtolower( esc_html( $old_value )), strtolower( $find ) );
 
-		$findNewDisStr = Util::insertWordInStringPos( $old_value, '<span class="find">', $firstOccu );
+		$findNewDisStr = Util::insertWordInStringPos( esc_html( $old_value ), '<span class="find">', $firstOccu );
 		$findNewDisStr = Util::insertWordInStringPos( $findNewDisStr, '</span>', $firstOccu + Util::charCount( $find ) + 19 );
 
-		$replaceNewDisStr = Util::insertWordInStringPos( $new_string, '<span class="replace">', $firstOccu );
+		$replaceNewDisStr = Util::insertWordInStringPos( esc_html( $new_string ), '<span class="replace">', $firstOccu );
 		$replaceNewDisStr = Util::insertWordInStringPos( $replaceNewDisStr, '</span>', $firstOccu + Util::charCount( $replace ) + 22 );
 
 		return array(

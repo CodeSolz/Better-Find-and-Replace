@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://www.paypal.me/wooAltCoinPayGatewy
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 1.0.6
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,12 @@ Join the elite web professionals who enjoy [Better Find And Replace Pro!](https:
 7. Dry run report
 
 == Changelog ==
+
+= Version: 1.0.8 =
+* **Improvement:** Multiple selection
+
+= Version: 1.0.7 =
+* **Fix:** Notification issues
 
 = Version: 1.0.6 =
 * **Feat:** Dry run on database search

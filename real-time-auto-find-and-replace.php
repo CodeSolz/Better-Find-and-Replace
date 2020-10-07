@@ -5,7 +5,7 @@
  * Plugin Name:       Better Find and Replace
  * Plugin URI:        https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/
  * Description:       The plugin automatically find the specific words and replace by your own. you can setup your own rules for find and replace. It will execute before rendering page in browser's as well as background calls by any other social plugins.
- * Version:           1.0.6
+ * Version:           1.0.8
  * Author:            CodeSolz
  * Author URI:        https://www.codesolz.net
  * License:           GPLv3
@@ -38,7 +38,7 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 		 *
 		 * @var String
 		 */
-		private static $version = '1.0.6';
+		private static $version = '1.0.8';
 
 		/**
 		 * Hold version

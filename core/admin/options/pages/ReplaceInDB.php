@@ -110,6 +110,7 @@ class ReplaceInDB {
 				'options'       => apply_filters(
 					'bfrp_urlOptions',
 					array(
+						'all'       => __( 'All', 'real-time-auto-find-and-replace' ),
 						'post'       => __( 'Post URLs', 'real-time-auto-find-and-replace' ),
 						'page'       => __( 'Page URLs', 'real-time-auto-find-and-replace' ),
 						'attachment' => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' ),
@@ -202,7 +203,7 @@ class ReplaceInDB {
 					});
 
 					jQuery("body").on('click', 'a.close', function(){
-						$("#popup1").removeClass('show-popup');
+						$("#popup1").removeClass('show-popup').addClass('hide-popup');
 					});
 
 					jQuery("#bfrModalContent").scroll(function () {
