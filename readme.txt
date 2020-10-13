@@ -8,12 +8,12 @@ Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Find and replace text, HTML code, image's url, footer credits, jQuery / Ajax loaded text or anything in the website without touching database.
+Find and replace text, HTML code, Image's url, Footer credits, jQuery / Ajax loaded text or anything in the website without touching the database.
 
 == Description ==
-This plugin will automatically find a specific word and will replace by your own word. The changes will be automatically done before the the website render to the browser's. It doesn't effect to any other plugins files or your database.
+This plugin will automatically find a specific word and will replace it with your own word. The changes will be automatically done before the website renders to the browser's. It doesn't affect any other plugins files or your database.
 
-Easily Find and replace text, HTML code, image's url, footer credits or anything in the website without touching database. Also, you can search and replace permanently in Database too. 
+Easily Find and replace text, HTML code, image's url, footer credits or anything in the website without touching the database. Also, you can search and replace permanently in Database too.
 
 == Key Features ==
 
@@ -35,13 +35,19 @@ Easily Find and replace text, HTML code, image's url, footer credits or anything
 * **RegEx** supported
 * Replace any HTML tag or attribute
 
+== How to replace in DB? ==
+* First create a report by selecting *dry run* from bottom of the setting section 
+* Report will appear in a modal window. You can check there which row / data is going to be replaced.
+* On the report's, if you think the replacement is perfect which you want, then close the report window and un-check the dry run and click the Find & Replace button.
+* **Attention:** Please check the report and make sure which data you are going to replace. It's very important because once you replace it in the Database you can't un-done it. 
+* **important:** So, before replacing in the database create a dry run report and see if it's perfect or not. If it's wrong change the find keyword then try again the same procedure until you see it's perfect on the report. 
 
 == Pro Features ==
 * Powerful search and replace in database
-* Replace each item by reviewing on dry run report's
-* Bulk replace on dry run reports 
+* Ability to check & replace each item separately which going to be replaced in the database
+* Bulk Replacement on report's page, generate by dry run option
 * All tables in database
-* Additional filterting options
+* Additional filterting options in default / custom URLs 
 
 Join the elite web professionals who enjoy [Better Find And Replace Pro!](https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README)
 

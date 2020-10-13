@@ -206,9 +206,9 @@ class Util {
 				array(
 					'timeout'     => 120,
 					'httpversion' => '1.1',
-				)
-			);
-		} elseif ( $method == 'POST' ) {
+					)
+				);
+			} elseif ( $method == 'POST' ) {
 			$response = wp_remote_post(
 				$url,
 				array(
