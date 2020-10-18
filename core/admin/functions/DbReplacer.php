@@ -3,7 +3,7 @@
 /**
  * From Builder Class
  *
- * @package Funcitons
+ * @package Functions
  * @since 1.0.0
  * @author M.Tuhin <info@codesolz.net>
  */
@@ -62,10 +62,9 @@ class DbReplacer {
 			);
 		}
 
+		$this->settings = Util::check_evil_script( $user_query );
 		$find           = $this->format_find( $find );
 		$replace        = $this->format_replace( $replace );
-		$this->settings = Util::check_evil_script( $user_query );
-
 		$whereToReplace = $userInput['where_to_replace'];
 
 		global $wpdb;
@@ -392,12 +391,30 @@ class DbReplacer {
 
 		// check for case-sensitive
 		$isCaseInsensitive = false;
-		if ( ! isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
-			$new_string = \str_replace( $find, $replace, $old_value );
-		} else {
-			$new_string        = \str_ireplace( $find, $replace, $old_value );
-			$isCaseInsensitive = true;
+
+		if ( isset( $this->settings['cs_db_string_replace']['whole_word'] ) ||
+			isset( $this->settings['cs_db_string_replace']['unicode_modifier'] )
+		) {
+			
+			if ( ! isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
+				$formattedFind = $this->formatFindWholeWord( $find ); 
+				$new_string = \preg_replace( $formattedFind, $replace, $old_value);
+			} else {
+				$formattedFind = $this->formatFindWholeWord( $find, true ); 
+				$new_string = \preg_replace( $formattedFind, $replace, $old_value);
+				$isCaseInsensitive = true;
+			}
+
+		}else{
+
+			if ( ! isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
+				$new_string = \str_replace( $find, $replace, $old_value );
+			} else {
+				$new_string        = \str_ireplace( $find, $replace, $old_value );
+				$isCaseInsensitive = true;
+			}
 		}
+
 
 		$is_updated = false;
 		if ( $new_string != $old_value ) {
@@ -409,9 +426,17 @@ class DbReplacer {
 				$wpdb->update( $tbl, array( $update_col => $new_string ), $update_con );
 			} elseif ( $this->settings['cs_db_string_replace']['dry_run'] == 'on' ) {
 
-				$displayReplace = $this->highlightDisplayFindReplace( $find, $replace, $old_value, $new_string, $tbl, $isCaseInsensitive );
+				$displayReplace = $this->highlightDisplayFindReplace( array(
+					'formattedFind' => isset($formattedFind) ? $formattedFind : '',
+					'find' => $find,
+					'replace' => $replace,
+					'old_value' => $old_value,
+					'new_value' => $new_string,
+					'isCaseInsensitive' => $isCaseInsensitive
+				) );
 
-				$reportRow = array(
+				$reportRow = array(  'bfrp_'. $row_id  => array(
+					'tbl'		  => $tbl,
 					'rid'         => $row_id,
 					'pCol'        => $primary_col, // primary col
 					'col'         => $update_col,
@@ -422,12 +447,12 @@ class DbReplacer {
 					'new_val'     => $new_string,
 					'dis_find'    => $displayReplace['find'],
 					'dis_replace' => $displayReplace['replace'],
-				);
+				) );
 
 				if ( isset( $this->dryRunReport[ $tbl ] ) ) {
-					$this->dryRunReport[ $tbl ] = array_merge( $this->dryRunReport[ $tbl ], array( $reportRow ) );
+					$this->dryRunReport[ $tbl ] = array_merge_recursive( $this->dryRunReport[ $tbl ], $reportRow );
 				} else {
-					$this->dryRunReport[ $tbl ] = array( $reportRow );
+					$this->dryRunReport[ $tbl ] = $reportRow;
 				}
 			}
 
@@ -446,19 +471,71 @@ class DbReplacer {
 	 * @param [type] $new_string
 	 * @return array
 	 */
-	private function highlightDisplayFindReplace( $find, $replace, $old_value, $new_string, $tbl, $isCaseInsensitive ) {
-		$firstOccu = \strpos( strtolower( esc_html( $old_value ) ), strtolower( $find ) );
+	private function highlightDisplayFindReplace( $args ) {
 
-		$findNewDisStr = Util::insertWordInStringPos( esc_html( $old_value ), '<span class="find">', $firstOccu );
-		$findNewDisStr = Util::insertWordInStringPos( $findNewDisStr, '</span>', $firstOccu + Util::charCount( $find ) + 19 );
+		if( isset($args['formattedFind']) && !empty($args['formattedFind'])){
+			$findNewDisStr = \preg_replace( $args['formattedFind'], "<span class='find'>$1</span>", $args['old_value']);
+		}else{
+			if( \is_array($args['find'])){
+				$pregCase = '/($0)/';
+				if( true === $args['isCaseInsensitive']){
+					$pregCase .= 'i';
+				}
+				$find = \preg_filter('/^(.*?)$/', $pregCase, $args['find'] );
+			}else{
+				$find = '/('. $args['find'] .')/';
 
-		$replaceNewDisStr = Util::insertWordInStringPos( esc_html( $new_string ), '<span class="replace">', $firstOccu );
-		$replaceNewDisStr = Util::insertWordInStringPos( $replaceNewDisStr, '</span>', $firstOccu + Util::charCount( $replace ) + 22 );
+				if( true === $args['isCaseInsensitive']){
+					$find .= 'i';
+				}
+			}
+
+			$findNewDisStr = \preg_replace( $find, "<span class='find'>$1</span>", $args['old_value']);
+		}
+
+		//get replace hightlight
+		if( \is_array($args['replace'])){
+			$pregCase = '/($0)/';
+			if( true === $args['isCaseInsensitive']){
+				$pregCase .= 'i';
+			}
+			$replace = \preg_filter('/^(.*?)$/', $pregCase, $args['replace'] );
+		}else{
+			$replace = '/('. $args['replace'] .')/';
+
+			if( true === $args['isCaseInsensitive']){
+				$replace .= 'i';
+			}
+		}
+
+		$replaceNewDisStr = \preg_replace( $replace, "<span class='replace'>$1</span>", $args['new_value']);
 
 		return array(
 			'find'    => $findNewDisStr,
 			'replace' => $replaceNewDisStr,
 		);
+		
+	}
+
+
+	/**
+	 * format find for whole word
+	 *
+	 * @param [type] $find
+	 * @param boolean $isCaseInsensitive
+	 * @return void
+	 */
+	private function formatFindWholeWord( $find, $isCaseInsensitive = false ){
+		if( \has_filter( 'bfrp_format_find_whole_word' )){
+			return apply_filters( 'bfrp_format_find_whole_word', $this->settings, $isCaseInsensitive, $find );
+		}
+		
+		$pregCase = '/\b($0)\b/';
+		if( true === $isCaseInsensitive){
+			$pregCase .= 'i';
+		}
+		
+		return \preg_filter('/^(.*?)$/', $pregCase, $find );
 	}
 
 	/**
@@ -469,10 +546,10 @@ class DbReplacer {
 	 */
 	private function format_find( $find ) {
 		if ( false !== \strpos( $find, ',' ) ) {
-			$find = explode( ',', $find );
-			$find = array_map(
+			$find = \explode( ',', $find );
+			$find = \array_map(
 				function( $str ) {
-					return '/' . trim( $str ) . '/';
+					return \trim( $str );
 				},
 				$find
 			);
@@ -488,8 +565,8 @@ class DbReplacer {
 	 */
 	private function format_replace( $replace ) {
 		if ( false !== \strpos( $replace, ',' ) ) {
-			$replace = explode( ',', $replace );
-			$replace = array_map(
+			$replace = \explode( ',', $replace );
+			$replace = \array_map(
 				function( $str ) {
 					return $str;
 				},

@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://www.paypal.me/wooAltCoinPayGatewy
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,9 +20,6 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 * Easy to use and user-friendly options
 * Search and replace text loaded by **Ajax / jQuery**
 * Search and replace any text
-* Lighting first find-replacement in Database table's ( posts, postmeta, options )
-* Select a specific database table to replace content
-* **Dry Run** to see what will be change on database
 * Find and **replace URLs**
 * Search and **replace images, attchment URLs etc..**
 * Create word masking with find-replace over the whole website
@@ -34,6 +31,10 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 * Change different language's content to your own language
 * **RegEx** supported
 * Replace any HTML tag or attribute
+* Lighting first find-replacement in Database table's ( posts, postmeta, options )
+* Select a specific database table to replace content
+* **Dry Run** to see what will be change on Database
+* Search and replace **Whole Words Only** in Database
 
 == How to replace in DB? ==
 * First create a report by selecting *dry run* from bottom of the setting section 
@@ -47,6 +48,7 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 * Ability to check & replace each item separately which going to be replaced in the database
 * Bulk Replacement on report's page, generate by dry run option
 * All tables in database
+* Search and replace **Unicode Characters** *UTF-8  ( e.g: U+0026, REČA )* in Database
 * Additional filterting options in default / custom URLs 
 
 Join the elite web professionals who enjoy [Better Find And Replace Pro!](https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README)
@@ -90,6 +92,11 @@ Join the elite web professionals who enjoy [Better Find And Replace Pro!](https:
 7. Dry run report
 
 == Changelog ==
+
+= Version: 1.0.9 =
+* **Improvement:** Database Search and Replacement
+* **Feat:** Whole Word Only - search on database
+* **Feat:** Search Unicode Characters in DB - pro
 
 = Version: 1.0.8 =
 * **Improvement:** Multiple selection
