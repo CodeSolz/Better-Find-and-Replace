@@ -109,9 +109,16 @@ class DbReplacer {
 
 		$dryRunReport = array();
 		if ( isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
+
+			$totalReplacement = \array_reduce( $this->dryRunReport, function($carry, $item) {
+				$carry += \array_sum( \array_column( $item, 'findCount')) ;
+				return $carry;
+			});
+
 			$dryRunReport = array(
 				'show_custom_content' => true,
 				'replacement'         => $i,
+				'replacementTotal'         => (int) $totalReplacement,
 				'replacementInTable'  => count( $this->dryRunReport ),
 				'dryRunReport'        => $this->dryRunReport,
 			);
@@ -447,6 +454,8 @@ class DbReplacer {
 					'new_val'     => $new_string,
 					'dis_find'    => $displayReplace['find'],
 					'dis_replace' => $displayReplace['replace'],
+					'findCount' => $displayReplace['findCount'],
+					'replaceCount' => $displayReplace['replaceCount']
 				) );
 
 				if ( isset( $this->dryRunReport[ $tbl ] ) ) {
@@ -473,8 +482,10 @@ class DbReplacer {
 	 */
 	private function highlightDisplayFindReplace( $args ) {
 
+		$countFind = 0;
+
 		if( isset($args['formattedFind']) && !empty($args['formattedFind'])){
-			$findNewDisStr = \preg_replace( $args['formattedFind'], "<span class='find'>$1</span>", $args['old_value']);
+			$findNewDisStr = \preg_replace( $args['formattedFind'], "<span class='find'>$1</span>", \esc_html($args['old_value']), -1 , $countFind );
 		}else{
 			if( \is_array($args['find'])){
 				$pregCase = '/($0)/';
@@ -490,7 +501,7 @@ class DbReplacer {
 				}
 			}
 
-			$findNewDisStr = \preg_replace( $find, "<span class='find'>$1</span>", $args['old_value']);
+			$findNewDisStr = \preg_replace( $find, "<span class='find'>$1</span>", \esc_html( $args['old_value']), -1 , $countFind);
 		}
 
 		//get replace hightlight
@@ -508,11 +519,14 @@ class DbReplacer {
 			}
 		}
 
-		$replaceNewDisStr = \preg_replace( $replace, "<span class='replace'>$1</span>", $args['new_value']);
+		$countReplace = 0;
+		$replaceNewDisStr = \preg_replace( $replace, "<span class='replace'>$1</span>", \esc_html($args['new_value']), -1 , $countReplace);
 
 		return array(
 			'find'    => $findNewDisStr,
 			'replace' => $replaceNewDisStr,
+			'findCount' => $countFind,
+			'replaceCount' => $countReplace
 		);
 		
 	}
