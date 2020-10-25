@@ -110,15 +110,18 @@ class DbReplacer {
 		$dryRunReport = array();
 		if ( isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
 
-			$totalReplacement = \array_reduce( $this->dryRunReport, function($carry, $item) {
-				$carry += \array_sum( \array_column( $item, 'findCount')) ;
-				return $carry;
-			});
+			$totalReplacement = \array_reduce(
+				$this->dryRunReport,
+				function( $carry, $item ) {
+					$carry += \array_sum( \array_column( $item, 'findCount' ) );
+					return $carry;
+				}
+			);
 
 			$dryRunReport = array(
 				'show_custom_content' => true,
 				'replacement'         => $i,
-				'replacementTotal'         => (int) $totalReplacement,
+				'replacementTotal'    => (int) $totalReplacement,
 				'replacementInTable'  => count( $this->dryRunReport ),
 				'dryRunReport'        => $this->dryRunReport,
 			);
@@ -402,17 +405,16 @@ class DbReplacer {
 		if ( isset( $this->settings['cs_db_string_replace']['whole_word'] ) ||
 			isset( $this->settings['cs_db_string_replace']['unicode_modifier'] )
 		) {
-			
+
 			if ( ! isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
-				$formattedFind = $this->formatFindWholeWord( $find ); 
-				$new_string = \preg_replace( $formattedFind, $replace, $old_value);
+				$formattedFind = $this->formatFindWholeWord( $find );
+				$new_string    = \preg_replace( $formattedFind, $replace, $old_value );
 			} else {
-				$formattedFind = $this->formatFindWholeWord( $find, true ); 
-				$new_string = \preg_replace( $formattedFind, $replace, $old_value);
+				$formattedFind     = $this->formatFindWholeWord( $find, true );
+				$new_string        = \preg_replace( $formattedFind, $replace, $old_value );
 				$isCaseInsensitive = true;
 			}
-
-		}else{
+		} else {
 
 			if ( ! isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
 				$new_string = \str_replace( $find, $replace, $old_value );
@@ -421,7 +423,6 @@ class DbReplacer {
 				$isCaseInsensitive = true;
 			}
 		}
-
 
 		$is_updated = false;
 		if ( $new_string != $old_value ) {
@@ -433,30 +434,34 @@ class DbReplacer {
 				$wpdb->update( $tbl, array( $update_col => $new_string ), $update_con );
 			} elseif ( $this->settings['cs_db_string_replace']['dry_run'] == 'on' ) {
 
-				$displayReplace = $this->highlightDisplayFindReplace( array(
-					'formattedFind' => isset($formattedFind) ? $formattedFind : '',
-					'find' => $find,
-					'replace' => $replace,
-					'old_value' => $old_value,
-					'new_value' => $new_string,
-					'isCaseInsensitive' => $isCaseInsensitive
-				) );
+				$displayReplace = $this->highlightDisplayFindReplace(
+					array(
+						'formattedFind'     => isset( $formattedFind ) ? $formattedFind : '',
+						'find'              => $find,
+						'replace'           => $replace,
+						'old_value'         => $old_value,
+						'new_value'         => $new_string,
+						'isCaseInsensitive' => $isCaseInsensitive,
+					)
+				);
 
-				$reportRow = array(  'bfrp_'. $row_id  => array(
-					'tbl'		  => $tbl,
-					'rid'         => $row_id,
-					'pCol'        => $primary_col, // primary col
-					'col'         => $update_col,
-					'find'        => $find,
-					'replace'     => $replace,
-					'ici'         => $isCaseInsensitive,
-					'old_val'     => $old_value,
-					'new_val'     => $new_string,
-					'dis_find'    => $displayReplace['find'],
-					'dis_replace' => $displayReplace['replace'],
-					'findCount' => $displayReplace['findCount'],
-					'replaceCount' => $displayReplace['replaceCount']
-				) );
+				$reportRow = array(
+					'bfrp_' . $row_id => array(
+						'tbl'          => $tbl,
+						'rid'          => $row_id,
+						'pCol'         => $primary_col, // primary col
+						'col'          => $update_col,
+						'find'         => $find,
+						'replace'      => $replace,
+						'ici'          => $isCaseInsensitive,
+						'old_val'      => $old_value,
+						'new_val'      => $new_string,
+						'dis_find'     => $displayReplace['find'],
+						'dis_replace'  => $displayReplace['replace'],
+						'findCount'    => $displayReplace['findCount'],
+						'replaceCount' => $displayReplace['replaceCount'],
+					),
+				);
 
 				if ( isset( $this->dryRunReport[ $tbl ] ) ) {
 					$this->dryRunReport[ $tbl ] = array_merge_recursive( $this->dryRunReport[ $tbl ], $reportRow );
@@ -484,72 +489,72 @@ class DbReplacer {
 
 		$countFind = 0;
 
-		if( isset($args['formattedFind']) && !empty($args['formattedFind'])){
-			$findNewDisStr = \preg_replace( $args['formattedFind'], "<span class='find'>$1</span>", \esc_html($args['old_value']), -1 , $countFind );
-		}else{
-			if( \is_array($args['find'])){
+		if ( isset( $args['formattedFind'] ) && ! empty( $args['formattedFind'] ) ) {
+			$findNewDisStr = \preg_replace( $args['formattedFind'], "<span class='find'>$1</span>", \esc_html( $args['old_value'] ), -1, $countFind );
+		} else {
+			if ( \is_array( $args['find'] ) ) {
 				$pregCase = '/($0)/';
-				if( true === $args['isCaseInsensitive']){
+				if ( true === $args['isCaseInsensitive'] ) {
 					$pregCase .= 'i';
 				}
-				$find = \preg_filter('/^(.*?)$/', $pregCase, $args['find'] );
-			}else{
-				$find = '/('. $args['find'] .')/';
+				$find = \preg_filter( '/^(.*?)$/', $pregCase, $args['find'] );
+			} else {
+				$find = '/(' . $args['find'] . ')/';
 
-				if( true === $args['isCaseInsensitive']){
+				if ( true === $args['isCaseInsensitive'] ) {
 					$find .= 'i';
 				}
 			}
 
-			$findNewDisStr = \preg_replace( $find, "<span class='find'>$1</span>", \esc_html( $args['old_value']), -1 , $countFind);
+			$findNewDisStr = \preg_replace( $find, "<span class='find'>$1</span>", \esc_html( $args['old_value'] ), -1, $countFind );
 		}
 
-		//get replace hightlight
-		if( \is_array($args['replace'])){
+		// get replace hightlight
+		if ( \is_array( $args['replace'] ) ) {
 			$pregCase = '/($0)/';
-			if( true === $args['isCaseInsensitive']){
+			if ( true === $args['isCaseInsensitive'] ) {
 				$pregCase .= 'i';
 			}
-			$replace = \preg_filter('/^(.*?)$/', $pregCase, $args['replace'] );
-		}else{
-			$replace = '/('. $args['replace'] .')/';
+			$replace = \preg_filter( '/^(.*?)$/', $pregCase, $args['replace'] );
+		} else {
+			$replace = '/(' . $args['replace'] . ')/';
 
-			if( true === $args['isCaseInsensitive']){
+			if ( true === $args['isCaseInsensitive'] ) {
 				$replace .= 'i';
 			}
 		}
 
-		$countReplace = 0;
-		$replaceNewDisStr = \preg_replace( $replace, "<span class='replace'>$1</span>", \esc_html($args['new_value']), -1 , $countReplace);
+		$countReplace     = 0;
+		$replaceNewDisStr = \preg_replace( $replace, "<span class='replace'>$1</span>", \esc_html( $args['new_value'] ), -1, $countReplace );
 
 		return array(
-			'find'    => $findNewDisStr,
-			'replace' => $replaceNewDisStr,
-			'findCount' => $countFind,
-			'replaceCount' => $countReplace
+			'find'         => $findNewDisStr,
+			'replace'      => $replaceNewDisStr,
+			'findCount'    => $countFind,
+			'replaceCount' => $countReplace,
 		);
-		
+
 	}
 
 
 	/**
 	 * format find for whole word
 	 *
-	 * @param [type] $find
+	 * @param [type]  $find
 	 * @param boolean $isCaseInsensitive
 	 * @return void
 	 */
-	private function formatFindWholeWord( $find, $isCaseInsensitive = false ){
-		if( \has_filter( 'bfrp_format_find_whole_word' )){
+	private function formatFindWholeWord( $find, $isCaseInsensitive = false ) {
+		if ( \has_filter( 'bfrp_format_find_whole_word' ) ) {
 			return apply_filters( 'bfrp_format_find_whole_word', $this->settings, $isCaseInsensitive, $find );
 		}
-		
+
 		$pregCase = '/\b($0)\b/';
-		if( true === $isCaseInsensitive){
+		if ( true === $isCaseInsensitive ) {
 			$pregCase .= 'i';
 		}
-		
-		return \preg_filter('/^(.*?)$/', $pregCase, $find );
+
+		return \preg_filter( '/^(.*?)$/', $pregCase, $find );
 	}
 
 	/**

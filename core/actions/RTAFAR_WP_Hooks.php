@@ -35,9 +35,11 @@ class RTAFAR_WP_Hooks {
 	 * @return void
 	 */
 	public function rtafar_filter_contents() {
-		ob_start(
+		// ob_get_clean();
+		\ob_start(
 			array( $this, 'get_filtered_content' )
 		);
+		// \ob_end_flush();
 	}
 
 	/**
@@ -50,7 +52,7 @@ class RTAFAR_WP_Hooks {
 		$replace_rules = Masking::get_rules( 'all' );
 		if ( $replace_rules ) {
 			foreach ( $replace_rules as $item ) {
-				if ( false !== stripos( $item->find, ',' ) ) {
+				if ( false !== stripos( $item->find, ',' ) && $item->type != 'regex' && $item->type != 'advance_regex' ) {
 					$finds = explode( ',', $item->find );
 					foreach ( $finds as $find ) {
 						$buffer = $this->replace( $item, $buffer, $find );
@@ -79,8 +81,14 @@ class RTAFAR_WP_Hooks {
 			$find    = '<' . Util::cs_stripslashes( $find ) . '>';
 			$replace = Util::cs_stripslashes( $item->replace );
 			return preg_replace( $find, $replace, $buffer );
+		} elseif ( $item->type == 'advance_regex' ) {
+			if ( \has_filter( 'bfrp_advance_regex_mask' ) ) {
+				return \apply_filters( 'bfrp_advance_regex_mask', $find, $item->replace, $buffer );
+			} else {
+				return $buffer;
+			}
 		} else {
-			return str_replace( $find, $item->replace, $buffer );
+			return \str_replace( $find, $item->replace, $buffer );
 		}
 	}
 
@@ -118,5 +126,4 @@ class RTAFAR_WP_Hooks {
 	}
 
 }
-
 

@@ -6,11 +6,11 @@ const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 
 module.exports = {
   entry: {
-    "./assets/js/rtafar.app.admin": "./assets/js/src/app.js",
-    "./assets/js/rtafar.admin.global": "./assets/js/src/app.global.js",
-    "./assets/css/rtafar-admin-style": "./assets/css/src/app.scss",
-    "./assets/css/rtafar-admin-global-style": "./assets/css/src/global.scss",
-    "./assets/js/rtafar.app": "./assets/js/src/ajaxContentReplacer.js",
+    "./assets/js/rtafar.app.admin": "./src/js/src/app.js",
+    "./assets/js/rtafar.admin.global": "./src/js/src/app.global.js",
+    "./assets/css/rtafar-admin-style": "./src/scss/src/app.scss",
+    "./assets/css/rtafar-admin-global-style": "./src/scss/src/global.scss",
+    "./assets/js/rtafar.app": "./src/js/src/ajaxContentReplacer.js",
   },
   output: {
     filename: "[name].min.js",

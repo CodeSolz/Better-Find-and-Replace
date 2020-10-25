@@ -71,7 +71,7 @@ class AddNewRule {
 			),
 			'cs_masking_rule[replace]'          => array(
 				'title'       => __( 'Replace With', 'real-time-auto-find-and-replace' ),
-				'type'        => 'text',
+				'type'        => 'textarea',
 				'class'       => 'form-control',
 				'value'       => FormBuilder::get_value( 'replace', $option, '' ),
 				'placeholder' => __( 'set replace rule', 'real-time-auto-find-and-replace' ),
@@ -83,13 +83,17 @@ class AddNewRule {
 				'class'       => 'form-control rule-type',
 				'required'    => true,
 				'placeholder' => __( 'Please select rules type', 'real-time-auto-find-and-replace' ),
-				'options'     => array(
-					'plain'       => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
-					'regex'       => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
-					'ajaxContent' => __( 'jQuery / Ajax', 'real-time-auto-find-and-replace' ),
+				'options'     => apply_filters(
+					'bfrp_masking_rules',
+					array(
+						'plain'                  => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
+						'regex'                  => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
+						'ajaxContent'            => __( 'jQuery / Ajax', 'real-time-auto-find-and-replace' ),
+						'advance_regex_disabled' => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
+					)
 				),
 				'value'       => FormBuilder::get_value( 'type', $option, '' ),
-				'desc_tip'    => __( 'Select rule\'s type. e.g : Plain Text', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Select find and replacement rule\'s type. e.g : Plain Text', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[delay]'            => array(
 				'wrapper_class'     => "delay-time {$delayTimer}",
@@ -208,11 +212,11 @@ class AddNewRule {
 						}
 					});
 				});
+
+				
 			</script>
 		<?php
 	}
-
-
 
 }
 

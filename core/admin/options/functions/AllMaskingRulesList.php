@@ -93,6 +93,8 @@ class AllMaskingRulesList extends \WP_List_Table {
 				$item->delay . ' seconds <br>',
 				$item->tag_selector
 			);
+		} elseif ( $item->type == 'advance_regex' ) {
+			return __( 'Advance Regular Expression (multiple lines at once / code blocks )', 'real-time-auto-find-and-replace' );
 		}
 	}
 

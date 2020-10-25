@@ -174,10 +174,10 @@ class Util {
 				$theme_name = $theme_obj->get( 'Name' );
 			}
 
-			$theme_name = sanitize_key( $theme_name );
+			$theme_name = \sanitize_key( $theme_name );
 		}
 
-		$link = add_query_arg( 'utm_term', $theme_name, $link );
+		$link = \add_query_arg( 'utm_term', $theme_name, $link );
 
 		return $link;
 	}
@@ -188,7 +188,7 @@ class Util {
 	 * @return boolean
 	 */
 	public static function has_pro() {
-		$v = get_option( 'bfarp_plugin_version' );
+		$v = \get_option( 'bfarp_plugin_version' );
 		return empty( $v ) ? false : true;
 	}
 
@@ -201,15 +201,15 @@ class Util {
 	 */
 	public static function remote_call( $url, $method = 'GET', $params = array() ) {
 		if ( $method == 'GET' ) {
-			$response = wp_remote_get(
+			$response = \wp_remote_get(
 				$url,
 				array(
 					'timeout'     => 120,
 					'httpversion' => '1.1',
-					)
-				);
-			} elseif ( $method == 'POST' ) {
-			$response = wp_remote_post(
+				)
+			);
+		} elseif ( $method == 'POST' ) {
+			$response = \wp_remote_post(
 				$url,
 				array(
 					'method'      => 'POST',
@@ -227,7 +227,7 @@ class Util {
 			);
 		}
 
-		return wp_remote_retrieve_body( $response );
+		return \wp_remote_retrieve_body( $response );
 	}
 
 }

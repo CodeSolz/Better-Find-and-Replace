@@ -55,7 +55,7 @@ class Masking {
 	public function insert_masking_rules( $find, $replace, $type, $replace_where, $id = '', $delay_time, $tag_selector ) {
 		global $wpdb;
 
-		if ( $type == 'regex' ) {
+		if ( $type == 'regex' || $type == 'advance_regex' ) {
 			$find    = Util::cs_addslashes( $find );
 			$replace = Util::cs_addslashes( $replace );
 		} else {

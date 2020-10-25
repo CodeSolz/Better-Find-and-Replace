@@ -293,14 +293,14 @@ class FormBuilder {
 		$input_item = $this->generate_attribute( $field_name, $field, $field_id );
 
 		$label = '';
-		if( isset( $field['label'])){
+		if ( isset( $field['label'] ) ) {
 
 			$is_disabled = '';
-			if( isset($field['disabled'])){
+			if ( isset( $field['disabled'] ) ) {
 				$is_disabled = 'checkbox-disabled-label';
 			}
 
-			$label = '<span class="checkbox-label ' . $is_disabled . '">'. $field['label'] . '</span>';
+			$label = '<span class="checkbox-label ' . $is_disabled . '">' . $field['label'] . '</span>';
 		}
 
 		return "<input  {$input_item} {$value}/> {$label} ";

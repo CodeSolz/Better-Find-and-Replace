@@ -63,7 +63,7 @@ class ReplaceInDB {
 				'placeholder' => __( 'Enter word to find ', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Enter a word you want to find in Database. e.g: _test ', 'real-time-auto-find-and-replace' ),
 			),
-			
+
 			'cs_db_string_replace[replace]'          => array(
 				'title'       => __( 'Replace With', 'real-time-auto-find-and-replace' ),
 				'type'        => 'text',
@@ -119,18 +119,22 @@ class ReplaceInDB {
 				'type'     => 'checkbox',
 				'desc_tip' => __( 'Check this checkbox if you want to find case insensitive or keep it un-check to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as same if you check this checkbox.', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_db_string_replace[whole_word]' => array(
+			'cs_db_string_replace[whole_word]'       => array(
 				'title'    => __( 'Whole Words Only', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
-				'desc_tip' => \sprintf( __( 'Check this checkbox, if you want to find & replace match whole words only. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
-					'<code>', '</code>', '<em>', '</em>'
+				'desc_tip' => \sprintf(
+					__( 'Check this checkbox, if you want to find & replace match whole words only. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
+					'<code>',
+					'</code>',
+					'<em>',
+					'</em>'
 				),
 			),
 			'cs_db_string_replace[unicode_modifier]' => array(
 				'title'    => __( 'Unicode Characters', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
-				'disabled'	=> true,
-				'label'	=> __( 'Pro version only', 'real-time-auto-find-and-replace' ),
+				'disabled' => true,
+				'label'    => __( 'Pro version only', 'real-time-auto-find-and-replace' ),
 				'desc_tip' => __( 'Check this checkbox, if you want find and replace unicode characters (UTF-8). e.g: U+0026, REČA', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[dry_run]'          => array(
@@ -140,7 +144,7 @@ class ReplaceInDB {
 			),
 		);
 
-		$fields = apply_filters( 'bfrp_replacedb_settings_fields', $fields );
+		$fields          = apply_filters( 'bfrp_replacedb_settings_fields', $fields );
 		$args['content'] = $this->Form_Generator->generate_html_fields( $fields );
 
 		$hidden_fields = array(
