@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://www.paypal.me/wooAltCoinPayGatewy
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,7 +54,7 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 * Any (CSS / JS / HTML) code Block find and replacement in real-time rendering
 
 = Code blocks / multilines find and replacement example =
-*Find following CSS code block and replace with your own or keep blank replament fields to remove code block*
+*Find following CSS code block and replace with your own or keep blank replament field to remove code block*
 
 	<style media="screen">
         html { margin-top: 32px !important; }
@@ -114,9 +114,12 @@ Join the elite web professional's club who enjoy [Better Find And Replace Pro!](
 
 == Changelog ==
 
+= Version: 1.1.1 =
+* **Improvement:** DB search and replacement multiple search to single downgraded
+
 = Version: 1.1.0 =
 * **Improvement:** RegEx improved for real-time find and replace
-* **Feat:** Find and replace code blocs - pro
+* **Feat:** Find and replace code blocks - pro
 
 = Version: 1.0.9 =
 * **Improvement:** Database Search and Replacement

@@ -145,7 +145,7 @@ class DbReplacer {
 	private function tbl_post( $find, $replace ) {
 		global $wpdb;
 		$i        = 0;
-		$get_data = $wpdb->get_results( "select * from {$wpdb->posts} " );
+		$get_data = $wpdb->get_results( "select * from {$wpdb->posts}" );
 		if ( $get_data ) {
 
 			foreach ( $get_data as $item ) {
@@ -564,16 +564,7 @@ class DbReplacer {
 	 * @return void
 	 */
 	private function format_find( $find ) {
-		if ( false !== \strpos( $find, ',' ) ) {
-			$find = \explode( ',', $find );
-			$find = \array_map(
-				function( $str ) {
-					return \trim( $str );
-				},
-				$find
-			);
-		}
-		return $find;
+		return Util::check_evil_script($find);
 	}
 
 	/**
@@ -583,17 +574,7 @@ class DbReplacer {
 	 * @return void
 	 */
 	private function format_replace( $replace ) {
-		if ( false !== \strpos( $replace, ',' ) ) {
-			$replace = \explode( ',', $replace );
-			$replace = \array_map(
-				function( $str ) {
-					return $str;
-				},
-				$replace
-			);
-		}
-
-		return $replace;
+		return Util::check_evil_script($replace);
 	}
 
 }

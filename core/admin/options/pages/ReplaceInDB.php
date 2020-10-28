@@ -61,7 +61,7 @@ class ReplaceInDB {
 				'required'    => true,
 				'value'       => '',
 				'placeholder' => __( 'Enter word to find ', 'real-time-auto-find-and-replace' ),
-				'desc_tip'    => __( 'Enter a word you want to find in Database. e.g: _test ', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Enter a word / phrase you want to find in Database. e.g: _test ', 'real-time-auto-find-and-replace' ),
 			),
 
 			'cs_db_string_replace[replace]'          => array(
@@ -71,7 +71,7 @@ class ReplaceInDB {
 				'required'    => true,
 				'value'       => '',
 				'placeholder' => __( 'Enter word to replace with', 'real-time-auto-find-and-replace' ),
-				'desc_tip'    => __( 'Enter word you want to replace with. e.g : test', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Enter word / phrase you want to replace with. e.g : test', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[where_to_replace]' => array(
 				'title'       => __( 'Where to Replace', 'real-time-auto-find-and-replace' ),
