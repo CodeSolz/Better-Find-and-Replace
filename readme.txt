@@ -1,7 +1,7 @@
 === Better Find and Replace ===
 Contributors: CodeSolz, m.tuhin
 Tags: find, replace, search, find and replace, search and replace, auto find, auto replace
-Donate link: https://www.paypal.me/wooAltCoinPayGatewy
+Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.5
 Stable tag: 1.1.1
@@ -50,29 +50,13 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 * All tables in database
 * Search and replace **Unicode Characters** *UTF-8  ( e.g: U+0026, REČA )* in Database
 * Additional filterting options in default / custom URLs 
-* Powerful code blocks find and replace in real-time rendering
-* Any (CSS / JS / HTML) code Block find and replacement in real-time rendering
 
-= Code blocks / multilines find and replacement example =
-*Find following CSS code block and replace with your own or keep blank replament field to remove code block*
-
-	<style media="screen">
-        html { margin-top: 32px !important; }
-        * html body { margin-top: 32px !important; }
-        @media screen and ( max-width: 782px ) {
-            html { margin-top: 46px !important; }
-            * html body { margin-top: 46px !important; }
-        }
-    </style>
-
-*Replace code block example*
-
-    <style>
-    .site-title a{color: red;}
-    </style>
+* **Real-Time Rendering Features:**
+* Powerful code blocks / multilines find and replace in real-time (masking) rendering
+* Any (CSS / JS / HTML) code Block find and replacement in real-time (masking) rendering
 
 
-Join the elite web professional's club who enjoy [Better Find And Replace Pro!](https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README)
+**Join the elite web professionals who enjoy [Better Find And Replace Pro!](https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README)**
 
 == Setup Video Guide - How to install and setup search and replace rules == 
 [youtube https://www.youtube.com/watch?v=nDv6T72sRfc]

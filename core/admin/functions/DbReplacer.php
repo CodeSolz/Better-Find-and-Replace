@@ -411,8 +411,10 @@ class DbReplacer {
 				$new_string    = \preg_replace( $formattedFind, $replace, $old_value );
 			} else {
 				$formattedFind     = $this->formatFindWholeWord( $find, true );
-				$new_string        = \preg_replace( $formattedFind, $replace, $old_value );
+				// pre_print($formattedFind);
+				$new_string        = \preg_replace( $formattedFind, $replace, htmlspecialchars ($old_value) );
 				$isCaseInsensitive = true;
+				// pre_print($new_string);
 			}
 		} else {
 
@@ -422,6 +424,8 @@ class DbReplacer {
 				$new_string        = \str_ireplace( $find, $replace, $old_value );
 				$isCaseInsensitive = true;
 			}
+
+			// pre_print($new_string);
 		}
 
 		$is_updated = false;
@@ -493,13 +497,13 @@ class DbReplacer {
 			$findNewDisStr = \preg_replace( $args['formattedFind'], "<span class='find'>$1</span>", \esc_html( $args['old_value'] ), -1, $countFind );
 		} else {
 			if ( \is_array( $args['find'] ) ) {
-				$pregCase = '/($0)/';
+				$pregCase = '#($0)#';
 				if ( true === $args['isCaseInsensitive'] ) {
 					$pregCase .= 'i';
 				}
-				$find = \preg_filter( '/^(.*?)$/', $pregCase, $args['find'] );
+				$find = \preg_filter( '#^(.*?)$#', $pregCase, $args['find'] );
 			} else {
-				$find = '/(' . $args['find'] . ')/';
+				$find = '#(' . $args['find'] . ')#';
 
 				if ( true === $args['isCaseInsensitive'] ) {
 					$find .= 'i';
@@ -511,13 +515,13 @@ class DbReplacer {
 
 		// get replace hightlight
 		if ( \is_array( $args['replace'] ) ) {
-			$pregCase = '/($0)/';
+			$pregCase = '#($0)#';
 			if ( true === $args['isCaseInsensitive'] ) {
 				$pregCase .= 'i';
 			}
-			$replace = \preg_filter( '/^(.*?)$/', $pregCase, $args['replace'] );
+			$replace = \preg_filter( '#^(.*?)$#', $pregCase, $args['replace'] );
 		} else {
-			$replace = '/(' . $args['replace'] . ')/';
+			$replace = '#(' . $args['replace'] . ')#';
 
 			if ( true === $args['isCaseInsensitive'] ) {
 				$replace .= 'i';
@@ -549,12 +553,22 @@ class DbReplacer {
 			return apply_filters( 'bfrp_format_find_whole_word', $this->settings, $isCaseInsensitive, $find );
 		}
 
-		$pregCase = '/\b($0)\b/';
+		$pregCase = '#\b($0)\b#';
 		if ( true === $isCaseInsensitive ) {
 			$pregCase .= 'i';
 		}
 
-		return \preg_filter( '/^(.*?)$/', $pregCase, $find );
+		// pre_print($find);
+
+		return "#\b($find)\b#i";
+
+		// $formatFind = 
+
+		// if(\is_array($find)){
+			return \preg_filter( '#^(.*?)$#', $pregCase, $find );
+		// }
+
+		return $pregCase;
 	}
 
 	/**
@@ -576,6 +590,8 @@ class DbReplacer {
 	private function format_replace( $replace ) {
 		return Util::check_evil_script($replace);
 	}
+
+	
 
 }
 
