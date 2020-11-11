@@ -399,8 +399,15 @@ class DbReplacer {
 	 */
 	public function bfrReplace( $find, $replace, $old_value, $tbl, $row_id, $primary_col, $update_col, $update_con ) {
 
+		//if old value is empty
+		if( empty( $old_value )){
+			return false;
+		}
+
 		// check for case-sensitive
 		$isCaseInsensitive = false;
+
+		$old_value = $this->format_old_value( $old_value );
 
 		if ( isset( $this->settings['cs_db_string_replace']['whole_word'] ) ||
 			isset( $this->settings['cs_db_string_replace']['unicode_modifier'] )
@@ -411,10 +418,8 @@ class DbReplacer {
 				$new_string    = \preg_replace( $formattedFind, $replace, $old_value );
 			} else {
 				$formattedFind     = $this->formatFindWholeWord( $find, true );
-				// pre_print($formattedFind);
-				$new_string        = \preg_replace( $formattedFind, $replace, htmlspecialchars ($old_value) );
+				$new_string        = \preg_replace( $formattedFind, $replace, $old_value );
 				$isCaseInsensitive = true;
-				// pre_print($new_string);
 			}
 		} else {
 
@@ -425,13 +430,13 @@ class DbReplacer {
 				$isCaseInsensitive = true;
 			}
 
-			// pre_print($new_string);
+			
 		}
-
+		
 		$is_updated = false;
 		if ( $new_string != $old_value ) {
 			global $wpdb;
-
+			
 			// check for dry run
 			if ( ! isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
 				// pre_print( $this->settings );
@@ -450,7 +455,7 @@ class DbReplacer {
 				);
 
 				$reportRow = array(
-					'bfrp_' . $row_id => array(
+					'bfrp_' . $row_id .'_' . $update_col => array(
 						'tbl'          => $tbl,
 						'rid'          => $row_id,
 						'pCol'         => $primary_col, // primary col
@@ -469,6 +474,7 @@ class DbReplacer {
 
 				if ( isset( $this->dryRunReport[ $tbl ] ) ) {
 					$this->dryRunReport[ $tbl ] = array_merge_recursive( $this->dryRunReport[ $tbl ], $reportRow );
+					// pre_print($this->dryRunReport);
 				} else {
 					$this->dryRunReport[ $tbl ] = $reportRow;
 				}
@@ -510,10 +516,10 @@ class DbReplacer {
 				}
 			}
 
-			$findNewDisStr = \preg_replace( $find, "<span class='find'>$1</span>", \esc_html( $args['old_value'] ), -1, $countFind );
+			$findNewDisStr = \preg_replace( \esc_html( $find ), "<span class='find'>$1</span>", \esc_html( $args['old_value'] ), -1, $countFind );
 		}
 
-		// get replace hightlight
+		// get replace highlight
 		if ( \is_array( $args['replace'] ) ) {
 			$pregCase = '#($0)#';
 			if ( true === $args['isCaseInsensitive'] ) {
@@ -529,7 +535,7 @@ class DbReplacer {
 		}
 
 		$countReplace     = 0;
-		$replaceNewDisStr = \preg_replace( $replace, "<span class='replace'>$1</span>", \esc_html( $args['new_value'] ), -1, $countReplace );
+		$replaceNewDisStr = \preg_replace( \esc_html( $replace ), "<span class='replace'>$1</span>", \esc_html( $args['new_value'] ), -1, $countReplace );
 
 		return array(
 			'find'         => $findNewDisStr,
@@ -558,17 +564,7 @@ class DbReplacer {
 			$pregCase .= 'i';
 		}
 
-		// pre_print($find);
-
-		return "#\b($find)\b#i";
-
-		// $formatFind = 
-
-		// if(\is_array($find)){
-			return \preg_filter( '#^(.*?)$#', $pregCase, $find );
-		// }
-
-		return $pregCase;
+		return \preg_filter( '#^(.*?)$#', $pregCase, $find );
 	}
 
 	/**
@@ -578,9 +574,9 @@ class DbReplacer {
 	 * @return void
 	 */
 	private function format_find( $find ) {
-		return Util::check_evil_script($find);
+		return \stripslashes( $find );
 	}
-
+	
 	/**
 	 * Format replace
 	 *
@@ -588,7 +584,17 @@ class DbReplacer {
 	 * @return void
 	 */
 	private function format_replace( $replace ) {
-		return Util::check_evil_script($replace);
+		return \stripslashes( $replace );
+	}
+
+	/**
+	 * Format old_value
+	 *
+	 * @param [type] $old_value
+	 * @return void
+	 */
+	private function format_old_value( $old_value ) {
+		return $old_value;
 	}
 
 	
