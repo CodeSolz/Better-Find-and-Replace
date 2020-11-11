@@ -140,6 +140,7 @@ class ReplaceInDB {
 			'cs_db_string_replace[dry_run]'          => array(
 				'title'    => __( 'Dry run', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
+				'value'    => true,
 				'desc_tip' => __( 'Check this checkbox, if you want to see where find and replace will take place. A list of the find and replacement will be displayed in the popup window. No changes will be made to the database.', 'real-time-auto-find-and-replace' ),
 			),
 		);

@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,6 +97,9 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 7. Dry run report
 
 == Changelog ==
+
+= Version: 1.1.2 =
+* **Improvement:** DB search and replacement 
 
 = Version: 1.1.1 =
 * **Improvement:** DB search and replacement multiple search to single downgraded

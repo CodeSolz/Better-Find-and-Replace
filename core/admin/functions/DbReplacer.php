@@ -14,6 +14,7 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 
 use RealTimeAutoFindReplace\lib\Util;
 
+
 class DbReplacer {
 
 	/**
@@ -399,8 +400,8 @@ class DbReplacer {
 	 */
 	public function bfrReplace( $find, $replace, $old_value, $tbl, $row_id, $primary_col, $update_col, $update_con ) {
 
-		//if old value is empty
-		if( empty( $old_value )){
+		// if old value is empty
+		if ( empty( $old_value ) ) {
 			return false;
 		}
 
@@ -429,14 +430,12 @@ class DbReplacer {
 				$new_string        = \str_ireplace( $find, $replace, $old_value );
 				$isCaseInsensitive = true;
 			}
-
-			
 		}
-		
+
 		$is_updated = false;
 		if ( $new_string != $old_value ) {
 			global $wpdb;
-			
+
 			// check for dry run
 			if ( ! isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
 				// pre_print( $this->settings );
@@ -455,7 +454,7 @@ class DbReplacer {
 				);
 
 				$reportRow = array(
-					'bfrp_' . $row_id .'_' . $update_col => array(
+					'bfrp_' . $row_id . '_' . $update_col => array(
 						'tbl'          => $tbl,
 						'rid'          => $row_id,
 						'pCol'         => $primary_col, // primary col
@@ -474,7 +473,6 @@ class DbReplacer {
 
 				if ( isset( $this->dryRunReport[ $tbl ] ) ) {
 					$this->dryRunReport[ $tbl ] = array_merge_recursive( $this->dryRunReport[ $tbl ], $reportRow );
-					// pre_print($this->dryRunReport);
 				} else {
 					$this->dryRunReport[ $tbl ] = $reportRow;
 				}
@@ -576,7 +574,7 @@ class DbReplacer {
 	private function format_find( $find ) {
 		return \stripslashes( $find );
 	}
-	
+
 	/**
 	 * Format replace
 	 *
@@ -597,7 +595,7 @@ class DbReplacer {
 		return $old_value;
 	}
 
-	
+
 
 }
 
