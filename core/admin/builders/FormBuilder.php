@@ -42,7 +42,7 @@ class FormBuilder {
 			}
 
 			if ( isset( $field['type'] ) && $field['type'] == 'section_title' ) {
-				$input = $this->form_field_section_title( $field );
+				$input = $this->form_field_section_title( $field, $wrapper_class );
 			} else {
 
 				// if field start with new section
@@ -50,7 +50,13 @@ class FormBuilder {
 					$input = $field['section'];
 				}
 
-				$input .= '<div class="form-group ' . $no_border . ' ' . $wrapper_class . '">';
+				//check if pro
+				$is_pro = '';
+				if ( isset( $field['is_pro'] ) && true === $field['is_pro'] ) {
+					$is_pro = 'pro-version';
+				}
+
+				$input .= '<div class="form-group ' . $no_border . ' ' . $wrapper_class . ' ' . $is_pro . '">';
 				$input .= $this->generate_field( $field_name, $field, $i );
 				$input .= '</div>';
 
@@ -119,6 +125,10 @@ class FormBuilder {
 					$input .= $this->generate_text_field( $item_name, $item_assets, 'mis_' . $field_id );
 				} elseif ( $item_assets['type'] == 'select' ) {
 					$input .= $this->generate_select_field( $item_name, $item_assets, 'mis_' . $field_id );
+				}elseif ( $item_assets['type'] == 'checkbox' ) {
+					$input .= $this->generate_checkbox_field( $item_name, $item_assets, 'mis_' . $field_id );
+				} elseif ( $item_assets['type'] == 'textarea' ) {
+					$input .= $this->generate_textarea_field( $item_name, $item_assets, 'mis_' . $field_id );
 				}
 
 				if ( isset( $item_assets['after_text'] ) ) {
@@ -156,10 +166,10 @@ class FormBuilder {
 	 * @param type $args
 	 * @return boolean
 	 */
-	public function form_field_section_title( $args ) {
-		$section_title = '<div class="section-title">' . sprintf( $args['title'], '<i class="fa fa-edit"></i> ' ) . '</div>';
+	public function form_field_section_title( $args, $wrapper_class ) {
+		$section_title = '<div class="section-title '.$wrapper_class.' ">' . sprintf( $args['title'], '<i class="fa fa-edit"></i> ' ) . '</div>';
 		if ( isset( $args['desc_tip'] ) && ! empty( $args['desc_tip'] ) ) {
-			$section_title .= '<p class="section-description">' . $args['desc_tip'] . '</p>';
+			$section_title .= '<p class="section-description '.$wrapper_class.' ">' . $args['desc_tip'] . '</p>';
 		}
 		return $section_title;
 	}
@@ -235,7 +245,7 @@ class FormBuilder {
 	/**
 	 * get disabled fields val
 	 */
-	private function get_disabled_field_val( $field_name, $field, $field_id ) {
+	private function get_hidden_field_val( $field_name, $field, $field_id ) {
 		if ( isset( $field['disabled'] ) && true === $field['disabled'] ) {
 			$input_value = $field['value'];
 			return '<input type="hidden" value ="' . $input_value . '" name ="' . $field_name . '" />';
@@ -253,7 +263,7 @@ class FormBuilder {
 	 */
 	private function generate_text_field( $field_name, $field, $field_id ) {
 		$input_item         = $this->generate_attribute( $field_name, $field, $field_id );
-		$disabled_field_val = $this->get_disabled_field_val( $field_name, $field, $field_id );
+		$disabled_field_val = $this->get_hidden_field_val( $field_name, $field, $field_id );
 		return "<input  {$input_item} /> {$disabled_field_val}";
 	}
 
@@ -286,7 +296,7 @@ class FormBuilder {
 
 		// old fields
 		if ( ! isset( $field['has_value'] ) && isset( $field['value'] ) && ! empty( $field['value'] ) ) {
-			$value = $field['value'] == 1 ? ' checked = "checked" ' : '';
+			$value = $field['value'] == 1 || $field['value'] == 'on' ? ' checked = "checked" ' : '';
 			unset( $field['value'] );
 		}
 
@@ -325,7 +335,7 @@ class FormBuilder {
 
 		$cus_val            = $field;
 		$cus_val['value']   = $value;
-		$disabled_field_val = $this->get_disabled_field_val( $field_name, $cus_val, $field_id );
+		$disabled_field_val = $this->get_hidden_field_val( $field_name, $cus_val, $field_id );
 
 		$input_item = $this->generate_attribute( $field_name, $field, $field_id );
 		$input      = "<select  {$input_item} >";

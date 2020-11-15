@@ -17,6 +17,8 @@ use RealTimeAutoFindReplace\lib\Util;
 
 class Masking {
 
+	private static $bypassID = '$buffer = ';
+
 	/**
 	 * Add Masking Rules
 	 *
@@ -35,7 +37,7 @@ class Masking {
 
 		$id = isset( $user_query['id'] ) ? $user_query['id'] : '';
 
-		$msg = $this->insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time, $tag_selector );
+		$msg = $this->insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time, $tag_selector, $user_query );
 
 		return wp_send_json(
 			array(
@@ -52,7 +54,7 @@ class Masking {
 	 *
 	 * @return void
 	 */
-	public function insert_masking_rules( $find, $replace, $type, $replace_where, $id = '', $delay_time, $tag_selector ) {
+	public function insert_masking_rules( $find, $replace, $type, $replace_where, $id = '', $delay_time, $tag_selector, $user_query ) {
 		global $wpdb;
 
 		if ( $type == 'regex' || $type == 'advance_regex' ) {
@@ -86,7 +88,11 @@ class Masking {
 			$wpdb->update( "{$wpdb->prefix}rtafar_rules", $userData, array( 'id' => $isExists ) );
 		} else {
 			$wpdb->insert( "{$wpdb->prefix}rtafar_rules", $userData );
+			$isExists = $wpdb->insert_id;
 		}
+
+		//add action
+		do_action( 'bfrp_save_masking_rule', $isExists, $user_query );
 
 		return $msg;
 	}
@@ -120,6 +126,8 @@ class Masking {
 		}
 		return false;
 	}
+
+	
 
 }
 
