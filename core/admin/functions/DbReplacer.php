@@ -553,6 +553,7 @@ class DbReplacer {
 	 * @return void
 	 */
 	private function formatFindWholeWord( $find, $isCaseInsensitive = false ) {
+		$find = \preg_quote( $find );
 		if ( \has_filter( 'bfrp_format_find_whole_word' ) ) {
 			return apply_filters( 'bfrp_format_find_whole_word', $this->settings, $isCaseInsensitive, $find );
 		}

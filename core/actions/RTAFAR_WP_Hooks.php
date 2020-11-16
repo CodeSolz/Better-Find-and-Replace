@@ -52,35 +52,17 @@ class RTAFAR_WP_Hooks {
 		$replace_rules = Masking::get_rules( 'all' );
 		if ( $replace_rules ) {
 			foreach ( $replace_rules as $item ) {
-				if ( false !== stripos( $item->find, ',' ) && $item->type != 'regex' && $item->type != 'advance_regex' ) {
-					$finds = explode( ',', $item->find );
-					foreach ( $finds as $find ) {
-						//check bypass filter rule
-						if( has_filter( 'bfrp_add_bypass_rule' ) ){
-							$buffer = apply_filters( 'bfrp_add_bypass_rule', $item, $buffer, $find );
-						}
-
-						$buffer = $this->replace( $item, $buffer, $find );
-
-						if( has_filter( 'bfrp_remove_bypass_rule' ) ){
-							$buffer = apply_filters( 'bfrp_remove_bypass_rule', $item, $buffer, $find );
-						}
-
-					}
-				} else {
-
-					//check bypass filter rule
-					if( has_filter( 'bfrp_add_bypass_rule' ) ){
-						$buffer = apply_filters( 'bfrp_add_bypass_rule', $item, $buffer, false );
-					}
-					
-					$buffer = $this->replace( $item, $buffer );
-					
-					if( has_filter( 'bfrp_remove_bypass_rule' ) ){
-						$buffer = apply_filters( 'bfrp_remove_bypass_rule', $item, $buffer, false );
-					}
-					
+				//check bypass filter rule
+				if( has_filter( 'bfrp_add_bypass_rule' ) && isset($item->type) && $item->type == 'plain' ){
+					$buffer = apply_filters( 'bfrp_add_bypass_rule', $item, $buffer, false );
 				}
+				
+				$buffer = $this->replace( $item, $buffer );
+				
+				if( has_filter( 'bfrp_remove_bypass_rule' ) && isset($item->type) && $item->type == 'plain' ){
+					$buffer = apply_filters( 'bfrp_remove_bypass_rule', $item, $buffer, false );
+				}
+
 			}
 		}
 
@@ -100,9 +82,14 @@ class RTAFAR_WP_Hooks {
 		$find = false !== $find ? $find : $item->find;
 
 		if ( $item->type == 'regex' ) {
-			$find    = '#' . Util::cs_stripslashes( $find ) . '#';
-			$replace = Util::cs_stripslashes( $item->replace );
-			return preg_replace( $find, $replace, $buffer );
+			if ( \has_filter( 'bfrp_masking_plain_filter' ) ) {
+				return \apply_filters( 'bfrp_masking_plain_filter', $item, $find, $buffer );
+			} else {
+				$find    = '#' . Util::cs_stripslashes( $find ) . '#';
+				$replace = Util::cs_stripslashes( $item->replace );
+				return preg_replace( $find, $replace, $buffer );
+			}
+
 		} elseif ( $item->type == 'advance_regex' ) {
 			if ( \has_filter( 'bfrp_advance_regex_mask' ) ) {
 				return \apply_filters( 'bfrp_advance_regex_mask', $find, $item->replace, $buffer );
@@ -110,7 +97,11 @@ class RTAFAR_WP_Hooks {
 				return $buffer;
 			}
 		} else {
-			return \str_replace( $find, $item->replace, $buffer );
+			if ( \has_filter( 'bfrp_masking_plain_filter' ) ) {
+				return \apply_filters( 'bfrp_masking_plain_filter', $item, $find, $buffer );
+			} else {
+				return \str_replace( Util::cs_stripslashes( $find ), Util::cs_stripslashes( $item->replace ), $buffer );
+			}
 		}
 
 	}

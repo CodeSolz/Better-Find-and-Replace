@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,7 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 * **important:** So, before replacing in the database create a dry run report and see if it's perfect or not. If it's wrong change the find keyword then try again the same procedure until you see it's perfect on the report. 
 
 == Pro Features ==
+* **Database Replacement Features:**
 * Powerful search and replace in database
 * Ability to check & replace each item separately which going to be replaced in the database
 * Bulk Replacement on report's page, generate by dry run option
@@ -52,8 +53,13 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 * Additional filterting options in default / custom URLs 
 
 * **Real-Time Rendering Features:**
-* Powerful code blocks / multilines find and replace in real-time (masking) rendering
-* Any (CSS / JS / HTML) code Block find and replacement in real-time (masking) rendering
+* RegEx supported
+* Advance Regex - Powerful code blocks / multilines find and replace in real-time (masking) rendering
+* Advance Regex - Any (CSS / JS / HTML) code Block find and replacement in real-time (masking) rendering
+* Advance filtering options - ( Case insensitive, Whole Word, Unicode )
+* Bypass rule  - keep texts unchanged on specific area with special pattern
+
+
 
 
 **Join the elite web professionals who enjoy [Better Find And Replace Pro!](https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README)**
