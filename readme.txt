@@ -59,7 +59,24 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 * Advance filtering options - ( Case insensitive, Whole Word, Unicode )
 * Bypass rule  - keep texts unchanged on specific area with special pattern
 
+= Code blocks / multilines find and replacement example - (Real-time Rendering) =
+*Find code block and replace with your own or keep blank *replament field* to remove code block. Let consider the following CSS code block for replace. Put following
+code block in find field*
 
+	<style media="screen">
+        html { margin-top: 32px !important; }
+        * html body { margin-top: 32px !important; }
+        @media screen and ( max-width: 782px ) {
+            html { margin-top: 46px !important; }
+            * html body { margin-top: 46px !important; }
+        }
+    </style>
+
+*Then put following code block in *Replace* field to replace the above code block*
+
+    <style>
+    .site-title a{color: red;}
+    </style>
 
 
 **Join the elite web professionals who enjoy [Better Find And Replace Pro!](https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README)**
@@ -103,6 +120,12 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 7. Dry run report
 
 == Changelog ==
+
+= Version: 1.1.3 =
+* **Improvement:** Real-time find and replacement 
+* **Feat:** Real-time find and replacement - advance filtering (pro)
+* **Feat:** Real-time find and replacement - bypass rule (pro)
+
 
 = Version: 1.1.2 =
 * **Improvement:** DB search and replacement 
