@@ -233,15 +233,15 @@ class AddNewRule {
 					'</em>'
 				),
 			),
-			'cs_db_string_replace[unicode_modifier]' => array(
+			'cs_masking_rule[unicode_modifier]' => array(
 				'wrapper_class' => "advance-filter {$hiddenAdvanceFilter}",
 				'title'    => sprintf(__( 'Unicode Characters %s Pro version only %s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'     => 'checkbox',
 				'is_pro'        => true,
+				'value'       => FormBuilder::get_value( 'unicode_modifier', $option, '' ),
 				'custom_attributes' => [
 					'disabled' => 'disabled'
 				],
-				'label'    => __( 'Pro version only', 'real-time-auto-find-and-replace' ),
 				'desc_tip' => __( 'Check this checkbox, if you want find and replace unicode characters (UTF-8). e.g: U+0026, REČA', 'real-time-auto-find-and-replace' ),
 			),
 
