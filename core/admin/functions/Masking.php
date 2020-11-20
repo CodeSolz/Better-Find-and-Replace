@@ -91,7 +91,7 @@ class Masking {
 			$isExists = $wpdb->insert_id;
 		}
 
-		//add action
+		// add action
 		do_action( 'bfrp_save_masking_rule', $isExists, $user_query );
 
 		return $msg;
@@ -127,7 +127,7 @@ class Masking {
 		return false;
 	}
 
-	
+
 
 }
 

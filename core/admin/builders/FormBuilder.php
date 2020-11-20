@@ -50,7 +50,7 @@ class FormBuilder {
 					$input = $field['section'];
 				}
 
-				//check if pro
+				// check if pro
 				$is_pro = '';
 				if ( isset( $field['is_pro'] ) && true === $field['is_pro'] ) {
 					$is_pro = 'pro-version';
@@ -125,7 +125,7 @@ class FormBuilder {
 					$input .= $this->generate_text_field( $item_name, $item_assets, 'mis_' . $field_id );
 				} elseif ( $item_assets['type'] == 'select' ) {
 					$input .= $this->generate_select_field( $item_name, $item_assets, 'mis_' . $field_id );
-				}elseif ( $item_assets['type'] == 'checkbox' ) {
+				} elseif ( $item_assets['type'] == 'checkbox' ) {
 					$input .= $this->generate_checkbox_field( $item_name, $item_assets, 'mis_' . $field_id );
 				} elseif ( $item_assets['type'] == 'textarea' ) {
 					$input .= $this->generate_textarea_field( $item_name, $item_assets, 'mis_' . $field_id );
@@ -167,9 +167,9 @@ class FormBuilder {
 	 * @return boolean
 	 */
 	public function form_field_section_title( $args, $wrapper_class ) {
-		$section_title = '<div class="section-title '.$wrapper_class.' ">' . sprintf( $args['title'], '<i class="fa fa-edit"></i> ' ) . '</div>';
+		$section_title = '<div class="section-title ' . $wrapper_class . ' ">' . sprintf( $args['title'], '<i class="fa fa-edit"></i> ' ) . '</div>';
 		if ( isset( $args['desc_tip'] ) && ! empty( $args['desc_tip'] ) ) {
-			$section_title .= '<p class="section-description '.$wrapper_class.' ">' . $args['desc_tip'] . '</p>';
+			$section_title .= '<p class="section-description ' . $wrapper_class . ' ">' . $args['desc_tip'] . '</p>';
 		}
 		return $section_title;
 	}

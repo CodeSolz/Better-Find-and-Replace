@@ -52,17 +52,16 @@ class RTAFAR_WP_Hooks {
 		$replace_rules = Masking::get_rules( 'all' );
 		if ( $replace_rules ) {
 			foreach ( $replace_rules as $item ) {
-				//check bypass filter rule
-				if( has_filter( 'bfrp_add_bypass_rule' ) && isset($item->type) && $item->type == 'plain' ){
+				// check bypass filter rule
+				if ( has_filter( 'bfrp_add_bypass_rule' ) && isset( $item->type ) && $item->type == 'plain' ) {
 					$buffer = apply_filters( 'bfrp_add_bypass_rule', $item, $buffer, false );
 				}
-				
+
 				$buffer = $this->replace( $item, $buffer );
-				
-				if( has_filter( 'bfrp_remove_bypass_rule' ) && isset($item->type) && $item->type == 'plain' ){
+
+				if ( has_filter( 'bfrp_remove_bypass_rule' ) && isset( $item->type ) && $item->type == 'plain' ) {
 					$buffer = apply_filters( 'bfrp_remove_bypass_rule', $item, $buffer, false );
 				}
-
 			}
 		}
 
@@ -89,7 +88,6 @@ class RTAFAR_WP_Hooks {
 				$replace = Util::cs_stripslashes( $item->replace );
 				return preg_replace( $find, $replace, $buffer );
 			}
-
 		} elseif ( $item->type == 'advance_regex' ) {
 			if ( \has_filter( 'bfrp_advance_regex_mask' ) ) {
 				return \apply_filters( 'bfrp_advance_regex_mask', $find, $item->replace, $buffer );

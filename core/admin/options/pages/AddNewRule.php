@@ -60,29 +60,28 @@ class AddNewRule {
 			$delayTimer = '';
 		}
 
-		$hiddenBypassRule = 'force-hidden'; 
+		$hiddenBypassRule    = 'force-hidden';
 		$hiddenAdvanceFilter = 'force-hidden';
-		if ( $ruleType == 'plain' || empty($option)) {
-			$hiddenBypassRule = '';
+		if ( $ruleType == 'plain' || empty( $option ) ) {
+			$hiddenBypassRule    = '';
 			$hiddenAdvanceFilter = '';
 		}
 
-		if ( $ruleType == 'regex') {
+		if ( $ruleType == 'regex' ) {
 			$hiddenAdvanceFilter = '';
 		}
-
 
 		$fields = array(
-			'cs_masking_rule[find]'             => array(
+			'cs_masking_rule[find]'                  => array(
 				'title'       => __( 'Find', 'real-time-auto-find-and-replace' ),
 				'type'        => 'textarea',
 				'class'       => 'form-control',
-				'required'       => true,
+				'required'    => true,
 				'value'       => FormBuilder::get_value( 'find', $option, '' ),
 				'placeholder' => __( 'Set find rules', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Enter your text / phrase what do you want to find out. e.g: Shop', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_masking_rule[replace]'          => array(
+			'cs_masking_rule[replace]'               => array(
 				'title'       => __( 'Replace With', 'real-time-auto-find-and-replace' ),
 				'type'        => 'textarea',
 				'class'       => 'form-control',
@@ -90,7 +89,7 @@ class AddNewRule {
 				'placeholder' => __( 'set replace rule', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Enter a word what do you want to replace with. e.g: My Store', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_masking_rule[type]'             => array(
+			'cs_masking_rule[type]'                  => array(
 				'title'       => __( 'Rule\'s Type', 'real-time-auto-find-and-replace' ),
 				'type'        => 'select',
 				'class'       => 'form-control rule-type',
@@ -108,7 +107,7 @@ class AddNewRule {
 				'value'       => FormBuilder::get_value( 'type', $option, '' ),
 				'desc_tip'    => __( 'Select find and replacement rule\'s type. e.g : Plain Text', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_masking_rule[delay]'            => array(
+			'cs_masking_rule[delay]'                 => array(
 				'wrapper_class'     => "delay-time {$delayTimer}",
 				'title'             => __( 'Delay Time', 'real-time-auto-find-and-replace' ),
 				'type'              => 'number',
@@ -121,7 +120,7 @@ class AddNewRule {
 					'max' => 10,
 				),
 			),
-			'cs_masking_rule[tag_selector]'     => array(
+			'cs_masking_rule[tag_selector]'          => array(
 				'wrapper_class' => "tag-selector {$delayTimer}",
 				'title'         => __( 'Tag selector', 'real-time-auto-find-and-replace' ),
 				'type'          => 'text',
@@ -130,7 +129,7 @@ class AddNewRule {
 				'placeholder'   => __( 'Please enter tag selector. e.g: .mytext', 'real-time-auto-find-and-replace' ),
 				'desc_tip'      => __( 'Enter Tag selector. Suppose if you select a tag by it\'s class then use a (.) before class name, (#) for ID. e.g: .mytext or #mytext', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_masking_rule[where_to_replace]' => array(
+			'cs_masking_rule[where_to_replace]'      => array(
 				'title'       => __( 'Where To Replace', 'real-time-auto-find-and-replace' ),
 				'type'        => 'select',
 				'class'       => 'form-control coin-type-select',
@@ -145,87 +144,109 @@ class AddNewRule {
 				'value'       => FormBuilder::get_value( 'where_to_replace', $option, '' ),
 				'desc_tip'    => __( 'Select rule\'s type. e.g : All over the website', 'real-time-auto-find-and-replace' ),
 			),
-			'st1' => array(
+			'st1'                                    => array(
 				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
-				'type'     => 'section_title',
-				'title'    => __( 'Bypass Rule', 'real-time-auto-find-and-replace' ),
-				'desc_tip' => __( 'Set the following settings if you want to keep unchange the text in specific area\'s.', 'real-time-auto-find-and-replace' ),
+				'type'          => 'section_title',
+				'title'         => __( 'Bypass Rule', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Set the following settings if you want to keep unchange the text in specific area\'s.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[bypass_rule_is_active]' => array(
-				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
-				'title'       => sprintf(__( 'Activate Bypass Rule %s Pro version only %s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
-				'type'        => 'checkbox',
-				'is_pro'        => true,
-				'value'       => FormBuilder::get_value( 'bypass_rule_is_active', $option, '' ),
-				'custom_attributes' => [
-					'disabled' => 'disabled'
-				],
-				'desc_tip'    => __( 'Check this checkbox if you want to apply Bypass rule', 'real-time-auto-find-and-replace' ),
+				'wrapper_class'     => "bypass-rule {$hiddenBypassRule}",
+				'title'             => sprintf( __( 'Activate Bypass Rule %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'checkbox',
+				'is_pro'            => true,
+				'value'             => FormBuilder::get_value( 'bypass_rule_is_active', $option, '' ),
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'desc_tip'          => __( 'Check this checkbox if you want to apply Bypass rule', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_masking_rule[bypass_rule]'          => array(
-				'title'       => sprintf( __( 'Bypass Rule %s Pro version only %s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+			'cs_masking_rule[bypass_rule]'           => array(
+				'title'         => sprintf( __( 'Bypass Rule %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
-				'type'        => 'miscellaneous',
+				'type'          => 'miscellaneous',
 				'is_pro'        => true,
-				'desc_tip'    => __( 'Keep the string / text / word / code blocks unchanged wrapped up with this pattern. e.g: {test} ', 'real-time-auto-find-and-replace' ),
-				'options'	  => array(
+				'desc_tip'      => __( 'Keep the string / text / word / code blocks unchanged wrapped up with this pattern. e.g: {test} ', 'real-time-auto-find-and-replace' ),
+				'options'       => array(
 					'cs_masking_rule[bypass_rule_wrapped_first_char]' => array(
-						'type' => 'text',
-						'class' => 'form-controller width-30',
-						'value'       => FormBuilder::get_value( 'bypass_rule_wrapped_first_char', $option, '{' ),
-						'custom_attributes' => [
-							'disabled' => 'disabled'
-						],
-						'after_text' => __( ' find word ', 'real-time-auto-find-and-replace' )
+						'type'              => 'text',
+						'class'             => 'form-controller width-30',
+						'value'             => FormBuilder::get_value( 'bypass_rule_wrapped_first_char', $option, '{' ),
+						'custom_attributes' => array(
+							'disabled' => 'disabled',
+						),
+						'after_text'        => __( ' find word ', 'real-time-auto-find-and-replace' ),
 					),
 					'cs_masking_rule[bypass_rule_wrapped_last_char]' => array(
-						'type' => 'text',
-						'class' => 'form-controller width-30',
-						'value'       => FormBuilder::get_value( 'bypass_rule_wrapped_last_char', $option, '}' ),
-						'custom_attributes' => [
-							'disabled' => 'disabled'
-						],
-					)
-				)	
+						'type'              => 'text',
+						'class'             => 'form-controller width-30',
+						'value'             => FormBuilder::get_value( 'bypass_rule_wrapped_last_char', $option, '}' ),
+						'custom_attributes' => array(
+							'disabled' => 'disabled',
+						),
+					),
+				),
 			),
 			'cs_masking_rule[remove_bypass_wrapper]' => array(
-				'title'       => sprintf(__( 'Remove Wrapper %s Pro version only %s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
-				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
-				'type'        => 'checkbox',
-				'is_pro'        => true,
-				'value'       => FormBuilder::get_value( 'remove_bypass_wrapper', $option, '' ),
-				'custom_attributes' => [
-					'disabled' => 'disabled'
-				],
-				'desc_tip'    => sprintf(__( 'Check this checkbox if you want to remove the bypass rule wrapper. eg. %1$s{test}%2$s will render finally %1$stest%2$s.', 'real-time-auto-find-and-replace' ), '<code>', '</code>'),
+				'title'             => sprintf( __( 'Remove Wrapper %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'wrapper_class'     => "bypass-rule {$hiddenBypassRule}",
+				'type'              => 'checkbox',
+				'is_pro'            => true,
+				'value'             => FormBuilder::get_value( 'remove_bypass_wrapper', $option, '' ),
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'desc_tip'          => sprintf( __( 'Check this checkbox if you want to remove the bypass rule wrapper on final output. eg. %1$s{test}%2$s will render finally %1$stest%2$s.', 'real-time-auto-find-and-replace' ), '<code>', '</code>' ),
 			),
-			'st2' => array(
+			'st2'                                    => array(
 				'wrapper_class' => "advance-filter {$hiddenAdvanceFilter}",
-				'type'     => 'section_title',
-				'title'    => __( 'Advance Filters', 'real-time-auto-find-and-replace' ),
-				'desc_tip' => __( 'Set the following filter if you want to apply special filter options.', 'real-time-auto-find-and-replace' ),
+				'type'          => 'section_title',
+				'title'         => __( 'Advance Filters', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Set the following settings if you want to apply special filter options.', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_masking_rule[case_insensitive]' => array(
-				'wrapper_class' => "advance-filter {$hiddenAdvanceFilter}",
-				'title'    => sprintf( __( 'Case-Insensitive %s Pro version only %s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
-				'type'     => 'checkbox',
-				'value'       => FormBuilder::get_value( 'case_insensitive', $option, '' ),
-				'is_pro'        => true,
-				'custom_attributes' => [
-					'disabled' => 'disabled'
-				],
-				'desc_tip' => __( 'Check this checkbox if you want to find case insensitive or keep it un-check to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as same if you check this checkbox.', 'real-time-auto-find-and-replace' ),
+			'cs_masking_rule[skip_base_url]'         => array(
+				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
+				'title'             => sprintf( __( 'Skip Base URLs %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'checkbox',
+				'is_pro'            => true,
+				'value'             => FormBuilder::get_value( 'skip_base_url', $option, '' ),
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'desc_tip'          => sprintf(
+					__(
+						'Check this checkbox, if you want to keep unchanged the URLs match with the website URL. 
+							e.g. You want to change %1$stest%2$s word from a post or page, but if the word exists in the URL - %1$s%3$s%2$s.
+							& when you will apply the find & replacement rule, the URL will change and page / post link will not work where the links appeared dynamically. 
+							As an example - Recent Post widget links.',
+						'real-time-auto-find-and-replace'
+					),
+					'<code>',
+					'</code>',
+					\site_url( 'test-post' )
+				),
 			),
-			'cs_masking_rule[whole_word]'       => array(
-				'wrapper_class' => "advance-filter {$hiddenAdvanceFilter}",
-				'title'    => sprintf(__( 'Whole Words Only %s Pro version only %s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
-				'type'     => 'checkbox',
-				'is_pro'        => true,
-				'value'       => FormBuilder::get_value( 'whole_word', $option, '' ),
-				'custom_attributes' => [
-					'disabled' => 'disabled'
-				],
-				'desc_tip' => \sprintf(
+			'cs_masking_rule[case_insensitive]'      => array(
+				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
+				'title'             => sprintf( __( 'Case-Insensitive %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'checkbox',
+				'value'             => FormBuilder::get_value( 'case_insensitive', $option, '' ),
+				'is_pro'            => true,
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'desc_tip'          => __( 'Check this checkbox if you want to find case insensitive or keep it un-check to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as same if you check this checkbox.', 'real-time-auto-find-and-replace' ),
+			),
+			'cs_masking_rule[whole_word]'            => array(
+				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
+				'title'             => sprintf( __( 'Whole Words Only %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'checkbox',
+				'is_pro'            => true,
+				'value'             => FormBuilder::get_value( 'whole_word', $option, '' ),
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'desc_tip'          => \sprintf(
 					__( 'Check this checkbox, if you want to find & replace match whole words only. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
 					'<code>',
 					'</code>',
@@ -233,26 +254,28 @@ class AddNewRule {
 					'</em>'
 				),
 			),
-			'cs_masking_rule[unicode_modifier]' => array(
-				'wrapper_class' => "advance-filter {$hiddenAdvanceFilter}",
-				'title'    => sprintf(__( 'Unicode Characters %s Pro version only %s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
-				'type'     => 'checkbox',
-				'is_pro'        => true,
-				'value'       => FormBuilder::get_value( 'unicode_modifier', $option, '' ),
-				'custom_attributes' => [
-					'disabled' => 'disabled'
-				],
-				'desc_tip' => __( 'Check this checkbox, if you want find and replace unicode characters (UTF-8). e.g: U+0026, REČA', 'real-time-auto-find-and-replace' ),
+			'cs_masking_rule[unicode_modifier]'      => array(
+				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
+				'title'             => sprintf( __( 'Unicode Characters %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'checkbox',
+				'is_pro'            => true,
+				'value'             => FormBuilder::get_value( 'unicode_modifier', $option, '' ),
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'desc_tip'          => __( 'Check this checkbox, if you want find and replace unicode characters (UTF-8). e.g: U+0026, REČA', 'real-time-auto-find-and-replace' ),
 			),
-
 		);
 
-		$fields          = apply_filters( 'bfrp_masking_settings_fields', $fields );
+
+		$fields          = apply_filters( 'bfrp_masking_settings_fields', $fields, $option );
 		$args['content'] = $this->Form_Generator->generate_html_fields( $fields );
 
 		$swal_title           = __( 'Adding Rule', 'real-time-auto-find-and-replace' );
 		$btn_txt              = __( 'Add Rule', 'real-time-auto-find-and-replace' );
+		
 		$update_hidden_fields = array();
+
 		if ( ! empty( $option ) ) {
 			$swal_title = __( 'Updating Rule', 'real-time-auto-find-and-replace' );
 			$btn_txt    = __( 'Update Rule', 'real-time-auto-find-and-replace' );
