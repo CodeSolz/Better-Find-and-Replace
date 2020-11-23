@@ -17,7 +17,6 @@
  * Tested Up To: 5.5
  */
 
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

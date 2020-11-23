@@ -148,7 +148,7 @@ class AddNewRule {
 				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
 				'type'          => 'section_title',
 				'title'         => __( 'Bypass Rule', 'real-time-auto-find-and-replace' ),
-				'desc_tip'      => __( 'Set the following settings if you want to keep unchange the text in specific area\'s.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Activate the following settings if you want to keep unchange the text in specific area with bypass rule pattern.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[bypass_rule_is_active]' => array(
 				'wrapper_class'     => "bypass-rule {$hiddenBypassRule}",
@@ -226,6 +226,115 @@ class AddNewRule {
 					\site_url( 'test-post' )
 				),
 			),
+			'cs_masking_rule[skip_css]'              => array(
+				'title'                    => sprintf( __( 'Skip CSS %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'wrapper_class'            => "bypass-rule {$hiddenBypassRule}",
+				'type'                     => 'miscellaneous',
+				'is_pro'                   => true,
+				'desc_tip'                 => __(
+					'Check the checkboxes, if you want to keep unchanged all the CSS',
+					'real-time-auto-find-and-replace'
+				),
+				'after_text_wrapper_class' => 'type-of-css-rule',
+				'options'                  => array(
+					'cs_masking_rule[skip_css_url_external]' => array(
+						'type'              => 'checkbox',
+						'value'             => FormBuilder::get_value( 'skip_css_url_external', $option, '' ),
+						'custom_attributes' => array(
+							'disabled' => 'disabled',
+						),
+						'after_text'        => sprintf(
+							__(
+								' External CSS URL %1$s e.g: The CSS loaded with a tag like this - %3$s %2$s',
+								'real-time-auto-find-and-replace'
+							),
+							'<i>(',
+							')</i>',
+							'<code>' . esc_html( '<link rel="stylesheet" href="mystyle.css">' ) . '</code>'
+						),
+					),
+					'cs_masking_rule[skip_css_internal]' => array(
+						'type'              => 'checkbox',
+						'value'             => FormBuilder::get_value( 'skip_css_internal', $option, '' ),
+						'custom_attributes' => array(
+							'disabled' => 'disabled',
+						),
+						'after_text'        => sprintf(
+							__(
+								' Internal CSS URL %1$s e.g: The CSS loaded with a internal tag like this - %3$s %2$s',
+								'real-time-auto-find-and-replace'
+							),
+							'<i>(',
+							')</i>',
+							'<code>' . esc_html( '<style> //css code  </style>' ) . '</code>'
+						),
+					),
+					'cs_masking_rule[skip_css_inline]'   => array(
+						'type'              => 'checkbox',
+						'value'             => FormBuilder::get_value( 'skip_css_inline', $option, '' ),
+						'custom_attributes' => array(
+							'disabled' => 'disabled',
+						),
+						'after_text'        => sprintf(
+							__(
+								' Inline CSS URL %1$s e.g: The CSS loaded with a tag like this - %3$s %2$s',
+								'real-time-auto-find-and-replace'
+							),
+							'<i>(',
+							')</i>',
+							'<code>' . esc_html( '<body style="color:red;">' ) . '</code>'
+						),
+					),
+				),
+			),
+			'cs_masking_rule[skip_js]'               => array(
+				'title'                    => sprintf( __( 'Skip JS %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'wrapper_class'            => "bypass-rule {$hiddenBypassRule}",
+				'type'                     => 'miscellaneous',
+				'is_pro'                   => true,
+				'desc_tip'                 => __(
+					'Check the checkboxes, if you want to keep unchanged all the JS',
+					'real-time-auto-find-and-replace'
+				),
+				'after_text_wrapper_class' => 'type-of-js-rule',
+				'options'                  => array(
+					'cs_masking_rule[skip_js_url_external]' => array(
+						'type'              => 'checkbox',
+						'value'             => FormBuilder::get_value( 'skip_js_url_external', $option, '' ),
+						'custom_attributes' => array(
+							'disabled' => 'disabled',
+						),
+						'after_text'        => sprintf(
+							__(
+								' External JS URL %1$s e.g: The JS loaded with a tag like this - %3$s %2$s',
+								'real-time-auto-find-and-replace'
+							),
+							'<i>(',
+							')</i>',
+							'<code>' . esc_html( '<script type="text/javascript" src="external.js"></script>' ) . '</code>'
+						),
+					),
+					'cs_masking_rule[skip_js_internal]' => array(
+						'type'              => 'checkbox',
+						'value'             => FormBuilder::get_value( 'skip_js_internal', $option, '' ),
+						'custom_attributes' => array(
+							'disabled' => 'disabled',
+						),
+						'after_text'        => sprintf(
+							__(
+								' Internal JS URL %1$s e.g: The JS loaded with a internal tag like this - %3$s %2$s',
+								'real-time-auto-find-and-replace'
+							),
+							'<i>(',
+							')</i>',
+							'<code>'
+											. esc_html( '<script type="text/javascript"> //JavScript code </script>' )
+											. '</code>'
+						),
+					),
+				),
+			),
+
 			'cs_masking_rule[case_insensitive]'      => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
 				'title'             => sprintf( __( 'Case-Insensitive %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
@@ -267,13 +376,12 @@ class AddNewRule {
 			),
 		);
 
-
 		$fields          = apply_filters( 'bfrp_masking_settings_fields', $fields, $option );
 		$args['content'] = $this->Form_Generator->generate_html_fields( $fields );
 
-		$swal_title           = __( 'Adding Rule', 'real-time-auto-find-and-replace' );
-		$btn_txt              = __( 'Add Rule', 'real-time-auto-find-and-replace' );
-		
+		$swal_title = __( 'Adding Rule', 'real-time-auto-find-and-replace' );
+		$btn_txt    = __( 'Add Rule', 'real-time-auto-find-and-replace' );
+
 		$update_hidden_fields = array();
 
 		if ( ! empty( $option ) ) {

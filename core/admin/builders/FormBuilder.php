@@ -121,6 +121,12 @@ class FormBuilder {
 			$input .= $this->generate_checkbox_field( $field_name, $field, $field_id );
 		} elseif ( $field['type'] == 'miscellaneous' ) {
 			foreach ( $field['options'] as $item_name => $item_assets ) {
+
+				// check has wrapper class
+				if ( isset( $field['after_text_wrapper_class'] ) ) {
+					$input .= '<span class="' . $field['after_text_wrapper_class'] . '">';
+				}
+
 				if ( $item_assets['type'] == 'text' || $field['type'] == 'email' || $item_assets['type'] == 'number' || $item_assets['type'] == 'password' ) {
 					$input .= $this->generate_text_field( $item_name, $item_assets, 'mis_' . $field_id );
 				} elseif ( $item_assets['type'] == 'select' ) {
@@ -133,6 +139,10 @@ class FormBuilder {
 
 				if ( isset( $item_assets['after_text'] ) ) {
 					$input .= $item_assets['after_text'];
+				}
+
+				if ( isset( $field['after_text_wrapper_class'] ) ) {
+					$input .= '</span>';
 				}
 			}
 		}

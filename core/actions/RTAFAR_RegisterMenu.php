@@ -272,11 +272,23 @@ class RTAFAR_RegisterMenu {
 		}
 
 		if ( 'cs-bfar-go-pro' === $_GET['page'] ) {
-			\wp_redirect( Util::cs_get_pro_link( 'https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' ) );
-			die;
+			_e( 'Please wait a while redirecting..' );
+
+			add_action(
+				'admin_footer',
+				function() {
+					$redirect_url = Util::cs_get_pro_link( 'https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
+					?>
+					<script type="text/javascript">
+						window.location.href = '<?php echo $redirect_url; ?>';
+					</script>
+					<?php
+				}
+			);
 		}
 	}
 
 
-}
 
+
+}
