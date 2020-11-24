@@ -71,6 +71,9 @@ class AddNewRule {
 			$hiddenAdvanceFilter = '';
 		}
 
+
+		// pre_print( $option );
+
 		$fields = array(
 			'cs_masking_rule[find]'                  => array(
 				'title'       => __( 'Find', 'real-time-auto-find-and-replace' ),
@@ -261,7 +264,7 @@ class AddNewRule {
 						),
 						'after_text'        => sprintf(
 							__(
-								' Internal CSS URL %1$s e.g: The CSS loaded with a internal tag like this - %3$s %2$s',
+								' Internal CSS %1$s e.g: The CSS loaded with a internal tag like this - %3$s %2$s',
 								'real-time-auto-find-and-replace'
 							),
 							'<i>(',
@@ -277,7 +280,7 @@ class AddNewRule {
 						),
 						'after_text'        => sprintf(
 							__(
-								' Inline CSS URL %1$s e.g: The CSS loaded with a tag like this - %3$s %2$s',
+								' Inline CSS %1$s e.g: The CSS loaded with a tag like this - %3$s %2$s',
 								'real-time-auto-find-and-replace'
 							),
 							'<i>(',
@@ -288,7 +291,7 @@ class AddNewRule {
 				),
 			),
 			'cs_masking_rule[skip_js]'               => array(
-				'title'                    => sprintf( __( 'Skip JS %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'title'                    => sprintf( __( 'Skip JavaScript %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'wrapper_class'            => "bypass-rule {$hiddenBypassRule}",
 				'type'                     => 'miscellaneous',
 				'is_pro'                   => true,
@@ -322,7 +325,7 @@ class AddNewRule {
 						),
 						'after_text'        => sprintf(
 							__(
-								' Internal JS URL %1$s e.g: The JS loaded with a internal tag like this - %3$s %2$s',
+								' Internal JS %1$s e.g: The JS loaded with a internal tag like this - %3$s %2$s',
 								'real-time-auto-find-and-replace'
 							),
 							'<i>(',
