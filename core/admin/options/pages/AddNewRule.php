@@ -71,6 +71,7 @@ class AddNewRule {
 			$hiddenAdvanceFilter = '';
 		}
 
+		// TODO: jquery search replace rule edit not working on admin, then advance jquery search replace
 
 		// pre_print( $option );
 

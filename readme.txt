@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,7 +56,13 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 * RegEx supported
 * Advance Regex - Powerful code blocks / multilines find and replace in real-time (masking) rendering
 * Advance Regex - Any (CSS / JS / HTML) code Block find and replacement in real-time (masking) rendering
-* Advance filtering options - ( Case insensitive, Whole Word, Unicode, Skip posts / page / custom taxonomies etc.. URLs )
+* **Advance filtering options** :-
+* Case insensitive - search and replace case sensitive or insensitive
+* Whole Word - search and replace whole word 
+* Unicode - search and replace Unicode Characters
+* Skip posts / page / custom taxonomies etc.. urls
+* Skip CSS - External, Internal, Inline
+* Skip JavaScript - External, Internal
 * Bypass rule  - keep texts unchanged on specific area with special pattern
 * Bypass rule  - keep base links / urls ( post, pages, custom taxonomies etc..) unchanged where find word exists in that URL.
 
@@ -121,6 +127,11 @@ code block in find field*
 7. Dry run report
 
 == Changelog ==
+
+= Version: 1.1.5 =
+* **Improvement:** Ajax find and replacement
+* **Feat:** Advance filters for CSS rule (pro)
+* **Feat:** Advance filters for JavaScript (pro) 
 
 = Version: 1.1.4 =
 * **Improvement:** Real-time find and replacement 
