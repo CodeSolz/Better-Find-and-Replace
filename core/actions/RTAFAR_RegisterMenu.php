@@ -137,7 +137,7 @@ class RTAFAR_RegisterMenu {
 		$title  = 'Add';
 		$option = array();
 		if ( isset( $_GET['action'] ) && ! empty( $_GET['rule_id'] ) ) {
-			$option = Masking::get_rules( 'all', $_GET['rule_id'] );
+			$option = Masking::get_rules( 'all', $_GET['rule_id'], false, 'admin_setting' );
 			$option = (array) $option[0];
 			$title  = 'Update';
 		}

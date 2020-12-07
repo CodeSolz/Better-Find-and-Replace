@@ -3,8 +3,8 @@ Contributors: CodeSolz, m.tuhin
 Tags: find, replace, search, find and replace, search and replace, auto find, auto replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
-Tested up to: 5.5
-Stable tag: 1.1.5
+Tested up to: 5.6
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -127,6 +127,10 @@ code block in find field*
 7. Dry run report
 
 == Changelog ==
+
+= Version: 1.1.6 =
+* **Improvement:** Database search and replacement
+* **Improvement:** Special characters on Database search and replacement
 
 = Version: 1.1.5 =
 * **Improvement:** Ajax find and replacement

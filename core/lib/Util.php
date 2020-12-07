@@ -230,5 +230,46 @@ class Util {
 		return \wp_remote_retrieve_body( $response );
 	}
 
+	/**
+	 * Special char wrap
+	 *
+	 * @return void
+	 */
+	public static function bfar_special_chars() {
+		return array(
+			'chars' => array(
+				'#',
+				'$',
+				'',
+				'^',
+				'*',
+				'+',
+				'\\',
+				"'",
+				'?',
+				'[',
+				'(',
+				')',
+				'.',
+			),
+			'flags' => array(
+				'~hash~',
+				'~dollar~',
+				'~&nbsp;~',
+				'~caret~',
+				'~star~',
+				'~plus~',
+				'~bslash~',
+				'~squote~',
+				'~ques~',
+				'~ltbrace~',
+				'~lfbrace~',
+				'~rfbrace~',
+				'~dot~',
+			),
+		);
+	}
+
+
 }
 

@@ -33,6 +33,13 @@ class DbReplacer {
 	public $dryRunReport = array();
 
 	/**
+	 * Hold special chars
+	 *
+	 * @var string
+	 */
+	private $bfar_special_chars;
+
+	/**
 	 * Init
 	 *
 	 * @param array $settings
@@ -50,9 +57,7 @@ class DbReplacer {
 	public function db_string_replace( $user_query ) {
 		$userInput = Util::check_evil_script( $user_query['cs_db_string_replace'] );
 		if ( ! isset( $userInput['find'] ) ||
-			empty( $find = $userInput['find'] ) ||
-			! isset( $userInput['replace'] ) ||
-			empty( $replace = $userInput['replace'] )
+			empty( $find = $userInput['find'] )
 		) {
 			return wp_send_json(
 				array(
@@ -63,9 +68,12 @@ class DbReplacer {
 			);
 		}
 
+		$this->bfar_special_chars                      = Util::bfar_special_chars();
+		$replace                                       = $this->format_replace( $user_query['cs_db_string_replace']['replace'] );
+		$user_query['cs_db_string_replace']['replace'] = $replace;
+
 		$this->settings = Util::check_evil_script( $user_query );
 		$find           = $this->format_find( $find );
-		$replace        = $this->format_replace( $replace );
 		$whereToReplace = $userInput['where_to_replace'];
 
 		global $wpdb;
@@ -438,7 +446,8 @@ class DbReplacer {
 
 			// check for dry run
 			if ( ! isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
-				// pre_print( $this->settings );
+				// remove empty flag
+				$new_string = $this->bfarRemoveSpcialCharsFlag( $new_string );
 				$wpdb->update( $tbl, array( $update_col => $new_string ), $update_con );
 			} elseif ( $this->settings['cs_db_string_replace']['dry_run'] == 'on' ) {
 
@@ -462,8 +471,8 @@ class DbReplacer {
 						'find'         => $find,
 						'replace'      => $replace,
 						'ici'          => $isCaseInsensitive,
-						'old_val'      => $old_value,
-						'new_val'      => $new_string,
+						'old_val'      => \esc_html( $old_value ),
+						'new_val'      => \esc_html( $new_string ),
 						'dis_find'     => $displayReplace['find'],
 						'dis_replace'  => $displayReplace['replace'],
 						'findCount'    => $displayReplace['findCount'],
@@ -507,14 +516,16 @@ class DbReplacer {
 				}
 				$find = \preg_filter( '#^(.*?)$#', $pregCase, $args['find'] );
 			} else {
-				$find = '#(' . $args['find'] . ')#';
-
+				$find = $this->bfarApplySpcialCharsFlag( $args['find'] );
+				$find = '#(' . \preg_quote( $find ) . ')#';
 				if ( true === $args['isCaseInsensitive'] ) {
 					$find .= 'i';
 				}
 			}
 
-			$findNewDisStr = \preg_replace( \esc_html( $find ), "<span class='find'>$1</span>", \esc_html( $args['old_value'] ), -1, $countFind );
+			$old_value     = $this->bfarApplySpcialCharsFlag( $args['old_value'] );
+			$findNewDisStr = \preg_replace( \esc_html( $find ), "<span class='find'>$1</span>", \esc_html( $old_value ), -1, $countFind );
+			$findNewDisStr = $this->bfarRemoveSpcialCharsFlag( $findNewDisStr );
 		}
 
 		// get replace highlight
@@ -534,6 +545,7 @@ class DbReplacer {
 
 		$countReplace     = 0;
 		$replaceNewDisStr = \preg_replace( \esc_html( $replace ), "<span class='replace'>$1</span>", \esc_html( $args['new_value'] ), -1, $countReplace );
+		$replaceNewDisStr = $this->bfarRemoveSpcialCharsFlag( $replaceNewDisStr );
 
 		return array(
 			'find'         => $findNewDisStr,
@@ -583,7 +595,12 @@ class DbReplacer {
 	 * @return void
 	 */
 	private function format_replace( $replace ) {
-		return \stripslashes( $replace );
+		$replace = \stripslashes( $replace );
+
+		// apply special chars filter
+		$replace = $this->bfarApplySpcialCharsFlag( $replace );
+
+		return $replace;
 	}
 
 	/**
@@ -596,6 +613,38 @@ class DbReplacer {
 		return $old_value;
 	}
 
+	/**
+	 * apply filter
+	 *
+	 * @return void
+	 */
+	public function bfarApplySpcialCharsFlag( $replace ) {
+		if ( empty( $replace ) ) {
+			$replace = '~&nbsp;~';
+		}
+
+		$replace = \str_replace(
+			$this->bfar_special_chars['chars'],
+			$this->bfar_special_chars['flags'],
+			$replace
+		);
+
+		return $replace;
+	}
+
+	/**
+	 * Remove replace flag
+	 *
+	 * @param [type] $replace
+	 * @return void
+	 */
+	public function bfarRemoveSpcialCharsFlag( $replace ) {
+		return \str_replace(
+			$this->bfar_special_chars['flags'],
+			$this->bfar_special_chars['chars'],
+			$replace
+		);
+	}
 
 
 }

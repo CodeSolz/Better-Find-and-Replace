@@ -68,7 +68,6 @@ class ReplaceInDB {
 				'title'       => __( 'Replace With', 'real-time-auto-find-and-replace' ),
 				'type'        => 'text',
 				'class'       => 'form-control',
-				'required'    => true,
 				'value'       => '',
 				'placeholder' => __( 'Enter word to replace with', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Enter word / phrase you want to replace with. e.g : test', 'real-time-auto-find-and-replace' ),
@@ -93,7 +92,7 @@ class ReplaceInDB {
 				'multiple'      => true,
 				'required'      => true,
 				'placeholder'   => __( 'Please select tables', 'real-time-auto-find-and-replace' ),
-				'options'       => apply_filters( 'bfrp_selectTables', array() ),
+				'options'       => \apply_filters( 'bfrp_selectTables', array() ),
 				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post.', 'real-time-auto-find-and-replace' ),
 			),
 			'url_options[]'                          => array(
@@ -103,7 +102,7 @@ class ReplaceInDB {
 				'class'         => 'form-control in-which-url',
 				'multiple'      => true,
 				'placeholder'   => __( 'Please select options', 'real-time-auto-find-and-replace' ),
-				'options'       => apply_filters(
+				'options'       => \apply_filters(
 					'bfrp_urlOptions',
 					array(
 						'all'        => __( 'All', 'real-time-auto-find-and-replace' ),
@@ -178,7 +177,7 @@ class ReplaceInDB {
 		);
 		$args['hidden_fields'] = $this->Form_Generator->generate_hidden_fields( $hidden_fields );
 
-		$args['btn_text']       = __( 'Find & Replace', 'real-time-auto-find-and-replace' );
+		$args['btn_text']       = __( 'Create Reports', 'real-time-auto-find-and-replace' );
 		$args['show_btn']       = true;
 		$args['body_class']     = 'no-bottom-margin';
 		$args['well']           = '<ul>

@@ -102,7 +102,7 @@ class Masking {
 	 *
 	 * @return void
 	 */
-	public static function get_rules( $where_to_replace = 'all', $id = '', $rule_type = false ) {
+	public static function get_rules( $where_to_replace = 'all', $id = '', $rule_type = false, $adminCall = false ) {
 		global $wpdb;
 
 		$where_id = '';
@@ -111,10 +111,13 @@ class Masking {
 		}
 
 		$ruleType = '';
-		if ( $rule_type ) {
-			$ruleType = " and type = '{$rule_type}' ";
-		} else {
-			$ruleType = " and type != 'ajaxContent' "; // get all but not ajaxRules
+
+		if ( false === $adminCall ) {
+			if ( $rule_type ) {
+				$ruleType = " and type = '{$rule_type}' ";
+			} else {
+				$ruleType = " and type != 'ajaxContent' "; // get all but not ajaxRules
+			}
 		}
 
 		$get_rules = $wpdb->get_results(
