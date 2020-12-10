@@ -68,6 +68,9 @@ class DbReplacer {
 			);
 		}
 
+		// hook search start
+		// do_action( 'bfar_search_before' );
+
 		$this->bfar_special_chars                      = Util::bfar_special_chars();
 		$replace                                       = $this->format_replace( $user_query['cs_db_string_replace']['replace'] );
 		$user_query['cs_db_string_replace']['replace'] = $replace;
@@ -116,6 +119,9 @@ class DbReplacer {
 			$i          += $this->replace_urls( $find, $replace, $inWhichUrl );
 		}
 
+		// hook dry run reports
+		// do_action( 'bfar_dry_run_item', $this->dryRunReport );
+
 		$dryRunReport = array();
 		if ( isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
 
@@ -154,7 +160,15 @@ class DbReplacer {
 	private function tbl_post( $find, $replace ) {
 		global $wpdb;
 		$i        = 0;
-		$get_data = $wpdb->get_results( "select * from {$wpdb->posts}" );
+		// $get_data = $wpdb->get_results( "select * from {$wpdb->posts}" );
+		$get_data = $wpdb->get_results( 
+			$wpdb->prepare( 
+				"select * from {$wpdb->posts} where post_title like %s or post_content like %s or post_excerpt like %s",
+				'%' . $wpdb->esc_like($find) . '%', 
+				'%' . $wpdb->esc_like($find) . '%', 
+				'%' . $wpdb->esc_like($find) . '%' 
+			) 
+		);
 		if ( $get_data ) {
 
 			foreach ( $get_data as $item ) {
@@ -219,7 +233,14 @@ class DbReplacer {
 	private function tbl_postmeta( $find, $replace ) {
 		global $wpdb;
 		$i        = 0;
-		$get_data = $wpdb->get_results( "select * from {$wpdb->postmeta} " );
+		$get_data = $wpdb->get_results( 
+			$wpdb->prepare( 
+				"select * from {$wpdb->postmeta} where meta_value like %s or meta_key like %s",
+				'%' . $wpdb->esc_like($find) . '%', 
+				'%' . $wpdb->esc_like($find) . '%' 
+			) 
+		);
+
 		if ( $get_data ) {
 			foreach ( $get_data as $item ) {
 
@@ -237,6 +258,23 @@ class DbReplacer {
 				if ( true === $is_replaced ) {
 					$i++;
 				}
+
+				$is_replaced = $this->bfrReplace(
+					$find,
+					$replace,
+					$item->meta_key,
+					$wpdb->base_prefix . 'postmeta',
+					$item->meta_id,
+					'meta_id', // primary key
+					'meta_key',
+					array( 'meta_id' => $item->meta_id )
+				);
+
+				if ( true === $is_replaced ) {
+					$i++;
+				}
+
+
 			}
 		}
 		return $i;
@@ -252,7 +290,13 @@ class DbReplacer {
 	private function tbl_options( $find, $replace ) {
 		global $wpdb;
 		$i        = 0;
-		$get_data = $wpdb->get_results( "select * from {$wpdb->options} " );
+		// $get_data = $wpdb->get_results( "select * from {$wpdb->options} " );
+		$get_data = $wpdb->get_results( 
+			$wpdb->prepare( 
+				"select * from {$wpdb->options} where option_value like %s",
+				'%' . $wpdb->esc_like($find) . '%'
+			) 
+		);
 		if ( $get_data ) {
 			foreach ( $get_data as $item ) {
 
@@ -349,8 +393,8 @@ class DbReplacer {
 		$get_data = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT * FROM {$wpdb->posts} WHERE (guid like %s OR post_name like %s ) AND ( {$con} ) ",
-				"%$find%",
-				"%$find%"
+				'%' . $wpdb->esc_like($find) . '%', 
+				'%' . $wpdb->esc_like($find) . '%' 
 			)
 		);
 
@@ -424,20 +468,21 @@ class DbReplacer {
 
 			if ( ! isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
 				$formattedFind = $this->formatFindWholeWord( $find );
-				$new_string    = \preg_replace( $formattedFind, $replace, $old_value );
 			} else {
-				$formattedFind     = $this->formatFindWholeWord( $find, true );
-				$new_string        = \preg_replace( $formattedFind, $replace, $old_value );
+				$formattedFind = $this->formatFindWholeWord( $find, true );
 				$isCaseInsensitive = true;
 			}
+			$new_string = $this->bfar_replace_formatter( $formattedFind, $replace, $old_value, 'pregReplace' );
+
+			// pre_print( $new_string );
+
 		} else {
 
-			if ( ! isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
-				$new_string = \str_replace( $find, $replace, $old_value );
-			} else {
-				$new_string        = \str_ireplace( $find, $replace, $old_value );
+			if ( isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
 				$isCaseInsensitive = true;
-			}
+			} 
+
+			$new_string = $this->bfar_replace_formatter( $find, $replace, $old_value, false, 'regular', $isCaseInsensitive );
 		}
 
 		$is_updated = false;
@@ -449,6 +494,9 @@ class DbReplacer {
 				// remove empty flag
 				$new_string = $this->bfarRemoveSpcialCharsFlag( $new_string );
 				$wpdb->update( $tbl, array( $update_col => $new_string ), $update_con );
+
+				//TODO: add log in history table
+
 			} elseif ( $this->settings['cs_db_string_replace']['dry_run'] == 'on' ) {
 
 				$displayReplace = $this->highlightDisplayFindReplace(
@@ -471,15 +519,15 @@ class DbReplacer {
 						'find'         => $find,
 						'replace'      => $replace,
 						'ici'          => $isCaseInsensitive,
-						'old_val'      => \esc_html( $old_value ),
-						'new_val'      => \esc_html( $new_string ),
+						'old_val'      => $old_value,
+						'new_val'      => $this->bfar_esc_html( $new_string ),
 						'dis_find'     => $displayReplace['find'],
 						'dis_replace'  => $displayReplace['replace'],
 						'findCount'    => $displayReplace['findCount'],
 						'replaceCount' => $displayReplace['replaceCount'],
 					),
 				);
-
+				
 				if ( isset( $this->dryRunReport[ $tbl ] ) ) {
 					$this->dryRunReport[ $tbl ] = array_merge_recursive( $this->dryRunReport[ $tbl ], $reportRow );
 				} else {
@@ -503,9 +551,7 @@ class DbReplacer {
 	 * @return array
 	 */
 	private function highlightDisplayFindReplace( $args ) {
-
 		$countFind = 0;
-
 		if ( isset( $args['formattedFind'] ) && ! empty( $args['formattedFind'] ) ) {
 			$findNewDisStr = \preg_replace( $args['formattedFind'], "<span class='find'>$1</span>", \esc_html( $args['old_value'] ), -1, $countFind );
 		} else {
@@ -614,22 +660,64 @@ class DbReplacer {
 	}
 
 	/**
+	 * Replace formatter
+	 *
+	 * @param [type]  $find
+	 * @param [type]  $replace
+	 * @param [type]  $str
+	 * @param boolean $is_preg
+	 * @param boolean $is_regular
+	 * @param boolean $is_case_in_sensitive
+	 * @param boolean $is_serialized
+	 * @return void
+	 */
+	public function bfar_replace_formatter( $find, $replace, $str, $is_preg = false, $is_regular = false,
+					$is_case_in_sensitive = false, $is_serialized = false ) {
+
+		if ( \is_serialized( $str ) && ! \is_serialized_string( $str ) ) {
+			$str = \maybe_unserialize( $str );
+			$str = $this->bfar_replace_formatter( $find, $replace, $str, $is_preg, $is_regular, $is_case_in_sensitive, true );
+		} elseif ( \is_serialized_string( $str ) ) {
+			$str = \maybe_unserialize( $str );
+			$str = Util::bfar_replacer( $find, $replace, $str, $is_preg, $is_regular, $is_case_in_sensitive );
+			$str = \maybe_serialize( $str );
+		} elseif ( is_array( $str ) ) {
+			$flag = array();
+			foreach ( $str as $key => $value ) {
+				$flag[ $key ] = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false );
+			}
+			$str = $flag;
+			unset( $flag );
+		} elseif ( \is_object( $str ) ) {
+			$flag    = $str;
+			$objVars = \get_object_vars( $str );
+			foreach ( $objVars as $key => $value ) {
+				$flag->$key = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false );
+			}
+			$str = $flag;
+			unset( $flag );
+		} elseif ( \is_string( $str ) ) {
+			$str = Util::bfar_replacer( $find, $replace, $str, $is_preg, $is_regular, $is_case_in_sensitive );
+		}
+
+		if ( $is_serialized ) {
+			$str = \maybe_serialize( $str );
+		}
+
+		return $str;
+	}
+
+	/**
 	 * apply filter
 	 *
 	 * @return void
 	 */
-	public function bfarApplySpcialCharsFlag( $replace ) {
-		if ( empty( $replace ) ) {
-			$replace = '~&nbsp;~';
+	public function bfarApplySpcialCharsFlag( $str ) {
+		if ( empty( $str ) ) {
+			$str = '~&nbsp;~';
 		}
 
-		$replace = \str_replace(
-			$this->bfar_special_chars['chars'],
-			$this->bfar_special_chars['flags'],
-			$replace
-		);
-
-		return $replace;
+		return Util::bfar_replacer( $this->bfar_special_chars['chars'], $this->bfar_special_chars['flags'], $str, false, 'regular' );
 	}
 
 	/**
@@ -638,14 +726,12 @@ class DbReplacer {
 	 * @param [type] $replace
 	 * @return void
 	 */
-	public function bfarRemoveSpcialCharsFlag( $replace ) {
-		return \str_replace(
-			$this->bfar_special_chars['flags'],
-			$this->bfar_special_chars['chars'],
-			$replace
-		);
+	public function bfarRemoveSpcialCharsFlag( $str ) {
+		return Util::bfar_replacer( $this->bfar_special_chars['flags'], $this->bfar_special_chars['chars'], $str, false, 'regular' );
 	}
 
+
+	
 
 }
 

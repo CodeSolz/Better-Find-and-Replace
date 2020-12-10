@@ -270,6 +270,30 @@ class Util {
 		);
 	}
 
+	/**
+	 * Str replacer
+	 *
+	 * @param [type]  $find
+	 * @param [type]  $replace
+	 * @param [type]  $str
+	 * @param boolean $is_preg
+	 * @param boolean $is_regular
+	 * @param boolean $is_case_in_sensitive
+	 * @return void
+	 */
+	public static function bfar_replacer( $find, $replace, $str, $is_preg = false, $is_regular = false, $is_case_in_sensitive = false ) {
+		if ( false !== $is_preg ) {
+			return \preg_replace( $find, $replace, $str );
+		} elseif ( false !== $is_regular ) {
+			if ( false !== $is_case_in_sensitive ) {
+				return \str_ireplace( $find, $replace, $str );
+			} else {
+				return \str_replace( $find, $replace, $str );
+			}
+		}
+
+		return false;
+	}
 
 }
 
