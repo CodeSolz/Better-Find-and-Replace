@@ -734,7 +734,4 @@ class DbReplacer {
 		return Util::bfar_replacer( $this->bfar_special_chars['flags'], $this->bfar_special_chars['chars'], $str, false, 'regular' );
 	}
 
-
-	
-
 }

@@ -14,10 +14,10 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 
 use RealTimeAutoFindReplace\lib\Util;
 use RealTimeAutoFindReplace\admin\builders\AdminPageBuilder;
-use RealTimeAutoFindReplace\admin\options\functions\AllMaskingRulesList;
+use RealTimeAutoFindReplace\admin\options\functions\AllRestoreDbData;
 
 
-class AllMaskingRules {
+class RestoreDb {
 
 	/**
 	 * Hold page generator class
@@ -45,11 +45,11 @@ class AllMaskingRules {
 		}
 
 		ob_start();
-		$adCodeList = new AllMaskingRulesList();
+		$adCodeList = new AllRestoreDbData();
 		$adCodeList->prepare_items();
 		echo '<form id="plugins-filter" method="get"><input type="hidden" name="page" value="' . $page . '" />';
 		$adCodeList->views();
-		$adCodeList->search_box( __( 'Search Rule', 'real-time-auto-find-and-replace' ), '' );
+		$adCodeList->search_box( __( 'Search', 'real-time-auto-find-and-replace' ), '' );
 		$adCodeList->display();
 		echo '</form>';
 		$html = ob_get_clean();

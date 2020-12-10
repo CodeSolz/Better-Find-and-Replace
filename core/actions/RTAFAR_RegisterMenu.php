@@ -105,6 +105,15 @@ class RTAFAR_RegisterMenu {
 			array( $this, 'rtafr_page_replace_in_db' )
 		);
 
+		$this->rtafr_menus['restore_in_db'] = add_submenu_page(
+			CS_RTAFAR_PLUGIN_IDENTIFIER,
+			__( 'Restore Database', 'real-time-auto-find-and-replace' ),
+			__( 'Restore in Database', 'real-time-auto-find-and-replace' ),
+			'manage_options',
+			'cs-bfar-restore-database',
+			array( $this, 'rtafar_page_restore_db' )
+		);
+
 		$this->rtafr_menus['go_pro'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Go Pro', 'real-time-auto-find-and-replace' ),
@@ -118,6 +127,7 @@ class RTAFAR_RegisterMenu {
 		add_action( "load-{$this->rtafr_menus['add_masking_rule']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['all_masking_rules']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['replace_in_db']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
+		add_action( "load-{$this->rtafr_menus['restore_in_db']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 
 		remove_submenu_page( CS_RTAFAR_PLUGIN_IDENTIFIER, CS_RTAFAR_PLUGIN_IDENTIFIER );
 
@@ -152,14 +162,14 @@ class RTAFAR_RegisterMenu {
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
 			$AddNewRule = $this->pages->AddNewRule();
 			if ( is_object( $AddNewRule ) ) {
-				echo $AddNewRule->generate_page( array_merge_recursive( $page_info, array( 'gateway_settings' => array() ) ), $option );
+				echo $AddNewRule->generate_page( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ), $option );
 			} else {
 				echo $AddNewRule;
 			}
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( is_object( $AccessDenied ) ) {
-				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'gateway_settings' => array() ) ) );
+				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
 				echo $AccessDenied;
 			}
@@ -175,14 +185,14 @@ class RTAFAR_RegisterMenu {
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
 			$AllMaskingRules = $this->pages->AllMaskingRules();
 			if ( is_object( $AllMaskingRules ) ) {
-				echo $AllMaskingRules->generate_page( array_merge_recursive( $page_info, array( 'gateway_settings' => array() ) ) );
+				echo $AllMaskingRules->generate_page( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
 				echo $AllMaskingRules;
 			}
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( is_object( $AccessDenied ) ) {
-				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'gateway_settings' => array() ) ) );
+				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
 				echo $AccessDenied;
 			}
@@ -203,14 +213,14 @@ class RTAFAR_RegisterMenu {
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
 			$Default_Settings = $this->pages->ReplaceInDB();
 			if ( is_object( $Default_Settings ) ) {
-				echo $Default_Settings->generate_default_settings( array_merge_recursive( $page_info, array( 'gateway_settings' => array() ) ) );
+				echo $Default_Settings->generate_default_settings( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
 				echo $Default_Settings;
 			}
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( is_object( $AccessDenied ) ) {
-				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'gateway_settings' => array() ) ) );
+				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
 				echo $AccessDenied;
 			}
@@ -260,9 +270,36 @@ class RTAFAR_RegisterMenu {
 		return Scripts_Settings::load_admin_footer_script( $this->current_screen->id, $this->rtafr_menus );
 	}
 
+	/**
+	 * Restore DB
+	 *
+	 * @return void
+	 */
+	public function rtafar_page_restore_db(){
+		$page_info = array(
+			'title'     => __( 'Restore in Database', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'You can restore data to database what you have replaced from bellow', 'real-time-auto-find-and-replace' ),
+		);
+
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
+			$RestoreDb = $this->pages->RestoreDb();
+			if ( is_object( $RestoreDb ) ) {
+				echo $RestoreDb->generate_page( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
+			} else {
+				echo $RestoreDb;
+			}
+		} else {
+			$AccessDenied = $this->pages->AccessDenied();
+			if ( is_object( $AccessDenied ) ) {
+				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
+			} else {
+				echo $AccessDenied;
+			}
+		}
+	}
 
 	/**
-	 * Handler expernal redirect
+	 * Handler external redirect
 	 *
 	 * @return void
 	 */
