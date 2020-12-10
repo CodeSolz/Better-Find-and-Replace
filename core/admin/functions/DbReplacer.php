@@ -68,8 +68,6 @@ class DbReplacer {
 			);
 		}
 
-		// hook search start
-		// do_action( 'bfar_search_before' );
 
 		$this->bfar_special_chars                      = Util::bfar_special_chars();
 		$replace                                       = $this->format_replace( $user_query['cs_db_string_replace']['replace'] );
@@ -119,9 +117,6 @@ class DbReplacer {
 			$i          += $this->replace_urls( $find, $replace, $inWhichUrl );
 		}
 
-		// hook dry run reports
-		// do_action( 'bfar_dry_run_item', $this->dryRunReport );
-
 		$dryRunReport = array();
 		if ( isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
 
@@ -141,14 +136,15 @@ class DbReplacer {
 				'dryRunReport'        => $this->dryRunReport,
 			);
 		}
+		
 
 		return wp_send_json(
-			array(
+			\array_merge_recursive( array(
 				'status'        => true,
 				'title'         => 'Success!',
 				'text'          => sprintf( __( 'Thank you! replacement completed!. Total %1$s replaced : %2$d', 'real-time-auto-find-and-replace' ), $replaceType, $i ),
-				'nothing_found' => __( 'Sorry! Nothing Found!', 'real-time-auto-find-and-replace' ),
-			) + $dryRunReport
+				'nothing_found' => __( 'Sorry! Nothing Found!', 'real-time-auto-find-and-replace' )
+			), $dryRunReport )
 		);
 	}
 
@@ -160,7 +156,6 @@ class DbReplacer {
 	private function tbl_post( $find, $replace ) {
 		global $wpdb;
 		$i        = 0;
-		// $get_data = $wpdb->get_results( "select * from {$wpdb->posts}" );
 		$get_data = $wpdb->get_results( 
 			$wpdb->prepare( 
 				"select * from {$wpdb->posts} where post_title like %s or post_content like %s or post_excerpt like %s",
@@ -290,7 +285,6 @@ class DbReplacer {
 	private function tbl_options( $find, $replace ) {
 		global $wpdb;
 		$i        = 0;
-		// $get_data = $wpdb->get_results( "select * from {$wpdb->options} " );
 		$get_data = $wpdb->get_results( 
 			$wpdb->prepare( 
 				"select * from {$wpdb->options} where option_value like %s",
@@ -474,8 +468,6 @@ class DbReplacer {
 			}
 			$new_string = $this->bfar_replace_formatter( $formattedFind, $replace, $old_value, 'pregReplace' );
 
-			// pre_print( $new_string );
-
 		} else {
 
 			if ( isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ) {
@@ -484,6 +476,7 @@ class DbReplacer {
 
 			$new_string = $this->bfar_replace_formatter( $find, $replace, $old_value, false, 'regular', $isCaseInsensitive );
 		}
+
 
 		$is_updated = false;
 		if ( $new_string != $old_value ) {
@@ -495,7 +488,17 @@ class DbReplacer {
 				$new_string = $this->bfarRemoveSpcialCharsFlag( $new_string );
 				$wpdb->update( $tbl, array( $update_col => $new_string ), $update_con );
 
-				//TODO: add log in history table
+				do_action( 'bfar_save_item_history', \json_encode( array(
+					'tbl'          => $tbl,
+					'rid'          => $row_id,
+					'pCol'         => $primary_col, // primary col
+					'col'          => $update_col,
+					'find'         => $find,
+					'replace'      => $replace,
+					'ici'          => $isCaseInsensitive,
+					'old_val'      => $old_value,
+					'new_val'      => $new_string
+				) ));
 
 			} elseif ( $this->settings['cs_db_string_replace']['dry_run'] == 'on' ) {
 
@@ -520,19 +523,20 @@ class DbReplacer {
 						'replace'      => $replace,
 						'ici'          => $isCaseInsensitive,
 						'old_val'      => $old_value,
-						'new_val'      => $this->bfar_esc_html( $new_string ),
+						'new_val'      => $this->bfarRemoveSpcialCharsFlag( $new_string ),
 						'dis_find'     => $displayReplace['find'],
 						'dis_replace'  => $displayReplace['replace'],
 						'findCount'    => $displayReplace['findCount'],
 						'replaceCount' => $displayReplace['replaceCount'],
 					),
 				);
-				
+
 				if ( isset( $this->dryRunReport[ $tbl ] ) ) {
 					$this->dryRunReport[ $tbl ] = array_merge_recursive( $this->dryRunReport[ $tbl ], $reportRow );
 				} else {
 					$this->dryRunReport[ $tbl ] = $reportRow;
 				}
+				
 			}
 
 			$is_updated = true;
@@ -734,8 +738,3 @@ class DbReplacer {
 	
 
 }
-
-
-
-
-
