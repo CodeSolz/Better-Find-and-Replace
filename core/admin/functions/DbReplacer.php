@@ -229,11 +229,7 @@ class DbReplacer {
 		global $wpdb;
 		$i        = 0;
 		$get_data = $wpdb->get_results( 
-			$wpdb->prepare( 
-				"select * from {$wpdb->postmeta} where meta_value like %s or meta_key like %s",
-				'%' . $wpdb->esc_like($find) . '%', 
-				'%' . $wpdb->esc_like($find) . '%' 
-			) 
+			"select * from {$wpdb->postmeta} where meta_id = 3667"
 		);
 
 		if ( $get_data ) {
@@ -677,6 +673,16 @@ class DbReplacer {
 	 * @return void
 	 */
 	private function format_old_value( $old_value ) {
+		// pre_print(
+		// 	get_class($old_value)
+		// );
+		// pre_print(
+		// 	json_decode( $old_value )
+		// );
+		// pre_print(
+		// 	html_entity_decode(preg_replace("/%u([0-9a-f]{3,4})/i", "&#x\\1;", urldecode($old_value)), null, 'UTF-8')
+		// );
+
 		return $old_value;
 	}
 
@@ -695,17 +701,31 @@ class DbReplacer {
 	public function bfar_replace_formatter( $find, $replace, $str, $is_preg = false, $is_regular = false,
 					$is_case_in_sensitive = false, $is_serialized = false ) {
 
-		if ( \is_serialized( $str ) && ! \is_serialized_string( $str ) ) {
+		if ( \is_serialized( $str ) || \is_serialized_string( $str ) ) {
+			if( is_array( $str ) || is_object( $str ) ){
+				pre_print( $str );
+			}
 			$str = \maybe_unserialize( $str );
 			$str = $this->bfar_replace_formatter( $find, $replace, $str, $is_preg, $is_regular, $is_case_in_sensitive, true );
-		} elseif ( \is_serialized_string( $str ) ) {
-			$str = \maybe_unserialize( $str );
-			$str = Util::bfar_replacer( $find, $replace, $str, $is_preg, $is_regular, $is_case_in_sensitive );
-			$str = \maybe_serialize( $str );
-		} elseif ( is_array( $str ) ) {
-			$flag = array();
+		}  elseif ( is_array( $str ) ) {
+			$flag = array(); $prev_key = '';
 			foreach ( $str as $key => $value ) {
-				$flag[ $key ] = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false );
+				
+				//check empty
+				// pre_print( $value );
+				if( $replace == '~&nbsp;~' && ($key == $find || $value == $find) && !is_array( $value ) ){
+					// print_r( $key );
+					// pre_print( $value );
+					unset( $flag[ $key ] );
+					// pre_print( $prev_key );
+					// $flag[ $prev_key ] =  $flag[ $prev_key ] . '~&nbsp;~';
+
+					
+				}else{
+					$flag[ $key ] = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false );
+				}
+				$prev_key = $key;
+
 			}
 			$str = $flag;
 			unset( $flag );
@@ -713,7 +733,16 @@ class DbReplacer {
 			$flag    = $str;
 			$objVars = \get_object_vars( $str );
 			foreach ( $objVars as $key => $value ) {
-				$flag->$key = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false );
+
+				if( $replace == '~&nbsp;~' && ($key == $find || $value == $find) && !is_array( $value ) && !is_object( $str ) ){
+					// print_r( $key );
+					// pre_print( $value );
+					unset( $flag->$key );
+
+				}else{
+					$flag->$key = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false );
+				}
+
 			}
 			$str = $flag;
 			unset( $flag );
