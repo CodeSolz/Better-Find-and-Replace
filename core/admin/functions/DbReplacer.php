@@ -287,7 +287,8 @@ class DbReplacer {
 		$i        = 0;
 		$get_data = $wpdb->get_results( 
 			$wpdb->prepare( 
-				"select * from {$wpdb->options} where option_value like %s",
+				"select * from {$wpdb->options} where option_value like %s or option_name like %s",
+				'%' . $wpdb->esc_like($find) . '%',
 				'%' . $wpdb->esc_like($find) . '%'
 			) 
 		);
@@ -308,6 +309,22 @@ class DbReplacer {
 				if ( true === $is_replaced ) {
 					$i++;
 				}
+
+				$is_replaced = $this->bfrReplace(
+					$find,
+					$replace,
+					$item->option_name,
+					$wpdb->base_prefix . 'options',
+					$item->option_id,
+					'option_id', // primary key
+					'option_name',
+					array( 'option_id' => $item->option_id )
+				);
+
+				if ( true === $is_replaced ) {
+					$i++;
+				}
+
 			}
 		}
 		return $i;

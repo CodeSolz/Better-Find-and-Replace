@@ -36,7 +36,7 @@ class AdminPageBuilder {
 	 * @return type
 	 */
 	public function __call( $name, $arguments ) {
-		return $this->getClass( ucwords( $name ) );
+		return $this->getClass( \ucwords( $name ) );
 	}
 
 	/**
@@ -48,11 +48,11 @@ class AdminPageBuilder {
 	private function getClass( $class ) {
 		$class_path = '\RealTimeAutoFindReplace\\admin\\options\\pages\\' . $class;
 
-		if ( ! class_exists( $class_path ) ) {
+		if ( ! \class_exists( $class_path ) ) {
 			return " Class / Method - '{$class_path}' - not found!";
 		}
 
-		if ( ! array_key_exists( $class_path, $this->admin_page ) ) {
+		if ( ! \array_key_exists( $class_path, $this->admin_page ) ) {
 			$this->admin_page[ $class_path ] = new $class_path( $this );
 		}
 
@@ -65,7 +65,7 @@ class AdminPageBuilder {
 	 * @return type
 	 */
 	private function init_current_screen() {
-		$this->current_screen = get_current_screen();
+		$this->current_screen = \get_current_screen();
 		return $this->current_screen;
 	}
 
@@ -153,7 +153,7 @@ class AdminPageBuilder {
 		$hidden_fields = isset( $argc['hidden_fields'] ) ? $argc['hidden_fields'] : '';
 		return '<div class="section-submit-button">
             ' . $hidden_fields . '
-            ' . wp_nonce_field( SECURE_AUTH_SALT, 'cs_token' ) . '
+            ' . \wp_nonce_field( SECURE_AUTH_SALT, 'cs_token' ) . '
             ' . $prepend_btn . '
             <input type="submit" class="btn btn-custom-submit" value="' . $btn_text . '" />
         </div>';

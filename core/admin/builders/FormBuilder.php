@@ -26,7 +26,7 @@ class FormBuilder {
 			return false; }
 
 		$html_fields = array();
-		$field_count = count( $fields );
+		$field_count = \count( $fields );
 
 		$i = 1;
 		foreach ( $fields as  $field_name => $field ) {
@@ -71,7 +71,7 @@ class FormBuilder {
 
 		// return html as string
 		if ( false == $return_array ) {
-			return implode( '', $html_fields );
+			return \implode( '', $html_fields );
 		}
 
 		// return array
@@ -237,7 +237,7 @@ class FormBuilder {
 				continue;
 			}
 
-			if ( method_exists( $this, ( $method = 'attr_' . $item_id ) ) ) {
+			if ( \method_exists( $this, ( $method = 'attr_' . $item_id ) ) ) {
 				$input_item .= $this->$method( $item_val );
 			}
 			if ( $item_id == 'custom_attributes' ) {

@@ -59,7 +59,7 @@ class RTAFAR_RegisterMenu {
 	 * @return type
 	 */
 	public function init_current_screen() {
-		 $this->current_screen = get_current_screen();
+		 $this->current_screen = \get_current_screen();
 		return $this->current_screen;
 	}
 
@@ -105,12 +105,12 @@ class RTAFAR_RegisterMenu {
 			array( $this, 'rtafr_page_replace_in_db' )
 		);
 
-		$this->rtafr_menus['restore_in_db'] = add_submenu_page(
+		$this->rtafr_menus['restore_in_db_pro'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Restore Database', 'real-time-auto-find-and-replace' ),
 			__( 'Restore in Database', 'real-time-auto-find-and-replace' ),
 			'manage_options',
-			'cs-bfar-restore-database',
+			'cs-bfar-restore-database-pro',
 			array( $this, 'rtafar_page_restore_db' )
 		);
 
@@ -127,7 +127,7 @@ class RTAFAR_RegisterMenu {
 		add_action( "load-{$this->rtafr_menus['add_masking_rule']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['all_masking_rules']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['replace_in_db']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
-		add_action( "load-{$this->rtafr_menus['restore_in_db']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
+		add_action( "load-{$this->rtafr_menus['restore_in_db_pro']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 
 		remove_submenu_page( CS_RTAFAR_PLUGIN_IDENTIFIER, CS_RTAFAR_PLUGIN_IDENTIFIER );
 
@@ -217,6 +217,7 @@ class RTAFAR_RegisterMenu {
 			} else {
 				echo $Default_Settings;
 			}
+
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( is_object( $AccessDenied ) ) {
@@ -276,26 +277,9 @@ class RTAFAR_RegisterMenu {
 	 * @return void
 	 */
 	public function rtafar_page_restore_db(){
-		$page_info = array(
-			'title'     => __( 'Restore in Database', 'real-time-auto-find-and-replace' ),
-			'sub_title' => __( 'You can restore data to database what you have replaced from bellow', 'real-time-auto-find-and-replace' ),
-		);
-
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
-			$RestoreDb = $this->pages->RestoreDb();
-			if ( is_object( $RestoreDb ) ) {
-				echo $RestoreDb->generate_page( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
-			} else {
-				echo $RestoreDb;
-			}
-		} else {
-			$AccessDenied = $this->pages->AccessDenied();
-			if ( is_object( $AccessDenied ) ) {
-				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
-			} else {
-				echo $AccessDenied;
-			}
-		}
+		?>
+			<img src="<?php echo CS_RTAFAR_PLUGIN_ASSET_URI; ?>img/restore-db-pro.png" />
+		<?php
 	}
 
 	/**
@@ -324,7 +308,6 @@ class RTAFAR_RegisterMenu {
 			);
 		}
 	}
-
 
 
 
