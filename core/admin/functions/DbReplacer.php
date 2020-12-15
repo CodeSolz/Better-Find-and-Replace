@@ -813,7 +813,8 @@ class DbReplacer {
 			foreach ( $args['str'] as $key => $value ) {
 				
 				//check empty
-				if( $args['replace'] == '~&nbsp;~' && ( $key == $args['find'] || $value == $args['find'] ) && !is_array( $value ) ){
+				// if( $args['replace'] == '~&nbsp;~' && !empty($key) && $key == $args['find'] && !is_array( $key ) ){
+				if( $args['replace'] == '~&nbsp;~' && !empty($key) && $key == $args['find'] && !is_array( $key ) && !is_object( $key ) ){
 					
 					unset( $flag[ $key ], $flagFresh[ $key ] );
 
@@ -862,8 +863,10 @@ class DbReplacer {
 			$objVars = \get_object_vars( $args['str'] );
 			foreach ( $objVars as $key => $value ) {
 
-				if( $args['replace'] == '~&nbsp;~' && ($key == $args['find'] || $value == $args['find'] ) && !is_array( $value ) && !is_object( $value ) ){
+				if( $args['replace'] == '~&nbsp;~' && !empty($key) && $key == $args['find'] && !is_array( $key ) && !is_object( $key ) ){
+					
 					unset( $flag->$key, $cleanStr->$key );
+
 				}else{
 					$rawKey = $key;
 					$cleanKey = $key;
