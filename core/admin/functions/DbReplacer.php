@@ -541,7 +541,7 @@ class DbReplacer {
 			$this->report_holder['find'] = $find;
 			$this->report_holder['replace'] = $replace;
 			$this->report_holder['str'] = $old_value;
-			$this->report_holder['is_case_in_sensitive'] = isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ? true : false;
+			$this->report_holder['is_case_in_sensitive'] = $isCaseInsensitive;
 			$this->report_holder['is_regular'] = 'regular';
 
 			// $new_string = $this->bfar_replace_formatter( $find, $replace, $old_value, false, 'regular', $isCaseInsensitive );
@@ -549,7 +549,7 @@ class DbReplacer {
 		}
 
 		// print_r(  $this->test );
-		pre_print(  $new_string );
+		// pre_print(  $new_string );
 
 		$displayReplace = $this->highlightDisplayFindReplace(
 			array(
@@ -557,13 +557,13 @@ class DbReplacer {
 				'find'              => $find,
 				'replace'           => $replace,
 				'old_value'         => $old_value,
-				'new_value'         => $new_string,
+				'new_value'         => $new_string['str'],
 				'isCaseInsensitive' => $isCaseInsensitive,
 			)
 		);
 
 		$is_updated = false;
-		if ( $new_string != $old_value && isset($displayReplace['findCount']) && $displayReplace['findCount'] >= 1 ) {
+		if ( $new_string['str'] != $old_value && isset($displayReplace['findCount']) && $displayReplace['findCount'] >= 1 ) {
 			global $wpdb;
 
 			// print_r( $new_string );
@@ -578,8 +578,8 @@ class DbReplacer {
 			// check for dry run
 			if ( ! isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
 				// remove empty flag
-				$new_string = $this->bfarRemoveSpcialCharsFlag( $new_string );
-				$wpdb->update( $tbl, array( $update_col => $new_string ), $update_con );
+				// $new_string = $this->bfarRemoveSpcialCharsFlag( $new_string );
+				$wpdb->update( $tbl, array( $update_col => $new_string['cleanStr'] ), $update_con );
 
 				do_action( 'bfar_save_item_history', \json_encode( array(
 					'tbl'          => $tbl,
@@ -590,12 +590,11 @@ class DbReplacer {
 					'replace'      => $replace,
 					'ici'          => $isCaseInsensitive,
 					'old_val'      => $old_value,
-					'new_val'      => $new_string
+					'new_val'      => $new_string['cleanStr']
 				) ));
 
 			} elseif ( $this->settings['cs_db_string_replace']['dry_run'] == 'on' ) {
 
-				
 
 				$reportRow = array(
 					'bfrp_' . $row_id . '_' . $update_col => array(
@@ -607,7 +606,7 @@ class DbReplacer {
 						'replace'      => $replace,
 						'ici'          => $isCaseInsensitive,
 						'old_val'      => $old_value,
-						'new_val'      => $this->bfarRemoveSpcialCharsFlag( $new_string ),
+						'new_val'      => $new_string['cleanStr'],
 						'dis_find'     => $displayReplace['find'],
 						'dis_replace'  => $displayReplace['replace'],
 						'findCount'    => $displayReplace['findCount'],
@@ -679,7 +678,6 @@ class DbReplacer {
 
 		// pre_print( $replace );
 
-		$replace     = $this->bfarRemoveSpcialCharsFlag( $replace );
 		$countReplace     = 0;
 		$replaceNewDisStr = \preg_replace( \esc_html( $replace ), "<span class='replace'>$1</span>", \esc_html( $args['new_value'] ), -1, $countReplace );
 		$replaceNewDisStr = $this->bfarRemoveSpcialCharsFlag( $replaceNewDisStr );
@@ -747,10 +745,6 @@ class DbReplacer {
 		return $old_value;
 	}
 
-	
-
-
-
 	/**
 	 * Replace formatter
 	 *
@@ -763,8 +757,6 @@ class DbReplacer {
 	 * @param boolean $is_serialized
 	 * @return void
 	 */
-	// public function bfar_replace_formatter( $find, $replace, $str, $is_preg = false, $is_regular = false,
-	// 				$is_case_in_sensitive = false, $is_serialized = false, $has_escaped_serialized = false, $is_serialize_data = false, $cleanStr = false ) {
 	public function bfar_replace_formatter( $args ) {
 			// $args = [
 			// 	'find' => '',
@@ -779,7 +771,8 @@ class DbReplacer {
 			// 	'cleanStr' => false
 			// ];			
 
-			//TODO: serialize object item remove not working, display replce hightlight not working						
+			//TODO: serialize object item remove not working, display replce hightlight not working	
+			//TODO:better search and replace serialize data - key change not working, remove item not working					
 
 
 		if ( ( \is_serialized( $args['str'] ) || \is_serialized_string( $args['str'] ) ) && 
@@ -808,18 +801,14 @@ class DbReplacer {
 
 			$this->s2++;
 			
-			$flag = array(); $flagFresh = array();
+			$flag = array(); 
+			$flagFresh = array();
 
 			foreach ( $args['str'] as $key => $value ) {
 				
 				//check empty
-				// if( $args['replace'] == '~&nbsp;~' && !empty($key) && $key == $args['find'] && !is_array( $key ) ){
 				if( $args['replace'] == '~&nbsp;~' && !empty($key) && $key == $args['find'] && !is_array( $key ) && !is_object( $key ) ){
-					
 					unset( $flag[ $key ], $flagFresh[ $key ] );
-
-					//TODO:better search and replace serialize data - key change not working, remove item not working
-					
 				}else{
 					$rawKey = $key;
 					$cleanKey = $key;
@@ -908,21 +897,18 @@ class DbReplacer {
 		}
 
 
-
 		$this->test++;
 		
 		if ( $args['is_serialized'] && !is_serialized( $args['str'] ) ) {
-			// $args['str'] = \maybe_serialize( $args['str'] );
-			// $args['cleanStr'] = \maybe_serialize( $args['cleanStr'] );
+			$args['str'] = \maybe_serialize( $args['str'] );
+			$args['cleanStr'] = \maybe_serialize( $args['cleanStr'] );
 
-			pre_print( $args );
+			// pre_print( $args );
 
-			return $args;
+			// return $args;
 		}
 
 		return $args;
-
-		// return [ "bfar_str_raw" => $str, 'bfar_str_fresh' => isset($fresh) ? $fresh : '' ];
 	}
 
 	/**
