@@ -14,6 +14,7 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 
 use RealTimeAutoFindReplace\lib\Util;
 
+//TODO: check query - db replacement - like - should be use or not use - if escaped data is stored in db like would not work -
 
 class DbReplacer {
 
@@ -38,6 +39,39 @@ class DbReplacer {
 	 * @var string
 	 */
 	private $bfar_special_chars;
+
+	/**
+	 * Report Holder
+	 *
+	 * @var array
+	 */
+	private $report_holder = [
+		'find' => '',
+		'replace' => '',
+		'str' => '',
+		'is_preg' => false,
+		'is_regular' => false,
+		'is_case_in_sensitive' => false,
+		'is_serialized' => false,
+		'has_escaped_serialized' => false,
+		'is_serialize_data' => false,
+		'cleanStr' => false
+	];
+
+	/**
+	 * Hold dry run data
+	 *
+	 * @var array
+	 */
+	private $dry_run_data;
+
+	private $test = 0;
+	private $s1 = 0;
+	private $s2 = 0;
+	private $s3 = 0;
+	private $s4 = 0;
+	private $s5 = 0;
+	private $s6 = 0;
 
 	/**
 	 * Init
@@ -229,8 +263,10 @@ class DbReplacer {
 		global $wpdb;
 		$i        = 0;
 		$get_data = $wpdb->get_results( 
-			"select * from {$wpdb->postmeta} where meta_id = 3667"
+			"select * from {$wpdb->postmeta} where meta_id = 3679"
 		);
+
+		// pre_print( $wpdb->esc_like($find) );
 
 		if ( $get_data ) {
 			foreach ( $get_data as $item ) {
@@ -445,6 +481,12 @@ class DbReplacer {
 		return $i;
 	}
 
+	/**
+	 * Reset report holder
+	 */
+	function __destruct() {
+        $this->report_holder;
+    }
 
 	/**
 	 * Replace String In DB
@@ -469,6 +511,8 @@ class DbReplacer {
 
 		$old_value = $this->format_old_value( $old_value );
 
+		// report holder var should be reset
+
 		if ( isset( $this->settings['cs_db_string_replace']['whole_word'] ) ||
 			isset( $this->settings['cs_db_string_replace']['unicode_modifier'] )
 		) {
@@ -479,7 +523,14 @@ class DbReplacer {
 				$formattedFind = $this->formatFindWholeWord( $find, true );
 				$isCaseInsensitive = true;
 			}
-			$new_string = $this->bfar_replace_formatter( $formattedFind, $replace, $old_value, 'pregReplace' );
+
+			$this->report_holder['find'] = $formattedFind;
+			$this->report_holder['replace'] = $replace;
+			$this->report_holder['str'] = $old_value;
+			$this->report_holder['is_preg'] = 'pregReplace';
+
+			// $new_string = $this->bfar_replace_formatter( $formattedFind, $replace, $old_value, 'pregReplace' );
+			$new_string = $this->bfar_replace_formatter( $this->report_holder );
 
 		} else {
 
@@ -487,13 +538,42 @@ class DbReplacer {
 				$isCaseInsensitive = true;
 			} 
 
-			$new_string = $this->bfar_replace_formatter( $find, $replace, $old_value, false, 'regular', $isCaseInsensitive );
+			$this->report_holder['find'] = $find;
+			$this->report_holder['replace'] = $replace;
+			$this->report_holder['str'] = $old_value;
+			$this->report_holder['is_case_in_sensitive'] = isset( $this->settings['cs_db_string_replace']['case_insensitive'] ) ? true : false;
+			$this->report_holder['is_regular'] = 'regular';
+
+			// $new_string = $this->bfar_replace_formatter( $find, $replace, $old_value, false, 'regular', $isCaseInsensitive );
+			$new_string = $this->bfar_replace_formatter( $this->report_holder );
 		}
 
+		// print_r(  $this->test );
+		pre_print(  $new_string );
+
+		$displayReplace = $this->highlightDisplayFindReplace(
+			array(
+				'formattedFind'     => isset( $formattedFind ) ? $formattedFind : '',
+				'find'              => $find,
+				'replace'           => $replace,
+				'old_value'         => $old_value,
+				'new_value'         => $new_string,
+				'isCaseInsensitive' => $isCaseInsensitive,
+			)
+		);
 
 		$is_updated = false;
-		if ( $new_string != $old_value ) {
+		if ( $new_string != $old_value && isset($displayReplace['findCount']) && $displayReplace['findCount'] >= 1 ) {
 			global $wpdb;
+
+			// print_r( $new_string );
+			// echo ' -- '. $old_value ;
+			// print_r( strlen($new_string ));
+			// pre_print( strlen($old_value ));
+			/**
+			 * Issues:
+			 * 1. find text is being highlighed but replace is not
+			 */
 
 			// check for dry run
 			if ( ! isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
@@ -515,16 +595,7 @@ class DbReplacer {
 
 			} elseif ( $this->settings['cs_db_string_replace']['dry_run'] == 'on' ) {
 
-				$displayReplace = $this->highlightDisplayFindReplace(
-					array(
-						'formattedFind'     => isset( $formattedFind ) ? $formattedFind : '',
-						'find'              => $find,
-						'replace'           => $replace,
-						'old_value'         => $old_value,
-						'new_value'         => $new_string,
-						'isCaseInsensitive' => $isCaseInsensitive,
-					)
-				);
+				
 
 				$reportRow = array(
 					'bfrp_' . $row_id . '_' . $update_col => array(
@@ -606,6 +677,9 @@ class DbReplacer {
 			}
 		}
 
+		// pre_print( $replace );
+
+		$replace     = $this->bfarRemoveSpcialCharsFlag( $replace );
 		$countReplace     = 0;
 		$replaceNewDisStr = \preg_replace( \esc_html( $replace ), "<span class='replace'>$1</span>", \esc_html( $args['new_value'] ), -1, $countReplace );
 		$replaceNewDisStr = $this->bfarRemoveSpcialCharsFlag( $replaceNewDisStr );
@@ -659,10 +733,7 @@ class DbReplacer {
 	 */
 	private function format_replace( $replace ) {
 		$replace = \stripslashes( $replace );
-
-		// apply special chars filter
 		$replace = $this->bfarApplySpcialCharsFlag( $replace );
-
 		return $replace;
 	}
 
@@ -673,18 +744,12 @@ class DbReplacer {
 	 * @return void
 	 */
 	private function format_old_value( $old_value ) {
-		// pre_print(
-		// 	get_class($old_value)
-		// );
-		// pre_print(
-		// 	json_decode( $old_value )
-		// );
-		// pre_print(
-		// 	html_entity_decode(preg_replace("/%u([0-9a-f]{3,4})/i", "&#x\\1;", urldecode($old_value)), null, 'UTF-8')
-		// );
-
 		return $old_value;
 	}
+
+	
+
+
 
 	/**
 	 * Replace formatter
@@ -698,63 +763,201 @@ class DbReplacer {
 	 * @param boolean $is_serialized
 	 * @return void
 	 */
-	public function bfar_replace_formatter( $find, $replace, $str, $is_preg = false, $is_regular = false,
-					$is_case_in_sensitive = false, $is_serialized = false ) {
+	// public function bfar_replace_formatter( $find, $replace, $str, $is_preg = false, $is_regular = false,
+	// 				$is_case_in_sensitive = false, $is_serialized = false, $has_escaped_serialized = false, $is_serialize_data = false, $cleanStr = false ) {
+	public function bfar_replace_formatter( $args ) {
+			// $args = [
+			// 	'find' => '',
+			// 	'replace' => '',
+			// 	'str' => '',
+			// 	'is_preg' => false,
+			// 	'is_regular' => false,
+			// 	'is_case_in_sensitive' => false,
+			// 	'is_serialized' => false,
+			// 	'has_escaped_serialized' => false,
+			// 	'is_serialize_data' => false,
+			// 	'cleanStr' => false
+			// ];			
 
-		if ( \is_serialized( $str ) || \is_serialized_string( $str ) ) {
-			if( is_array( $str ) || is_object( $str ) ){
-				pre_print( $str );
+			//TODO: serialize object item remove not working, display replce hightlight not working						
+
+
+		if ( ( \is_serialized( $args['str'] ) || \is_serialized_string( $args['str'] ) ) && 
+				is_string( $args['str'] ) && false === $args['has_escaped_serialized'] ) {
+			
+			$temp = [];		
+
+			$uStr = \maybe_unserialize( $args['str'] );
+			if( $uStr !== false ){
+				$temp['is_serialized'] = true;
+				$temp['str'] = $uStr;
+				
+				$temp['is_serialize_data'] = true;
+			}else{
+				$temp['has_escaped_serialized'] = true;
 			}
-			$str = \maybe_unserialize( $str );
-			$str = $this->bfar_replace_formatter( $find, $replace, $str, $is_preg, $is_regular, $is_case_in_sensitive, true );
-		}  elseif ( is_array( $str ) ) {
-			$flag = array(); $prev_key = '';
-			foreach ( $str as $key => $value ) {
+
+			$this->s1++;
+
+			$args = $this->bfar_replace_formatter( \array_merge( $args, $temp) );
+			unset( $temp['str'] );
+			$args = \array_merge( $args, $temp);
+
+		}
+		elseif ( \is_array( $args['str'] ) ) {
+
+			$this->s2++;
+			
+			$flag = array(); $flagFresh = array();
+
+			foreach ( $args['str'] as $key => $value ) {
 				
 				//check empty
-				// pre_print( $value );
-				if( $replace == '~&nbsp;~' && ($key == $find || $value == $find) && !is_array( $value ) ){
-					// print_r( $key );
-					// pre_print( $value );
-					unset( $flag[ $key ] );
+				if( $args['replace'] == '~&nbsp;~' && ( $key == $args['find'] || $value == $args['find'] ) && !is_array( $value ) ){
+					
+					unset( $flag[ $key ], $flagFresh[ $key ] );
 					// pre_print( $prev_key );
 					// $flag[ $prev_key ] =  $flag[ $prev_key ] . '~&nbsp;~';
 
+					//TODO:better search and replace serialize data - key change not working, remove item not working
 					
 				}else{
-					$flag[ $key ] = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false );
-				}
-				$prev_key = $key;
 
+					//TODO:check if key has changed
+					// !empty($key) && $key == 'action_button_test' ? pre_print( $key ) : '';
+
+
+					if( is_string( $key ) && !empty( $key ) ){
+
+						$args['str'] = $key;
+						$args['is_serialized'] = false;
+
+						// $nKey = $this->bfar_replace_formatter( $find, $replace, $key, $is_preg, $is_regular, $is_case_in_sensitive, false, $has_escaped_serialized, $is_serialize_data, $key );
+						$nKey = $this->bfar_replace_formatter( $args );
+						$nKey = is_array($nKey) && isset( $nKey['str'] ) ? $nKey['str'] : $nKey;
+						if( $nKey != $key ){
+							unset( $flag[ $key ], $flagFresh[ $key ] );
+							$key = $nKey;
+						}
+
+					}
+
+
+					$args['str'] = $value;
+					$args['is_serialized'] = false;
+
+					// $flag[ $key ] = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false, $has_escaped_serialized, $is_serialize_data );
+					$arrNes = $this->bfar_replace_formatter( $args );
+
+					// pre_print( $arrNes );
+
+					$flag[ $key ] = is_array( $arrNes ) && isset($arrNes['str']) ? $arrNes['str'] : $arrNes;
+					$flagFresh[ $key ] = is_array( $arrNes ) && isset($arrNes['cleanStr']) ? $arrNes['cleanStr'] : $arrNes;
+
+					// pre_print( $arrNes );
+
+					// $flag[ $key ] = isset($arrNes[''])
+					// $flagFresh[ $key ] = 
+					
+				}
+				
 			}
-			$str = $flag;
-			unset( $flag );
-		} elseif ( \is_object( $str ) ) {
-			$flag    = $str;
-			$objVars = \get_object_vars( $str );
+			
+			$args['str'] = $flag;
+			$args['cleanStr'] = $flagFresh;
+			unset( $flag, $flagFresh );
+			// unset( $flagFresh );
+			
+			// pre_print( $args );
+
+		} elseif ( \is_object( $args['str'] ) ) {
+
+			$this->s3++;
+
+			$flag    	  = $args['str'];
+			$cleanStr    	  = $args['cleanStr'];
+
+			$objVars = \get_object_vars( $args['str'] );
 			foreach ( $objVars as $key => $value ) {
 
-				if( $replace == '~&nbsp;~' && ($key == $find || $value == $find) && !is_array( $value ) && !is_object( $str ) ){
+				if( $args['replace'] == '~&nbsp;~' && ($key == $args['find'] || $value == $args['find'] ) && !is_array( $value ) && !is_object( $value ) ){
 					// print_r( $key );
 					// pre_print( $value );
-					unset( $flag->$key );
+					unset( $flag->$key, $flagFresh->$key );
+					// unset( $flagFresh->$key );
 
 				}else{
-					$flag->$key = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false );
+					//TODO: need to add same things of array
+					// pre_print( $flag->key );
+					// !empty($key)  ? pre_print( $key ) : '';
+					
+					if( is_string( $key ) && !empty( $key ) ){
+						
+						$args['str'] = $key;
+						$args['is_serialized'] = false;
+
+						$nOjbKey = $this->bfar_replace_formatter( $args );
+						$nOjbKey = is_array($nOjbKey) && isset( $nOjbKey['str'] ) ? $nOjbKey['str'] : $nOjbKey;
+
+						if( !empty($nOjbKey) && $nOjbKey != $key ){ // replace old key with new key
+							unset( $flag->$key, $cleanStr->$key );
+							$key = $nOjbKey;
+						}
+					}
+
+
+					$args['str'] = $value;
+					$args['is_serialized'] = false;
+
+					// $flag->$key = $this->bfar_replace_formatter( $args );
+
+					$objNes = $this->bfar_replace_formatter( $args );
+
+					$flag->$key = is_array($objNes) && isset($objNes['str']) ? $objNes['str'] : $objNes;
+					$cleanStr->$key = is_array($objNes) && isset($objNes['cleanStr']) ? $objNes['cleanStr'] : $objNes;
+					
+
 				}
-
+				
 			}
-			$str = $flag;
+
+			$args['str'] = $flag;
+			$args['cleanStr'] = $cleanStr;
 			unset( $flag );
-		} elseif ( \is_string( $str ) ) {
-			$str = Util::bfar_replacer( $find, $replace, $str, $is_preg, $is_regular, $is_case_in_sensitive );
+			unset( $cleanStr );
+
+			// pre_print( $args );
+
+		} elseif( \is_numeric( $args['str'] ) || is_string( $args['str'] ) ){
+
+			$this->s4++;
+			
+			// if( \is_numeric( $args['str'] ) || is_string( $args['str'] ) ){
+
+				$args['str'] = Util::bfar_replacer( $args['find'], $args['replace'], $args['str'], $args['is_preg'], $args['is_regular'], $args['is_case_in_sensitive'] );
+				$args['cleanStr'] = $this->bfarRemoveSpcialCharsFlag( $args['str'] );
+	
+			// }
+
+
 		}
 
-		if ( $is_serialized ) {
-			$str = \maybe_serialize( $str );
+
+
+		$this->test++;
+		
+		if ( $args['is_serialized'] && !is_serialized( $args['str'] ) ) {
+			// $args['str'] = \maybe_serialize( $args['str'] );
+			// $args['cleanStr'] = \maybe_serialize( $args['cleanStr'] );
+
+			pre_print( $args );
+
+			return $args;
 		}
 
-		return $str;
+		return $args;
+
+		// return [ "bfar_str_raw" => $str, 'bfar_str_fresh' => isset($fresh) ? $fresh : '' ];
 	}
 
 	/**
@@ -778,6 +981,160 @@ class DbReplacer {
 	 */
 	public function bfarRemoveSpcialCharsFlag( $str ) {
 		return Util::bfar_replacer( $this->bfar_special_chars['flags'], $this->bfar_special_chars['chars'], $str, false, 'regular' );
+	}
+
+
+
+	public function copy_bfar_replace_formatter( $find, $replace, $str, $is_preg = false, $is_regular = false,
+					$is_case_in_sensitive = false, $is_serialized = false, $has_escaped_serialized = false, $is_serialize_data = false, $cleanStr = false ) {
+			$args = [
+				'find' => '',
+				'replace' => '',
+				'str' => '',
+				'is_preg' => false,
+				'is_regular' => false,
+				'is_case_in_sensitive' => false,
+				'is_serialized' => false,
+				'has_escaped_serialized' => false,
+				'is_serialize_data' => false,
+				'cleanStr' => false
+			];			
+
+			//TODO: serialize object item remove not working, display replce hightlight not working						
+
+		// if( is_array($str) && isset( $str['bfar_str_raw'] ) ){
+		// 	$str = $str['bfar_str_raw'];
+		// 	$fresh = is_array($str) && isset( $str['bfar_str_fresh'] ) ? $str['bfar_str_fresh'] :  '' ;
+		// }
+
+
+		if ( ( \is_serialized( $str ) || \is_serialized_string( $str ) ) && 
+				is_string( $str ) && false === $has_escaped_serialized ) {
+			
+			$uStr = \maybe_unserialize( $str );
+			if( $uStr !== false ){
+				$args['is_serialized'] = true;
+				$args['str'] = $uStr;
+				$args['is_serialize_data'] = true;
+				
+			}else{
+				$args['has_escaped_serialized'] = true;
+			}
+
+			$this->s1++;
+
+			$str = $this->bfar_replace_formatter( $find, $replace, $str, $is_preg, $is_regular, $is_case_in_sensitive, $is_serialized, $has_escaped_serialized, $is_serialize_data );
+
+		}
+		elseif ( is_array( $str ) ) {
+
+			$this->s2++;
+			
+			// $str = is_array($str) && isset( $str['bfar_str_raw'] ) ? $str['bfar_str_raw'] : $str;
+
+			$flag = array(); $flagFresh = array();
+			// pre_print( $str );
+			foreach ( $str as $key => $value ) {
+				
+				//check empty
+				// pre_print( $value );
+				if( $replace == '~&nbsp;~' && ( $key == $find || $value == $find ) && !is_array( $value ) ){
+					// print_r( $key );
+					// pre_print( $value );
+					unset( $flag[ $key ] );
+					// pre_print( $prev_key );
+					// $flag[ $prev_key ] =  $flag[ $prev_key ] . '~&nbsp;~';
+
+					//TODO:better search and replace serialize data - key change not working, remove item not working
+					
+				}else{
+
+					//TODO:check if key has changed
+					// !empty($key) && $key == 'action_button_test' ? pre_print( $key ) : '';
+
+					// if( is_string( $key ) && !empty( $key ) ){
+					// 	$nKey = $this->bfar_replace_formatter( $find, $replace, $key, $is_preg, $is_regular, $is_case_in_sensitive, false, $has_escaped_serialized, $is_serialize_data, $key );
+					// 	$nKey = is_array($nKey) && isset( $nKey['bfar_str_raw'] ) ? $nKey['bfar_str_raw'] : $nKey;
+					// 	if( $nKey != $key ){
+					// 		unset( $flag[ $key ]);
+					// 		$key = $nKey;
+					// 	}
+					// }
+
+
+					$flag[ $key ] = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false, $has_escaped_serialized, $is_serialize_data );
+					// pre_print( $key );
+					
+				}
+				
+			}
+			
+			$str = $flag;
+			unset( $flag );
+			
+		} elseif ( \is_object( $str ) ) {
+
+			$this->s3++;
+
+			$flag    	  = $str;
+			$objVars = \get_object_vars( $str );
+			foreach ( $objVars as $key => $value ) {
+
+				if( $replace == '~&nbsp;~' && ($key == $find || $value == $find) && !is_array( $value ) && !is_object( $str ) ){
+					// print_r( $key );
+					// pre_print( $value );
+					unset( $flag->$key );
+					unset( $flagFresh->$key );
+
+				}else{
+					//TODO: need to add same things of array
+					// pre_print( $flag->key );
+					// !empty($key)  ? pre_print( $key ) : '';
+					$nOjbKey = '';
+					// if( is_string( $key ) && !empty( $key ) ){
+					// 	$nOjbKey = $this->bfar_replace_formatter( $find, $replace, $key, $is_preg, $is_regular, $is_case_in_sensitive, false, $has_escaped_serialized, $is_serialize_data, $key );
+					// 	$nOjbKey = is_array($nOjbKey) && isset( $nOjbKey['bfar_str_raw'] ) ? $nOjbKey['bfar_str_raw'] : $nOjbKey;
+
+					// 	if( !empty($nOjbKey) && $nOjbKey != $key ){ // remove when new objkey is not equal to old key - replace old key with new key
+					// 		unset( $flag->$key);
+					// 		unset( $flagFresh->$key);
+					// 		$key = $nOjbKey;
+					// 	}
+					// }
+
+					$flag->$key = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false, $has_escaped_serialized, $is_serialize_data );
+
+				}
+				
+			}
+
+			$str = $flag;
+			unset( $flag );
+
+
+		} elseif ( \is_string( $str ) ) {
+
+			$this->s4++;
+			
+			$str = Util::bfar_replacer( $find, $replace, $str, $is_preg, $is_regular, $is_case_in_sensitive );
+			
+			//optimized string
+			$freshStr = '';
+			if ( $is_serialize_data || $cleanStr ){
+				$freshStr = $this->bfarRemoveSpcialCharsFlag( $str );
+			}
+
+		}
+
+		$this->test++;
+		
+		if ( $is_serialized && ! is_serialized( $str ) ) {
+			return \maybe_serialize( $str );
+		}
+
+		return $str;
+
+		// return [ "bfar_str_raw" => $str, 'bfar_str_fresh' => isset($fresh) ? $fresh : '' ];
 	}
 
 }
