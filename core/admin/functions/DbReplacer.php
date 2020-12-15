@@ -15,6 +15,8 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 use RealTimeAutoFindReplace\lib\Util;
 
 // TODO: check query - db replacement - like - should be use or not use - if escaped data is stored in db like would not work -
+// TODO: test to reset serialize data by value only
+// TODO: test more on serialize data
 
 class DbReplacer {
 
@@ -49,29 +51,14 @@ class DbReplacer {
 		'find'                   => '',
 		'replace'                => '',
 		'str'                    => '',
+		'cleanStr'               => '',
 		'is_preg'                => false,
 		'is_regular'             => false,
 		'is_case_in_sensitive'   => false,
 		'is_serialized'          => false,
 		'has_escaped_serialized' => false,
-		'is_serialize_data'      => false,
-		'cleanStr'               => false,
+		'is_serialize_data'      => false
 	);
-
-	/**
-	 * Hold dry run data
-	 *
-	 * @var array
-	 */
-	private $dry_run_data;
-
-	private $test = 0;
-	private $s1   = 0;
-	private $s2   = 0;
-	private $s3   = 0;
-	private $s4   = 0;
-	private $s5   = 0;
-	private $s6   = 0;
 
 	/**
 	 * Init

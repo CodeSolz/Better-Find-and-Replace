@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.6
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,9 @@ Find and replace text, HTML code, Image's url, Footer credits, jQuery / Ajax loa
 == Description ==
 This plugin will automatically find a specific word and will replace it with your own word. The changes will be automatically done before the website renders to the browser's. It doesn't affect any other plugins files or your database.
 
-Easily Find and replace text, HTML code, image's url, footer credits or anything in the website without touching the database. Also, you can search and replace permanently in Database too.
+Easily Find and replace text, HTML code, image's url, footer credits or anything in the website without touching the database. 
+
+Also, It has powerful options which you can to search and replace permanently in Database. You will be able to find and replace both key or value in serialize data. Also, you can remove any item from your serialize data by it's key.
 
 == Key Features ==
 
@@ -35,6 +37,8 @@ Easily Find and replace text, HTML code, image's url, footer credits 
 * Select a specific database table to replace content
 * **Dry Run** to see what will be change on Database
 * Search and replace **Whole Words Only** in Database
+* Ultimate powerful options for Search and replace **Serialize Data** in Database
+* Remove any item from **Serialize Data** in Database 
 
 == How to replace in DB? ==
 * First create a report by selecting *dry run* from bottom of the setting section 
