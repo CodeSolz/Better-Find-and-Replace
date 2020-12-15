@@ -263,7 +263,7 @@ class DbReplacer {
 		global $wpdb;
 		$i        = 0;
 		$get_data = $wpdb->get_results( 
-			"select * from {$wpdb->postmeta} where meta_id = 3679"
+			"select * from {$wpdb->postmeta}"
 		);
 
 		// pre_print( $wpdb->esc_like($find) );
