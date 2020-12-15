@@ -804,7 +804,7 @@ class DbReplacer {
 			$args = \array_merge( $args, $temp);
 
 		}
-		elseif ( \is_array( $args['str'] ) ) {
+		elseif ( is_array( $args['str'] ) ) {
 
 			$this->s2++;
 			
@@ -816,48 +816,33 @@ class DbReplacer {
 				if( $args['replace'] == '~&nbsp;~' && ( $key == $args['find'] || $value == $args['find'] ) && !is_array( $value ) ){
 					
 					unset( $flag[ $key ], $flagFresh[ $key ] );
-					// pre_print( $prev_key );
-					// $flag[ $prev_key ] =  $flag[ $prev_key ] . '~&nbsp;~';
 
 					//TODO:better search and replace serialize data - key change not working, remove item not working
 					
 				}else{
-
-					//TODO:check if key has changed
-					// !empty($key) && $key == 'action_button_test' ? pre_print( $key ) : '';
-
+					$rawKey = $key;
+					$cleanKey = $key;
 
 					if( is_string( $key ) && !empty( $key ) ){
 
 						$args['str'] = $key;
 						$args['is_serialized'] = false;
 
-						// $nKey = $this->bfar_replace_formatter( $find, $replace, $key, $is_preg, $is_regular, $is_case_in_sensitive, false, $has_escaped_serialized, $is_serialize_data, $key );
 						$nKey = $this->bfar_replace_formatter( $args );
-						$nKey = is_array($nKey) && isset( $nKey['str'] ) ? $nKey['str'] : $nKey;
-						if( $nKey != $key ){
-							unset( $flag[ $key ], $flagFresh[ $key ] );
-							$key = $nKey;
+						$nRawKey = is_array($nKey) && isset( $nKey['str'] ) ? $nKey['str'] : $nKey;
+						if( !empty($nKey) && $nRawKey != $key ){
+							unset( $flag[ $key ]);
+							$rawKey = $nRawKey;
+							$cleanKey = is_array($nKey) && isset( $nKey['cleanStr'] ) ? $nKey['cleanStr'] : $nKey;
 						}
 
 					}
 
-
 					$args['str'] = $value;
 					$args['is_serialized'] = false;
-
-					// $flag[ $key ] = $this->bfar_replace_formatter( $find, $replace, $value, $is_preg, $is_regular, $is_case_in_sensitive, false, $has_escaped_serialized, $is_serialize_data );
 					$arrNes = $this->bfar_replace_formatter( $args );
-
-					// pre_print( $arrNes );
-
-					$flag[ $key ] = is_array( $arrNes ) && isset($arrNes['str']) ? $arrNes['str'] : $arrNes;
-					$flagFresh[ $key ] = is_array( $arrNes ) && isset($arrNes['cleanStr']) ? $arrNes['cleanStr'] : $arrNes;
-
-					// pre_print( $arrNes );
-
-					// $flag[ $key ] = isset($arrNes[''])
-					// $flagFresh[ $key ] = 
+					$flag[ $rawKey ] = is_array( $arrNes ) && isset($arrNes['str']) ? $arrNes['str'] : $arrNes;
+					$flagFresh[ $cleanKey ] = is_array( $arrNes ) && isset($arrNes['cleanStr']) ? $arrNes['cleanStr'] : $arrNes;
 					
 				}
 				
@@ -866,10 +851,7 @@ class DbReplacer {
 			$args['str'] = $flag;
 			$args['cleanStr'] = $flagFresh;
 			unset( $flag, $flagFresh );
-			// unset( $flagFresh );
 			
-			// pre_print( $args );
-
 		} elseif ( \is_object( $args['str'] ) ) {
 
 			$this->s3++;
@@ -881,64 +863,44 @@ class DbReplacer {
 			foreach ( $objVars as $key => $value ) {
 
 				if( $args['replace'] == '~&nbsp;~' && ($key == $args['find'] || $value == $args['find'] ) && !is_array( $value ) && !is_object( $value ) ){
-					// print_r( $key );
-					// pre_print( $value );
-					unset( $flag->$key, $flagFresh->$key );
-					// unset( $flagFresh->$key );
-
+					unset( $flag->$key, $cleanStr->$key );
 				}else{
-					//TODO: need to add same things of array
-					// pre_print( $flag->key );
-					// !empty($key)  ? pre_print( $key ) : '';
-					
+					$rawKey = $key;
+					$cleanKey = $key;
+
 					if( is_string( $key ) && !empty( $key ) ){
-						
 						$args['str'] = $key;
 						$args['is_serialized'] = false;
+						$nObjKey = $this->bfar_replace_formatter( $args );
+						$newRawKey = is_array($nObjKey) && isset( $nObjKey['str'] ) ? $nObjKey['str'] : $nObjKey;
 
-						$nOjbKey = $this->bfar_replace_formatter( $args );
-						$nOjbKey = is_array($nOjbKey) && isset( $nOjbKey['str'] ) ? $nOjbKey['str'] : $nOjbKey;
-
-						if( !empty($nOjbKey) && $nOjbKey != $key ){ // replace old key with new key
+						if( !empty($nObjKey) && $newRawKey != $key ){ // replace old key with new key
 							unset( $flag->$key, $cleanStr->$key );
-							$key = $nOjbKey;
+							$rawKey = $newRawKey;
+							$cleanKey = is_array($nObjKey) && isset( $nObjKey['cleanStr'] ) ? $nObjKey['cleanStr'] : $nObjKey;
 						}
 					}
 
 
 					$args['str'] = $value;
 					$args['is_serialized'] = false;
-
-					// $flag->$key = $this->bfar_replace_formatter( $args );
-
 					$objNes = $this->bfar_replace_formatter( $args );
-
-					$flag->$key = is_array($objNes) && isset($objNes['str']) ? $objNes['str'] : $objNes;
-					$cleanStr->$key = is_array($objNes) && isset($objNes['cleanStr']) ? $objNes['cleanStr'] : $objNes;
-					
+					$flag->$rawKey = is_array($objNes) && isset($objNes['str']) ? $objNes['str'] : $objNes;
+					$cleanStr->$cleanKey = is_array($objNes) && isset($objNes['cleanStr']) ? $objNes['cleanStr'] : $objNes;
 
 				}
-				
 			}
 
 			$args['str'] = $flag;
 			$args['cleanStr'] = $cleanStr;
-			unset( $flag );
-			unset( $cleanStr );
-
-			// pre_print( $args );
+			unset( $flag, $cleanStr );
 
 		} elseif( \is_numeric( $args['str'] ) || is_string( $args['str'] ) ){
 
 			$this->s4++;
 			
-			// if( \is_numeric( $args['str'] ) || is_string( $args['str'] ) ){
-
-				$args['str'] = Util::bfar_replacer( $args['find'], $args['replace'], $args['str'], $args['is_preg'], $args['is_regular'], $args['is_case_in_sensitive'] );
-				$args['cleanStr'] = $this->bfarRemoveSpcialCharsFlag( $args['str'] );
-	
-			// }
-
+			$args['str'] = Util::bfar_replacer( $args['find'], $args['replace'], $args['str'], $args['is_preg'], $args['is_regular'], $args['is_case_in_sensitive'] );
+			$args['cleanStr'] = $this->bfarRemoveSpcialCharsFlag( $args['str'] );
 
 		}
 
