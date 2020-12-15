@@ -217,7 +217,6 @@ class RTAFAR_RegisterMenu {
 			} else {
 				echo $Default_Settings;
 			}
-
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( is_object( $AccessDenied ) ) {
@@ -276,7 +275,7 @@ class RTAFAR_RegisterMenu {
 	 *
 	 * @return void
 	 */
-	public function rtafar_page_restore_db(){
+	public function rtafar_page_restore_db() {
 		?>
 			<img src="<?php echo CS_RTAFAR_PLUGIN_ASSET_URI; ?>img/restore-db-pro.png" />
 		<?php

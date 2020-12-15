@@ -46,7 +46,7 @@ class Scripts_Settings {
 
 		if ( ( isset( $rtafr_menu['add_masking_rule'] ) && $page_id == $rtafr_menu['add_masking_rule'] ) ||
 				( isset( $rtafr_menu['replace_in_db'] ) && $page_id == $rtafr_menu['replace_in_db'] ) ||
-				( isset( $rtafr_menu['brafp_license'] ) && $page_id == $rtafr_menu['brafp_license'] ) 
+				( isset( $rtafr_menu['brafp_license'] ) && $page_id == $rtafr_menu['brafp_license'] )
 			) {
 				wp_enqueue_script(
 					'rtafar.app.admin.min',

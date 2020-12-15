@@ -105,14 +105,14 @@ class ReplaceInDB {
 				'options'       => \apply_filters(
 					'bfrp_urlOptions',
 					array(
-						'all'        => __( 'Select All', 'real-time-auto-find-and-replace' ),
-						'unselect_all'        => __( 'Unselect All', 'real-time-auto-find-and-replace' ),
-						'post'       => __( 'Post URLs', 'real-time-auto-find-and-replace' ),
-						'page'       => __( 'Page URLs', 'real-time-auto-find-and-replace' ),
-						'attachment' => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' ),
+						'all'          => __( 'Select All', 'real-time-auto-find-and-replace' ),
+						'unselect_all' => __( 'Unselect All', 'real-time-auto-find-and-replace' ),
+						'post'         => __( 'Post URLs', 'real-time-auto-find-and-replace' ),
+						'page'         => __( 'Page URLs', 'real-time-auto-find-and-replace' ),
+						'attachment'   => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' ),
 					)
 				),
-				'after' => 'sdf',
+				'after'         => 'sdf',
 				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[case_insensitive]' => array(
@@ -132,13 +132,13 @@ class ReplaceInDB {
 				),
 			),
 			'cs_db_string_replace[unicode_modifier]' => array(
-				'title'    => sprintf( __( 'Unicode Characters %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
-				'type'     => 'checkbox',
-				'is_pro'	=> true,
+				'title'             => sprintf( __( 'Unicode Characters %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'checkbox',
+				'is_pro'            => true,
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
 				),
-				'desc_tip' => __( 'Check this checkbox, if you want find and replace unicode characters (UTF-8). e.g: U+0026, REČA', 'real-time-auto-find-and-replace' ),
+				'desc_tip'          => __( 'Check this checkbox, if you want find and replace unicode characters (UTF-8). e.g: U+0026, REČA', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[dry_run]'          => array(
 				'title'    => __( 'Dry run', 'real-time-auto-find-and-replace' ),

@@ -37,14 +37,13 @@ class RTAFAR_DB {
 		$active = array();
 		$tables = $wpdb->get_results( 'SHOW TABLE STATUS', ARRAY_A );
 
-
 		if ( is_array( $tables ) && ! empty( $tables ) ) {
 
 			foreach ( $tables as $table ) {
 				$size = \round( $table['Data_length'] / 1024 / 1024, 2 );
 
-				//escape plugins tbl
-				if( false !== strpos( $table['Name'], '_rtafar_') ){
+				// escape plugins tbl
+				if ( false !== strpos( $table['Name'], '_rtafar_' ) ) {
 					continue;
 				}
 
@@ -59,7 +58,7 @@ class RTAFAR_DB {
 		}
 
 		$all_selector = array(
-			'select_all' => __( 'Select All', 'real-time-auto-find-and-replace' ),
+			'select_all'   => __( 'Select All', 'real-time-auto-find-and-replace' ),
 			'unselect_all' => __( 'Unselect All', 'real-time-auto-find-and-replace' ),
 		);
 
