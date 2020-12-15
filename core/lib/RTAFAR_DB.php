@@ -73,6 +73,11 @@ class RTAFAR_DB {
 	 * @return array
 	 */
 	public static function get_columns( $table ) {
+
+		if( $table == 'select_all' ){
+			return false;
+		}
+
 		global $wpdb;
 		$primary_key = null;
 		$columns     = array();
