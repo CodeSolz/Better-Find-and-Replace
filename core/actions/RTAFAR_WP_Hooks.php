@@ -128,7 +128,11 @@ class RTAFAR_WP_Hooks {
 	 * @return void
 	 */
 	public static function rtafarAfterUpgrade( $upgrader_object, $options ) {
-		if ( $options['action'] == 'update' && $options['type'] == 'plugin' ) {
+		if ( isset($options['action']) && $options['action'] == 'update' && 
+			 isset($options['type']) && $options['type'] == 'plugin' && 
+			 isset($options['plugins']) 
+			 ) {
+				 
 			foreach ( $options['plugins'] as $eachPlugin ) {
 				if ( $eachPlugin == CS_RTAFAR_PLUGIN_IDENTIFIER ) {
 					Activate::onUpgrade();

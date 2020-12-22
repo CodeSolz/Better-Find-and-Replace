@@ -4,24 +4,24 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.6
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Find and replace text, HTML code, Image's url, Footer credits, jQuery / Ajax loaded text or anything in the website without touching the database.
+Find and replace text, any code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real time rendering as well as search & replace in database.
 
 == Description ==
 This plugin will automatically find a specific word and will replace it with your own word. The changes will be automatically done before the website renders to the browser's. It doesn't affect any other plugins files or your database.
 
 Easily Find and replace text, HTML code, image's url, footer credits or anything in the website without touching the database. 
 
-Also, It has powerful options which you can to search and replace permanently in Database. You will be able to find and replace both key or value in serialize data. Also, you can remove any item from your serialize data by it's key.
+Also, It has powerful features which you can use to search and replace permanently in Database. You will be able to find and replace in both keys or values of serialized data. Also, you can remove any item from your serialized data by it's key.
 
 == Key Features ==
 
 * Easy to use and user-friendly options
-* Search and replace text loaded by **Ajax / jQuery**
 * Search and replace any text
+* Search and replace text loaded by **Ajax / jQuery**
 * Find and **replace URLs**
 * Search and **replace images, attchment URLs etc..**
 * Create word masking with find-replace over the whole website
@@ -37,8 +37,8 @@ Also, It has powerful options which you can to search and replace permanen
 * Select a specific database table to replace content
 * **Dry Run** to see what will be change on Database
 * Search and replace **Whole Words Only** in Database
-* Ultimate powerful options for Search and replace **Serialize Data** in Database
-* Remove any item from **Serialize Data** in Database 
+* Ultimate powerful options for Search and replace **Serialized Data** in Database
+* Remove any item from **Serialized Data** in Database 
 
 == How to replace in DB? ==
 * First create a report by selecting *dry run* from bottom of the setting section 
@@ -50,6 +50,9 @@ Also, It has powerful options which you can to search and replace permanen
 == Pro Features ==
 * **Database Replacement Features:**
 * Powerful search and replace in database
+* Ultimate solution for search & replace in serialized data & remove item 
+* Automatic backup of the search and replacement data
+* Ultimate easy solution for restore data what you have replaced by mistake
 * Ability to check & replace each item separately which going to be replaced in the database
 * Bulk Replacement on report's page, generate by dry run option
 * All tables in database
@@ -131,6 +134,15 @@ code block in find field*
 7. Dry run report
 
 == Changelog ==
+
+= Version: 1.1.8 =
+* **Improvement:** Database search and replacement
+
+
+= Version: 1.1.7 =
+* **Feat:** Serialized data supported ( find & replace or remove item by it's key )
+* **Feat:** Automatic backup options - pro
+* **Feat:** Restore data - pro
 
 = Version: 1.1.6 =
 * **Improvement:** Database search and replacement

@@ -33,9 +33,10 @@ class RTAFAR_DB {
 	public static function get_sizes( $type = '' ) {
 		global $wpdb;
 
-		$sizes  = array();
-		$active = array();
-		$tables = $wpdb->get_results( 'SHOW TABLE STATUS', ARRAY_A );
+		$sizes           = array();
+		$active          = array();
+		$freeVersionTbls = self::freeVersionTbls();
+		$tables          = $wpdb->get_results( 'SHOW TABLE STATUS', ARRAY_A );
 
 		if ( is_array( $tables ) && ! empty( $tables ) ) {
 
@@ -47,12 +48,10 @@ class RTAFAR_DB {
 					continue;
 				}
 
-				$isActive = '';
-				if ( $type && ! \in_array( $table['Name'], self::freeVersionTbls() ) ) {
-					$isActive                            = '_disabled';
-					$sizes[ $table['Name'] . $isActive ] = sprintf( __( '%1$s (%2$s MB) - Pro version only!', 'real-time-auto-find-and-replace' ), $table['Name'], $size );
+				if ( $type && ! \in_array( $table['Name'], $freeVersionTbls ) ) {
+					$sizes[ $table['Name'] . '_disabled' ] = sprintf( __( '%1$s (%2$s MB) - Pro version only!', 'real-time-auto-find-and-replace' ), $table['Name'], $size );
 				} else {
-					$active[ $table['Name'] . $isActive ] = sprintf( __( '%1$s (%2$s MB)', 'real-time-auto-find-and-replace' ), $table['Name'], $size );
+					$active[ $table['Name'] ] = sprintf( __( '%1$s (%2$s MB)', 'real-time-auto-find-and-replace' ), $table['Name'], $size );
 				}
 			}
 		}
@@ -74,7 +73,7 @@ class RTAFAR_DB {
 	 */
 	public static function get_columns( $table ) {
 
-		if( $table == 'select_all' ){
+		if ( $table == 'select_all' ) {
 			return false;
 		}
 

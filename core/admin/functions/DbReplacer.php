@@ -14,10 +14,6 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 
 use RealTimeAutoFindReplace\lib\Util;
 
-// TODO: check query - db replacement - like - should be use or not use - if escaped data is stored in db like would not work -
-// TODO: test to reset serialize data by value only
-// TODO: test more on serialize data
-
 class DbReplacer {
 
 	/**
@@ -57,7 +53,7 @@ class DbReplacer {
 		'is_case_in_sensitive'   => false,
 		'is_serialized'          => false,
 		'has_escaped_serialized' => false,
-		'is_serialize_data'      => false
+		'is_serialize_data'      => false,
 	);
 
 	/**
@@ -251,7 +247,11 @@ class DbReplacer {
 		global $wpdb;
 		$i        = 0;
 		$get_data = $wpdb->get_results(
-			"select * from {$wpdb->postmeta}"
+			$wpdb->prepare(
+				"select * from {$wpdb->postmeta} where meta_key like %s or meta_value like %s ",
+				'%' . $wpdb->esc_like( $find ) . '%',
+				'%' . $wpdb->esc_like( $find ) . '%'
+			)
 		);
 
 		if ( $get_data ) {
@@ -464,12 +464,6 @@ class DbReplacer {
 		return $i;
 	}
 
-	/**
-	 * Reset report holder
-	 */
-	function __destruct() {
-		// $this->report_holder;
-	}
 
 	/**
 	 * Replace String In DB
@@ -547,19 +541,9 @@ class DbReplacer {
 		if ( $new_string['str'] != $old_value && isset( $displayReplace['findCount'] ) && $displayReplace['findCount'] >= 1 ) {
 			global $wpdb;
 
-			// print_r( $new_string );
-			// echo ' -- '. $old_value ;
-			// print_r( strlen($new_string ));
-			// pre_print( strlen($old_value ));
-			/**
-			 * Issues:
-			 * 1. find text is being highlighed but replace is not
-			 */
-
 			// check for dry run
 			if ( ! isset( $this->settings['cs_db_string_replace']['dry_run'] ) ) {
-				// remove empty flag
-				// $new_string = $this->bfarRemoveSpcialCharsFlag( $new_string );
+
 				$wpdb->update( $tbl, array( $update_col => $new_string['cleanStr'] ), $update_con );
 
 				do_action(
@@ -731,21 +715,6 @@ class DbReplacer {
 	 * @return void
 	 */
 	public function bfar_replace_formatter( $args ) {
-			// $args = [
-			// 'find' => '',
-			// 'replace' => '',
-			// 'str' => '',
-			// 'is_preg' => false,
-			// 'is_regular' => false,
-			// 'is_case_in_sensitive' => false,
-			// 'is_serialized' => false,
-			// 'has_escaped_serialized' => false,
-			// 'is_serialize_data' => false,
-			// 'cleanStr' => false
-			// ];
-
-			// TODO: serialize object item remove not working, display replce hightlight not working
-			// TODO:better search and replace serialize data - key change not working, remove item not working
 
 		if ( ( \is_serialized( $args['str'] ) || \is_serialized_string( $args['str'] ) ) &&
 				is_string( $args['str'] ) && false === $args['has_escaped_serialized'] ) {
@@ -810,7 +779,7 @@ class DbReplacer {
 		} elseif ( \is_object( $args['str'] ) ) {
 
 			$flag     = $args['str'];
-			$cleanStr = isset($args['cleanStr']) && !empty($args['cleanStr']) ? $args['cleanStr'] : new \stdClass();
+			$cleanStr = isset( $args['cleanStr'] ) && ! empty( $args['cleanStr'] ) ? $args['cleanStr'] : new \stdClass();
 
 			$objVars = \get_object_vars( $args['str'] );
 			foreach ( $objVars as $key => $value ) {
@@ -858,9 +827,6 @@ class DbReplacer {
 		if ( $args['is_serialized'] && ! is_serialized( $args['str'] ) ) {
 			$args['str']      = \maybe_serialize( $args['str'] );
 			$args['cleanStr'] = \maybe_serialize( $args['cleanStr'] );
-
-			// pre_print( $args );
-			// return $args;
 		}
 
 		return $args;
