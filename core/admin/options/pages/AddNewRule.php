@@ -54,10 +54,10 @@ class AddNewRule {
 	 */
 	public function generate_page( $args, $option ) {
 
-		$delayTimer = 'force-hidden';
+		$ajaxSeRepFields = 'force-hidden';
 		$ruleType   = FormBuilder::get_value( 'type', $option, '' );
 		if ( $ruleType == 'ajaxContent' ) {
-			$delayTimer = '';
+			$ajaxSeRepFields = '';
 		}
 
 		$hiddenBypassRule    = 'force-hidden';
@@ -110,7 +110,7 @@ class AddNewRule {
 				'desc_tip'    => __( 'Select find and replacement rule\'s type. e.g : Plain Text', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[delay]'                 => array(
-				'wrapper_class'     => "delay-time {$delayTimer}",
+				'wrapper_class'     => "delay-time {$ajaxSeRepFields}",
 				'title'             => __( 'Delay Time', 'real-time-auto-find-and-replace' ),
 				'type'              => 'number',
 				'class'             => 'form-control width-100 delay-time-input',
@@ -121,15 +121,6 @@ class AddNewRule {
 					'min' => 1,
 					'max' => 10,
 				),
-			),
-			'cs_masking_rule[tag_selector]'          => array(
-				'wrapper_class' => "tag-selector {$delayTimer}",
-				'title'         => __( 'Tag selector', 'real-time-auto-find-and-replace' ),
-				'type'          => 'text',
-				'class'         => 'form-control tag-selector-input',
-				'value'         => FormBuilder::get_value( 'tag_selector', $option, '' ),
-				'placeholder'   => __( 'Please enter tag selector. e.g: .mytext', 'real-time-auto-find-and-replace' ),
-				'desc_tip'      => __( 'Enter Tag selector. Suppose if you select a tag by it\'s class then use a (.) before class name, (#) for ID. e.g: .mytext or #mytext', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[where_to_replace]'      => array(
 				'title'       => __( 'Where To Replace', 'real-time-auto-find-and-replace' ),

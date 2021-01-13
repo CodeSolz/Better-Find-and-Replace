@@ -277,7 +277,7 @@ class RTAFAR_RegisterMenu {
 	 */
 	public function rtafar_page_restore_db() {
 		?>
-			<img src="<?php echo CS_RTAFAR_PLUGIN_ASSET_URI; ?>img/restore-db-pro.png" />
+			<img src="<?php echo CS_RTAFAR_PLUGIN_ASSET_URI; ?>img/restore-db-pro.png" style="width: 99%" />
 		<?php
 	}
 

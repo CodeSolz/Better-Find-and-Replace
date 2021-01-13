@@ -33,7 +33,6 @@ class Activate {
 				`replace` mediumtext,
 				`type` varchar(56),
 				`delay` float,
-				`tag_selector` mediumtext,
 				`where_to_replace` varchar(128),
 				PRIMARY KEY ( `id`)
 				) $charset_collate",
@@ -68,6 +67,12 @@ class Activate {
 			global $wpdb;
 
 			$update_sqls = array();
+
+			if ( \version_compare( $get_installed_db_version, '1.0.2', '<' ) ) {
+				$update_sqls = array(
+					"ALTER TABLE `{$wpdb->prefix}rtafar_rules` DROP COLUMN tag_selector"
+				);
+			}
 
 			if ( \version_compare( $get_installed_db_version, '1.0.1', '<' ) ) {
 				$update_sqls = array(

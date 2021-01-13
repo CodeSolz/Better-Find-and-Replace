@@ -4,18 +4,18 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.6
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Find and replace text, any code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real time rendering as well as search & replace in database.
+Easy Find and replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real time rendering as well as search & replace in database.
 
 == Description ==
-This plugin will automatically find a specific word and will replace it with your own word. The changes will be automatically done before the website renders to the browser's. It doesn't affect any other plugins files or your database.
+This plugin automatically find a specific word and will replace it with your own word. The changes will be automatically done before the website renders to the browser's. It doesn't affect any other plugins files or your database.
 
-Easily Find and replace text, HTML code, image's url, footer credits or anything in the website without touching the database. 
+Easily Find and replace text, HTML code, Media / Image's URL, Footer credits or anything in the website without touching the database. 
 
-Also, It has powerful features which you can use to search and replace permanently in Database. You will be able to find and replace in both keys or values of serialized data. Also, you can remove any item from your serialized data by it's key.
+Also, It has powerful features which you can use to search and replace permanently in Database. You will be able to find and replace in both keys or values of serialized data. Also, you can remove any item from your serialized data by it's key in your database.
 
 == Key Features ==
 
@@ -135,9 +135,13 @@ code block in find field*
 
 == Changelog ==
 
+= Version: 1.1.9 =
+* **Improvement:** Ajax search & replace
+* **Drop:** Droped ajax search & replace by tag selector
+* **Fix:** Plugin Upgrade warning issues
+
 = Version: 1.1.8 =
 * **Improvement:** Database search and replacement
-
 
 = Version: 1.1.7 =
 * **Feat:** Serialized data supported ( find & replace or remove item by it's key )

@@ -34,7 +34,7 @@ class RTAFAR_EnqueueScript {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'admin.app.global', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.admin.global.min.js', array(), CS_RTAFAR_VERSION, true );
 
-		wp_enqueue_style( 'wapg-global', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-global-style.min.css', false );
+		wp_enqueue_style( 'rtafar-global', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-global-style.min.css', false );
 
 		// register custom data
 		wp_localize_script(

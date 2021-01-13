@@ -33,11 +33,10 @@ class Masking {
 		$type          = isset( $user_query['type'] ) ? $user_query['type'] : '';
 		$replace_where = isset( $user_query['where_to_replace'] ) ? $user_query['where_to_replace'] : '';
 		$delay_time    = isset( $user_query['delay'] ) ? (float) $user_query['delay'] : '';
-		$tag_selector  = isset( $user_query['tag_selector'] ) ? $user_query['tag_selector'] : '';
 
 		$id = isset( $user_query['id'] ) ? $user_query['id'] : '';
 
-		$msg = $this->insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time, $tag_selector, $user_query );
+		$msg = $this->insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time, $user_query );
 
 		return wp_send_json(
 			array(
@@ -54,7 +53,7 @@ class Masking {
 	 *
 	 * @return void
 	 */
-	public function insert_masking_rules( $find, $replace, $type, $replace_where, $id = '', $delay_time, $tag_selector, $user_query ) {
+	public function insert_masking_rules( $find, $replace, $type, $replace_where, $id = '', $delay_time, $user_query ) {
 		global $wpdb;
 
 		if ( $type == 'regex' || $type == 'advance_regex' ) {
@@ -70,8 +69,7 @@ class Masking {
 			'replace'          => $replace,
 			'type'             => Util::check_evil_script( $type ),
 			'where_to_replace' => Util::check_evil_script( $replace_where ),
-			'delay'            => $delay_time,
-			'tag_selector'     => $tag_selector,
+			'delay'            => $delay_time
 		);
 
 		$isExists = $wpdb->get_var(
