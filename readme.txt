@@ -11,11 +11,12 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Easy Find and replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real time rendering as well as search & replace in database.
 
 == Description ==
-This plugin automatically find a specific word and will replace it with your own word. The changes will be automatically done before the website renders to the browser's. It doesn't affect any other plugins files or your database.
+This plugin automatically find a specific word and will replace it with your own word. The changes will be automatically done before the website renders to the browser's. It doesn't affect any other plugins files or your database.
 
-Easily Find and replace text, HTML code, Media / Image's URL, Footer credits or anything in the website without touching the database. 
+Easily Find and replace text, HTML code, Media / Image's URL, Footer credits or anything in the website without touching the database. 
 
-Also, It has powerful features which you can use to search and replace permanently in Database. You will be able to find and replace in both keys or values of serialized data. Also, you can remove any item from your serialized data by it's key in your database.
+Also, It has powerful features which you can use to search and replace permanently in Database. You will be able to find and replace 
+in both keys or values of serialized data. Also, you can remove any item from your serialized data by it's key in your database.
 
 == Key Features ==
 

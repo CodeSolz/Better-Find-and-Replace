@@ -88,10 +88,9 @@ class AllMaskingRulesList extends \WP_List_Table {
 			return __( 'Regular Expression', 'real-time-auto-find-and-replace' );
 		} elseif ( $item->type == 'ajaxContent' ) {
 			return sprintf(
-				__( 'jQuery / Ajax %1$s Delay Time : %2$s Tag selector : %3$s', 'real-time-auto-find-and-replace' ),
+				__( 'jQuery / Ajax %1$s Delay Time : %2$s ', 'real-time-auto-find-and-replace' ),
 				'<br>',
-				$item->delay . ' seconds <br>',
-				$item->tag_selector
+				$item->delay . ' seconds <br>'
 			);
 		} elseif ( $item->type == 'advance_regex' ) {
 			return __( 'Advance Regular Expression (multiple lines at once / code blocks )', 'real-time-auto-find-and-replace' );
