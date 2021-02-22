@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.6
-Stable tag: 1.1.9
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -121,7 +121,7 @@ code block in find field*
 
 
 == Installation ==
-1. Upload the WooCommerce_AltCoin_Payment_Gateway folder to the '/wp-content/plugins/' directory
+1. Upload the real-time-auto-find-and-replace folder to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Screenshots ==
@@ -136,10 +136,13 @@ code block in find field*
 
 == Changelog ==
 
+= Version: 1.2.0 =
+* **Bug Fix:** Replacement bug fixed
+* **Improvement:** Improved database search and replace
+
 = Version: 1.1.9 =
 * **Improvement:** Ajax search & replace
 * **Drop:** Droped ajax search & replace by tag selector
-* **Fix:** Plugin Upgrade warning issues
 
 = Version: 1.1.8 =
 * **Improvement:** Database search and replacement

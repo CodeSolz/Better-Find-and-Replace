@@ -27,7 +27,9 @@ class Scripts_Settings {
 		wp_enqueue_style( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.css', array(), CS_RTAFAR_VERSION );
 		wp_enqueue_script( 'sweetalert', CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/sweetalert/dist/sweetalert.min.js', array(), CS_RTAFAR_VERSION, true );
 
-		if ( isset( $rtafr_menu['replace_in_db'] ) && $page_id === $rtafr_menu['replace_in_db'] ) {
+		if (  ( isset( $rtafr_menu['add_masking_rule'] ) && $page_id === $rtafr_menu['add_masking_rule'] ) ||
+				( isset( $rtafr_menu['replace_in_db'] ) && $page_id === $rtafr_menu['replace_in_db'] )
+			) {
 			wp_enqueue_style(
 				'select2',
 				CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/select2/css/select2.min.css',

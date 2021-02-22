@@ -128,11 +128,14 @@ class AddNewRule {
 				'class'       => 'form-control coin-type-select',
 				'required'    => true,
 				'placeholder' => __( 'Please select where to replace', 'real-time-auto-find-and-replace' ),
-				'options'     => array(
-					'all'               => __( 'All over the website', 'real-time-auto-find-and-replace' ),
-					'posts_disabled'    => __( 'All Blog Posts', 'real-time-auto-find-and-replace' ),
-					'pages_disabled'    => __( 'All Pages', 'real-time-auto-find-and-replace' ),
-					'comments_disabled' => __( 'All Comments', 'real-time-auto-find-and-replace' ),
+				'options'     => apply_filters(
+					'bfrp_masking_location',
+						array(
+						'all'               => __( 'All over the website', 'real-time-auto-find-and-replace' ),
+						'posts_disabled'    => __( 'All Blog Posts Only - pro version only - Upcoming', 'real-time-auto-find-and-replace' ),
+						'pages_disabled'    => __( 'Website All Pages Only - pro version only - Upcoming', 'real-time-auto-find-and-replace' ),
+						'specific_page_post_disabled' => __( 'On Specific Page / Posts - pro version only - Upcoming', 'real-time-auto-find-and-replace' ),
+					)
 				),
 				'value'       => FormBuilder::get_value( 'where_to_replace', $option, '' ),
 				'desc_tip'    => __( 'Select rule\'s type. e.g : All over the website', 'real-time-auto-find-and-replace' ),
@@ -196,6 +199,21 @@ class AddNewRule {
 				'type'          => 'section_title',
 				'title'         => __( 'Advance Filters', 'real-time-auto-find-and-replace' ),
 				'desc_tip'      => __( 'Set the following settings if you want to apply special filter options.', 'real-time-auto-find-and-replace' ),
+			),
+			'cs_masking_rule[skip_pages][]'                            => array(
+				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
+				'title'         	=> __( 'Skip Pages', 'real-time-auto-find-and-replace' ),
+				'type'          	=> 'select',
+				'class'         	=> 'form-control skip-pages',
+				'multiple'      	=> true,
+				'is_pro'        	=> true,
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'value'         	=> \apply_filters( 'bfrp_active_skip_pages' , FormBuilder::get_value( 'skip_pages', $option, '' ) ),
+				'placeholder'  		=> __( 'Please select page(s)', 'real-time-auto-find-and-replace' ),
+				'options'       => \apply_filters( 'bfrp_skip_pages', array() ),
+				'desc_tip'      => __( 'Select pages where you don\'t want to apply this rule', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[skip_base_url]'         => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",

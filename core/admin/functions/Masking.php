@@ -118,10 +118,20 @@ class Masking {
 			}
 		}
 
-		$get_rules = $wpdb->get_results(
-			"SELECT * from `{$wpdb->prefix}rtafar_rules` as r where where_to_replace = '{$where_to_replace}' {$where_id} {$ruleType} order by id asc"
-		);
+		$sql = "SELECT * from `{$wpdb->prefix}rtafar_rules` as r where where_to_replace = '{$where_to_replace}' {$where_id} {$ruleType} order by id asc";
 
+		if( has_filter( 'bfrp_get_rules_sql' ) && ! is_admin() ){
+			$sql = apply_filters( "bfrp_get_rules_sql", 
+				array(
+					'where_to_replace' => $where_to_replace, 
+					'where_id' => $where_id, 
+					'ruleType' => $ruleType
+				) 
+			);
+		}
+
+		$get_rules = $wpdb->get_results( $sql );
+		
 		if ( $get_rules ) {
 			return $get_rules;
 		}

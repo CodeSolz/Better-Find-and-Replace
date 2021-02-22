@@ -18,6 +18,8 @@ use RealTimeAutoFindReplace\install\Activate;
 
 class RTAFAR_WP_Hooks {
 
+	private $WP_Ins;
+
 	function __construct() {
 
 		/*** add settings link */
@@ -35,11 +37,11 @@ class RTAFAR_WP_Hooks {
 	 * @return void
 	 */
 	public function rtafar_filter_contents() {
-		// ob_get_clean();
-		\ob_start(
-			array( $this, 'get_filtered_content' )
-		);
-		// \ob_end_flush();
+		$replace_rules = Masking::get_rules( 'all' );
+
+		return ob_start(function($buffer) use ( $replace_rules ) {
+			return $this->get_filtered_content($buffer, $replace_rules );
+		});
 	}
 
 	/**
@@ -48,8 +50,7 @@ class RTAFAR_WP_Hooks {
 	 * @param [type] $buffer
 	 * @return void
 	 */
-	private function get_filtered_content( $buffer ) {
-		$replace_rules = Masking::get_rules( 'all' );
+	private function get_filtered_content( $buffer, $replace_rules ) {
 		if ( $replace_rules ) {
 			foreach ( $replace_rules as $item ) {
 				// check bypass filter rule
