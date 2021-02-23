@@ -645,7 +645,6 @@ class DbReplacer {
 		$replaceNewDisStr = \preg_replace( \esc_html( $replace ), "<span class='replace'>$1</span>", \esc_html( $args['new_value'] ), -1, $countReplace );
 		$replaceNewDisStr = $this->bfarRemoveSpcialCharsFlag( $replaceNewDisStr );
 
-
 		return array(
 			'find'         => $findNewDisStr,
 			'replace'      => $replaceNewDisStr,
@@ -843,7 +842,7 @@ class DbReplacer {
 			$str = '~&nbsp;~';
 		}
 
-		if( empty( $this->bfar_special_chars )){
+		if ( empty( $this->bfar_special_chars ) ) {
 			$this->bfar_special_chars = Util::bfar_special_chars();
 		}
 
@@ -862,7 +861,7 @@ class DbReplacer {
 	 */
 	public function bfarRemoveSpcialCharsFlag( $str ) {
 
-		if( empty( $this->bfar_special_chars )){
+		if ( empty( $this->bfar_special_chars ) ) {
 			$this->bfar_special_chars = Util::bfar_special_chars();
 		}
 

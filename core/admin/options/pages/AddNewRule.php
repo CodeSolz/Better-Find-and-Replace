@@ -55,7 +55,7 @@ class AddNewRule {
 	public function generate_page( $args, $option ) {
 
 		$ajaxSeRepFields = 'force-hidden';
-		$ruleType   = FormBuilder::get_value( 'type', $option, '' );
+		$ruleType        = FormBuilder::get_value( 'type', $option, '' );
 		if ( $ruleType == 'ajaxContent' ) {
 			$ajaxSeRepFields = '';
 		}
@@ -130,11 +130,8 @@ class AddNewRule {
 				'placeholder' => __( 'Please select where to replace', 'real-time-auto-find-and-replace' ),
 				'options'     => apply_filters(
 					'bfrp_masking_location',
-						array(
-						'all'               => __( 'All over the website', 'real-time-auto-find-and-replace' ),
-						'posts_disabled'    => __( 'All Blog Posts Only - pro version only - Upcoming', 'real-time-auto-find-and-replace' ),
-						'pages_disabled'    => __( 'Website All Pages Only - pro version only - Upcoming', 'real-time-auto-find-and-replace' ),
-						'specific_page_post_disabled' => __( 'On Specific Page / Posts - pro version only - Upcoming', 'real-time-auto-find-and-replace' ),
+					array(
+						'all' => __( 'All over the website', 'real-time-auto-find-and-replace' ),
 					)
 				),
 				'value'       => FormBuilder::get_value( 'where_to_replace', $option, '' ),
@@ -144,7 +141,7 @@ class AddNewRule {
 				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
 				'type'          => 'section_title',
 				'title'         => __( 'Bypass Rule', 'real-time-auto-find-and-replace' ),
-				'desc_tip'      => __( 'Activate the following settings if you want to keep unchange the text in specific area with bypass rule pattern.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Activate the following settings if you want to keep unchange any text in specific area with bypass rule pattern.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[bypass_rule_is_active]' => array(
 				'wrapper_class'     => "bypass-rule {$hiddenBypassRule}",
@@ -200,20 +197,20 @@ class AddNewRule {
 				'title'         => __( 'Advance Filters', 'real-time-auto-find-and-replace' ),
 				'desc_tip'      => __( 'Set the following settings if you want to apply special filter options.', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_masking_rule[skip_pages][]'                            => array(
+			'cs_masking_rule[skip_pages][]'          => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
-				'title'         	=> __( 'Skip Pages', 'real-time-auto-find-and-replace' ),
-				'type'          	=> 'select',
-				'class'         	=> 'form-control skip-pages',
-				'multiple'      	=> true,
-				'is_pro'        	=> true,
+				'title'             => sprintf( __( 'Skip Pages %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'select',
+				'class'             => 'form-control skip-pages',
+				'multiple'          => true,
+				'is_pro'            => true,
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
 				),
-				'value'         	=> \apply_filters( 'bfrp_active_skip_pages' , FormBuilder::get_value( 'skip_pages', $option, '' ) ),
-				'placeholder'  		=> __( 'Please select page(s)', 'real-time-auto-find-and-replace' ),
-				'options'       => \apply_filters( 'bfrp_skip_pages', array() ),
-				'desc_tip'      => __( 'Select pages where you don\'t want to apply this rule', 'real-time-auto-find-and-replace' ),
+				'value'             => \apply_filters( 'bfrp_active_skip_pages', FormBuilder::get_value( 'skip_pages', $option, '' ) ),
+				'placeholder'       => __( 'Please select page(s)', 'real-time-auto-find-and-replace' ),
+				'options'           => \apply_filters( 'bfrp_skip_pages', array() ),
+				'desc_tip'          => __( 'Select pages where you don\'t want to apply this rule. e.g: Checkout, Home', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[skip_base_url]'         => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
@@ -466,6 +463,8 @@ class AddNewRule {
 							jQuery(".delay-time-input, .tag-selector-input").attr('required', 'required');
 						}
 					});
+
+					jQuery('.skip-pages').select2();
 				});
 
 				

@@ -116,7 +116,7 @@ class ReplaceInDB {
 				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post', 'real-time-auto-find-and-replace' ),
 			),
 			'st2'                                    => array(
-				'wrapper_class' => "advance-filter ",
+				'wrapper_class' => 'advance-filter ',
 				'type'          => 'section_title',
 				'title'         => __( 'Advance Filters', 'real-time-auto-find-and-replace' ),
 				'desc_tip'      => __( 'Set the following settings if you want to apply special filter options.', 'real-time-auto-find-and-replace' ),

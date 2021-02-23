@@ -70,7 +70,7 @@ class Activate {
 
 			if ( \version_compare( $get_installed_db_version, '1.0.2', '<' ) ) {
 				$update_sqls = array(
-					"ALTER TABLE `{$wpdb->prefix}rtafar_rules` DROP COLUMN tag_selector"
+					"ALTER TABLE `{$wpdb->prefix}rtafar_rules` DROP COLUMN tag_selector",
 				);
 			}
 

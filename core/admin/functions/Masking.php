@@ -69,7 +69,7 @@ class Masking {
 			'replace'          => $replace,
 			'type'             => Util::check_evil_script( $type ),
 			'where_to_replace' => Util::check_evil_script( $replace_where ),
-			'delay'            => $delay_time
+			'delay'            => $delay_time,
 		);
 
 		$isExists = $wpdb->get_var(
@@ -120,18 +120,19 @@ class Masking {
 
 		$sql = "SELECT * from `{$wpdb->prefix}rtafar_rules` as r where where_to_replace = '{$where_to_replace}' {$where_id} {$ruleType} order by id asc";
 
-		if( has_filter( 'bfrp_get_rules_sql' ) && ! is_admin() ){
-			$sql = apply_filters( "bfrp_get_rules_sql", 
+		if ( has_filter( 'bfrp_get_rules_sql' ) && ! is_admin() ) {
+			$sql = apply_filters(
+				'bfrp_get_rules_sql',
 				array(
-					'where_to_replace' => $where_to_replace, 
-					'where_id' => $where_id, 
-					'ruleType' => $ruleType
-				) 
+					'where_to_replace' => $where_to_replace,
+					'where_id'         => $where_id,
+					'ruleType'         => $ruleType,
+				)
 			);
 		}
 
 		$get_rules = $wpdb->get_results( $sql );
-		
+
 		if ( $get_rules ) {
 			return $get_rules;
 		}

@@ -4,7 +4,7 @@ Tags: find, replace, search, find and replace, search and replace, auto find, au
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.6
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,7 @@ in both keys or values of serialized data. Also, you can remove any item from yo
 * Skip posts / page / custom taxonomies etc.. urls
 * Skip CSS - External, Internal, Inline
 * Skip JavaScript - External, Internal
+* Skip pages - if you don't want to apply rules on any specific page
 * Bypass rule  - keep texts unchanged on specific area with special pattern
 * Bypass rule  - keep base links / urls ( post, pages, custom taxonomies etc..) unchanged where find word exists in that URL.
 
@@ -135,6 +136,10 @@ code block in find field*
 7. Dry run report
 
 == Changelog ==
+
+= Version: 1.2.1 =
+* **Feat:** Skip pages ( if you don't want to apply rules on any specific pages ) - pro
+* **Improvement:** Real-time find and replacement 
 
 = Version: 1.2.0 =
 * **Bug Fix:** Replacement bug fixed

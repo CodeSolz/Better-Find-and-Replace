@@ -39,9 +39,11 @@ class RTAFAR_WP_Hooks {
 	public function rtafar_filter_contents() {
 		$replace_rules = Masking::get_rules( 'all' );
 
-		return ob_start(function($buffer) use ( $replace_rules ) {
-			return $this->get_filtered_content($buffer, $replace_rules );
-		});
+		return ob_start(
+			function( $buffer ) use ( $replace_rules ) {
+				return $this->get_filtered_content( $buffer, $replace_rules );
+			}
+		);
 	}
 
 	/**
@@ -129,11 +131,11 @@ class RTAFAR_WP_Hooks {
 	 * @return void
 	 */
 	public static function rtafarAfterUpgrade( $upgrader_object, $options ) {
-		if ( isset($options['action']) && $options['action'] == 'update' && 
-			 isset($options['type']) && $options['type'] == 'plugin' && 
-			 isset($options['plugins']) 
+		if ( isset( $options['action'] ) && $options['action'] == 'update' &&
+			 isset( $options['type'] ) && $options['type'] == 'plugin' &&
+			 isset( $options['plugins'] )
 			 ) {
-				 
+
 			foreach ( $options['plugins'] as $eachPlugin ) {
 				if ( $eachPlugin == CS_RTAFAR_PLUGIN_IDENTIFIER ) {
 					Activate::onUpgrade();

@@ -38,12 +38,15 @@ class AllMaskingRulesList extends \WP_List_Table {
 	 * @return typeGenerate column
 	 */
 	public function get_columns() {
-		return array(
-			'cb'               => '<input type="checkbox" />',
-			'find'             => __( 'Find', 'real-time-auto-find-and-replace' ),
-			'replace'          => __( 'Replace by', 'real-time-auto-find-and-replace' ),
-			'type'             => __( 'Rule Type', 'real-time-auto-find-and-replace' ),
-			'where_to_replace' => __( 'Where to replace', 'real-time-auto-find-and-replace' ),
+		return apply_filters(
+			'bfrp_all_masking_rules_tbl_rows',
+			array(
+				'cb'               => '<input type="checkbox" />',
+				'find'             => __( 'Find', 'real-time-auto-find-and-replace' ),
+				'replace'          => __( 'Replace by', 'real-time-auto-find-and-replace' ),
+				'type'             => __( 'Rule Type', 'real-time-auto-find-and-replace' ),
+				'where_to_replace' => __( 'Where to replace', 'real-time-auto-find-and-replace' ),
+			)
 		);
 	}
 
@@ -98,9 +101,16 @@ class AllMaskingRulesList extends \WP_List_Table {
 	}
 
 	public function column_where_to_replace( $item ) {
-		// pre_print( $item );
 		if ( strtolower( $item->where_to_replace ) == 'all' ) {
-			return 'All over the website';
+			return __( 'All over the website', 'real-time-auto-find-and-replace' );
+		}
+	}
+
+	public function column_skip_pages( $item ) {
+		if ( has_action( 'bfrp_column_skip_pages' ) ) {
+			do_action( 'bfrp_column_skip_pages', $item );
+		} else {
+			return '---';
 		}
 	}
 

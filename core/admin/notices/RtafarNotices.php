@@ -53,7 +53,7 @@ class RtafarNotices {
 		$installedOn = get_option( 'rtafar_plugin_install_date' );
 		$date1       = new \DateTime( date( 'Y-m-d', \strtotime( $installedOn ) ) );
 		$date2       = new \DateTime( date( 'Y-m-d' ) );
-		if ( $date1->diff( $date2 )->days > 14 ) {
+		if ( $date1->diff( $date2 )->days < 14 ) {
 			return false;
 		}
 		$timeDiff    = \human_time_diff( \strtotime( $installedOn ), current_time( 'U' ) );
