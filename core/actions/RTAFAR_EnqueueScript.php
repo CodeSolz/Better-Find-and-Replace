@@ -71,7 +71,7 @@ class RTAFAR_EnqueueScript {
 		wp_localize_script(
 			'rtrar.appLocal',
 			'rtafr',
-			$rules
+			array( 'rules' => $rules )
 		);
 	}
 

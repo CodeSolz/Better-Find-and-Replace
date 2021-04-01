@@ -121,7 +121,7 @@ class Masking {
 		$sql = "SELECT * from `{$wpdb->prefix}rtafar_rules` as r where where_to_replace = '{$where_to_replace}' {$where_id} {$ruleType} order by id asc";
 
 		if ( has_filter( 'bfrp_get_rules_sql' ) && ! is_admin() ) {
-			$sql = apply_filters(
+			$fsql = apply_filters(
 				'bfrp_get_rules_sql',
 				array(
 					'where_to_replace' => $where_to_replace,
@@ -129,6 +129,8 @@ class Masking {
 					'ruleType'         => $ruleType,
 				)
 			);
+
+			$sql = false === $fsql ? $sql : $fsql;
 		}
 
 		$get_rules = $wpdb->get_results( $sql );

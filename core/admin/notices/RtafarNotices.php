@@ -51,14 +51,19 @@ class RtafarNotices {
 	public static function feedback( $notice ) {
 		// check installed time
 		$installedOn = get_option( 'rtafar_plugin_install_date' );
-		$date1       = new \DateTime( date( 'Y-m-d', \strtotime( $installedOn ) ) );
-		$date2       = new \DateTime( date( 'Y-m-d' ) );
+		if ( empty( $installedOn ) ) {
+			add_option( 'rtafar_plugin_install_date', date( 'Y-m-d H:i:s' ) );
+			return false;
+		}
+
+		$date1 = new \DateTime( date( 'Y-m-d', \strtotime( $installedOn ) ) );
+		$date2 = new \DateTime( date( 'Y-m-d' ) );
 		if ( $date1->diff( $date2 )->days < 14 ) {
 			return false;
 		}
 		$timeDiff    = \human_time_diff( \strtotime( $installedOn ), current_time( 'U' ) );
 		$message     = __(
-			'You are using our plugin more then %s. If you are enjoying it, %s would you mind%s to %s give us a 5 stars %s (%s) review?
+			'You are using our plugin more than %s. If you are enjoying it, %s would you mind%s to %s give us a 5 stars %s (%s) review?
 			%2$s Your valuable review %3$s will %2$s inspire us %3$s to make it more better.',
 			'real-time-auto-find-and-replace'
 		);

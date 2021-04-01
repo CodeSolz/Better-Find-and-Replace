@@ -1,10 +1,10 @@
 === Better Find and Replace ===
 Contributors: CodeSolz, m.tuhin
-Tags: find, replace, search, find and replace, search and replace, auto find, auto replace
+Tags: database, replace, search, find and replace, search and replace, auto find, auto replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
-Tested up to: 5.6
-Stable tag: 1.2.1
+Tested up to: 5.7
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,30 +50,30 @@ in both keys or values of serialized data. Also, you can remove any item from yo
 
 == Pro Features ==
 * **Database Replacement Features:**
-* Powerful search and replace in database
-* Ultimate solution for search & replace in serialized data & remove item 
-* Automatic backup of the search and replacement data
-* Ultimate easy solution for restore data what you have replaced by mistake
-* Ability to check & replace each item separately which going to be replaced in the database
-* Bulk Replacement on report's page, generate by dry run option
-* All tables in database
-* Search and replace **Unicode Characters** *UTF-8  ( e.g: U+0026, REČA )* in Database
-* Additional filterting options in default / custom URLs 
+    * Powerful search and replace in database
+    * Ultimate solution for search & replace in serialized data & remove item 
+    * Automatic backup of the search and replacement data
+    * Ultimate easy solution for restore data what you have replaced by mistake
+    * Ability to check & replace each item separately which going to be replaced in the database
+    * Bulk Replacement on report's page, generate by dry run option
+    * All tables in database
+    * Search and replace **Unicode Characters** *UTF-8  ( e.g: U+0026, REČA )* in Database
+    * Additional filterting options in default / custom URLs 
 
 * **Real-Time Rendering Features:**
-* RegEx supported
-* Advance Regex - Powerful code blocks / multilines find and replace in real-time (masking) rendering
-* Advance Regex - Any (CSS / JS / HTML) code Block find and replacement in real-time (masking) rendering
-* **Advance filtering options** :-
-* Case insensitive - search and replace case sensitive or insensitive
-* Whole Word - search and replace whole word 
-* Unicode - search and replace Unicode Characters
-* Skip posts / page / custom taxonomies etc.. urls
-* Skip CSS - External, Internal, Inline
-* Skip JavaScript - External, Internal
-* Skip pages - if you don't want to apply rules on any specific page
-* Bypass rule  - keep texts unchanged on specific area with special pattern
-* Bypass rule  - keep base links / urls ( post, pages, custom taxonomies etc..) unchanged where find word exists in that URL.
+    * RegEx supported
+    * Advance Regex - Powerful code blocks / multilines find and replace in real-time (masking) rendering
+    * Advance Regex - Any (CSS / JS / HTML) code Block find and replacement in real-time (masking) rendering
+    * **Advance filtering options** :-
+        * Case insensitive - search and replace case sensitive or insensitive
+        * Whole Word - search and replace whole word 
+        * Unicode - search and replace Unicode Characters
+        * Skip posts / page / custom taxonomies etc.. urls
+        * Skip CSS - External, Internal, Inline
+        * Skip JavaScript - External, Internal
+        * Skip pages - if you don't want to apply rules on any specific page
+        * Bypass rule  - keep texts unchanged on specific area with special pattern
+        * Bypass rule  - keep base links / urls ( post, pages, custom taxonomies etc..) unchanged where find word exists in that URL.
 
 = Advance Regex - Code blocks / multilines find and replacement example - (Real-time Rendering) =
 *Find code block and replace with your own or keep blank *replament field* to remove code block. Let consider the following CSS code block for replace. Put following
@@ -97,8 +97,29 @@ code block in find field*
 
 **Join the elite web professionals who enjoy [Better Find And Replace Pro!](https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README)**
 
-== Setup Video Guide - How to install and setup search and replace rules == 
+== ➡️ Basic Documentation To Get Started == 
+
+* Setup Video Guide - How to install and setup search and replace rules
 [youtube https://www.youtube.com/watch?v=nDv6T72sRfc]
+
+<hr/><hr/>
+
+👉 Real-time search and replace
+
+* General options for filteting
+    * [Live Demo & Documentation](https://docs.codesolz.net/better-find-and-replace/real-time-find-replace/general-options/)
+* Advance options for filteting
+    * [Live Demo & Documentation](https://docs.codesolz.net/better-find-and-replace/real-time-find-replace/advance-filters/)
+
+
+👉 Search and replace in Database
+
+* [Live Demo & Documentation](https://docs.codesolz.net/better-find-and-replace/search-replace-in-database/)
+* Find and replace in Database tables
+    * [Live Demo & Documentation](https://docs.codesolz.net/better-find-and-replace/search-replace-in-database/find-and-replace-in-tables/)
+* Find and replace in Database URLs
+    * [Live Demo &  Documentation](https://docs.codesolz.net/better-find-and-replace/search-replace-in-database/find-and-replace-urls/)
+
 
 = Forum and Feature Request = 
 
@@ -136,6 +157,16 @@ code block in find field*
 7. Dry run report
 
 == Changelog ==
+
+= Version: 1.2.4 =
+* **Fix:** WP_Scripts::localize PHP Notice
+
+= Version: 1.2.3 =
+* **Improvement:** Database find and replacement 
+* **Improvement:** WordPress 5.7 compatible
+
+= Version: 1.2.2 =
+* **Bug Fix:** bug fixed
 
 = Version: 1.2.1 =
 * **Feat:** Skip pages ( if you don't want to apply rules on any specific pages ) - pro
