@@ -804,6 +804,7 @@ class DbReplacer {
 						}
 					}
 
+					$cleanKey 			   = trim( $cleanKey );
 					$args['str']           = $value;
 					$args['is_serialized'] = false;
 					$objNes                = $this->bfar_replace_formatter( $args );

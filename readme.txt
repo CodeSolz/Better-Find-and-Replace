@@ -4,7 +4,7 @@ Tags: database, replace, search, find and replace, search and replace, auto find
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.7
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,6 +157,9 @@ code block in find field*
 7. Dry run report
 
 == Changelog ==
+
+= Version: 1.2.5 =
+* **Fix:** Database search replace: PHP error: Cannot access property started with '\0'
 
 = Version: 1.2.4 =
 * **Fix:** WP_Scripts::localize PHP Notice
