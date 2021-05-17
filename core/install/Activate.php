@@ -68,17 +68,18 @@ class Activate {
 
 			$update_sqls = array();
 
-			if ( \version_compare( $get_installed_db_version, '1.0.2', '<' ) ) {
-				$update_sqls = array(
-					"ALTER TABLE `{$wpdb->prefix}rtafar_rules` DROP COLUMN tag_selector",
-				);
-			}
-
+			
 			if ( \version_compare( $get_installed_db_version, '1.0.1', '<' ) ) {
-				$update_sqls = array(
+				$update_sqls =  array(
 					"ALTER TABLE `{$wpdb->prefix}rtafar_rules` ADD COLUMN delay FLOAT DEFAULT 0 AFTER type",
 					"ALTER TABLE `{$wpdb->prefix}rtafar_rules` ADD COLUMN tag_selector mediumtext AFTER delay",
 				);
+			}
+
+			if ( \version_compare( $get_installed_db_version, '1.0.2', '<' ) ) {
+				$update_sqls = array_merge_recursive( $update_sqls, array(
+					"ALTER TABLE `{$wpdb->prefix}rtafar_rules` DROP COLUMN tag_selector",
+				));
 			}
 
 			// update db

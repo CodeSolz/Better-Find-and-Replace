@@ -71,7 +71,27 @@ class AddNewRule {
 			$hiddenAdvanceFilter = '';
 		}
 
-		// pre_print( $option );
+		$isShowSt2 = $hiddenAdvanceFilter;
+		$isShowSkipPage = $hiddenAdvanceFilter;
+		$isShowSkipPost = $hiddenAdvanceFilter;
+
+		if ( has_filter( 'bfrp_filterSnAnrFields' ) ) {
+			$isShowScFields = array();
+			$isShowScFields = apply_filters( 'bfrp_filterSnAnrFields', $isShowScFields, $option, $ruleType );
+			
+			if( isset( $isShowScFields['st2'] ) && $isShowScFields['st2'] == 'show' ){
+				$isShowSt2 = '';
+			}
+			if( isset( $isShowScFields['skip_pages'] ) && $isShowScFields['skip_pages'] == 'show' ){
+				$isShowSkipPage = '';
+			}
+			if( isset( $isShowScFields['skip_posts'] ) && $isShowScFields['skip_posts'] == 'show' ){
+				$isShowSkipPost = '';
+			}
+		}
+		
+		// pre_print( $isShowScFields );
+
 
 		$fields = array(
 			'cs_masking_rule[find]'                  => array(
@@ -104,6 +124,9 @@ class AddNewRule {
 						'regex'                  => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
 						'ajaxContent'            => __( 'jQuery / Ajax', 'real-time-auto-find-and-replace' ),
 						'advance_regex_disabled' => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterShortCodes_disabled' 	 => __( 'Shortcodes (will replace before render to browser)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterAutopost_disabled' 	 => __( 'Auto Incoming Post (will replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterComment_disabled' 	 => __( 'New Comment (will replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
 					)
 				),
 				'value'       => FormBuilder::get_value( 'type', $option, '' ),
@@ -137,7 +160,7 @@ class AddNewRule {
 				'value'       => FormBuilder::get_value( 'where_to_replace', $option, '' ),
 				'desc_tip'    => __( 'Select rule\'s type. e.g : All over the website', 'real-time-auto-find-and-replace' ),
 			),
-			'st1'                                    => array(
+			'st1' => array(
 				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
 				'type'          => 'section_title',
 				'title'         => __( 'Bypass Rule', 'real-time-auto-find-and-replace' ),
@@ -192,13 +215,13 @@ class AddNewRule {
 				'desc_tip'          => sprintf( __( 'Check this checkbox if you want to remove the bypass rule wrapper on final output. eg. %1$s{test}%2$s will render finally %1$stest%2$s.', 'real-time-auto-find-and-replace' ), '<code>', '</code>' ),
 			),
 			'st2'                                    => array(
-				'wrapper_class' => "advance-filter {$hiddenAdvanceFilter}",
+				'wrapper_class' => "advance-filter st2-wrapper {$isShowSt2}",
 				'type'          => 'section_title',
 				'title'         => __( 'Advance Filters', 'real-time-auto-find-and-replace' ),
 				'desc_tip'      => __( 'Set the following settings if you want to apply special filter options.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[skip_pages][]'          => array(
-				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
+				'wrapper_class'     => "advance-filter wrap-skip-pages {$isShowSkipPage}",
 				'title'             => sprintf( __( 'Skip Pages %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'select',
 				'class'             => 'form-control skip-pages',
@@ -211,6 +234,21 @@ class AddNewRule {
 				'placeholder'       => __( 'Please select page(s)', 'real-time-auto-find-and-replace' ),
 				'options'           => \apply_filters( 'bfrp_skip_pages', array() ),
 				'desc_tip'          => __( 'Select pages where you don\'t want to apply this rule. e.g: Checkout, Home', 'real-time-auto-find-and-replace' ),
+			),
+			'cs_masking_rule[skip_posts][]'          => array(
+				'wrapper_class'     => "advance-filter wrap-skip-posts {$isShowSkipPost}",
+				'title'             => sprintf( __( 'Skip Posts %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'select',
+				'class'             => 'form-control skip-posts',
+				'multiple'          => true,
+				'is_pro'            => true,
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'value'             => \apply_filters( 'bfrp_active_skip_posts', FormBuilder::get_value( 'skip_posts', $option, '' ) ),
+				'placeholder'       => __( 'Please select page(s)', 'real-time-auto-find-and-replace' ),
+				'options'           => \apply_filters( 'bfrp_skip_posts', array() ),
+				'desc_tip'          => __( 'Select posts where you don\'t want to apply this rule. Rule will be applied on single post pages only. e.g: My post', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[skip_base_url]'         => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
@@ -464,7 +502,7 @@ class AddNewRule {
 						}
 					});
 
-					jQuery('.skip-pages').select2();
+					jQuery('.skip-pages, .skip-posts').select2();
 				});
 
 				

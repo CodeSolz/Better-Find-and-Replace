@@ -158,6 +158,12 @@ code block in find field*
 
 == Changelog ==
 
+= Version: 1.2.6 =
+* **Feat:** Masking rule on Shortcode (pro)
+* **Feat:** Skip posts - if you don't want to apply rules on any specific posts - (pro)
+* **Feat:** Automatically filter New Posts before inserting into Database (good for auto posting websites) - (pro)
+* **Feat:** Automatically filter New Comments before inserting into Database - (pro)
+
 = Version: 1.2.5 =
 * **Fix:** Database search replace: PHP error: Cannot access property started with '\0'
 

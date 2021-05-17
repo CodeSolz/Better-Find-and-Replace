@@ -34,6 +34,10 @@ class Masking {
 		$replace_where = isset( $user_query['where_to_replace'] ) ? $user_query['where_to_replace'] : '';
 		$delay_time    = isset( $user_query['delay'] ) ? (float) $user_query['delay'] : '';
 
+		// pre_print(
+		// 	$user_query
+		// );
+
 		$id = isset( $user_query['id'] ) ? $user_query['id'] : '';
 
 		$msg = $this->insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time, $user_query );
@@ -114,11 +118,12 @@ class Masking {
 			if ( $rule_type ) {
 				$ruleType = " and type = '{$rule_type}' ";
 			} else {
-				$ruleType = " and type != 'ajaxContent' "; // get all but not ajaxRules
+				$ruleType = " and type != 'ajaxContent' and type != 'filterShortCodes' "; // get all but not ajaxRules
 			}
 		}
 
 		$sql = "SELECT * from `{$wpdb->prefix}rtafar_rules` as r where where_to_replace = '{$where_to_replace}' {$where_id} {$ruleType} order by id asc";
+
 
 		if ( has_filter( 'bfrp_get_rules_sql' ) && ! is_admin() ) {
 			$fsql = apply_filters(

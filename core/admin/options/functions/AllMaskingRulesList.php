@@ -98,6 +98,11 @@ class AllMaskingRulesList extends \WP_List_Table {
 		} elseif ( $item->type == 'advance_regex' ) {
 			return __( 'Advance Regular Expression (multiple lines at once / code blocks )', 'real-time-auto-find-and-replace' );
 		}
+		else{
+			if ( has_filter( 'bfrp_column_type_text' ) ) {
+				return apply_filters( 'bfrp_column_type_text', $item );
+			}
+		}
 	}
 
 	public function column_where_to_replace( $item ) {
@@ -109,6 +114,14 @@ class AllMaskingRulesList extends \WP_List_Table {
 	public function column_skip_pages( $item ) {
 		if ( has_action( 'bfrp_column_skip_pages' ) ) {
 			do_action( 'bfrp_column_skip_pages', $item );
+		} else {
+			return '---';
+		}
+	}
+
+	public function column_skip_posts( $item ) {
+		if ( has_action( 'bfrp_column_skip_posts' ) ) {
+			do_action( 'bfrp_column_skip_posts', $item );
 		} else {
 			return '---';
 		}
