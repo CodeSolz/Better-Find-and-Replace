@@ -78,8 +78,8 @@ class Masking {
 
 		$isExists = $wpdb->get_var(
 			$wpdb->prepare(
-				"select id from {$wpdb->prefix}rtafar_rules where find = '%s' ",
-				$find
+				"select id from {$wpdb->prefix}rtafar_rules where find = '%s' and type = '%s'",
+				$find, $type
 			)
 		);
 
@@ -118,7 +118,7 @@ class Masking {
 			if ( $rule_type ) {
 				$ruleType = " and type = '{$rule_type}' ";
 			} else {
-				$ruleType = " and type != 'ajaxContent' and type != 'filterShortCodes' "; // get all but not ajaxRules
+				$ruleType = " and type != 'ajaxContent' and type != 'filterShortCodes' and type != 'filterComment' and type != 'filterOldComments' and type != 'filterAutoPost' "; // get all but not ajaxRules
 			}
 		}
 

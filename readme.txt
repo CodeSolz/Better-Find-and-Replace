@@ -4,7 +4,7 @@ Tags: database, replace, search, find and replace, search and replace, auto find
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.7
-Stable tag: 1.2.5
+Stable tag: 1.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,11 +59,14 @@ in both keys or values of serialized data. Also, you can remove any item from yo
     * All tables in database
     * Search and replace **Unicode Characters** *UTF-8  ( e.g: U+0026, REČA )* in Database
     * Additional filterting options in default / custom URLs 
+    * Filter new comments before inserting into Database 
+    * Filter new post before inserting into Database (Good for auto post generation website)
 
 * **Real-Time Rendering Features:**
     * RegEx supported
     * Advance Regex - Powerful code blocks / multilines find and replace in real-time (masking) rendering
     * Advance Regex - Any (CSS / JS / HTML) code Block find and replacement in real-time (masking) rendering
+    * Masking on Shortcode
     * **Advance filtering options** :-
         * Case insensitive - search and replace case sensitive or insensitive
         * Whole Word - search and replace whole word 
@@ -72,6 +75,7 @@ in both keys or values of serialized data. Also, you can remove any item from yo
         * Skip CSS - External, Internal, Inline
         * Skip JavaScript - External, Internal
         * Skip pages - if you don't want to apply rules on any specific page
+        * Skip posts - if you don't want to apply rules on any specific posts
         * Bypass rule  - keep texts unchanged on specific area with special pattern
         * Bypass rule  - keep base links / urls ( post, pages, custom taxonomies etc..) unchanged where find word exists in that URL.
 
@@ -160,6 +164,7 @@ code block in find field*
 
 = Version: 1.2.6 =
 * **Feat:** Masking rule on Shortcode (pro)
+* **Feat:** Masking on Old Comments - (pro)
 * **Feat:** Skip posts - if you don't want to apply rules on any specific posts - (pro)
 * **Feat:** Automatically filter New Posts before inserting into Database (good for auto posting websites) - (pro)
 * **Feat:** Automatically filter New Comments before inserting into Database - (pro)

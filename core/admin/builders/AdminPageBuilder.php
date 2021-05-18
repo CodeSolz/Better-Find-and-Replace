@@ -166,7 +166,9 @@ class AdminPageBuilder {
 	 */
 	private function generate_footer() {
 		return '<div class="panel-footer">
-            <p>Thank you for choosing us! <a href="https://www.codesolz.net" target="_blank">codesolz.net</a></p>
+            <p>Thank you for choosing <a href="https://www.codesolz.net" target="_blank">CodeSolz\'s</a> Software!
+				<span class="doc-link">Looking for features details? Check plugin\'s <a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank">Documentation</a> </span> 
+			</p>
         </div>';
 	}
 }

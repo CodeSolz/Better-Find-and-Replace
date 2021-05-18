@@ -124,9 +124,10 @@ class AddNewRule {
 						'regex'                  => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
 						'ajaxContent'            => __( 'jQuery / Ajax', 'real-time-auto-find-and-replace' ),
 						'advance_regex_disabled' => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
-						'filterShortCodes_disabled' 	 => __( 'Shortcodes (will replace before render to browser)  - pro version only', 'real-time-auto-find-and-replace' ),
-						'filterAutopost_disabled' 	 => __( 'Auto Incoming Post (will replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
-						'filterComment_disabled' 	 => __( 'New Comment (will replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterShortCodes_disabled' 	 => __( 'Shortcode (replace before rendering on Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterAutoPost_disabled' 	 => __( 'Auto / New Post (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterComment_disabled' 	 => __( 'New Comment (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterOldComments_disabled' 	 => __( 'Old Comments(replace before rendering on Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
 					)
 				),
 				'value'       => FormBuilder::get_value( 'type', $option, '' ),
