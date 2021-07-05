@@ -71,27 +71,26 @@ class AddNewRule {
 			$hiddenAdvanceFilter = '';
 		}
 
-		$isShowSt2 = $hiddenAdvanceFilter;
+		$isShowSt2      = $hiddenAdvanceFilter;
 		$isShowSkipPage = $hiddenAdvanceFilter;
 		$isShowSkipPost = $hiddenAdvanceFilter;
 
 		if ( has_filter( 'bfrp_filterSnAnrFields' ) ) {
 			$isShowScFields = array();
 			$isShowScFields = apply_filters( 'bfrp_filterSnAnrFields', $isShowScFields, $option, $ruleType );
-			
-			if( isset( $isShowScFields['st2'] ) && $isShowScFields['st2'] == 'show' ){
+
+			if ( isset( $isShowScFields['st2'] ) && $isShowScFields['st2'] == 'show' ) {
 				$isShowSt2 = '';
 			}
-			if( isset( $isShowScFields['skip_pages'] ) && $isShowScFields['skip_pages'] == 'show' ){
+			if ( isset( $isShowScFields['skip_pages'] ) && $isShowScFields['skip_pages'] == 'show' ) {
 				$isShowSkipPage = '';
 			}
-			if( isset( $isShowScFields['skip_posts'] ) && $isShowScFields['skip_posts'] == 'show' ){
+			if ( isset( $isShowScFields['skip_posts'] ) && $isShowScFields['skip_posts'] == 'show' ) {
 				$isShowSkipPost = '';
 			}
 		}
-		
-		// pre_print( $isShowScFields );
 
+		// pre_print( $isShowScFields );
 
 		$fields = array(
 			'cs_masking_rule[find]'                  => array(
@@ -120,14 +119,14 @@ class AddNewRule {
 				'options'     => apply_filters(
 					'bfrp_masking_rules',
 					array(
-						'plain'                  => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
-						'regex'                  => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
-						'ajaxContent'            => __( 'jQuery / Ajax', 'real-time-auto-find-and-replace' ),
-						'advance_regex_disabled' => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
-						'filterShortCodes_disabled' 	 => __( 'Shortcode (replace before rendering on Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
-						'filterAutoPost_disabled' 	 => __( 'Auto / New Post (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
-						'filterComment_disabled' 	 => __( 'New Comment (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
-						'filterOldComments_disabled' 	 => __( 'Old Comments(replace before rendering on Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'plain'                      => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
+						'regex'                      => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
+						'ajaxContent'                => __( 'jQuery / Ajax', 'real-time-auto-find-and-replace' ),
+						'advance_regex_disabled'     => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterShortCodes_disabled'  => __( 'Shortcode (replace before rendering on Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterAutoPost_disabled'    => __( 'Auto / New Post (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterComment_disabled'     => __( 'New Comment (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterOldComments_disabled' => __( 'Old Comments(replace before rendering on Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
 					)
 				),
 				'value'       => FormBuilder::get_value( 'type', $option, '' ),
@@ -161,7 +160,7 @@ class AddNewRule {
 				'value'       => FormBuilder::get_value( 'where_to_replace', $option, '' ),
 				'desc_tip'    => __( 'Select rule\'s type. e.g : All over the website', 'real-time-auto-find-and-replace' ),
 			),
-			'st1' => array(
+			'st1'                                    => array(
 				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
 				'type'          => 'section_title',
 				'title'         => __( 'Bypass Rule', 'real-time-auto-find-and-replace' ),
@@ -247,7 +246,7 @@ class AddNewRule {
 					'disabled' => 'disabled',
 				),
 				'value'             => \apply_filters( 'bfrp_active_skip_posts', FormBuilder::get_value( 'skip_posts', $option, '' ) ),
-				'placeholder'       => __( 'Please select page(s)', 'real-time-auto-find-and-replace' ),
+				'placeholder'       => __( 'Please select posts(s)', 'real-time-auto-find-and-replace' ),
 				'options'           => \apply_filters( 'bfrp_skip_posts', array() ),
 				'desc_tip'          => __( 'Select posts where you don\'t want to apply this rule. Rule will be applied on single post pages only. e.g: My post', 'real-time-auto-find-and-replace' ),
 			),

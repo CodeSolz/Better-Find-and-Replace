@@ -1,7 +1,7 @@
 <?php namespace RealTimeAutoFindReplace\admin\functions;
 
 /**
- * From Builder Class
+ * Masking Class
  *
  * @package Funcitons
  * @since 1.0.0
@@ -35,7 +35,7 @@ class Masking {
 		$delay_time    = isset( $user_query['delay'] ) ? (float) $user_query['delay'] : '';
 
 		// pre_print(
-		// 	$user_query
+		// $user_query
 		// );
 
 		$id = isset( $user_query['id'] ) ? $user_query['id'] : '';
@@ -79,7 +79,8 @@ class Masking {
 		$isExists = $wpdb->get_var(
 			$wpdb->prepare(
 				"select id from {$wpdb->prefix}rtafar_rules where find = '%s' and type = '%s'",
-				$find, $type
+				$find,
+				$type
 			)
 		);
 
@@ -123,7 +124,6 @@ class Masking {
 		}
 
 		$sql = "SELECT * from `{$wpdb->prefix}rtafar_rules` as r where where_to_replace = '{$where_to_replace}' {$where_id} {$ruleType} order by id asc";
-
 
 		if ( has_filter( 'bfrp_get_rules_sql' ) && ! is_admin() ) {
 			$fsql = apply_filters(

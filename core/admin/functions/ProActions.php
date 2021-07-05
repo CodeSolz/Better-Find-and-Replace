@@ -1,7 +1,7 @@
 <?php namespace RealTimeAutoFindReplace\admin\functions;
 
 /**
- * From Builder Class
+ * Pro Action Class
  *
  * @package Funcitons
  * @since 1.0.6

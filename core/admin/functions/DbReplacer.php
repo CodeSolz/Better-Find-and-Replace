@@ -1,7 +1,7 @@
 <?php namespace RealTimeAutoFindReplace\admin\functions;
 
 /**
- * From Builder Class
+ * Database Replacer Class
  *
  * @package Functions
  * @since 1.0.0
@@ -804,7 +804,7 @@ class DbReplacer {
 						}
 					}
 
-					$cleanKey 			   = trim( $cleanKey );
+					$cleanKey              = trim( $cleanKey );
 					$args['str']           = $value;
 					$args['is_serialized'] = false;
 					$objNes                = $this->bfar_replace_formatter( $args );

@@ -97,8 +97,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 			);
 		} elseif ( $item->type == 'advance_regex' ) {
 			return __( 'Advance Regular Expression (multiple lines at once / code blocks )', 'real-time-auto-find-and-replace' );
-		}
-		else{
+		} else {
 			if ( has_filter( 'bfrp_column_type_text' ) ) {
 				return apply_filters( 'bfrp_column_type_text', $item );
 			}

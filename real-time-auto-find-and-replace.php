@@ -1,11 +1,10 @@
 <?php
-
 /**
  * @wordpress-plugin
  * Plugin Name:       Better Find and Replace
  * Plugin URI:        https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/
  * Description:       The plugin automatically find the specific words and replace by your own. you can setup your own rules for find and replace. It will execute before rendering page in browser's as well as background calls by any other social plugins.
- * Version:           1.2.6
+ * Version:           1.2.7
  * Author:            CodeSolz
  * Author URI:        https://www.codesolz.net
  * License:           GPLv3
@@ -37,7 +36,7 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 		 *
 		 * @var String
 		 */
-		private static $version = '1.2.6';
+		private static $version = '1.2.7';
 
 		/**
 		 * Hold version
@@ -53,7 +52,9 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 		 */
 		private static $namespace = 'RealTimeAutoFindReplace';
 
-
+		/**
+		 * Constructor
+		 */
 		public function __construct() {
 
 			// load plugins constant.
@@ -74,7 +75,7 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 			/**Init necessary functions */
 			add_action( 'plugins_loaded', array( __CLASS__, 'rtaafr_init_function' ), 14 );
 
-			/**check plugin db*/
+			/**Check plugin db*/
 			add_action( 'plugins_loaded', array( __CLASS__, 'rtaafr_check_db' ), 17 );
 		}
 
@@ -105,8 +106,8 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 		/**
 		 * Set constant
 		 *
-		 * @param type $name
-		 * @param type $value
+		 * @param String $name store constant names.
+		 * @param String $value store values.
 		 * @return boolean
 		 */
 		private static function set_constant( $name, $value ) {
@@ -118,14 +119,14 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 
 
 		/**
-		 * load core framework
+		 * Autoload core framework.
 		 */
 		private static function load_core_framework() {
 			require_once CS_RTAFAR_BASE_DIR_PATH . 'vendor/autoload.php';
 		}
 
 		/**
-		 * Load Action Files
+		 * Load Action Files.
 		 *
 		 * @return classes
 		 */
@@ -135,7 +136,7 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 				$class_name = basename( $cs_action_file, '.php' );
 				$class      = $namespace . $class_name;
 				if ( class_exists( $class ) &&
-					! array_key_exists( $class, self::$rtaafr_hooks ) ) { // check class doesn't load multiple time
+					! array_key_exists( $class, self::$rtaafr_hooks ) ) { // check class doesn't load multiple time.
 					self::$rtaafr_hooks[ $class ] = new $class();
 				}
 			}
@@ -143,21 +144,21 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 		}
 
 		/**
-		 * init activation hook
+		 * Init activation hook
 		 */
 		private static function on_activate() {
 
-			// activation hook
+			// activation hook.
 			register_deactivation_hook( __FILE__, array( self::$namespace . '\\install\\Activate', 'on_activate' ) );
 
-			// deactivation hook
+			// deactivation hook.
 			register_deactivation_hook( __FILE__, array( self::$namespace . '\\install\\Activate', 'on_deactivate' ) );
 
 			return true;
 		}
 
 		/**
-		 * init textdomain
+		 * Init textdomain
 		 */
 		public static function init_textdomain() {
 			load_plugin_textdomain( 'real-time-auto-find-and-replace', false, CS_RTAFAR_BASE_DIR_PATH . '/languages/' );
@@ -170,7 +171,7 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 		 */
 		public static function rtaafr_init_function() {
 
-			// init notices
+			// init notices.
 			\RealTimeAutoFindReplace\admin\notices\RtafarNotices::init();
 		}
 
