@@ -3,12 +3,12 @@ Contributors: CodeSolz, m.tuhin
 Tags: database, replace, search, find and replace, search and replace, auto find, auto replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
-Tested up to: 5.7
-Stable tag: 1.2.7
+Tested up to: 5.8
+Stable tag: 1.2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily Find and replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real time rendering as well as search & replace in database.
+Easily Find and replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real time. Search & replace in database too..
 
 == Description ==
 This plugin automatically find a specific word and will replace it with your own word. The changes will be automatically done before the website renders to the browser's. It doesn't affect any other plugins files or your database.
@@ -162,6 +162,10 @@ code block in find field*
 7. List of All Masking Rules with pro features 
 
 == Changelog ==
+
+= Version: 1.2.8 =
+* **Improvement:** WordPress 5.8 compatible
+* **Improvement:** Database search and replacement 
 
 = Version: 1.2.7 =
 * **Improvement:** Database search and replacement 

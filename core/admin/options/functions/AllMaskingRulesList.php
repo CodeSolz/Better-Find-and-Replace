@@ -145,6 +145,13 @@ class AllMaskingRulesList extends \WP_List_Table {
 	}
 
 	/**
+	 * Extra table nav
+	 */
+	public function extra_tablenav(){
+		do_action( 'rtafar_allmaskingrules_extra_tablenav');
+    }
+
+	/**
 	 * Get the data
 	 *
 	 * @global type $wpdb
