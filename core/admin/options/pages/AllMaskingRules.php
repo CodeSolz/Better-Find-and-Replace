@@ -1,7 +1,7 @@
 <?php namespace RealTimeAutoFindReplace\admin\options\pages;
 
 /**
- * Class: Coin LIst
+ * Class: All Masking List
  *
  * @package Admin
  * @since 1.2.4
@@ -41,7 +41,7 @@ class AllMaskingRules {
 		$page = isset( $_GET['page'] ) ? Util::check_evil_script( $_GET['page'] ) : '';
 		if ( isset( $_GET['s'] ) && ! empty( $_GET['s'] ) ) {
 			$back_url     = Util::cs_generate_admin_url( $page );
-			$args['well'] = "<p class='search-keyword'>Search results for : '<b>" . $_GET['s'] . "</b>' </p> <a href='{$back_url}' class='button'><< Back to all</a> ";
+			$args['well'] = "<p class='search-keyword'>Search results for : '<b>" . Util::check_evil_script( $_GET['s'] ) . "</b>' </p> <a href='{$back_url}' class='button'><< Back to all</a> ";
 		}
 
 		ob_start();

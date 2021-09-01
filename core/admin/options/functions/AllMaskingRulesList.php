@@ -161,6 +161,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 		global $wpdb, $wapg_tables;
 		$search = '';
 		if ( isset( $_GET['s'] ) && ! empty( $skey = $_GET['s'] ) ) {
+			$skey = Util::check_evil_script( $skey );
 			$search = " where c.find like '%{$skey}%'";
 		}
 
