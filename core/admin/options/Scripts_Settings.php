@@ -46,6 +46,29 @@ class Scripts_Settings {
 
 		}
 
+		if ( ( isset( $rtafr_menu['replace_in_db'] ) && $page_id == $rtafr_menu['replace_in_db'] )
+		) {
+
+			wp_enqueue_script(
+				'rtafar.admin.replace.in.db',
+				CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.admin.replace.in.db.min.js',
+				array(),
+				CS_RTAFAR_VERSION,
+				true
+			);
+
+			// load vars
+			wp_localize_script(
+				'rtafar.admin.replace.in.db',
+				'repndb',
+				array(
+					'mgt'    => 'admin\\options\\functions\\DbFuncReplaceInDb@get_tables_in_select_options',
+					'mgurls' => 'admin\\options\\functions\\DbFuncReplaceInDb@get_urls_in_select_options',
+				)
+			);
+
+		}
+
 		if ( ( isset( $rtafr_menu['add_masking_rule'] ) && $page_id == $rtafr_menu['add_masking_rule'] ) ||
 				( isset( $rtafr_menu['replace_in_db'] ) && $page_id == $rtafr_menu['replace_in_db'] ) ||
 				( isset( $rtafr_menu['brafp_license'] ) && $page_id == $rtafr_menu['brafp_license'] )

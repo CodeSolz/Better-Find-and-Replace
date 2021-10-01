@@ -105,6 +105,16 @@ class Util {
 	}
 
 	/**
+	 * Print strings
+	 *
+	 * @param [type] $value
+	 * @return void
+	 */
+	public static function cs_sanitize_prnt_str( $value ) {
+		return \esc_attr( self::cs_esc_html( $value ) );
+	}
+
+	/**
 	 * Strip slashes
 	 *
 	 * @param [type] $value

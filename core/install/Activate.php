@@ -145,7 +145,10 @@ class Activate {
 	 */
 	public static function onUpgrade() {
 		// remove notice status
-		delete_option( CS_NOTICE_ID . 'ed_Feedback' );
+		if ( ! get_option( CS_NOTICE_ID . 'ed_Feedback_offPerm' ) ) {
+			delete_option( CS_NOTICE_ID . 'ed_Feedback' );
+		}
+
 		return true;
 	}
 

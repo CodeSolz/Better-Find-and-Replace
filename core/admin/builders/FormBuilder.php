@@ -350,18 +350,20 @@ class FormBuilder {
 		$input_item = $this->generate_attribute( $field_name, $field, $field_id );
 		$input      = "<select  {$input_item} >";
 		$input     .= '<option value="" disabled class="placeholder" >==================== ' . $field['placeholder'] . ' ====================</option>';
-		foreach ( $field['options'] as $key => $val ) {
-			$selected = '';
-			if ( ( is_array( $value ) && in_array( $key, $value ) ) || $key == $value ) {
-				$selected = 'selected="selected"';
-			}
+		if ( ! empty( $field['options'] ) ) {
+			foreach ( $field['options'] as $key => $val ) {
+				$selected = '';
+				if ( ( is_array( $value ) && in_array( $key, $value ) ) || $key == $value ) {
+					$selected = 'selected="selected"';
+				}
 
-			$disabled = '';
-			if ( \strpos( $key, '_disabled' ) !== false ) {
-				$disabled = 'disabled';
-			}
+				$disabled = '';
+				if ( \strpos( $key, '_disabled' ) !== false ) {
+					$disabled = 'disabled';
+				}
 
-			$input .= '<option value ="' . $key . '" ' . $selected . ' ' . $disabled . ' >' . $val . '</option>';
+				$input .= '<option value ="' . $key . '" ' . $selected . ' ' . $disabled . ' >' . $val . '</option>';
+			}
 		}
 		$input .= '</select>';
 

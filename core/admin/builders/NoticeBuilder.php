@@ -48,9 +48,14 @@ class NoticeBuilder {
 	 */
 	public function action_admin_init() {
 		$dismiss_option = filter_input( INPUT_GET, CS_NOTICE_ID, FILTER_SANITIZE_STRING );
+
 		if ( is_string( $dismiss_option ) ) {
 			update_option( CS_NOTICE_ID . 'ed_' . $dismiss_option, true );
-			wp_die();
+			return wp_send_json(
+				array(
+					'status' => 'success',
+				)
+			);
 		}
 	}
 
@@ -78,7 +83,10 @@ class NoticeBuilder {
 					admin_url()
 				);
 
-				if ( ! get_option( CS_NOTICE_ID . "ed_{$admin_notice->dismiss_option}" ) ) {
+				if ( ! get_option( CS_NOTICE_ID . "ed_{$admin_notice->dismiss_option}" ) &&
+					! get_option( CS_NOTICE_ID . "ed_{$admin_notice->dismiss_option}_offPerm" )
+
+					) {
 
 					$dissmissUrl = '';
 					$canDissmiss = '';

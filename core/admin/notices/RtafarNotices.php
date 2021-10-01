@@ -63,14 +63,13 @@ class RtafarNotices {
 		}
 		$timeDiff    = \human_time_diff( \strtotime( $installedOn ), current_time( 'U' ) );
 		$message     = __(
-			'You are using our plugin more than %s. If you are enjoying it, %s would you mind%s to %s give us a 5 stars %s (%s) review?
-			%2$s Your valuable review %3$s will %2$s inspire us %3$s to make it more better.',
+			'You are using the plugin quite a while! If you are enjoying it, %s Would you mind%s to %s give us a 5 stars %s (%s) review?
+			%1$s Your valuable review %2$s will %1$s inspire us %2$s to make it more better.',
 			'real-time-auto-find-and-replace'
 		);
 		$review_link = 'https://wordpress.org/support/plugin/real-time-auto-find-and-replace/reviews/?filter=5';
 		$message     = sprintf(
 			$message,
-			$timeDiff,
 			'<b>',
 			'</b>',
 			'<a href="' . $review_link . '" target="_blank"><strong>',
@@ -81,6 +80,12 @@ class RtafarNotices {
 			<span class="dashicons dashicons-star-filled"></span>
 			<span class="dashicons dashicons-star-filled"></span>'
 		);
+
+		$message .= '<div class="cs-notice-action-btn-holder"><button class="button-primary bfar-review-now">Let\'s do it now! </button> '
+		. '<button class="button-secondary bfar-review-never">I\'ve already done it!</button> '
+			. '<button class="button-secondary bfar-review-later">I\'ll do it later!</button> '
+			. '<button class="button-secondary bfar-review-never">Please don\'t bother me again :(</button> </div>';
+
 		$notice->info( $message, 'Feedback' );
 	}
 

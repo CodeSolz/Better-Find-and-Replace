@@ -16,6 +16,9 @@ use RealTimeAutoFindReplace\lib\Util;
 use RealTimeAutoFindReplace\admin\builders\FormBuilder;
 use RealTimeAutoFindReplace\admin\builders\AdminPageBuilder;
 
+
+use RealTimeAutoFindReplace\admin\functions\DbReplacer;
+
 class ReplaceInDB {
 
 	/**
@@ -92,7 +95,7 @@ class ReplaceInDB {
 				'multiple'      => true,
 				'required'      => true,
 				'placeholder'   => __( 'Please select tables', 'real-time-auto-find-and-replace' ),
-				'options'       => \apply_filters( 'bfrp_selectTables', array() ),
+				'options'       => '', // loads dynamically
 				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post.', 'real-time-auto-find-and-replace' ),
 			),
 			'url_options[]'                          => array(
@@ -102,17 +105,7 @@ class ReplaceInDB {
 				'class'         => 'form-control in-which-url',
 				'multiple'      => true,
 				'placeholder'   => __( 'Please select options', 'real-time-auto-find-and-replace' ),
-				'options'       => \apply_filters(
-					'bfrp_urlOptions',
-					array(
-						'all'          => __( 'Select All', 'real-time-auto-find-and-replace' ),
-						'unselect_all' => __( 'Unselect All', 'real-time-auto-find-and-replace' ),
-						'post'         => __( 'Post URLs', 'real-time-auto-find-and-replace' ),
-						'page'         => __( 'Page URLs', 'real-time-auto-find-and-replace' ),
-						'attachment'   => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' ),
-					)
-				),
-				'after'         => 'sdf',
+				'options'       => '', // loads value dynamically
 				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post', 'real-time-auto-find-and-replace' ),
 			),
 			'st2'                                    => array(
@@ -211,54 +204,6 @@ class ReplaceInDB {
 		?>
 			<script>
 				jQuery(document).ready(function($) {
-
-					$('.db-tables, .in-which-url').select2();
-
-					$('body').on("select2:select", '.db-tables', function (e) { 
-						var data = e.params.data.text;
-						if(data=='Select All'){
-							$(".db-tables > option:enabled").prop("selected","selected");
-							$(".db-tables > option:contains(Unselect All)").prop('selected', false);
-							$(".db-tables").trigger("change");
-						}
-						else if( data=='Unselect All'){
-							$(".db-tables > option:enabled").prop("selected","");
-							$(".db-tables").trigger("change");
-						}
-					});
-
-					$('body').on("select2:select", '.in-which-url', function (e) { 
-						var data = e.params.data.text;
-						if(data=='Select All'){
-							$(".in-which-url > option:enabled").prop("selected","selected");
-							$(".in-which-url > option:contains(Unselect All)").prop('selected', false);
-							$(".in-which-url").trigger("change");
-						}
-						else if( data=='Unselect All'){
-							$(".in-which-url > option:enabled").prop("selected","");
-							$(".in-which-url").trigger("change");
-						}
-					});
-
-					
-					jQuery("body").on('change', '.where-to-replace', function(){
-						var currVal = jQuery(this).val();
-						if( currVal === 'tables' ){
-							jQuery(".url-options").addClass('force-hidden');
-							jQuery(".db-tables-wrap").removeClass('force-hidden');
-							jQuery(".in-which-url").removeAttr('required');
-							jQuery(".db-tables").attr('required', 'required');
-						}
-						else if( currVal === 'urls' ){
-							jQuery(".url-options").removeClass('force-hidden');
-							jQuery(".db-tables-wrap").addClass('force-hidden');
-							jQuery(".in-which-url").attr('required', 'required');
-							jQuery(".db-tables").removeAttr('required');
-						}
-
-						// $('.db-tables, .in-which-url').select2();
-
-					});
 
 					jQuery("body").on('click', 'a.close', function(){
 						$("#popup1").removeClass('show-popup').addClass('hide-popup');

@@ -4,7 +4,7 @@ Tags: database, replace, search, find and replace, search and replace, auto find
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.8
-Stable tag: 1.2.9
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -162,6 +162,16 @@ code block in find field*
 7. List of All Masking Rules with pro features 
 
 == Changelog ==
+
+= Version: 1.3.1 =
+* **Improvement:** Speed up on Database replacement section
+* **Improvement:** serialize data replacement algorithm
+* **Fix:** PHP warnings
+
+
+= Version: 1.3.0 =
+* **Improvement:** string replacemnt 
+* **Improvement:** loading time 
 
 = Version: 1.2.9 =
 * **Fix:** Security issues

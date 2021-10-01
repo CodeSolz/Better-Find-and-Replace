@@ -11,6 +11,7 @@ module.exports = {
     "./assets/css/rtafar-admin-style": "./src/scss/src/app.scss",
     "./assets/css/rtafar-admin-global-style": "./src/scss/src/global.scss",
     "./assets/js/rtafar.app": "./src/js/src/ajaxContentReplacer.js",
+    "./assets/js/rtafar.admin.replace.in.db": "./src/js/src/pageReplaceInDb.js",
   },
   output: {
     filename: "[name].min.js",

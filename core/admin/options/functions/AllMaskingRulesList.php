@@ -1,7 +1,7 @@
 <?php namespace RealTimeAutoFindReplace\admin\options\functions;
 
 /**
- * Class: Coin LIst
+ * Class: Item List
  *
  * @package Admin
  * @since 1.0.0
@@ -147,9 +147,9 @@ class AllMaskingRulesList extends \WP_List_Table {
 	/**
 	 * Extra table nav
 	 */
-	public function extra_tablenav(){
-		do_action( 'rtafar_allmaskingrules_extra_tablenav');
-    }
+	public function extra_tablenav( $which ) {
+		do_action( 'rtafar_allmaskingrules_extra_tablenav' );
+	}
 
 	/**
 	 * Get the data
@@ -161,7 +161,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 		global $wpdb, $wapg_tables;
 		$search = '';
 		if ( isset( $_GET['s'] ) && ! empty( $skey = $_GET['s'] ) ) {
-			$skey = Util::check_evil_script( $skey );
+			$skey   = Util::check_evil_script( $skey );
 			$search = " where c.find like '%{$skey}%'";
 		}
 

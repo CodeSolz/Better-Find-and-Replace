@@ -232,7 +232,7 @@ class AddNewRule {
 				),
 				'value'             => \apply_filters( 'bfrp_active_skip_pages', FormBuilder::get_value( 'skip_pages', $option, '' ) ),
 				'placeholder'       => __( 'Please select page(s)', 'real-time-auto-find-and-replace' ),
-				'options'           => \apply_filters( 'bfrp_skip_pages', array() ),
+				'options'           => \apply_filters( 'bfrp_skip_pages', FormBuilder::get_value( 'skip_pages', $option, '' ) ),
 				'desc_tip'          => __( 'Select pages where you don\'t want to apply this rule. e.g: Checkout, Home', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[skip_posts][]'          => array(
@@ -247,7 +247,7 @@ class AddNewRule {
 				),
 				'value'             => \apply_filters( 'bfrp_active_skip_posts', FormBuilder::get_value( 'skip_posts', $option, '' ) ),
 				'placeholder'       => __( 'Please select posts(s)', 'real-time-auto-find-and-replace' ),
-				'options'           => \apply_filters( 'bfrp_skip_posts', array() ),
+				'options'           => \apply_filters( 'bfrp_skip_posts', FormBuilder::get_value( 'skip_posts', $option, '' ) ),
 				'desc_tip'          => __( 'Select posts where you don\'t want to apply this rule. Rule will be applied on single post pages only. e.g: My post', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[skip_base_url]'         => array(
@@ -502,7 +502,6 @@ class AddNewRule {
 						}
 					});
 
-					jQuery('.skip-pages, .skip-posts').select2();
 				});
 
 				

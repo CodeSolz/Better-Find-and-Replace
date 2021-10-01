@@ -43,7 +43,7 @@ class ProActions {
 			}
 		}
 
-		$getPosts = $wpdb->get_results( "SELECT distinct post_type from `{$wpdb->base_prefix}posts` order by post_type asc " );
+		$getPosts = $wpdb->get_results( "SELECT DISTINCT post_type from `{$wpdb->base_prefix}posts` order by post_type ASC " );
 		if ( $getPosts ) {
 			foreach ( $getPosts as $post ) {
 				if ( $type == 'selectOptions' ) {
