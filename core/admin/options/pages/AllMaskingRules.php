@@ -55,10 +55,35 @@ class AllMaskingRules {
 		$html = ob_get_clean();
 
 		$args['content'] = $html;
+		$args['hidden_content'] = $this->popupHtml();
 
 		return $this->Admin_Page_Generator->generate_page( $args );
 	}
 
+
+	/**
+	 * Custom Modal
+	 *
+	 * @return void
+	 */
+	private function popupHtml() {
+		$html = \ob_start();
+		?>
+			<div id="popup1" class="overlay">
+				<div class="popup">
+					<h2 class="title">---</h2>
+					<p class="sub-title">--</p>
+					<a class="close" >&times;</a>
+					<div id="bfrModalContent" class="content"><!-- Content --></div>
+					<div class="after-content"><!-- after content elements --> </div>
+					<div class="apiResponse"></div>
+				</div>
+			</div>
+		<?php
+		$html = ob_get_clean();
+
+		return $html;
+	}
 
 }
 

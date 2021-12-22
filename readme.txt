@@ -1,14 +1,14 @@
 === Better Find and Replace ===
 Contributors: CodeSolz, m.tuhin
-Tags: database, replace, search, find and replace, search and replace, auto find, auto replace
+Tags: database, search and replace, search replace, search, real-time replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 5.8
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily Find and replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real time. Search & replace in database too..
+Easily Find and replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real time. Search replace in database too..
 
 == Description ==
 This plugin automatically find a specific word and will replace it with your own word. The changes will be automatically done before the website renders to the browser's. It doesn't affect any other plugins files or your database.
@@ -79,6 +79,7 @@ in both keys or values of serialized data. Also, you can remove any item from yo
         * Bypass rule  - keep texts unchanged on specific area with special pattern
         * Bypass rule  - keep base links / urls ( post, pages, custom taxonomies etc..) unchanged where find word exists in that URL.
 
+
 = Advance Regex - Code blocks / multilines find and replacement example - (Real-time Rendering) =
 *Find code block and replace with your own or keep blank *replament field* to remove code block. Let consider the following CSS code block for replace. Put following
 code block in find field*
@@ -136,7 +137,7 @@ code block in find field*
 
 = Visit our forum to share your experience or request features = 
 <ul>
-    <li> Visit our <a target="_blank" href="https://forum.codesolz.net/?utm_source=wordpress.org&utm_medium=README&utm_campaign=real-time-auto-find-and-replace">forum</a></li>
+    <li> Visit our <a target="_blank" href="https://codesolz.net/forum/?utm_source=wordpress.org&utm_medium=README&utm_campaign=real-time-auto-find-and-replace">forum</a></li>
 </ul>
 
 = As it's open source, check our github development Status = 
@@ -162,6 +163,11 @@ code block in find field*
 7. List of All Masking Rules with pro features 
 
 == Changelog ==
+
+= Version: 1.3.2 =
+* **Feat:** Export / Import rules - (pro)
+* **Feat:** Export / Import Database replacement logs - (pro)
+
 
 = Version: 1.3.1 =
 * **Improvement:** Speed up on Database replacement section
