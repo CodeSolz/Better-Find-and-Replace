@@ -3,20 +3,20 @@ Contributors: CodeSolz, m.tuhin
 Tags: database, search and replace, search replace, search, real-time replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
-Tested up to: 5.8
-Stable tag: 1.3.2
+Tested up to: 5.9
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily Find and replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real time. Search replace in database too..
+Easily Find and replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real-time. Search replace within database too..
 
 == Description ==
-This plugin automatically find a specific word and will replace it with your own word. The changes will be automatically done before the website renders to the browser's. It doesn't affect any other plugins files or your database.
+This plugin automatically finds a specific word (given by you) and will replace it with your own word. The changes will automatically happen before the website renders to the browser. It doesn't affect any other files or databases.
 
-Easily Find and replace text, HTML code, Media / Image's URL, Footer credits or anything in the website without touching the database. 
+Easily find and replace text, HTML code, Media / Image's URL, Footer credits or anything in the website without touching the database. 
 
-Also, It has powerful features which you can use to search and replace permanently in Database. You will be able to find and replace 
-in both keys or values of serialized data. Also, you can remove any item from your serialized data by it's key in your database.
+Also, It has powerful features which can be use to search and replace in Database permanently. It has an advanced feature that can be use to find and replace 
+any keyword on keys or values of serialized data. Also any element of the serialized data can be removed / unset by its key.
 
 == Key Features ==
 
@@ -43,7 +43,7 @@ in both keys or values of serialized data. Also, you can remove any item from yo
 
 == How to replace in DB? ==
 * First create a report by selecting *dry run* from bottom of the setting section 
-* Report will appear in a modal window. You can check there which row / data is going to be replaced.
+* Report will appear in a modal window. You can check there which row / data is going to be replaced.
 * On the report's, if you think the replacement is perfect which you want, then close the report window and un-check the dry run and click the Find & Replace button.
 * **Attention:** Please check the report and make sure which data you are going to replace. It's very important because once you replace it in the Database you can't un-done it. 
 * **important:** So, before replacing in the database create a dry run report and see if it's perfect or not. If it's wrong change the find keyword then try again the same procedure until you see it's perfect on the report. 
@@ -53,9 +53,9 @@ in both keys or values of serialized data. Also, you can remove any item from yo
     * Powerful search and replace in database
     * Ultimate solution for search & replace in serialized data & remove item 
     * Automatic backup of the search and replacement data
-    * Ultimate easy solution for restore data what you have replaced by mistake
-    * Ability to check & replace each item separately which going to be replaced in the database
-    * Bulk Replacement on report's page, generate by dry run option
+    * Ultimate easy solution for restore data what you have replaced by mistake
+    * Ability to check & replace each item separately which going to be replaced in the database
+    * Bulk Replacement on report's page, generate by dry run option
     * All tables in database
     * Search and replace **Unicode Characters** *UTF-8  ( e.g: U+0026, REČA )* in Database
     * Additional filterting options in default / custom URLs 
@@ -80,7 +80,7 @@ in both keys or values of serialized data. Also, you can remove any item from yo
         * Bypass rule  - keep base links / urls ( post, pages, custom taxonomies etc..) unchanged where find word exists in that URL.
 
 
-= Advance Regex - Code blocks / multilines find and replacement example - (Real-time Rendering) =
+= Advance Regex - Code blocks / multi lines find and replacement example - (Real-time Rendering) =
 *Find code block and replace with your own or keep blank *replament field* to remove code block. Let consider the following CSS code block for replace. Put following
 code block in find field*
 
@@ -164,16 +164,17 @@ code block in find field*
 
 == Changelog ==
 
+= Version: 1.3.3 =
+* **Improvement:** WordPress 5.9 & PHP 8 compatible
+
 = Version: 1.3.2 =
 * **Feat:** Export / Import rules - (pro)
 * **Feat:** Export / Import Database replacement logs - (pro)
-
 
 = Version: 1.3.1 =
 * **Improvement:** Speed up on Database replacement section
 * **Improvement:** serialize data replacement algorithm
 * **Fix:** PHP warnings
-
 
 = Version: 1.3.0 =
 * **Improvement:** string replacemnt 
