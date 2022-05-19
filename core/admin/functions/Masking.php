@@ -27,7 +27,7 @@ class Masking {
 	 */
 	public function add_masking_rule( $user_query ) {
 
-		$res_type 	   = isset( $user_query['res_no_json'] ) ? $user_query['res_no_json'] : '';
+		$res_type      = isset( $user_query['res_no_json'] ) ? $user_query['res_no_json'] : '';
 		$user_query    = $user_query['cs_masking_rule'];
 		$find          = isset( $user_query['find'] ) ? $user_query['find'] : '';
 		$replace       = isset( $user_query['replace'] ) ? $user_query['replace'] : '';
@@ -35,14 +35,14 @@ class Masking {
 		$replace_where = isset( $user_query['where_to_replace'] ) ? $user_query['where_to_replace'] : '';
 		$delay_time    = isset( $user_query['delay'] ) ? (float) $user_query['delay'] : '';
 
-		$id = isset( $user_query['id'] ) ? $user_query['id'] : '';
+		$id  = isset( $user_query['id'] ) ? $user_query['id'] : '';
 		$msg = $this->insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time, $user_query );
 
-		if( true === $res_type ){
+		if ( true === $res_type ) {
 			return array(
-					'status'       => true,
-					'action_type'  => trim( $msg ),
-				);
+				'status'      => true,
+				'action_type' => trim( $msg ),
+			);
 		}
 
 		return wp_send_json(

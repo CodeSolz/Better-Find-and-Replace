@@ -1,7 +1,7 @@
 const path = require("path");
-const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("css-minimizer-webpack-plugin");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 
 module.exports = {
@@ -47,10 +47,16 @@ module.exports = {
     }),
   ],
   optimization: {
+    minimize: true,
     minimizer: [
-      new UglifyJSPlugin({
-        cache: true,
-        parallel: true,
+      new TerserPlugin({
+        minify: TerserPlugin.swcMinify,
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],

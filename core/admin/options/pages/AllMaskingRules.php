@@ -54,7 +54,7 @@ class AllMaskingRules {
 		echo '</form>';
 		$html = ob_get_clean();
 
-		$args['content'] = $html;
+		$args['content']        = $html;
 		$args['hidden_content'] = $this->popupHtml();
 
 		return $this->Admin_Page_Generator->generate_page( $args );

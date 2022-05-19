@@ -12,24 +12,27 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
-                "reference": "7451ccc3f2801c23385e3cb0bc690ed1c0cd3992"
+                "url": "https://github.com/PHPCSStandards/composer-installer.git",
+                "reference": "a1b6e4e5afa0ba70a12d16bbb3cf429841438209"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/7451ccc3f2801c23385e3cb0bc690ed1c0cd3992",
-                "reference": "7451ccc3f2801c23385e3cb0bc690ed1c0cd3992",
+                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/a1b6e4e5afa0ba70a12d16bbb3cf429841438209",
+                "reference": "a1b6e4e5afa0ba70a12d16bbb3cf429841438209",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
-                "php": ">=5.3",
-                "squizlabs/php_codesniffer": "^2.0 || ^3.0 || ^4.0"
+                "php": ">=5.4",
+                "squizlabs/php_codesniffer": "^2.0 || ^3.1.0 || ^4.0"
             },
             "require-dev": {
                 "composer/composer": "*",
+                "ext-json": "*",
+                "ext-zip": "*",
                 "php-parallel-lint/php-parallel-lint": "^1.3.1",
-                "phpcompatibility/php-compatibility": "^9.0"
+                "phpcompatibility/php-compatibility": "^9.0",
+                "yoast/phpunit-polyfills": "^1.0"
             },
             "default-branch": true,
             "type": "composer-plugin",
@@ -51,6 +54,10 @@
                     "email": "franck.nijhof@dealerdirect.com",
                     "homepage": "http://www.frenck.nl",
                     "role": "Developer / IT Manager"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/PHPCSStandards/composer-installer/graphs/contributors"
                 }
             ],
             "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
@@ -62,6 +69,7 @@
                 "codesniffer",
                 "composer",
                 "installer",
+                "phpcbf",
                 "phpcs",
                 "plugin",
                 "qa",
@@ -73,10 +81,10 @@
                 "tests"
             ],
             "support": {
-                "issues": "https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues",
-                "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
+                "issues": "https://github.com/PHPCSStandards/composer-installer/issues",
+                "source": "https://github.com/PHPCSStandards/composer-installer"
             },
-            "time": "2022-01-25T12:03:59+00:00"
+            "time": "2022-04-18T16:14:00+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -256,12 +264,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "498a939c8ff49f0b00769144bdd07933352d77e8"
+                "reference": "96b0866e57b00a91efb608d1938d9505c06b3fb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/498a939c8ff49f0b00769144bdd07933352d77e8",
-                "reference": "498a939c8ff49f0b00769144bdd07933352d77e8",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/96b0866e57b00a91efb608d1938d9505c06b3fb9",
+                "reference": "96b0866e57b00a91efb608d1938d9505c06b3fb9",
                 "shasum": ""
             },
             "require": {
@@ -305,7 +313,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2022-01-17T01:04:39+00:00"
+            "time": "2022-05-18T05:35:53+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
@@ -371,5 +379,5 @@
         "php": ">=7.0.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

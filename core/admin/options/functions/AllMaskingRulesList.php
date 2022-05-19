@@ -165,8 +165,8 @@ class AllMaskingRulesList extends \WP_List_Table {
 			$search = " where c.find like '%{$skey}%'";
 		}
 
-		if ( isset( $_GET['order'] ) ) {
-			$order = $_GET['order'];
+		if ( isset( $_GET['order'] ) && ! empty( $order = $_GET['order'] ) ) {
+			$order = Util::check_evil_script( $order );
 		} else {
 			$order = 'c.id DESC';
 		}
