@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "jquery": "^3.6.0",
-    "localforage": "^1.10.0",
-    "sweetalert2": "^11.4.14"
+    "localforage": "^1.10.0"
   }
 }

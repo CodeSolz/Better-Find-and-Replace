@@ -38,6 +38,8 @@ class RTAFAR_DB {
 		$freeVersionTbls = self::freeVersionTbls();
 		$tables          = $wpdb->get_results( 'SHOW TABLE STATUS', ARRAY_A );
 
+		// pre_print($tables);
+
 		if ( is_array( $tables ) && ! empty( $tables ) ) {
 
 			foreach ( $tables as $table ) {
@@ -49,9 +51,9 @@ class RTAFAR_DB {
 				}
 
 				if ( $type && ! \in_array( $table['Name'], $freeVersionTbls ) ) {
-					$sizes[ $table['Name'] . '_disabled' ] = sprintf( __( '%1$s (%2$s MB) - Pro version only!', 'real-time-auto-find-and-replace' ), $table['Name'], $size );
+					$sizes[ $table['Name'] . '_disabled' ] = sprintf( __( '%1$s - ( %2$s MB - %3$s Rows) - Pro version only!', 'real-time-auto-find-and-replace' ), $table['Name'], $size, $table['Rows'] );
 				} else {
-					$active[ $table['Name'] ] = sprintf( __( '%1$s (%2$s MB)', 'real-time-auto-find-and-replace' ), $table['Name'], $size );
+					$active[ $table['Name'] ] = sprintf( __( '%1$s - ( %2$s MB - %3$s Rows )', 'real-time-auto-find-and-replace' ), $table['Name'], $size, $table['Rows'] );
 				}
 			}
 		}

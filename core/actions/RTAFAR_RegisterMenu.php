@@ -80,8 +80,8 @@ class RTAFAR_RegisterMenu {
 
 		$this->rtafr_menus['add_masking_rule'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
-			__( 'Add Replace Rule', 'real-time-auto-find-and-replace' ),
-			'Add Masking Rule',
+			__( 'Add Replacement Rule', 'real-time-auto-find-and-replace' ),
+			'Add New Rule',
 			'manage_options',
 			'cs-add-replacement-rule',
 			array( $this, 'rtafr_page_add_rule' )
@@ -89,8 +89,8 @@ class RTAFAR_RegisterMenu {
 
 		$this->rtafr_menus['all_masking_rules'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
-			__( 'All Masking Rules', 'real-time-auto-find-and-replace' ),
-			'All Masking Rules',
+			__( 'All Replacement Rules', 'real-time-auto-find-and-replace' ),
+			'All Replacement Rules',
 			'manage_options',
 			'cs-all-masking-rules',
 			array( $this, 'rtafr_page_all_masking_rules' )
@@ -144,7 +144,7 @@ class RTAFAR_RegisterMenu {
 	 */
 	public function rtafr_page_add_rule() {
 
-		$title  = 'Add';
+		$title  = 'Add New';
 		$option = array();
 		if ( isset( $_GET['action'] ) && ! empty( $_GET['rule_id'] ) ) {
 			$option = Masking::get_rules( 'all', $_GET['rule_id'], false, 'admin_setting' );
@@ -155,8 +155,9 @@ class RTAFAR_RegisterMenu {
 		// pre_print( $option );
 
 		$page_info = array(
-			'title'     => sprintf( __( '%s Masking Rule', 'real-time-auto-find-and-replace' ), $title ),
-			'sub_title' => __( 'These will not replace in database. Following find replace rules will take place before website render to browser.', 'real-time-auto-find-and-replace' ),
+			'title'     => sprintf( __( '%s Rule', 'real-time-auto-find-and-replace' ), $title ),
+			// 'sub_title' => __( 'These will not replace in database. Following find replace rules will take place before website render to browser.', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'Realtime masking find and replace rules will take place before website render to browser. Besides Database masking will be affected in the Database.', 'real-time-auto-find-and-replace' ),
 		);
 
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
@@ -178,7 +179,7 @@ class RTAFAR_RegisterMenu {
 
 	public function rtafr_page_all_masking_rules() {
 		$page_info = array(
-			'title'     => __( 'All Masking Rule', 'real-time-auto-find-and-replace' ),
+			'title'     => __( 'All Replacement Rule', 'real-time-auto-find-and-replace' ),
 			'sub_title' => __( 'Following find replace rules will take place before website render to browser.', 'real-time-auto-find-and-replace' ),
 		);
 

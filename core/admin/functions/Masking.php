@@ -60,7 +60,7 @@ class Masking {
 	 *
 	 * @return void
 	 */
-	public function insert_masking_rules( $find, $replace, $type, $replace_where, $id = '', $delay_time, $user_query ) {
+	public function insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time, $user_query ) {
 		global $wpdb;
 
 		if ( $type == 'regex' || $type == 'advance_regex' ) {

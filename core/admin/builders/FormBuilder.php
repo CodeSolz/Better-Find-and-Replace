@@ -341,33 +341,78 @@ class FormBuilder {
 			unset( $field['value'] );
 		}
 
-		// pre_print( $field_id );
+		// pre_print( $field );
 
 		$cus_val            = $field;
 		$cus_val['value']   = $value;
 		$disabled_field_val = $this->get_hidden_field_val( $field_name, $cus_val, $field_id );
 
 		$input_item = $this->generate_attribute( $field_name, $field, $field_id );
-		$input      = "<select  {$input_item} >";
-		$input     .= '<option value="" disabled class="placeholder" >==================== ' . $field['placeholder'] . ' ====================</option>';
+		$tag_start  = "<select  {$input_item} >";
+		// $option     = '<option value="" disabled class="placeholder" >==================== ' . $field['placeholder'] . ' ====================</option>';
+		$option = '';
 		if ( ! empty( $field['options'] ) ) {
-			foreach ( $field['options'] as $key => $val ) {
-				$selected = '';
-				if ( ( is_array( $value ) && in_array( $key, $value ) ) || $key == $value ) {
-					$selected = 'selected="selected"';
-				}
 
-				$disabled = '';
-				if ( \strpos( $key, '_disabled' ) !== false ) {
-					$disabled = 'disabled';
+			if ( isset( $field['options']['hasGroup'] ) ) {
+				foreach ( $field['options']['hasGroup'] as $groupName => $groupOptions ) {
+					// pre_print( $groupName );
+					$placeholder_text = sprintf( $field['placeholder'], \strtolower( $groupName ) );
+					$option          .= '<optgroup label="' . $groupName . '">' . $this->generate_select_options( $groupOptions, $placeholder_text, $value ) . '</optgroup>';
 				}
+			} else {
+				$option = $this->generate_select_options( $field['options'], $field['placeholder'], $value );
 
-				$input .= '<option value ="' . $key . '" ' . $selected . ' ' . $disabled . ' >' . $val . '</option>';
 			}
-		}
-		$input .= '</select>';
 
-		return $input . $disabled_field_val;
+			// foreach ( $field['options'] as $key => $val ) {
+			// $selected = '';
+			// if ( ( is_array( $value ) && in_array( $key, $value ) ) || $key == $value ) {
+			// $selected = 'selected="selected"';
+			// }
+
+			// $disabled = '';
+			// if ( \strpos( $key, '_disabled' ) !== false ) {
+			// $disabled = 'disabled';
+			// }
+
+			// $option .= '<option value ="' . $key . '" ' . $selected . ' ' . $disabled . ' >' . $val . '</option>';
+			// }
+
+			// $option = '<optgroup label="Realtime Masking">' . $option . '</optgroup>';
+
+		}
+		$select_tag = $tag_start . $option . '</select>';
+
+		return $select_tag . $disabled_field_val;
+	}
+
+	/**
+	 * Generate select options
+	 *
+	 * @return void
+	 */
+	private function generate_select_options( $options, $placeholder_text, $selected_item ) {
+		if ( empty( $options ) ) {
+			return '<option value ="" >' . __( 'No option available', 'real-time-auto-find-and-replace' ) . '</option>';
+
+		}
+		// $item = '';
+		$item = '<option value="" disabled class="placeholder" >==================== ' . $placeholder_text . ' ====================</option>';
+		foreach ( $options as $key => $val ) {
+			$selected = '';
+			if ( ( is_array( $selected_item ) && in_array( $key, $selected_item ) ) || $key == $selected_item ) {
+				$selected = 'selected="selected"';
+			}
+
+			$disabled = '';
+			if ( \strpos( $key, '_disabled' ) !== false ) {
+				$disabled = 'disabled';
+			}
+
+			$item .= '<option value ="' . $key . '" ' . $selected . ' ' . $disabled . ' >' . $val . '</option>';
+		}
+
+		return $item;
 	}
 
 	/**

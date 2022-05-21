@@ -139,6 +139,15 @@ class ReplaceInDB {
 				),
 				'desc_tip'          => __( 'Check this checkbox, if you want find and replace unicode characters (UTF-8). e.g: U+0026, REČA', 'real-time-auto-find-and-replace' ),
 			),
+			'cs_db_string_replace[large_table]'      => array(
+				'title'       => sprintf( __( 'Large Table %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'        => 'text',
+				'class'       => 'form-control',
+				'is_pro'      => true,
+				'value'       => '',
+				'placeholder' => __( 'Enter word to replace with', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Enter word / phrase you want to replace with. e.g : test', 'real-time-auto-find-and-replace' ),
+			),
 			'cs_db_string_replace[dry_run]'          => array(
 				'title'    => __( 'Dry run', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
