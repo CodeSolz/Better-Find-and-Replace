@@ -165,6 +165,8 @@ code block in find field*
 == Changelog ==
 
 = Version: 1.3.6 ( May 25, 2022 ) =
+* **New:** Search and replace on a specific page or post - (pro)
+* **Improvement:** On Ajax / jQuery rule - added skip post / page options
 * **Improvement:** Media/images URL/path updater
 * **Improvement:** Removed integrated jQuery to reduce script size to load faster
 * **Improvement:** PHP 8 compatible, checked up to: 8.1.4

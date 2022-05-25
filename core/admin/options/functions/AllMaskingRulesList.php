@@ -166,7 +166,8 @@ class AllMaskingRulesList extends \WP_List_Table {
 		$search = '';
 		if ( isset( $_GET['s'] ) && ! empty( $skey = $_GET['s'] ) ) {
 			$skey   = Util::cs_esc_sql( $skey );
-			$search = " where c.find like '%{$skey}%'";
+			$search = $wpdb->prepare( " where c.find like %s ", "bfarPercent" . $skey . "bfarPercent" );
+			$search = \str_replace( 'bfarPercent', '%', $search );
 		}
 
 		if ( isset( $_GET['order'] ) && ! empty( $order = $_GET['order'] ) ) {
