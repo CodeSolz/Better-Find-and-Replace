@@ -79,17 +79,24 @@ class Masking {
 			'delay'            => $delay_time,
 		);
 
-		$isExists = $wpdb->get_var(
-			$wpdb->prepare(
-				"select id from {$wpdb->prefix}rtafar_rules where find = '%s' and type = '%s'",
-				$find,
-				$type
-			)
-		);
+		if( 
+			has_filter( 'bfrp_before_insert_new_rule' ) &&
+			isset( $user_query['where_to_replace'] ) && $user_query['where_to_replace'] != 'all'
+		){
+			$isExists = apply_filters( 'bfrp_before_insert_new_rule', $user_query );
+		}else{
+			$isExists = $wpdb->get_var(
+				$wpdb->prepare(
+					"select id from {$wpdb->prefix}rtafar_rules where find = '%s' and type = '%s'",
+					$find,
+					$type
+				)
+			);
+		}
 
 		$msg = ' added ';
 		if ( $isExists || ! empty( $id ) ) {
-			$isExists = $id;
+			$isExists = ! empty( $id ) ? $id : $isExists;
 			$msg      = ' updated ';
 			$wpdb->update( "{$wpdb->prefix}rtafar_rules", $userData, array( 'id' => $isExists ) );
 		} else {
@@ -112,30 +119,29 @@ class Masking {
 		global $wpdb;
 
 		$where_to_replace_sql = '';
-		if( $where_to_replace && ! is_array($where_to_replace) ){
-			$where_to_replace_sql = $wpdb->prepare( " where_to_replace = %s ", $where_to_replace );
+		if ( $where_to_replace && ! is_array( $where_to_replace ) ) {
+			$where_to_replace_sql = $wpdb->prepare( ' where_to_replace = %s ', $where_to_replace );
 		}
-
 
 		$where_id = '';
-		
+
 		if ( $id ) {
-			$where_id = $wpdb->prepare( " id = %d", $id);
+			$where_id = $wpdb->prepare( ' id = %d', $id );
 		}
 
-		//check prev params exists
-		if( !empty( $where_to_replace_sql ) && !empty( $where_id) ){
-			$where_id = " and " . $where_id;
+		// check prev params exists
+		if ( ! empty( $where_to_replace_sql ) && ! empty( $where_id ) ) {
+			$where_id = ' and ' . $where_id;
 		}
 
 		$ruleType = '';
 
 		if ( false === $adminCall ) {
 			if ( $rule_type ) {
-				$ruleType = $wpdb->prepare( " and type = %s ", $rule_type );
+				$ruleType = $wpdb->prepare( ' and type = %s ', $rule_type );
 			} else {
-				$ruleType = $wpdb->prepare( 
-					" and type != %s and type != %s and type != %s and type != %s and type != %s ", 
+				$ruleType = $wpdb->prepare(
+					' and type != %s and type != %s and type != %s and type != %s and type != %s ',
 					'ajaxContent',
 					'filterShortCodes',
 					'filterComment',
@@ -157,7 +163,7 @@ class Masking {
 				)
 			);
 
-			$sql = false === $fsql ? $sql : $fsql; 
+			$sql = false === $fsql ? $sql : $fsql;
 		}
 
 		$get_rules = $wpdb->get_results( $sql );

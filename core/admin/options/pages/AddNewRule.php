@@ -128,7 +128,6 @@ class AddNewRule {
 								'plain'                  => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
 								'regex'                  => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
 								'ajaxContent'            => __( 'jQuery / Ajax - Onload', 'real-time-auto-find-and-replace' ),
-								'ajaxContentDynamic_disabled' => __( 'jQuery / Ajax - Dynamic  - pro version only', 'real-time-auto-find-and-replace' ),
 								'advance_regex_disabled' => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
 								'filterShortCodes_disabled' => __( 'Shortcode (replace before rendering to Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
 								'filterOldComments_disabled' => __( 'Old Comments (replace before rendering to Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
@@ -138,15 +137,6 @@ class AddNewRule {
 								'filterComment_disabled'  => __( 'New Comment (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
 							),
 						),
-						// 'plain'                       => __( 'Plain Text ( realtime masking )', 'real-time-auto-find-and-replace' ),
-						// 'regex'                       => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
-						// 'ajaxContent'                 => __( 'jQuery / Ajax - Onload', 'real-time-auto-find-and-replace' ),
-						// 'ajaxContentDynamic_disabled' => __( 'jQuery / Ajax - Dynamic  - pro version only', 'real-time-auto-find-and-replace' ),
-						// 'advance_regex_disabled'      => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
-						// 'filterShortCodes_disabled'   => __( 'Shortcode (replace before rendering on Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
-						// 'filterAutoPost_disabled'     => __( 'Auto / New Post (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
-						// 'filterComment_disabled'      => __( 'New Comment (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
-						// 'filterOldComments_disabled'  => __( 'Old Comments(replace before rendering on Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
 					)
 				),
 				'value'       => FormBuilder::get_value( 'type', $option, '' ),
@@ -174,7 +164,7 @@ class AddNewRule {
 				'options'     => apply_filters(
 					'bfrp_masking_location',
 					array(
-						'all'                   => __( 'All over the website', 'real-time-auto-find-and-replace' ),
+						'all'                       => __( 'All over the website', 'real-time-auto-find-and-replace' ),
 						'specificPagePost_disabled' => __( 'On specific page or post - pro version only', 'real-time-auto-find-and-replace' ),
 					)
 				),
@@ -243,7 +233,7 @@ class AddNewRule {
 			),
 			'cs_masking_rule[skip_pages][]'          => array(
 				'wrapper_class'     => "advance-filter wrap-skip-pages {$isShowSkipPage}",
-				'title'             => \apply_filters( 'bfrp_skip_pages_title', sprintf( __( 'Skip Pages %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ), $option),
+				'title'             => \apply_filters( 'bfrp_skip_pages_title', sprintf( __( 'Skip Pages %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ), $option ),
 				'type'              => 'select',
 				'class'             => 'form-control skip-pages',
 				'multiple'          => true,
@@ -254,11 +244,11 @@ class AddNewRule {
 				'value'             => \apply_filters( 'bfrp_active_skip_pages', FormBuilder::get_value( 'skip_pages', $option, '' ), $option ),
 				'placeholder'       => __( 'Please select page(s)', 'real-time-auto-find-and-replace' ),
 				'options'           => \apply_filters( 'bfrp_skip_pages', FormBuilder::get_value( 'skip_pages', $option, '' ), $option ),
-				'desc_tip'          => \apply_filters( 'bfrp_skip_pages_desc_tip', __( 'Select pages where you don\'t want to apply this rule. e.g: Checkout, Home', 'real-time-auto-find-and-replace' ), $option),
+				'desc_tip'          => \apply_filters( 'bfrp_skip_pages_desc_tip', __( 'Select pages where you don\'t want to apply this rule. e.g: Checkout, Home', 'real-time-auto-find-and-replace' ), $option ),
 			),
 			'cs_masking_rule[skip_posts][]'          => array(
 				'wrapper_class'     => "advance-filter wrap-skip-posts {$isShowSkipPost}",
-				'title'             => \apply_filters( 'bfrp_skip_posts_title', sprintf( __( 'Skip Posts %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ), $option),
+				'title'             => \apply_filters( 'bfrp_skip_posts_title', sprintf( __( 'Skip Posts %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ), $option ),
 				'type'              => 'select',
 				'class'             => 'form-control skip-posts',
 				'multiple'          => true,

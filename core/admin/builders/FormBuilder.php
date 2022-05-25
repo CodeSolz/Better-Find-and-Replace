@@ -377,7 +377,6 @@ class FormBuilder {
 			// $option .= '<option value ="' . $key . '" ' . $selected . ' ' . $disabled . ' >' . $val . '</option>';
 			// }
 
-
 		}
 		$select_tag = $tag_start . $option . '</select>';
 

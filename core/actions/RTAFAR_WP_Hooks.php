@@ -39,6 +39,8 @@ class RTAFAR_WP_Hooks {
 	public function rtafar_filter_contents() {
 		$replace_rules = Masking::get_rules( 'all' );
 
+		// pre_print( $replace_rules );
+
 		return ob_start(
 			function( $buffer ) use ( $replace_rules ) {
 				return $this->get_filtered_content( $buffer, $replace_rules );

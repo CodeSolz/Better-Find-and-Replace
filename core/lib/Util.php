@@ -130,7 +130,7 @@ class Util {
 	 * @param [type] $value
 	 * @return void
 	 */
-	public static function cs_sanitize_sql_orderby( $value ){
+	public static function cs_sanitize_sql_orderby( $value ) {
 		return \sanitize_sql_orderby( $value );
 	}
 
@@ -140,7 +140,7 @@ class Util {
 	 * @param [type] $value
 	 * @return void
 	 */
-	public static function cs_esc_sql( $value ){
+	public static function cs_esc_sql( $value ) {
 		return \esc_sql( $value );
 	}
 

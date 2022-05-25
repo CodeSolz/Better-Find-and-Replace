@@ -152,7 +152,6 @@ class RTAFAR_RegisterMenu {
 			$title  = 'Update';
 		}
 
-
 		$page_info = array(
 			'title'     => sprintf( __( '%s Rule', 'real-time-auto-find-and-replace' ), $title ),
 			'sub_title' => __( 'Realtime masking find and replace rules will take place before website render to browser. Besides Database masking will be affected in the Database.', 'real-time-auto-find-and-replace' ),

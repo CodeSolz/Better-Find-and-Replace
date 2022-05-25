@@ -3,7 +3,7 @@ Contributors: CodeSolz, m.tuhin
 Tags: database, search and replace, search replace, search, real-time replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
-Tested up to: 5.9
+Tested up to: 6.0
 Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -165,7 +165,7 @@ code block in find field*
 == Changelog ==
 
 = Version: 1.3.6 ( May 25, 2022 ) =
-* **New:** Search and replace on a specific page or post - (pro)
+* **New:** Search and replace on a specific page or post (real-time) - (pro)
 * **Improvement:** On Ajax / jQuery rule - added skip post / page options
 * **Improvement:** Media/images URL/path updater
 * **Improvement:** Removed integrated jQuery to reduce script size to load faster
