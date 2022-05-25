@@ -52,6 +52,7 @@ class RTAFAR_EnqueueScript {
 				'drT'             => __( 'Creating Reports..', 'real-time-auto-find-and-replace' ),
 				'frBnT'           => __( 'Find & Replace', 'real-time-auto-find-and-replace' ),
 				'frDrBnT'         => __( 'Create Reports', 'real-time-auto-find-and-replace' ),
+				
 				'fedNotOfPerm'    => add_query_arg(
 					array(
 						CS_NOTICE_ID => 'Feedback_offPerm',

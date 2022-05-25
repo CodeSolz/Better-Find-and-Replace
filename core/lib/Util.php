@@ -125,6 +125,26 @@ class Util {
 	}
 
 	/**
+	 * Sanitize sql order by
+	 *
+	 * @param [type] $value
+	 * @return void
+	 */
+	public static function cs_sanitize_sql_orderby( $value ){
+		return \sanitize_sql_orderby( $value );
+	}
+
+	/**
+	 * Sanitize SQL string / array
+	 *
+	 * @param [type] $value
+	 * @return void
+	 */
+	public static function cs_esc_sql( $value ){
+		return \esc_sql( $value );
+	}
+
+	/**
 	 * generate admin page url
 	 *
 	 * @return string

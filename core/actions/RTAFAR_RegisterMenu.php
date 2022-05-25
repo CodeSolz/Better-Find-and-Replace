@@ -147,16 +147,14 @@ class RTAFAR_RegisterMenu {
 		$title  = 'Add New';
 		$option = array();
 		if ( isset( $_GET['action'] ) && ! empty( $_GET['rule_id'] ) ) {
-			$option = Masking::get_rules( 'all', $_GET['rule_id'], false, 'admin_setting' );
+			$option = Masking::get_rules( '', $_GET['rule_id'], false, 'admin_setting' );
 			$option = (array) $option[0];
 			$title  = 'Update';
 		}
 
-		// pre_print( $option );
 
 		$page_info = array(
 			'title'     => sprintf( __( '%s Rule', 'real-time-auto-find-and-replace' ), $title ),
-			// 'sub_title' => __( 'These will not replace in database. Following find replace rules will take place before website render to browser.', 'real-time-auto-find-and-replace' ),
 			'sub_title' => __( 'Realtime masking find and replace rules will take place before website render to browser. Besides Database masking will be affected in the Database.', 'real-time-auto-find-and-replace' ),
 		);
 

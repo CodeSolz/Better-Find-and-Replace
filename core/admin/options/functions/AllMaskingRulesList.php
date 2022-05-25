@@ -107,6 +107,10 @@ class AllMaskingRulesList extends \WP_List_Table {
 	public function column_where_to_replace( $item ) {
 		if ( strtolower( $item->where_to_replace ) == 'all' ) {
 			return __( 'All over the website', 'real-time-auto-find-and-replace' );
+		}else {
+			if ( has_filter( 'bfrp_where_to_replace' ) ) {
+				return apply_filters( 'bfrp_where_to_replace', $item );
+			}
 		}
 	}
 
@@ -161,15 +165,16 @@ class AllMaskingRulesList extends \WP_List_Table {
 		global $wpdb, $wapg_tables;
 		$search = '';
 		if ( isset( $_GET['s'] ) && ! empty( $skey = $_GET['s'] ) ) {
-			$skey   = Util::check_evil_script( $skey );
+			$skey   = Util::cs_esc_sql( $skey );
 			$search = " where c.find like '%{$skey}%'";
 		}
 
 		if ( isset( $_GET['order'] ) && ! empty( $order = $_GET['order'] ) ) {
-			$order = Util::check_evil_script( $order );
+			$order = Util::cs_sanitize_sql_orderby( $order );
 		} else {
 			$order = 'c.id DESC';
 		}
+
 
 		$current_page = $this->get_pagenum();
 		if ( 1 < $current_page ) {

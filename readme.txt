@@ -165,11 +165,12 @@ code block in find field*
 == Changelog ==
 
 = Version: 1.3.6 ( May 25, 2022 ) =
-* **Upgrade:** Media/images URL/path updater
-* **Upgrade:** Removed integrated jQuery to reduce script size to load faster
+* **Improvement:** Media/images URL/path updater
+* **Improvement:** Removed integrated jQuery to reduce script size to load faster
 * **Improvement:** PHP 8 compatible, checked up to: 8.1.4
 * **Update:** Updated Sweetalert2 version to: 11.4.14
 * **Update:** Updated Select2 version to: 4.0.13
+* **Fix:** Data sanitize issues
 
 = Version: 1.3.5 =
 * **Fix:** Data sanitize issues

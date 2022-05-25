@@ -355,7 +355,6 @@ class FormBuilder {
 
 			if ( isset( $field['options']['hasGroup'] ) ) {
 				foreach ( $field['options']['hasGroup'] as $groupName => $groupOptions ) {
-					// pre_print( $groupName );
 					$placeholder_text = sprintf( $field['placeholder'], \strtolower( $groupName ) );
 					$option          .= '<optgroup label="' . $groupName . '">' . $this->generate_select_options( $groupOptions, $placeholder_text, $value ) . '</optgroup>';
 				}
@@ -378,7 +377,6 @@ class FormBuilder {
 			// $option .= '<option value ="' . $key . '" ' . $selected . ' ' . $disabled . ' >' . $val . '</option>';
 			// }
 
-			// $option = '<optgroup label="Realtime Masking">' . $option . '</optgroup>';
 
 		}
 		$select_tag = $tag_start . $option . '</select>';

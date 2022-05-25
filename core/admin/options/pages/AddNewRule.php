@@ -130,8 +130,8 @@ class AddNewRule {
 								'ajaxContent'            => __( 'jQuery / Ajax - Onload', 'real-time-auto-find-and-replace' ),
 								'ajaxContentDynamic_disabled' => __( 'jQuery / Ajax - Dynamic  - pro version only', 'real-time-auto-find-and-replace' ),
 								'advance_regex_disabled' => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
-								'filterShortCodes_disabled' => __( 'Shortcode (replace before rendering on Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
-								'filterOldComments_disabled' => __( 'Old Comments(replace before rendering on Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
+								'filterShortCodes_disabled' => __( 'Shortcode (replace before rendering to Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
+								'filterOldComments_disabled' => __( 'Old Comments (replace before rendering to Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
 							),
 							__( 'Database Masking (affect in Database)', 'real-time-auto-find-and-replace' ) => array(
 								'filterAutoPost_disabled' => __( 'Auto / New Post (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
@@ -168,15 +168,14 @@ class AddNewRule {
 			'cs_masking_rule[where_to_replace]'      => array(
 				'title'       => __( 'Where To Replace', 'real-time-auto-find-and-replace' ),
 				'type'        => 'select',
-				'class'       => 'form-control coin-type-select',
+				'class'       => 'form-control where-to-replace-select',
 				'required'    => true,
 				'placeholder' => __( 'Please select where to replace', 'real-time-auto-find-and-replace' ),
 				'options'     => apply_filters(
 					'bfrp_masking_location',
 					array(
 						'all'                   => __( 'All over the website', 'real-time-auto-find-and-replace' ),
-						'specificPage_disabled' => __( 'On specific page - pro version only', 'real-time-auto-find-and-replace' ),
-						'specificPost_disabled' => __( 'On specific post - pro version only', 'real-time-auto-find-and-replace' ),
+						'specificPagePost_disabled' => __( 'On specific page or post - pro version only', 'real-time-auto-find-and-replace' ),
 					)
 				),
 				'value'       => FormBuilder::get_value( 'where_to_replace', $option, '' ),
@@ -244,7 +243,7 @@ class AddNewRule {
 			),
 			'cs_masking_rule[skip_pages][]'          => array(
 				'wrapper_class'     => "advance-filter wrap-skip-pages {$isShowSkipPage}",
-				'title'             => sprintf( __( 'Skip Pages %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'title'             => \apply_filters( 'bfrp_skip_pages_title', sprintf( __( 'Skip Pages %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ), $option),
 				'type'              => 'select',
 				'class'             => 'form-control skip-pages',
 				'multiple'          => true,
@@ -252,14 +251,14 @@ class AddNewRule {
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
 				),
-				'value'             => \apply_filters( 'bfrp_active_skip_pages', FormBuilder::get_value( 'skip_pages', $option, '' ) ),
+				'value'             => \apply_filters( 'bfrp_active_skip_pages', FormBuilder::get_value( 'skip_pages', $option, '' ), $option ),
 				'placeholder'       => __( 'Please select page(s)', 'real-time-auto-find-and-replace' ),
-				'options'           => \apply_filters( 'bfrp_skip_pages', FormBuilder::get_value( 'skip_pages', $option, '' ) ),
-				'desc_tip'          => __( 'Select pages where you don\'t want to apply this rule. e.g: Checkout, Home', 'real-time-auto-find-and-replace' ),
+				'options'           => \apply_filters( 'bfrp_skip_pages', FormBuilder::get_value( 'skip_pages', $option, '' ), $option ),
+				'desc_tip'          => \apply_filters( 'bfrp_skip_pages_desc_tip', __( 'Select pages where you don\'t want to apply this rule. e.g: Checkout, Home', 'real-time-auto-find-and-replace' ), $option),
 			),
 			'cs_masking_rule[skip_posts][]'          => array(
 				'wrapper_class'     => "advance-filter wrap-skip-posts {$isShowSkipPost}",
-				'title'             => sprintf( __( 'Skip Posts %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'title'             => \apply_filters( 'bfrp_skip_posts_title', sprintf( __( 'Skip Posts %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ), $option),
 				'type'              => 'select',
 				'class'             => 'form-control skip-posts',
 				'multiple'          => true,
@@ -267,10 +266,10 @@ class AddNewRule {
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
 				),
-				'value'             => \apply_filters( 'bfrp_active_skip_posts', FormBuilder::get_value( 'skip_posts', $option, '' ) ),
+				'value'             => \apply_filters( 'bfrp_active_skip_posts', FormBuilder::get_value( 'skip_posts', $option, '' ), $option ),
 				'placeholder'       => __( 'Please select posts(s)', 'real-time-auto-find-and-replace' ),
-				'options'           => \apply_filters( 'bfrp_skip_posts', FormBuilder::get_value( 'skip_posts', $option, '' ) ),
-				'desc_tip'          => __( 'Select posts where you don\'t want to apply this rule. Rule will be applied on single post pages only. e.g: My post', 'real-time-auto-find-and-replace' ),
+				'options'           => \apply_filters( 'bfrp_skip_posts', FormBuilder::get_value( 'skip_posts', $option, '' ), $option ),
+				'desc_tip'          => \apply_filters( 'bfrp_skip_posts_desc_tip', __( 'Select posts where you don\'t want to apply this rule. Rule will be applied on single post pages only. e.g: My post', 'real-time-auto-find-and-replace' ), $option ),
 			),
 			'cs_masking_rule[skip_base_url]'         => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",

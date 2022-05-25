@@ -111,22 +111,41 @@ class Masking {
 	public static function get_rules( $where_to_replace = 'all', $id = '', $rule_type = false, $adminCall = false ) {
 		global $wpdb;
 
+		$where_to_replace_sql = '';
+		if( $where_to_replace && ! is_array($where_to_replace) ){
+			$where_to_replace_sql = $wpdb->prepare( " where_to_replace = %s ", $where_to_replace );
+		}
+
+
 		$where_id = '';
+		
 		if ( $id ) {
-			$where_id = "and id = {$id}";
+			$where_id = $wpdb->prepare( " id = %d", $id);
+		}
+
+		//check prev params exists
+		if( !empty( $where_to_replace_sql ) && !empty( $where_id) ){
+			$where_id = " and " . $where_id;
 		}
 
 		$ruleType = '';
 
 		if ( false === $adminCall ) {
 			if ( $rule_type ) {
-				$ruleType = " and type = '{$rule_type}' ";
+				$ruleType = $wpdb->prepare( " and type = %s ", $rule_type );
 			} else {
-				$ruleType = " and type != 'ajaxContent' and type != 'filterShortCodes' and type != 'filterComment' and type != 'filterOldComments' and type != 'filterAutoPost' "; // get all but not ajaxRules
+				$ruleType = $wpdb->prepare( 
+					" and type != %s and type != %s and type != %s and type != %s and type != %s ", 
+					'ajaxContent',
+					'filterShortCodes',
+					'filterComment',
+					'filterOldComments',
+					'filterAutoPost'
+				);
 			}
 		}
 
-		$sql = "SELECT * from `{$wpdb->prefix}rtafar_rules` as r where where_to_replace = '{$where_to_replace}' {$where_id} {$ruleType} order by id asc";
+		$sql = "SELECT * from `{$wpdb->prefix}rtafar_rules` as r where {$where_to_replace_sql} {$where_id} {$ruleType} order by r.id asc";
 
 		if ( has_filter( 'bfrp_get_rules_sql' ) && ! is_admin() ) {
 			$fsql = apply_filters(
@@ -138,7 +157,7 @@ class Masking {
 				)
 			);
 
-			$sql = false === $fsql ? $sql : $fsql;
+			$sql = false === $fsql ? $sql : $fsql; 
 		}
 
 		$get_rules = $wpdb->get_results( $sql );
