@@ -118,10 +118,10 @@ class RTAFAR_WP_Hooks {
 	public static function rtafarSettingsLink( $links ) {
 		$links[] = '<a href="' .
 		Util::cs_generate_admin_url( 'cs-all-masking-rules' ) .
-		'">' . __( 'All Rules' ) . '</a>';
+		'">' . __( 'All Rules', 'real-time-auto-find-and-replace' ) . '</a>';
 		$links[] = '<a href="' .
 		Util::cs_generate_admin_url( 'cs-add-replacement-rule' ) .
-		'">' . __( 'Add New Rule' ) . '</a>';
+		'">' . __( 'Add New Rule', 'real-time-auto-find-and-replace' ) . '</a>';
 
 		return $links;
 	}

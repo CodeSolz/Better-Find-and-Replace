@@ -79,7 +79,7 @@ class DbReplacer {
 			return wp_send_json(
 				array(
 					'status' => false,
-					'title'  => 'Error!',
+					'title'  => __( 'Error!', 'real-time-auto-find-and-replace' ),
 					'text'   => __( 'Please enter string to find and replace.', 'real-time-auto-find-and-replace' ),
 				)
 			);
@@ -157,7 +157,7 @@ class DbReplacer {
 			\array_merge_recursive(
 				array(
 					'status'        => true,
-					'title'         => 'Success!',
+					'title'         => __( 'Success!', 'real-time-auto-find-and-replace' ),
 					'text'          => sprintf( __( 'Thank you! replacement completed!. Total %1$s replaced : %2$d', 'real-time-auto-find-and-replace' ), $replaceType, $i ),
 					'nothing_found' => __( 'Sorry! Nothing Found!', 'real-time-auto-find-and-replace' ),
 				),

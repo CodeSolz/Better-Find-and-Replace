@@ -363,20 +363,6 @@ class FormBuilder {
 
 			}
 
-			// foreach ( $field['options'] as $key => $val ) {
-			// $selected = '';
-			// if ( ( is_array( $value ) && in_array( $key, $value ) ) || $key == $value ) {
-			// $selected = 'selected="selected"';
-			// }
-
-			// $disabled = '';
-			// if ( \strpos( $key, '_disabled' ) !== false ) {
-			// $disabled = 'disabled';
-			// }
-
-			// $option .= '<option value ="' . $key . '" ' . $selected . ' ' . $disabled . ' >' . $val . '</option>';
-			// }
-
 		}
 		$select_tag = $tag_start . $option . '</select>';
 

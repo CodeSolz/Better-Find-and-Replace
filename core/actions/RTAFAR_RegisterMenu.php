@@ -70,7 +70,7 @@ class RTAFAR_RegisterMenu {
 		global $rtafr_menu;
 		add_menu_page(
 			__( 'Real time auto find and replace', 'real-time-auto-find-and-replace' ),
-			'Find & Replace',
+			__( 'Find & Replace', 'real-time-auto-find-and-replace' ),
 			'manage_options',
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			'cs-woo-altcoin-gateway',
@@ -81,7 +81,7 @@ class RTAFAR_RegisterMenu {
 		$this->rtafr_menus['add_masking_rule'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Add Replacement Rule', 'real-time-auto-find-and-replace' ),
-			'Add New Rule',
+			__( 'Add New Rule', 'real-time-auto-find-and-replace' ),
 			'manage_options',
 			'cs-add-replacement-rule',
 			array( $this, 'rtafr_page_add_rule' )
@@ -90,7 +90,7 @@ class RTAFAR_RegisterMenu {
 		$this->rtafr_menus['all_masking_rules'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'All Replacement Rules', 'real-time-auto-find-and-replace' ),
-			'All Replacement Rules',
+			__( 'All Replacement Rules', 'real-time-auto-find-and-replace' ),
 			'manage_options',
 			'cs-all-masking-rules',
 			array( $this, 'rtafr_page_all_masking_rules' )
@@ -99,7 +99,7 @@ class RTAFAR_RegisterMenu {
 		$this->rtafr_menus['replace_in_db'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Replace in DB', 'real-time-auto-find-and-replace' ),
-			'Replace in Database',
+			__( 'Replace in Database', 'real-time-auto-find-and-replace' ),
 			'manage_options',
 			'cs-replace-in-database',
 			array( $this, 'rtafr_page_replace_in_db' )
@@ -290,7 +290,7 @@ class RTAFAR_RegisterMenu {
 		}
 
 		if ( 'cs-bfar-go-pro' === $_GET['page'] ) {
-			_e( 'Please wait a while redirecting..' );
+			_e( 'Please wait a while redirecting..', 'real-time-auto-find-and-replace' );
 
 			add_action(
 				'admin_footer',

@@ -73,7 +73,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 	}
 
 	public function column_find( $item ) {
-		echo Util::cs_esc_html( $item->find );
+		echo Util::cs_sanitize_prnt_str( $item->find );
 		$edit_link = admin_url( "admin.php?page=cs-add-replacement-rule&action=update&rule_id={$item->id}" );
 		echo '<div class="row-actions"><span class="edit">';
 		echo '<a href="' . $edit_link . '">Edit</a>';
@@ -81,7 +81,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 	}
 
 	public function column_replace( $item ) {
-		echo Util::cs_esc_html( $item->replace );
+		echo Util::cs_sanitize_prnt_str( $item->replace );
 	}
 
 	public function column_type( $item ) {

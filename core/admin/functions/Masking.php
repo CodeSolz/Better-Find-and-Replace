@@ -48,7 +48,7 @@ class Masking {
 		return wp_send_json(
 			array(
 				'status'       => true,
-				'title'        => 'Success!',
+				'title'        => __( 'Success!', 'real-time-auto-find-and-replace' ),
 				'text'         => __( "Thank you! replacement rule {$msg} successfully.", 'real-time-auto-find-and-replace' ),
 				'redirect_url' => admin_url( 'admin.php?page=cs-all-masking-rules' ),
 			)
