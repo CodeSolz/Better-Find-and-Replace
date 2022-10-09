@@ -4,11 +4,11 @@ Tags: database, search and replace, search replace, search, real-time replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 6.0
-Stable tag: 1.3.6
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily Find and replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real-time. Search replace within database too..
+Easily Search & replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real-time. Search replace within database too..
 
 == Description ==
 This plugin automatically finds a specific word (given by you) and will replace it with your own word. The changes will automatically happen before the website renders to the browser. It doesn't affect any other files or databases.
@@ -24,7 +24,7 @@ any keyword on keys or values of serialized data. Also any element of the serial
 * Search and replace any text
 * Search and replace text loaded by **Ajax / jQuery**
 * Find and **replace URLs**
-* Search and **replace images, attchment URLs etc..**
+* Search and **replace images, attachment URLs etc..**
 * Create word masking with find-replace over the whole website
 * Create find-replace temp rules without touching database.
 * Remove or change footer credit without touching database or HTML code
@@ -40,6 +40,7 @@ any keyword on keys or values of serialized data. Also any element of the serial
 * Search and replace **Whole Words Only** in Database
 * Ultimate powerful options for Search and replace **Serialized Data** in Database
 * Remove any item from **Serialized Data** in Database 
+* Assign a specific role to manage this plugin for lower level of users
 
 == How to replace in DB? ==
 * First create a report by selecting *dry run* from bottom of the setting section 
@@ -58,15 +59,16 @@ any keyword on keys or values of serialized data. Also any element of the serial
     * Bulk Replacement on report's page, generate by dry run option
     * All tables in database
     * Search and replace **Unicode Characters** *UTF-8  ( e.g: U+0026, REČA )* in Database
-    * Additional filterting options in default / custom URLs 
+    * Additional filtering options in default / custom URLs 
     * Filter new comments before inserting into Database 
     * Filter new post before inserting into Database (Good for auto post generation website)
+    * Special feature to search and replace in **large table**
 
 * **Real-Time Rendering Features:**
     * RegEx supported
-    * Advance Regex - Powerful code blocks / multilines find and replace in real-time (masking) rendering
+    * Advance Regex - Powerful code blocks / multi-lines find and replace in real-time (masking) rendering
     * Advance Regex - Any (CSS / JS / HTML) code Block find and replacement in real-time (masking) rendering
-    * Masking on Shortcode
+    * Masking on Shortcodes
     * **Advance filtering options** :-
         * Case insensitive - search and replace case sensitive or insensitive
         * Whole Word - search and replace whole word 
@@ -163,6 +165,33 @@ code block in find field*
 7. List of All Masking Rules with pro features 
 
 == Changelog ==
+
+= Version: 1.4.1 ( September 19, 2022 ) =
+* **Upgrade:** JavaScript code has been modernize for latest browsers
+* **Improvement:** Support docs added
+
+
+= Version: 1.4.0 ( August 21, 2022 ) =
+* **Fix:** Bug fixed on real-time search replace
+* **Fix:** Speed up on real-time search replace
+* **Upgrade:** Rules saving updated more smoothly
+
+= Version: 1.3.9 ( August 19, 2022 ) =
+* **New:** Assign a specific user role to manage this plugin
+* **New:** Single access level can be assign by most popular "User Role Editor" or "PublishPress Capabilities" plugin
+* **New:** Group access level can be assign by most popular "User Role Editor" plugin
+* **New:** Capabilities - bfar_menu_add_new_rule, bfar_menu_all_replacement_rules,  bfar_menu_replace_in_database, bfar_menu_restore_in_database
+
+= Version: 1.3.8 ( July 26, 2022 ) =
+* **New:** Screen options
+* **New:** Initiated language support
+* **New:** Clear log function - Restore in Db + All replacement rules section ( pro )
+* **Fix:** Small bug on Export ( pro extend )
+
+= Version: 1.3.7 ( June 15, 2022 ) =
+* **New:** Special feature to search and replace in large table - ( pro extend )
+* **Improvement:** Bulk replacement (pro)
+* **Improvement:** Popup report page cleanup
 
 = Version: 1.3.6 ( May 25, 2022 ) =
 * **New:** Search and replace on a specific page or post (real-time) - (pro)

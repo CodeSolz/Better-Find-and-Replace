@@ -44,8 +44,8 @@ class AllMaskingRules {
 			$args['well'] = "<p class='search-keyword'>"
 			 . __( 'Search results for', 'real-time-auto-find-and-replace' )
 			 . " : '<b>" . Util::cs_sanitize_prnt_str( $_GET['s'] ) . "</b>' </p> <a href='{$back_url}' class='button'><< "
-			 . __( 'Back to all', 'real-time-auto-find-and-replace' ) 
-			 ."</a> ";
+			 . __( 'Back to all', 'real-time-auto-find-and-replace' )
+			 . '</a> ';
 		}
 
 		ob_start();

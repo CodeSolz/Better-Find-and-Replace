@@ -72,6 +72,9 @@ class DbReplacer {
 	 * @return void
 	 */
 	public function db_string_replace( $user_query ) {
+
+		// pre_print( $user_query );
+
 		$userInput = Util::check_evil_script( $user_query['cs_db_string_replace'] );
 		if ( ! isset( $userInput['find'] ) ||
 			empty( $find = $userInput['find'] )
@@ -96,36 +99,46 @@ class DbReplacer {
 		global $wpdb;
 		$i           = 0;
 		$replaceType = '';
+		$custom_data = '';
 		// replace type is table
 		if ( $whereToReplace == 'tables' ) {
 			$tables      = isset( $user_query['db_tables'] ) ? $user_query['db_tables'] : '';
 			$replaceType = 'text';
 
-			if ( ! empty( $tables ) && in_array( $wpdb->base_prefix . 'posts', $tables ) ) {
+			if ( ! empty( $tables ) && in_array( $wpdb->base_prefix . 'posts', $tables ) &&
+					( ! isset( $userInput['large_table'] ) || empty( $userInput['large_table'] ) )
+				) {
 				$i += $this->tbl_post( $find, $replace );
 				if ( ( $key = array_search( $wpdb->base_prefix . 'posts', $tables ) ) !== false ) {
 					unset( $tables[ $key ] );
 				}
 			}
 
-			if ( ! empty( $tables ) && in_array( $wpdb->base_prefix . 'postmeta', $tables ) ) {
+			if ( ! empty( $tables ) && in_array( $wpdb->base_prefix . 'postmeta', $tables ) &&
+				( ! isset( $userInput['large_table'] ) || empty( $userInput['large_table'] ) )
+			) {
 				$i += $this->tbl_postmeta( $find, $replace );
 				if ( ( $key = array_search( $wpdb->base_prefix . 'postmeta', $tables ) ) !== false ) {
 					unset( $tables[ $key ] );
 				}
 			}
 
-			if ( ! empty( $tables ) && in_array( $wpdb->base_prefix . 'options', $tables ) ) {
+			if ( ! empty( $tables ) && in_array( $wpdb->base_prefix . 'options', $tables ) &&
+				( ! isset( $userInput['large_table'] ) || empty( $userInput['large_table'] ) )
+			) {
 				$i += $this->tbl_options( $find, $replace );
 				if ( ( $key = array_search( $wpdb->base_prefix . 'options', $tables ) ) !== false ) {
 					unset( $tables[ $key ] );
 				}
 			}
 
+			// pre_print( $this->settings );
+
 			$res = apply_filters( 'bfrp_custom_tables', $this->settings, $tables );
 
 			$i                 += isset( $res['i'] ) ? (int) $res['i'] : 0;
 			$this->dryRunReport = isset( $res['dryRunReport'] ) ? \array_merge_recursive( $this->dryRunReport, $res['dryRunReport'] ) : $this->dryRunReport;
+			$custom_data        = isset( $res['custom_data'] ) ? $res['custom_data'] : $custom_data;
 
 		} elseif ( $whereToReplace == 'urls' ) {
 			$inWhichUrl  = isset( $user_query['url_options'] ) ? $user_query['url_options'] : '';
@@ -144,14 +157,20 @@ class DbReplacer {
 				}
 			);
 
+			// pre_print( $user_query );
+
 			$dryRunReport = array(
 				'show_custom_content' => true,
 				'replacement'         => $i,
 				'replacementTotal'    => (int) $totalReplacement,
 				'replacementInTable'  => count( $this->dryRunReport ),
 				'dryRunReport'        => $this->dryRunReport,
+				'user_data'           => $user_query,
+				'custom_data'         => $custom_data,
 			);
 		}
+
+		$dryRunReport = apply_filters( 'bfrp_dryrun_final_report', $dryRunReport );
 
 		return wp_send_json(
 			\array_merge_recursive(

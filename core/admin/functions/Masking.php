@@ -79,12 +79,11 @@ class Masking {
 			'delay'            => $delay_time,
 		);
 
-		if( 
-			has_filter( 'bfrp_before_insert_new_rule' ) &&
+		if ( has_filter( 'bfrp_before_insert_new_rule' ) &&
 			isset( $user_query['where_to_replace'] ) && $user_query['where_to_replace'] != 'all'
-		){
+		) {
 			$isExists = apply_filters( 'bfrp_before_insert_new_rule', $user_query );
-		}else{
+		} else {
 			$isExists = $wpdb->get_var(
 				$wpdb->prepare(
 					"select id from {$wpdb->prefix}rtafar_rules where find = '%s' and type = '%s'",

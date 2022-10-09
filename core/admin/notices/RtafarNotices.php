@@ -56,18 +56,18 @@ class RtafarNotices {
 			return false;
 		}
 
-		$date1 = new \DateTime( date( 'Y-m-d', \strtotime( $installedOn ) ) );
-		$date2 = new \DateTime( date( 'Y-m-d' ) );
+		$date1 = new \DateTime( \date( 'Y-m-d', \strtotime( $installedOn ) ) );
+		$date2 = new \DateTime( \date( 'Y-m-d' ) );
 		if ( $date1->diff( $date2 )->days < 14 ) {
 			return false;
 		}
 		$timeDiff    = \human_time_diff( \strtotime( $installedOn ), current_time( 'U' ) );
 		$message     = __(
-			'You are using the plugin quite a while! If you are enjoying it, %s Would you mind%s to %s give us a 5 stars %s (%s) review?
+			'You are using the plugin quite a while! If you are enjoying it, %3$splease consider giving us a 5-star (%5$s) rating.%4$s 
 			%1$s Your valuable review %2$s will %1$s inspire us %2$s to make it more better.',
 			'real-time-auto-find-and-replace'
 		);
-		$review_link = 'https://wordpress.org/support/plugin/real-time-auto-find-and-replace/reviews/?filter=5';
+		$review_link = 'https://login.wordpress.org/?redirect_to=https%3A%2F%2Fwordpress.org%2Fsupport%2Fplugin%2Freal-time-auto-find-and-replace%2Freviews%2F%23new-post&locale=en_US';
 		$message     = sprintf(
 			$message,
 			'<b>',
@@ -76,9 +76,9 @@ class RtafarNotices {
 			'</strong></a>',
 			'<span class="dashicons dashicons-star-filled">
 			</span><span class="dashicons dashicons-star-filled">
-			</span><span class="dashicons dashicons-star-filled"></span>
-			<span class="dashicons dashicons-star-filled"></span>
-			<span class="dashicons dashicons-star-filled"></span>'
+			</span><span class="dashicons dashicons-star-filled">
+			</span><span class="dashicons dashicons-star-filled">
+			</span><span class="dashicons dashicons-star-filled"></span>'
 		);
 
 		$message .= '<div class="cs-notice-action-btn-holder"><button class="button-primary bfar-review-now">Let\'s do it now! </button> '

@@ -156,26 +156,27 @@ class AddNewRule {
 				),
 			),
 			'cs_masking_rule[where_to_replace]'      => array(
-				'title'       => __( 'Where To Replace', 'real-time-auto-find-and-replace' ),
-				'type'        => 'select',
-				'class'       => 'form-control where-to-replace-select',
-				'required'    => true,
-				'placeholder' => __( 'Please select where to replace', 'real-time-auto-find-and-replace' ),
-				'options'     => apply_filters(
+				'wrapper_class' => 'where_to_replace',
+				'title'         => __( 'Where To Replace', 'real-time-auto-find-and-replace' ),
+				'type'          => 'select',
+				'class'         => 'form-control where-to-replace-select',
+				'required'      => true,
+				'placeholder'   => __( 'Please select where to replace', 'real-time-auto-find-and-replace' ),
+				'options'       => apply_filters(
 					'bfrp_masking_location',
 					array(
 						'all'                       => __( 'All over the website', 'real-time-auto-find-and-replace' ),
 						'specificPagePost_disabled' => __( 'On specific page or post - pro version only', 'real-time-auto-find-and-replace' ),
 					)
 				),
-				'value'       => FormBuilder::get_value( 'where_to_replace', $option, '' ),
-				'desc_tip'    => __( 'Select rule\'s type. e.g : All over the website', 'real-time-auto-find-and-replace' ),
+				'value'         => FormBuilder::get_value( 'where_to_replace', $option, '' ),
+				'desc_tip'      => __( 'Select rule\'s type. e.g : All over the website', 'real-time-auto-find-and-replace' ),
 			),
 			'st1'                                    => array(
 				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
 				'type'          => 'section_title',
 				'title'         => __( 'Bypass Rule', 'real-time-auto-find-and-replace' ),
-				'desc_tip'      => __( 'Activate the following settings if you want to keep unchange any text in specific area with bypass rule pattern.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Activate the following settings if you want to keep unchanged any text in a specific area with a bypass rule pattern.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[bypass_rule_is_active]' => array(
 				'wrapper_class'     => "bypass-rule {$hiddenBypassRule}",
@@ -259,7 +260,7 @@ class AddNewRule {
 				'value'             => \apply_filters( 'bfrp_active_skip_posts', FormBuilder::get_value( 'skip_posts', $option, '' ), $option ),
 				'placeholder'       => __( 'Please select posts(s)', 'real-time-auto-find-and-replace' ),
 				'options'           => \apply_filters( 'bfrp_skip_posts', FormBuilder::get_value( 'skip_posts', $option, '' ), $option ),
-				'desc_tip'          => \apply_filters( 'bfrp_skip_posts_desc_tip', __( 'Select posts where you don\'t want to apply this rule. Rule will be applied on single post pages only. e.g: My post', 'real-time-auto-find-and-replace' ), $option ),
+				'desc_tip'          => \apply_filters( 'bfrp_skip_posts_desc_tip', __( 'Select posts where you don\'t want to apply this rule. Rules will be applied on single post pages only. e.g: My post', 'real-time-auto-find-and-replace' ), $option ),
 			),
 			'cs_masking_rule[skip_base_url]'         => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
@@ -273,8 +274,8 @@ class AddNewRule {
 				'desc_tip'          => sprintf(
 					__(
 						'Check this checkbox, if you want to keep unchanged the URLs match with the website URL. 
-							e.g. You want to change %1$stest%2$s word from a post or page, but if the word exists in the URL - %1$s%3$s%2$s.
-							& when you will apply the find & replacement rule, the URL will change and page / post link will not work where the links appeared dynamically. 
+							e.g. You want to change the %1$stest%2$s word from a post or page, but if the word exists in the URL - %1$s%3$s%2$s.
+							& when you apply the find & replacement rule, the URL will change and the page / post link will not work where the links appeared dynamically. 
 							As an example - Recent Post widget links.',
 						'real-time-auto-find-and-replace'
 					),
@@ -401,7 +402,7 @@ class AddNewRule {
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
 				),
-				'desc_tip'          => __( 'Check this checkbox if you want to find case insensitive or keep it un-check to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as same if you check this checkbox.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'          => __( 'Check this checkbox if you want to find case insensitive or keep it un-checked to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as the same word if you check this checkbox.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[whole_word]'            => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
@@ -429,7 +430,7 @@ class AddNewRule {
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
 				),
-				'desc_tip'          => __( 'Check this checkbox, if you want find and replace unicode characters (UTF-8). e.g: U+0026, REČA', 'real-time-auto-find-and-replace' ),
+				'desc_tip'          => __( 'Check this checkbox, if you want to find and replace unicode characters (UTF-8). e.g: U+0026, REČA', 'real-time-auto-find-and-replace' ),
 			),
 		);
 

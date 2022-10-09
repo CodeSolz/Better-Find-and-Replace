@@ -1,0 +1,914 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR CoinMarketStats
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Better Find & Replace\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-26 15:51+0600\n"
+"PO-Revision-Date: 2022-07-26 15:52+0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: core\n"
+"X-Poedit-SearchPath-1: real-time-auto-find-and-replace.php\n"
+
+#: core/actions/RTAFAR_CustomAjax.php:33
+msgid "Invalid token"
+msgstr ""
+
+#: core/actions/RTAFAR_CustomAjax.php:34
+msgid "Sorry! we are unable recognize your auth!"
+msgstr ""
+
+#: core/actions/RTAFAR_CustomAjax.php:49
+msgid "Invalid Request"
+msgstr ""
+
+#: core/actions/RTAFAR_CustomAjax.php:50
+msgid "Method parameter missing / invalid!"
+msgstr ""
+
+#: core/actions/RTAFAR_CustomAjax.php:60
+msgid "Invalid Library"
+msgstr ""
+
+#: core/actions/RTAFAR_CustomAjax.php:61
+#, php-format
+msgid "Library Class \"%s\" not found! "
+msgstr ""
+
+#: core/actions/RTAFAR_CustomAjax.php:70
+msgid "Invalid Method"
+msgstr ""
+
+#: core/actions/RTAFAR_CustomAjax.php:71
+#, php-format
+msgid "Method \"%1$s\" not found in Class \"%2$s\"! "
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:45
+msgid "Bulk Action"
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:46
+msgid "Replace"
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:47
+#: core/admin/options/functions/AllMaskingRulesList.php:49
+#: core/admin/options/pages/AddNewRule.php:97
+#: core/admin/options/pages/ReplaceInDB.php:61
+msgid "Find"
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:48
+msgid "Apply"
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:49
+msgid "Apply - Pro version only"
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:50
+msgid "Pro version required!"
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:51
+msgid "Replace - Pro"
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:52
+msgid "Creating Reports.."
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:53
+#: core/actions/RTAFAR_RegisterMenu.php:73
+msgid "Find & Replace"
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:54
+#: core/admin/options/pages/ReplaceInDB.php:196
+msgid "Create Reports"
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:55
+msgid "Search Next"
+msgstr ""
+
+#: core/actions/RTAFAR_EnqueueScript.php:56
+msgid "Search Prev"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:72
+msgid "Real time auto find and replace"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:83
+msgid "Add Replacement Rule"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:84 core/actions/RTAFAR_WP_Hooks.php:127
+msgid "Add New Rule"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:92
+#: core/actions/RTAFAR_RegisterMenu.php:93
+msgid "All Replacement Rules"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:101
+msgid "Replace in DB"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:102
+msgid "Replace in Database"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:110
+msgid "Restore Database"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:111
+msgid "Restore in Database"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:119
+#: core/actions/RTAFAR_RegisterMenu.php:120
+msgid "Go Pro"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:156
+#, php-format
+msgid "%s Rule"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:157
+msgid ""
+"Realtime masking find and replace rules will take place before website "
+"render to browser. Besides Database masking will be affected in the Database."
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:179
+msgid "All Replacement Rule"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:180
+msgid ""
+"Following find replace rules will take place before website render to "
+"browser."
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:207
+msgid "Replace In Database"
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:208
+msgid ""
+"Instantly & permanently replace string from database table's. It will take "
+"effect in WordPress's table's only."
+msgstr ""
+
+#: core/actions/RTAFAR_RegisterMenu.php:293
+msgid "Please wait a while redirecting.."
+msgstr ""
+
+#: core/actions/RTAFAR_WP_Hooks.php:124
+msgid "All Rules"
+msgstr ""
+
+#: core/admin/builders/FormBuilder.php:378
+msgid "No option available"
+msgstr ""
+
+#: core/admin/functions/DbReplacer.php:85
+msgid "Error!"
+msgstr ""
+
+#: core/admin/functions/DbReplacer.php:86
+msgid "Please enter string to find and replace."
+msgstr ""
+
+#: core/admin/functions/DbReplacer.php:179 core/admin/functions/Masking.php:51
+msgid "Success!"
+msgstr ""
+
+#: core/admin/functions/DbReplacer.php:180
+#, php-format
+msgid "Thank you! replacement completed!. Total %1$s replaced : %2$d"
+msgstr ""
+
+#: core/admin/functions/DbReplacer.php:181
+msgid "Sorry! Nothing Found!"
+msgstr ""
+
+#: core/admin/functions/ProActions.php:41
+#, php-format
+msgid "Taxonomy URLs ( %s ) - Pro version only!"
+msgstr ""
+
+#: core/admin/notices/RtafarNotices.php:33
+#, php-format
+msgid ""
+"Thank you for choosing us. Let's %1$s set some find & replace rules. %2$s"
+msgstr ""
+
+#: core/admin/notices/RtafarNotices.php:66
+#, php-format
+msgid ""
+"You are using the plugin quite a while! If you are enjoying it, %s Would you "
+"mind%s to %s give us a 5 stars %s (%s) review?\n"
+"\t\t\t%1$s Your valuable review %2$s will %1$s inspire us %2$s to make it "
+"more better."
+msgstr ""
+
+#: core/admin/options/Scripts_Settings.php:98
+msgid "admin footer script start"
+msgstr ""
+
+#: core/admin/options/Scripts_Settings.php:107
+msgid "admin footer script end"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:30
+msgid "find_replace"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:31
+msgid "finds_replaces"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:50
+msgid "Replace by"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:51
+msgid "Rule Type"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:52
+msgid "Where to replace"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:93
+#: core/admin/options/pages/AddNewRule.php:128
+msgid "Plain Text"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:95
+#: core/admin/options/pages/AddNewRule.php:129
+msgid "Regular Expression"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:98
+#, php-format
+msgid "jQuery / Ajax %1$s Delay Time : %2$s "
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:103
+msgid "Advance Regular Expression (multiple lines at once / code blocks )"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:113
+#: core/admin/options/pages/AddNewRule.php:167
+msgid "All over the website"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:139
+msgid "Sorry! No Rule Found!"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:150
+msgid "Delete"
+msgstr ""
+
+#: core/admin/options/functions/AllMaskingRulesList.php:239
+msgid "Rule has been deleted successfully!"
+msgstr ""
+
+#: core/admin/options/functions/DbFuncReplaceInDb.php:42
+#: core/lib/RTAFAR_DB.php:63
+msgid "Select All"
+msgstr ""
+
+#: core/admin/options/functions/DbFuncReplaceInDb.php:43
+#: core/lib/RTAFAR_DB.php:64
+msgid "Unselect All"
+msgstr ""
+
+#: core/admin/options/functions/DbFuncReplaceInDb.php:44
+msgid "Post URLs"
+msgstr ""
+
+#: core/admin/options/functions/DbFuncReplaceInDb.php:45
+msgid "Page URLs"
+msgstr ""
+
+#: core/admin/options/functions/DbFuncReplaceInDb.php:46
+msgid "Media URLs (images, attachments etc..)"
+msgstr ""
+
+#: core/admin/options/pages/AccessDenied.php:53
+msgid "Caution!"
+msgstr ""
+
+#: core/admin/options/pages/AccessDenied.php:54
+msgid ""
+"You don't have permission to access this page! Contact Administration if "
+"this is wrong!"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:102
+msgid "Set find rules"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:103
+msgid "Enter your text / phrase what do you want to find out. e.g: Shop"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:106
+#: core/admin/options/pages/ReplaceInDB.php:71
+msgid "Replace With"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:110
+msgid "set replace rule"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:111
+msgid "Enter a word what do you want to replace with. e.g: My Store"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:114
+msgid "Rule's Type"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:118
+#, php-format
+msgid "Please select %s rule type"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:127
+msgid "Realtime Masking  (no effect in Database)"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:130
+msgid "jQuery / Ajax - Onload"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:131
+msgid ""
+"Advance Regular Expression (multiple lines at once / code blocks ) - pro "
+"version only"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:132
+msgid "Shortcode (replace before rendering to Browser)  - pro version only"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:133
+msgid "Old Comments (replace before rendering to Browser)  - pro version only"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:135
+msgid "Database Masking (affect in Database)"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:136
+msgid ""
+"Auto / New Post (replace before inserting into Database)  - pro version only"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:137
+msgid ""
+"New Comment (replace before inserting into Database)  - pro version only"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:143
+msgid "Select find and replacement rule's type. e.g : Plain Text"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:147
+msgid "Delay Time"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:151
+msgid "Set delay time in seconds. e.g : 2"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:152
+msgid ""
+"Set delay time in seconds. e.g: 2. If your text still not replace then "
+"increase the delay time. "
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:159
+msgid "Where To Replace"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:163
+msgid "Please select where to replace"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:168
+msgid "On specific page or post - pro version only"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:172
+msgid "Select rule's type. e.g : All over the website"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:177
+msgid "Bypass Rule"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:178
+msgid ""
+"Activate the following settings if you want to keep unchange any text in "
+"specific area with bypass rule pattern."
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:182
+#, php-format
+msgid "Activate Bypass Rule %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:189
+msgid "Check this checkbox if you want to apply Bypass rule"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:192
+#, php-format
+msgid "Bypass Rule %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:196
+msgid ""
+"Keep the string / text / word / code blocks unchanged wrapped up with this "
+"pattern. e.g: {test} "
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:205
+msgid " find word "
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:218
+#, php-format
+msgid "Remove Wrapper %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:226
+#, php-format
+msgid ""
+"Check this checkbox if you want to remove the bypass rule wrapper on final "
+"output. eg. %1$s{test}%2$s will render finally %1$stest%2$s."
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:231
+#: core/admin/options/pages/ReplaceInDB.php:126
+msgid "Advance Filters"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:232
+#: core/admin/options/pages/ReplaceInDB.php:127
+msgid "Set the following settings if you want to apply special filter options."
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:236
+#, php-format
+msgid "Skip Pages %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:245
+msgid "Please select page(s)"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:247
+msgid ""
+"Select pages where you don't want to apply this rule. e.g: Checkout, Home"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:251
+#, php-format
+msgid "Skip Posts %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:260
+msgid "Please select posts(s)"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:262
+msgid ""
+"Select posts where you don't want to apply this rule. Rule will be applied "
+"on single post pages only. e.g: My post"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:266
+#, php-format
+msgid "Skip Base URLs %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:275
+#, php-format
+msgid ""
+"Check this checkbox, if you want to keep unchanged the URLs match with the "
+"website URL. \n"
+"\t\t\t\t\t\t\te.g. You want to change %1$stest%2$s word from a post or page, "
+"but if the word exists in the URL - %1$s%3$s%2$s.\n"
+"\t\t\t\t\t\t\t& when you will apply the find & replacement rule, the URL "
+"will change and page / post link will not work where the links appeared "
+"dynamically. \n"
+"\t\t\t\t\t\t\tAs an example - Recent Post widget links."
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:287
+#, php-format
+msgid "Skip CSS %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:292
+msgid "Check the checkboxes, if you want to keep unchanged all the CSS"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:305
+#, php-format
+msgid ""
+" External CSS URL %1$s e.g: The CSS loaded with a tag like this - %3$s %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:321
+#, php-format
+msgid ""
+" Internal CSS %1$s e.g: The CSS loaded with a internal tag like this - %3$s "
+"%2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:337
+#, php-format
+msgid " Inline CSS %1$s e.g: The CSS loaded with a tag like this - %3$s %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:348
+#, php-format
+msgid "Skip JavaScript %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:353
+msgid "Check the checkboxes, if you want to keep unchanged all the JS"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:366
+#, php-format
+msgid ""
+" External JS URL %1$s e.g: The JS loaded with a tag like this - %3$s %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:382
+#, php-format
+msgid ""
+" Internal JS %1$s e.g: The JS loaded with a internal tag like this - %3$s "
+"%2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:397
+#, php-format
+msgid "Case-Insensitive %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:404
+#: core/admin/options/pages/ReplaceInDB.php:132
+msgid ""
+"Check this checkbox if you want to find case insensitive or keep it un-check "
+"to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as "
+"same if you check this checkbox."
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:408
+#, php-format
+msgid "Whole Words Only %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:416
+#: core/admin/options/pages/ReplaceInDB.php:138
+#, php-format
+msgid ""
+"Check this checkbox, if you want to find & replace match whole words only. e."
+"g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence "
+"for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest"
+"%4$s sentence for testing%2$s "
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:425
+#: core/admin/options/pages/ReplaceInDB.php:146
+#, php-format
+msgid "Unicode Characters %1$s Pro version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:432
+#: core/admin/options/pages/ReplaceInDB.php:152
+msgid ""
+"Check this checkbox, if you want find and replace unicode characters "
+"(UTF-8). e.g: U+0026, REČA"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:439
+msgid "Adding Rule"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:440
+msgid "Add Rule"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:445
+msgid "Updating Rule"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:446
+msgid "Update Rule"
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:473
+#: core/admin/options/pages/ReplaceInDB.php:180
+msgid "Please wait a while..."
+msgstr ""
+
+#: core/admin/options/pages/AddNewRule.php:483
+#: core/admin/options/pages/ReplaceInDB.php:190
+msgid "Something went wrong! Please try again by refreshing the page."
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:49
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:90
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:49
+msgid "Overview"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:56
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:56
+msgid "Available Features"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:71
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:126
+#, php-format
+msgid ""
+"%s This screen provides the  the functionalities to add new rule. You can "
+"add real-time rules as well as some specific rules in Database. After "
+"installing the pro version, these muted pro features will be activated "
+"automatically. %s"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:86
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:86
+msgid "You can perform the following Features:"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:90
+#, php-format
+msgid ""
+"%s Rule's Type %s allows to specify the type of a search and replacement "
+"rule. You can add real-time rule or rule for database. Real-time (masking) "
+"rules will take places before your website renders to the browser. It it "
+"will not effect anything on database."
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:93
+#, php-format
+msgid ""
+"%s Where to Replace %s allows to specify where you want to apply the rules. "
+"You need pro version to avail the muted features."
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:98
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:98
+#, php-format
+msgid ""
+"%s Tutorial %s : To read more about the features,  %scheck plugin's "
+"documentation%s from our website"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:111
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:191
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:111
+msgid "For more information: "
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:113
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:193
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:113
+msgid "Looking for features details? Check plugin's "
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:114
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:194
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:114
+msgid "Documentation"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAddNewRule.php:115
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:195
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:115
+msgid "Support"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:29
+msgid "Number of items per page : "
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:97
+msgid "Screen Content"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:104
+msgid "Available Actions"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:111
+msgid "Bulk Actions"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:141
+msgid ""
+"Hovering over a row in the item list will display action links that allow "
+"you to manage your item. You can perform the following actions:"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:145
+#, php-format
+msgid "%s Edit %s takes you to the editing screen for that rule. "
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:161
+msgid ""
+"You can customize the display of this screen’s contents in a number of ways:"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:165
+msgid ""
+"You can decide how many item to list per screen using the Screen Options tab."
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnAllMaskRules.php:177
+msgid ""
+"You can also delete one or multiple item(s) at once. Select the item(s) you "
+"want to act on using the checkboxes, then select the action you want to take "
+"from the Bulk actions menu and click Apply."
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:71
+#, php-format
+msgid ""
+"%s This screen provides the  the functionalities to search and replace in "
+"Database. You can search on a specific table or for URL. After installing "
+"the pro version, these muted pro features will be activated automatically. %s"
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:90
+#, php-format
+msgid ""
+"%s Where to Replace %s allows to specify where you want to search and "
+"replace. "
+msgstr ""
+
+#: core/admin/options/pages/AdvScreenOptions/ScOptnReplaceInDb.php:93
+#, php-format
+msgid ""
+"%s Dry Run %s allows to create a visual report of the items you have "
+"searched for or if its unchecked, the searched item will be replaced if its "
+"found. "
+msgstr ""
+
+#: core/admin/options/pages/AllMaskingRules.php:45
+msgid "Search results for"
+msgstr ""
+
+#: core/admin/options/pages/AllMaskingRules.php:47
+msgid "Back to all"
+msgstr ""
+
+#: core/admin/options/pages/AllMaskingRules.php:56
+msgid "Search Rule"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:66
+msgid "Enter word to find "
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:67
+msgid "Enter a word / phrase you want to find in Database. e.g: _test "
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:75
+msgid "Enter word to replace with"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:76
+msgid "Enter word / phrase you want to replace with. e.g : test"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:79
+msgid "Where to Replace"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:84
+msgid "Database Tables"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:85
+msgid "URLs"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:87
+msgid "Select where to find and replace"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:88
+msgid "Select where to find and replace. e.g : Database Tables"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:92
+#, php-format
+msgid "Large Table %1$s Pro Extend - version only %2$s"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:100
+msgid ""
+"Check this checkbox, if you would like to search in a large table. Should "
+"select one table at a time."
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:104
+msgid "Select tables"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:109
+msgid "Please select tables"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:111
+msgid "Select / Enter table name where you want to replace. e.g : post."
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:115
+msgid "Select which url"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:119
+msgid "Please select options"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:121
+msgid "Select / Enter table name where you want to replace. e.g : post"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:130
+msgid "Case-Insensitive"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:135
+msgid "Whole Words Only"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:156
+msgid "Dry run"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:159
+msgid ""
+"Check this checkbox, if you want to see where find and replace will take "
+"place. A list of the find and replacement will be displayed in the popup "
+"window. No changes will be made to the database."
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:200
+msgid "Warning!"
+msgstr ""
+
+#: core/admin/options/pages/ReplaceInDB.php:203
+msgid ""
+"Replacement in database is permanent. You can't un-done it, once it get "
+"replaced."
+msgstr ""
+
+#: core/lib/RTAFAR_DB.php:55
+#, php-format
+msgid "%1$s - ( %2$s MB - %3$s Rows) - Pro version only!"
+msgstr ""
+
+#: core/lib/RTAFAR_DB.php:57
+#, php-format
+msgid "%1$s - ( %2$s MB - %3$s Rows )"
+msgstr ""
+
+#: core/lib/Util.php:165
+msgid "<< Back"
+msgstr ""

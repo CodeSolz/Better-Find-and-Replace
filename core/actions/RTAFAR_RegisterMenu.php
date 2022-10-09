@@ -46,6 +46,14 @@ class RTAFAR_RegisterMenu {
 	 */
 	public $rtafr_menus;
 
+
+	public static $nav_cap = array(
+		'add_masking_rule'  => 'bfar_menu_add_new_rule',
+		'all_masking_rules' => 'bfar_menu_all_replacement_rules',
+		'replace_in_db'     => 'bfar_menu_replace_in_database',
+		'restore_in_db'     => 'bfar_menu_restore_in_database',
+	);
+
 	private static $_instance;
 
 	public function __construct() {
@@ -71,7 +79,7 @@ class RTAFAR_RegisterMenu {
 		add_menu_page(
 			__( 'Real time auto find and replace', 'real-time-auto-find-and-replace' ),
 			__( 'Find & Replace', 'real-time-auto-find-and-replace' ),
-			'manage_options',
+			'read',
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			'cs-woo-altcoin-gateway',
 			CS_RTAFAR_PLUGIN_ASSET_URI . 'img/icon-24x24.png',
@@ -82,7 +90,7 @@ class RTAFAR_RegisterMenu {
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Add Replacement Rule', 'real-time-auto-find-and-replace' ),
 			__( 'Add New Rule', 'real-time-auto-find-and-replace' ),
-			'manage_options',
+			'read',
 			'cs-add-replacement-rule',
 			array( $this, 'rtafr_page_add_rule' )
 		);
@@ -91,7 +99,7 @@ class RTAFAR_RegisterMenu {
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'All Replacement Rules', 'real-time-auto-find-and-replace' ),
 			__( 'All Replacement Rules', 'real-time-auto-find-and-replace' ),
-			'manage_options',
+			'read',
 			'cs-all-masking-rules',
 			array( $this, 'rtafr_page_all_masking_rules' )
 		);
@@ -100,7 +108,7 @@ class RTAFAR_RegisterMenu {
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Replace in DB', 'real-time-auto-find-and-replace' ),
 			__( 'Replace in Database', 'real-time-auto-find-and-replace' ),
-			'manage_options',
+			'read',
 			'cs-replace-in-database',
 			array( $this, 'rtafr_page_replace_in_db' )
 		);
@@ -109,7 +117,7 @@ class RTAFAR_RegisterMenu {
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Restore Database', 'real-time-auto-find-and-replace' ),
 			__( 'Restore in Database', 'real-time-auto-find-and-replace' ),
-			'manage_options',
+			'read',
 			'cs-bfar-restore-database-pro',
 			array( $this, 'rtafar_page_restore_db' )
 		);
@@ -118,7 +126,7 @@ class RTAFAR_RegisterMenu {
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Go Pro', 'real-time-auto-find-and-replace' ),
 			'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . __( 'Go Pro', 'real-time-auto-find-and-replace' ),
-			'manage_options',
+			'read',
 			'cs-bfar-go-pro',
 			array( $this, 'rtafar_handle_external_redirects' )
 		);
@@ -154,10 +162,10 @@ class RTAFAR_RegisterMenu {
 
 		$page_info = array(
 			'title'     => sprintf( __( '%s Rule', 'real-time-auto-find-and-replace' ), $title ),
-			'sub_title' => __( 'Realtime masking find and replace rules will take place before website render to browser. Besides Database masking will be affected in the Database.', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'Realtime masking find and replace rules will take place before the website renders to the browser. Besides Database masking will be affected in the Database.', 'real-time-auto-find-and-replace' ),
 		);
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( self::$nav_cap['add_masking_rule'] ) ) {
 			$AddNewRule = $this->pages->AddNewRule();
 			if ( is_object( $AddNewRule ) ) {
 				echo $AddNewRule->generate_page( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ), $option );
@@ -177,10 +185,10 @@ class RTAFAR_RegisterMenu {
 	public function rtafr_page_all_masking_rules() {
 		$page_info = array(
 			'title'     => __( 'All Replacement Rule', 'real-time-auto-find-and-replace' ),
-			'sub_title' => __( 'Following find replace rules will take place before website render to browser.', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'Following find replace rules will take place before the website renders to the browser.', 'real-time-auto-find-and-replace' ),
 		);
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( self::$nav_cap['all_masking_rules'] ) ) {
 			$AllMaskingRules = $this->pages->AllMaskingRules();
 			if ( is_object( $AllMaskingRules ) ) {
 				echo $AllMaskingRules->generate_page( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
@@ -205,10 +213,10 @@ class RTAFAR_RegisterMenu {
 	public function rtafr_page_replace_in_db() {
 		$page_info = array(
 			'title'     => __( 'Replace In Database', 'real-time-auto-find-and-replace' ),
-			'sub_title' => __( 'Instantly & permanently replace string from database table\'s. It will take effect in WordPress\'s table\'s only.', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'Instantly & permanently replace strings from database table\'s.', 'real-time-auto-find-and-replace' ),
 		);
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( self::$nav_cap['replace_in_db'] ) ) {
 			$Default_Settings = $this->pages->ReplaceInDB();
 			if ( is_object( $Default_Settings ) ) {
 				echo $Default_Settings->generate_default_settings( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
@@ -223,7 +231,31 @@ class RTAFAR_RegisterMenu {
 				echo $AccessDenied;
 			}
 		}
+	}
 
+	/**
+	 * Restore DB
+	 *
+	 * @return void
+	 */
+	public function rtafar_page_restore_db() {
+		$page_info = array(
+			'title'     => __( 'Replace In Database', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'You can restore data to database what you have replaced', 'real-time-auto-find-and-replace' ),
+		);
+
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( self::$nav_cap['restore_in_db'] ) ) {
+			?>
+				<img src="<?php echo CS_RTAFAR_PLUGIN_ASSET_URI; ?>img/restore-db-pro.png" style="width: 99%" />
+			<?php
+		} else {
+			$AccessDenied = $this->pages->AccessDenied();
+			if ( \is_object( $AccessDenied ) ) {
+				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
+			} else {
+				echo $AccessDenied;
+			}
+		}
 	}
 
 	/**
@@ -268,16 +300,7 @@ class RTAFAR_RegisterMenu {
 		return Scripts_Settings::load_admin_footer_script( $this->current_screen->id, $this->rtafr_menus );
 	}
 
-	/**
-	 * Restore DB
-	 *
-	 * @return void
-	 */
-	public function rtafar_page_restore_db() {
-		?>
-			<img src="<?php echo CS_RTAFAR_PLUGIN_ASSET_URI; ?>img/restore-db-pro.png" style="width: 99%" />
-		<?php
-	}
+
 
 	/**
 	 * Handler external redirect
@@ -295,7 +318,7 @@ class RTAFAR_RegisterMenu {
 			add_action(
 				'admin_footer',
 				function() {
-					$redirect_url = Util::cs_get_pro_link( 'https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
+					$redirect_url = Util::cs_get_pro_link( Util::cs_pro_link() . '?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
 					?>
 					<script type="text/javascript">
 						window.location.href = '<?php echo $redirect_url; ?>';

@@ -13,8 +13,11 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 }
 
 use RealTimeAutoFindReplace\lib\Util;
-use RealTimeAutoFindReplace\admin\functions\Masking;
 use RealTimeAutoFindReplace\install\Activate;
+use RealTimeAutoFindReplace\admin\functions\Masking;
+use RealTimeAutoFindReplace\admin\functions\ProActions;
+use RealTimeAutoFindReplace\actions\RTAFAR_RegisterMenu;
+use RealTimeAutoFindReplace\admin\options\pages\AdvScreenOptions\ScreenOptions;
 
 class RTAFAR_WP_Hooks {
 
@@ -25,11 +28,27 @@ class RTAFAR_WP_Hooks {
 		/*** add settings link */
 		add_filter( 'plugin_action_links_' . CS_RTAFAR_PLUGIN_IDENTIFIER, array( __class__, 'rtafarSettingsLink' ) );
 
+		/*** add docs link */
+		add_filter( 'plugin_row_meta', array( $this, 'rtafar_plugin_row_meta' ), 10, 2 );
+
 		add_action( 'template_redirect', array( $this, 'rtafar_filter_contents' ) );
 
 		/*** add function after upgrade process complete */
 		add_action( 'upgrader_process_complete', array( __class__, 'rtafarAfterUpgrade' ), 10, 2 );
+
+		/*** screen options */
+		add_action( 'admin_menu', array( $this, 'rtafar_current_screen_options' ), 25 );
+		add_filter( 'set-screen-option', array( $this, 'rtafar_set_amr_per_page' ), 15, 3 );
+
+		/*** Capability options */
+		add_action( 'init', array( $this, 'rtafar_role_caps' ), 11 );
+		add_filter( 'ure_capabilities_groups_tree', array( $this, 'rtafar_ure_capabilities' ), 15 );
+		add_filter( 'ure_custom_capability_groups', array( $this, 'rtafar_ure_custom_capability_groups' ), 15, 2 );
+
 	}
+
+
+
 
 	/**
 	 * Filter content
@@ -38,8 +57,6 @@ class RTAFAR_WP_Hooks {
 	 */
 	public function rtafar_filter_contents() {
 		$replace_rules = Masking::get_rules( 'all' );
-
-		// pre_print( $replace_rules );
 
 		return ob_start(
 			function( $buffer ) use ( $replace_rules ) {
@@ -116,14 +133,45 @@ class RTAFAR_WP_Hooks {
 	 * @return void
 	 */
 	public static function rtafarSettingsLink( $links ) {
-		$links[] = '<a href="' .
-		Util::cs_generate_admin_url( 'cs-all-masking-rules' ) .
-		'">' . __( 'All Rules', 'real-time-auto-find-and-replace' ) . '</a>';
-		$links[] = '<a href="' .
-		Util::cs_generate_admin_url( 'cs-add-replacement-rule' ) .
-		'">' . __( 'Add New Rule', 'real-time-auto-find-and-replace' ) . '</a>';
+		$custom_links = array(
+			'add_new_rules' => '<a href="' . Util::cs_generate_admin_url( 'cs-add-replacement-rule' ) . '">' . __( 'Add New Rule', 'real-time-auto-find-and-replace' ) . '</a>',
+			'all_rules'     => '<a href="' . Util::cs_generate_admin_url( 'cs-all-masking-rules' ) . '" aria-label="' . esc_attr__( 'All Replacement Rules', 'real-time-auto-find-and-replace' ) . '">' . __( 'All Rules', 'real-time-auto-find-and-replace' ) . '</a>',
+		);
 
-		return $links;
+		$pro_links = array(
+			'cs-bfar-go-pro-action-link' => '<a target="_blank" href="' . esc_url( Util::cs_pro_link() . '?utm_campaign=gopro&utm_source=pl-actions-links&utm_medium=wp-dash' ) . '" aria-label="' . esc_attr__( 'Go Pro', 'real-time-auto-find-and-replace' ) . '"> ' . esc_html__( 'Go Pro', 'real-time-auto-find-and-replace' ) . '</a>',
+		);
+
+		if ( ProActions::hasPro() ) {
+			$pro_links = array();
+		}
+
+		return array_merge( $custom_links, $links, $pro_links );
+	}
+
+	/**
+	 * Plugins Row
+	 *
+	 * @param [type] $links
+	 * @param [type] $file
+	 * @return void
+	 */
+	public function rtafar_plugin_row_meta( $links, $file ) {
+		if ( plugin_basename( CS_RTAFAR_PLUGIN_IDENTIFIER ) !== $file ) {
+			return $links;
+		}
+
+		$row_meta = apply_filters(
+			'rtafar_row_meta',
+			array(
+				'docs'    => '<a target="_blank" href="' . esc_url( 'https://docs.codesolz.net/better-find-and-replace/' ) . '" aria-label="' . esc_attr__( 'documentation', 'real-time-auto-find-and-replace' ) . '">' . esc_html__( 'Docs', 'real-time-auto-find-and-replace' ) . '</a>',
+				'videos'  => '<a target="_blank" href="' . esc_url( 'https://www.youtube.com/watch?v=nDv6T72sRfc&list=PLxLVEan0phTv5OfCX-FPu6n3RgpHS4kn6' ) . '" aria-label="' . esc_attr__( 'Video Tutorials', 'real-time-auto-find-and-replace' ) . '">' . esc_html__( 'Video Tutorials', 'real-time-auto-find-and-replace' ) . '</a>',
+				'support' => '<a target="_blank" href="' . esc_url( 'https://codesolz.net/forum' ) . '" aria-label="' . esc_attr__( 'Community support', 'real-time-auto-find-and-replace' ) . '">' . esc_html__( 'Community support', 'real-time-auto-find-and-replace' ) . '</a>',
+			)
+		);
+
+		return array_merge( $links, $row_meta );
+
 	}
 
 	/**
@@ -144,6 +192,88 @@ class RTAFAR_WP_Hooks {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Screen options
+	 *
+	 * @since 1.3.8
+	 * @return void
+	 */
+	public function rtafar_current_screen_options() {
+		global $rtafr_menu;
+
+		$ScreenOptions = new ScreenOptions();
+
+		if ( isset( $rtafr_menu['add_masking_rule'] ) && ! empty( $rtafr_menu['add_masking_rule'] ) ) {
+			// add_action( 'load-' . $rtafr_menu['add_masking_rule'], array( $ScreenOptions, 'rtafar_arr_screen_options' ) );
+		}
+
+		if ( isset( $rtafr_menu['all_masking_rules'] ) && ! empty( $rtafr_menu['all_masking_rules'] ) ) {
+			add_action( 'load-' . $rtafr_menu['all_masking_rules'], array( $ScreenOptions, 'rtafar_all_rules_screen_options' ) );
+		}
+
+		if ( isset( $rtafr_menu['replace_in_db'] ) && ! empty( $rtafr_menu['replace_in_db'] ) ) {
+			// add_action( 'load-' . $rtafr_menu['replace_in_db'], array( $ScreenOptions, 'rtafar_screen_options_replace_in_db' ) );
+		}
+	}
+
+
+	/**
+	 * Save Screen option
+	 *
+	 * @return void
+	 */
+	public function rtafar_set_amr_per_page( $status, $option, $value ) {
+		return ScreenOptions::rtafar_set_amr_per_page( $status, $option, $value );
+	}
+
+
+	/**
+	 * Add user capabilities
+	 *
+	 * @return void
+	 */
+	public function rtafar_role_caps() {
+		$role = \get_role( 'administrator' );
+		$caps = RTAFAR_RegisterMenu::$nav_cap;
+		if ( $caps ) {
+			foreach ( $caps as $cap ) {
+				$role->add_cap( $cap, true );
+			}
+		}
+	}
+
+	/**
+	 * URE Capabilities
+	 *
+	 * @param [type] $groups
+	 * @return void
+	 */
+	public function rtafar_ure_capabilities( $groups ) {
+		$groups['better_find_and_replace'] = array(
+			'caption' => esc_html__( 'Better find and replace', 'real-time-auto-find-and-replace' ),
+			'parent'  => 'custom',
+			'level'   => 2,
+		);
+
+		return $groups;
+	}
+
+	/**
+	 * Add Capabilities in "USER ROLE EDITOR" plugin
+	 *
+	 * @param [type] $groups
+	 * @param [type] $cap_id
+	 * @return void
+	 */
+	public function rtafar_ure_custom_capability_groups( $groups, $cap_id ) {
+		$caps = RTAFAR_RegisterMenu::$nav_cap;
+		if ( $caps && \is_array( $caps ) && \in_array( $cap_id, $caps ) ) {
+			$groups = array( 'custom', 'better_find_and_replace', 'better_find_and_replace_core' );
+		}
+		return $groups;
+
 	}
 
 }

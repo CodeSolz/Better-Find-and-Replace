@@ -70,6 +70,15 @@ class ProActions {
 		return $tables;
 	}
 
+	/**
+	 * Check for pro version
+	 *
+	 * @return boolean
+	 */
+	public static function hasPro() {
+		return is_plugin_active( 'better-find-and-replace-pro/better-find-and-replace-pro.php' );
+	}
+
 
 
 }

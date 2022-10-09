@@ -13,6 +13,7 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 }
 
 use RealTimeAutoFindReplace\admin\functions\Masking;
+use RealTimeAutoFindReplace\admin\functions\ProActions;
 
 class RTAFAR_EnqueueScript {
 
@@ -41,7 +42,7 @@ class RTAFAR_EnqueueScript {
 			'admin.app.global',
 			'rtafr',
 			array(
-				'is_pro_activate' => is_plugin_active( 'better-find-and-replace-pro/better-find-and-replace-pro.php' ),
+				'is_pro_activate' => ProActions::hasPro(),
 				'baT'             => __( 'Bulk Action', 'real-time-auto-find-and-replace' ),
 				'rT'              => __( 'Replace', 'real-time-auto-find-and-replace' ),
 				'fT'              => __( 'Find', 'real-time-auto-find-and-replace' ),
@@ -52,6 +53,8 @@ class RTAFAR_EnqueueScript {
 				'drT'             => __( 'Creating Reports..', 'real-time-auto-find-and-replace' ),
 				'frBnT'           => __( 'Find & Replace', 'real-time-auto-find-and-replace' ),
 				'frDrBnT'         => __( 'Create Reports', 'real-time-auto-find-and-replace' ),
+				'bTsN'            => __( 'Search Next', 'real-time-auto-find-and-replace' ),
+				'bTsP'            => __( 'Search Prev', 'real-time-auto-find-and-replace' ),
 
 				'fedNotOfPerm'    => add_query_arg(
 					array(

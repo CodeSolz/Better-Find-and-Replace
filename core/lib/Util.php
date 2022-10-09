@@ -325,5 +325,36 @@ class Util {
 		return false;
 	}
 
+	/**
+	 * Get logged in user id
+	 *
+	 * @return void
+	 */
+	public static function bfar_get_current_user_id() {
+		if ( \is_user_logged_in() ) {
+			return \get_current_user_id();
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * Pro link
+	 *
+	 * @return void
+	 */
+	public static function cs_pro_link() {
+		return 'https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/';
+	}
+
+	/**
+	 * Free plugins
+	 *
+	 * @return void
+	 */
+	public static function cs_free_plugins() {
+		return \self_admin_url( 'plugin-install.php?s=codesolz&tab=search&type=author' );
+	}
+
 }
 

@@ -87,6 +87,18 @@ class ReplaceInDB {
 				'placeholder' => __( 'Select where to find and replace', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Select where to find and replace. e.g : Database Tables', 'real-time-auto-find-and-replace' ),
 			),
+			'cs_db_string_replace[large_table]'      => array(
+				'wrapper_class'     => 'large-table',
+				'title'             => sprintf( __( 'Large Table %1$s Pro Extend - version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'checkbox',
+				'is_pro'            => true,
+				'is_pro_extend'     => true,
+				'class'             => 'large-table',
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'desc_tip'          => __( 'Check this checkbox, if you would like to search in a large table. Should select one table at a time.', 'real-time-auto-find-and-replace' ),
+			),
 			'db_tables[]'                            => array(
 				'wrapper_class' => 'no-border db-tables-wrap',
 				'title'         => __( 'Select tables', 'real-time-auto-find-and-replace' ),
@@ -117,13 +129,13 @@ class ReplaceInDB {
 			'cs_db_string_replace[case_insensitive]' => array(
 				'title'    => __( 'Case-Insensitive', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
-				'desc_tip' => __( 'Check this checkbox if you want to find case insensitive or keep it un-check to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as same if you check this checkbox.', 'real-time-auto-find-and-replace' ),
+				'desc_tip' => __( 'Check this checkbox if you want to find case insensitive or keep it un-check to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as the same word if you check this checkbox.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[whole_word]'       => array(
 				'title'    => __( 'Whole Words Only', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
 				'desc_tip' => \sprintf(
-					__( 'Check this checkbox, if you want to find & replace match whole words only. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
+					__( 'Check this checkbox, if you want to find & replace by matching whole words only. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
 					'<code>',
 					'</code>',
 					'<em>',
@@ -139,20 +151,12 @@ class ReplaceInDB {
 				),
 				'desc_tip'          => __( 'Check this checkbox, if you want find and replace unicode characters (UTF-8). e.g: U+0026, REČA', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_db_string_replace[large_table]'      => array(
-				'title'       => sprintf( __( 'Large Table %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
-				'type'        => 'text',
-				'class'       => 'form-control',
-				'is_pro'      => true,
-				'value'       => '',
-				'placeholder' => __( 'Enter word to replace with', 'real-time-auto-find-and-replace' ),
-				'desc_tip'    => __( 'Enter word / phrase you want to replace with. e.g : test', 'real-time-auto-find-and-replace' ),
-			),
+
 			'cs_db_string_replace[dry_run]'          => array(
 				'title'    => __( 'Dry run', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
 				'value'    => true,
-				'desc_tip' => __( 'Check this checkbox, if you want to see where find and replace will take place. A list of the find and replacement will be displayed in the popup window. No changes will be made to the database.', 'real-time-auto-find-and-replace' ),
+				'desc_tip' => __( 'Check this checkbox, if you want to see where find and replace will take place. A list of the find and replacement items will be displayed in the popup window. No changes will be made on the database until you uncheck it.', 'real-time-auto-find-and-replace' ),
 			),
 		);
 
@@ -196,7 +200,7 @@ class ReplaceInDB {
                         <li> <b>' . __( 'Warning!', 'real-time-auto-find-and-replace' ) . '</b>
                             <ol>
                                 <li>'
-									. __( 'Replacement in database is permanent. You can\'t un-done it, once it get replaced.', 'real-time-auto-find-and-replace' )
+									. __( 'Replacement in the database is permanent. You can\'t un-done it, once it gets replaced.', 'real-time-auto-find-and-replace' )
 								. '</li>
                             </ol>
                         </li>

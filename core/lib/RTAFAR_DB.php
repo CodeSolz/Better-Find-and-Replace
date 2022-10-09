@@ -43,7 +43,8 @@ class RTAFAR_DB {
 		if ( is_array( $tables ) && ! empty( $tables ) ) {
 
 			foreach ( $tables as $table ) {
-				$size = \round( $table['Data_length'] / 1024 / 1024, 2 );
+				// $size = \round( $table['Data_length'] / 1024 / 1024, 2 );
+				$size = self::tbl_size_mb( $table['Data_length'] );
 
 				// escape plugins tbl
 				if ( false !== strpos( $table['Name'], '_rtafar_' ) ) {
@@ -94,6 +95,40 @@ class RTAFAR_DB {
 		}
 
 		return array( $primary_key, $columns );
+	}
+
+	/**
+	 * Get Number of Rows & Size of a Table
+	 *
+	 * @param [type] $table
+	 * @return void
+	 */
+	public static function get_info_of_tbl( $table ) {
+		if ( empty( $table ) ) {
+			return false;
+		}
+
+		global $wpdb;
+		$res = $wpdb->get_row( $wpdb->prepare( 'SHOW TABLE STATUS like %s', $table ), ARRAY_A );
+		if ( $res ) {
+			// $res = (array) $res;
+			$res['Data_length_mb'] = self::tbl_size_mb( $res['Data_length'] );
+		}
+
+		return $res;
+	}
+
+	/**
+	 * Get size to MB
+	 *
+	 * @param [type] $data_length
+	 * @return void
+	 */
+	public static function tbl_size_mb( $data_length ) {
+		if ( empty( $data_length ) ) {
+			return 0; }
+
+		return \round( $data_length / 1024 / 1024, 2 );
 	}
 
 	/**

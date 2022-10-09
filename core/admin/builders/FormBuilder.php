@@ -362,7 +362,6 @@ class FormBuilder {
 				$option = $this->generate_select_options( $field['options'], $field['placeholder'], $value );
 
 			}
-
 		}
 		$select_tag = $tag_start . $option . '</select>';
 

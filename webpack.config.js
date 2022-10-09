@@ -6,12 +6,12 @@ const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 
 module.exports = {
   entry: {
-    "./assets/js/rtafar.app.admin": "./src/js/src/app.js",
-    "./assets/js/rtafar.admin.global": "./src/js/src/app.global.js",
-    "./assets/css/rtafar-admin-style": "./src/scss/src/app.scss",
-    "./assets/css/rtafar-admin-global-style": "./src/scss/src/global.scss",
-    "./assets/js/rtafar.app": "./src/js/src/ajaxContentReplacer.js",
-    "./assets/js/rtafar.admin.replace.in.db": "./src/js/src/pageReplaceInDb.js",
+    "./assets/js/rtafar.app.admin": "./src/js/app.js",
+    "./assets/js/rtafar.admin.global": "./src/js/app.global.js",
+    "./assets/css/rtafar-admin-style": "./src/scss/app.scss",
+    "./assets/css/rtafar-admin-global-style": "./src/scss/global.scss",
+    "./assets/js/rtafar.app": "./src/js/ajaxContentReplacer.js",
+    "./assets/js/rtafar.admin.replace.in.db": "./src/js/pageReplaceInDb.js",
   },
   output: {
     filename: "[name].min.js",
@@ -47,7 +47,6 @@ module.exports = {
     }),
   ],
   optimization: {
-    minimize: true,
     minimizer: [
       new TerserPlugin({
         minify: TerserPlugin.swcMinify,

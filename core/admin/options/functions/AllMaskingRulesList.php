@@ -14,13 +14,14 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 
 use RealTimeAutoFindReplace\lib\Util;
 use RealTimeAutoFindReplace\admin\functions\Masking;
+use RealTimeAutoFindReplace\admin\options\pages\AdvScreenOptions\ScreenOptions;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
 class AllMaskingRulesList extends \WP_List_Table {
-	var $item_per_page = 10;
+	var $item_per_page;
 	var $total_post;
 
 	public function __construct() {
@@ -31,6 +32,9 @@ class AllMaskingRulesList extends \WP_List_Table {
 				'ajax'     => false,
 			)
 		);
+
+		$per_page            = ScreenOptions::rtafar_get_amr_per_page();
+		$this->item_per_page = empty( $per_page ) ? 10 : $per_page;
 	}
 
 	/**
