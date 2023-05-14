@@ -60,6 +60,11 @@ class AddNewRule {
 			$ajaxSeRepFields = '';
 		}
 
+		$ajaxMultiByte = 'force-hidden';
+		if ( $ruleType == 'multiByte' ) {
+			$ajaxMultiByte = '';
+		}
+
 		$hiddenBypassRule    = 'force-hidden';
 		$hiddenAdvanceFilter = 'force-hidden';
 		if ( $ruleType == 'plain' || empty( $option ) ) {
@@ -100,7 +105,7 @@ class AddNewRule {
 				'required'    => true,
 				'value'       => FormBuilder::get_value( 'find', $option, '' ),
 				'placeholder' => __( 'Set find rules', 'real-time-auto-find-and-replace' ),
-				'desc_tip'    => __( 'Enter your text / phrase what do you want to find out. e.g: Shop', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Enter the text or phrase you want to search for. e.g: Shop', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[replace]'               => array(
 				'title'       => __( 'Replace With', 'real-time-auto-find-and-replace' ),
@@ -108,7 +113,7 @@ class AddNewRule {
 				'class'       => 'form-control',
 				'value'       => FormBuilder::get_value( 'replace', $option, '' ),
 				'placeholder' => __( 'set replace rule', 'real-time-auto-find-and-replace' ),
-				'desc_tip'    => __( 'Enter a word what do you want to replace with. e.g: My Store', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Enter the word you want to replace with. e.g: My Store', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[type]'                  => array(
 				'title'       => __( 'Rule\'s Type', 'real-time-auto-find-and-replace' ),
@@ -119,20 +124,19 @@ class AddNewRule {
 				'options'     => apply_filters(
 					'bfrp_masking_rules',
 					array(
-
-						// 'group_realtime' => array(
-						// 'plain'                       => __( 'Plain Text ( realtime masking )', 'real-time-auto-find-and-replace' ),
-						// ),
 						'hasGroup' => array(
 							__( 'Realtime Masking  (no effect in Database)', 'real-time-auto-find-and-replace' ) => array(
 								'plain'                  => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
-								'regex'                  => __( 'Regular Expression', 'real-time-auto-find-and-replace' ),
+								'regex'                  => __( 'Regular Expression - Managed', 'real-time-auto-find-and-replace' ),
+								'regexCustom'                  => __( 'Regular Expression - Custom', 'real-time-auto-find-and-replace' ),
 								'ajaxContent'            => __( 'jQuery / Ajax - Onload', 'real-time-auto-find-and-replace' ),
+								'multiByte'            => __( 'Multibyte characters ( lang: Arabic / Chinese etc)', 'real-time-auto-find-and-replace' ),
+								'htmlTags_disabled234' => __( 'Replace HTML tag(s) - pro version only (pro PRO & above)', 'real-time-auto-find-and-replace' ),
 								'advance_regex_disabled' => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
-								'filterShortCodes_disabled' => __( 'Shortcode (replace before rendering to Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
-								'filterOldComments_disabled' => __( 'Old Comments (replace before rendering to Browser)  - pro version only', 'real-time-auto-find-and-replace' ),
+								'filterShortCodes_disabled' => __( 'Shortcode   - pro version only', 'real-time-auto-find-and-replace' ),
+								'filterOldComments_disabled' => __( 'Old Comments  - pro version only', 'real-time-auto-find-and-replace' ),
 							),
-							__( 'Database Masking (affect in Database)', 'real-time-auto-find-and-replace' ) => array(
+							__( 'Database Replacement (affect in Database)', 'real-time-auto-find-and-replace' ) => array(
 								'filterAutoPost_disabled' => __( 'Auto / New Post (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
 								'filterComment_disabled'  => __( 'New Comment (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
 							),
@@ -141,6 +145,15 @@ class AddNewRule {
 				),
 				'value'       => FormBuilder::get_value( 'type', $option, '' ),
 				'desc_tip'    => __( 'Select find and replacement rule\'s type. e.g : Plain Text', 'real-time-auto-find-and-replace' ),
+			),
+			'cs_masking_rule[html_charset]'                  => array(
+				'wrapper_class'     => "html-charset {$ajaxMultiByte}",
+				'title'       => __( 'Website Charset', 'real-time-auto-find-and-replace' ),
+				'type'        => 'text',
+				'class'       => 'form-control',
+				'value'       => FormBuilder::get_value( 'html_charset', $option, '' ),
+				'placeholder' => __( 'Enter website charset', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Enter website charset. It supports 25 character encoding types.. e.g: UTF-8', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[delay]'                 => array(
 				'wrapper_class'     => "delay-time {$ajaxSeRepFields}",
@@ -176,7 +189,7 @@ class AddNewRule {
 				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
 				'type'          => 'section_title',
 				'title'         => __( 'Bypass Rule', 'real-time-auto-find-and-replace' ),
-				'desc_tip'      => __( 'Activate the following settings if you want to keep unchanged any text in a specific area with a bypass rule pattern.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Turn on the following settings if you desire to keep text unchanged in a particular region using a bypass rule pattern.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[bypass_rule_is_active]' => array(
 				'wrapper_class'     => "bypass-rule {$hiddenBypassRule}",
@@ -230,7 +243,7 @@ class AddNewRule {
 				'wrapper_class' => "advance-filter st2-wrapper {$isShowSt2}",
 				'type'          => 'section_title',
 				'title'         => __( 'Advance Filters', 'real-time-auto-find-and-replace' ),
-				'desc_tip'      => __( 'Set the following settings if you want to apply special filter options.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Configure the following settings if you wish to implement specialized filter options.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[skip_pages][]'          => array(
 				'wrapper_class'     => "advance-filter wrap-skip-pages {$isShowSkipPage}",
@@ -274,8 +287,8 @@ class AddNewRule {
 				'desc_tip'          => sprintf(
 					__(
 						'Check this checkbox, if you want to keep unchanged the URLs match with the website URL. 
-							e.g. You want to change the %1$stest%2$s word from a post or page, but if the word exists in the URL - %1$s%3$s%2$s.
-							& when you apply the find & replacement rule, the URL will change and the page / post link will not work where the links appeared dynamically. 
+							e.g. If you desire to modify the word %1$stest%2$s within a post or page, but it appears within the URL as %1$s%3$s%2$s, please note that applying the find and replace rule will alter the 
+							URL and potentially render any dynamic links within the page or post inactive. 
 							As an example - Recent Post widget links.',
 						'real-time-auto-find-and-replace'
 					),
@@ -402,7 +415,7 @@ class AddNewRule {
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
 				),
-				'desc_tip'          => __( 'Check this checkbox if you want to find case insensitive or keep it un-checked to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as the same word if you check this checkbox.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'          => __( 'Check this checkbox if you wish to perform a case-insensitive search, or leave it unchecked to perform a case-sensitive search. e.g : Shop / shop / SHOP, all will be treated as the same word if you check this checkbox.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[whole_word]'            => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
@@ -414,7 +427,7 @@ class AddNewRule {
 					'disabled' => 'disabled',
 				),
 				'desc_tip'          => \sprintf(
-					__( 'Check this checkbox, if you want to find & replace match whole words only. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
+					__( 'Check this checkbox, if you want the find and replace function to only match complete words. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
 					'<code>',
 					'</code>',
 					'<em>',
@@ -506,11 +519,15 @@ class AddNewRule {
 			<script type="text/javascript">
 				jQuery(document).ready(function(){
 					jQuery("body").on('change', '.rule-type', function(){
-						jQuery(".delay-time, .tag-selector").addClass('force-hidden');
+						jQuery(".delay-time, .tag-selector, .html-charset").addClass('force-hidden');
 						jQuery(".delay-time-input, .tag-selector-input").removeAttr('required');
 						if( jQuery(this).val() === 'ajaxContent' ){
 							jQuery(".delay-time, .tag-selector").removeClass('force-hidden');
 							jQuery(".delay-time-input, .tag-selector-input").attr('required', 'required');
+						}
+						
+						if( jQuery(this).val() === 'multiByte' ){ 
+							jQuery(".html-charset").removeClass('force-hidden');
 						}
 					});
 

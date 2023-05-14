@@ -48,8 +48,6 @@ class RTAFAR_WP_Hooks {
 	}
 
 
-
-
 	/**
 	 * Filter content
 	 *
@@ -57,10 +55,13 @@ class RTAFAR_WP_Hooks {
 	 */
 	public function rtafar_filter_contents() {
 		$replace_rules = Masking::get_rules( 'all' );
+		$has_pro = ProActions::hasPro();
+
+		// pre_print( $replace_rules );
 
 		return ob_start(
-			function( $buffer ) use ( $replace_rules ) {
-				return $this->get_filtered_content( $buffer, $replace_rules );
+			function( $buffer ) use ( $replace_rules, $has_pro ) {
+				return $this->get_filtered_content( $buffer, $replace_rules, $has_pro );
 			}
 		);
 	}
@@ -71,18 +72,13 @@ class RTAFAR_WP_Hooks {
 	 * @param [type] $buffer
 	 * @return void
 	 */
-	private function get_filtered_content( $buffer, $replace_rules ) {
+	private function get_filtered_content( $buffer, $replace_rules, $has_pro ) {
 		if ( $replace_rules ) {
 			foreach ( $replace_rules as $item ) {
-				// check bypass filter rule
-				if ( has_filter( 'bfrp_add_bypass_rule' ) && isset( $item->type ) && $item->type == 'plain' ) {
-					$buffer = apply_filters( 'bfrp_add_bypass_rule', $item, $buffer, false );
-				}
-
-				$buffer = $this->replace( $item, $buffer );
-
-				if ( has_filter( 'bfrp_remove_bypass_rule' ) && isset( $item->type ) && $item->type == 'plain' ) {
-					$buffer = apply_filters( 'bfrp_remove_bypass_rule', $item, $buffer, false );
+				if( $has_pro ){
+					$buffer = apply_filters( 'bfrp_render_real_time_content', $item, $buffer );
+				}else{
+					$buffer = $this->replace( $item, $buffer );
 				}
 			}
 		}
@@ -103,25 +99,21 @@ class RTAFAR_WP_Hooks {
 		$find = false !== $find ? $find : $item->find;
 
 		if ( $item->type == 'regex' ) {
-			if ( \has_filter( 'bfrp_masking_plain_filter' ) ) {
-				return \apply_filters( 'bfrp_masking_plain_filter', $item, $find, $buffer );
-			} else {
-				$find    = '#' . Util::cs_stripslashes( $find ) . '#';
-				$replace = Util::cs_stripslashes( $item->replace );
-				return preg_replace( $find, $replace, $buffer );
-			}
-		} elseif ( $item->type == 'advance_regex' ) {
-			if ( \has_filter( 'bfrp_advance_regex_mask' ) ) {
-				return \apply_filters( 'bfrp_advance_regex_mask', $find, $item->replace, $buffer );
-			} else {
-				return $buffer;
-			}
-		} else {
-			if ( \has_filter( 'bfrp_masking_plain_filter' ) ) {
-				return \apply_filters( 'bfrp_masking_plain_filter', $item, $find, $buffer );
-			} else {
-				return \str_replace( Util::cs_stripslashes( $find ), Util::cs_stripslashes( $item->replace ), $buffer );
-			}
+			$find    = '#' . Util::cs_stripslashes( $find ) . '#';
+			$replace = Util::cs_stripslashes( $item->replace );
+			return \preg_replace( $find, $replace, $buffer );
+		} 
+		elseif ( $item->type == 'regexCustom' ) {
+			//NOTE: search with custom pattern  
+			return \preg_replace( $find, $item->replace, $buffer );
+		} 
+		elseif ( $item->type == 'multiByte' ) {
+			//NOTE: search and replace on multiByte string
+			\mb_regex_encoding( $item->html_charset );
+			return \mb_ereg_replace( $find, Util::cs_stripslashes( $item->replace ), $buffer );
+		} 
+		else {
+			return \str_replace( Util::cs_stripslashes( $find ), Util::cs_stripslashes( $item->replace ), $buffer );
 		}
 
 	}
@@ -189,6 +181,7 @@ class RTAFAR_WP_Hooks {
 			foreach ( $options['plugins'] as $eachPlugin ) {
 				if ( $eachPlugin == CS_RTAFAR_PLUGIN_IDENTIFIER ) {
 					Activate::onUpgrade();
+					break;
 				}
 			}
 		}
@@ -273,7 +266,6 @@ class RTAFAR_WP_Hooks {
 			$groups = array( 'custom', 'better_find_and_replace', 'better_find_and_replace_core' );
 		}
 		return $groups;
-
 	}
 
 }

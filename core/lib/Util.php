@@ -250,7 +250,7 @@ class Util {
 			);
 		}
 
-		if ( is_wp_error( $response ) ) {
+		if ( \is_wp_error( $response ) ) {
 			return array(
 				'error'    => true,
 				'response' => $response->get_error_message(),

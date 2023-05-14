@@ -89,10 +89,10 @@ class ReplaceInDB {
 			),
 			'cs_db_string_replace[large_table]'      => array(
 				'wrapper_class'     => 'large-table',
-				'title'             => sprintf( __( 'Large Table %1$s Pro Extend - version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'title'             => sprintf( __( 'Large Table %1$s >= Pro Extend  - version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'checkbox',
 				'is_pro'            => true,
-				'is_pro_extend'     => true,
+				'pro_plan'     		=> '34', 
 				'class'             => 'large-table',
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
@@ -124,18 +124,18 @@ class ReplaceInDB {
 				'wrapper_class' => 'advance-filter ',
 				'type'          => 'section_title',
 				'title'         => __( 'Advance Filters', 'real-time-auto-find-and-replace' ),
-				'desc_tip'      => __( 'Set the following settings if you want to apply special filter options.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Activate the following settings if you wish to apply special filtering options.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[case_insensitive]' => array(
 				'title'    => __( 'Case-Insensitive', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
-				'desc_tip' => __( 'Check this checkbox if you want to find case insensitive or keep it un-check to find case-sensitive. e.g : Shop / shop / SHOP, all will be treated as the same word if you check this checkbox.', 'real-time-auto-find-and-replace' ),
+				'desc_tip' => __( 'Check this checkbox if you wish to perform a case-insensitive search, or leave it unchecked to perform a case-sensitive search. e.g : Shop / shop / SHOP, all will be treated as the same word if you check this checkbox.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[whole_word]'       => array(
 				'title'    => __( 'Whole Words Only', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
 				'desc_tip' => \sprintf(
-					__( 'Check this checkbox, if you want to find & replace by matching whole words only. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
+					__( 'Check this checkbox, if you want the find and replace function to only match complete words. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
 					'<code>',
 					'</code>',
 					'<em>',
@@ -156,7 +156,7 @@ class ReplaceInDB {
 				'title'    => __( 'Dry run', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
 				'value'    => true,
-				'desc_tip' => __( 'Check this checkbox, if you want to see where find and replace will take place. A list of the find and replacement items will be displayed in the popup window. No changes will be made on the database until you uncheck it.', 'real-time-auto-find-and-replace' ),
+				'desc_tip' => __( 'By ticking this checkbox, you can preview the areas where the find and replace action will take place. The popup window will display a comprehensive list of the identified items and their respective replacements. The database will remain unchanged until you opt to uncheck this option.', 'real-time-auto-find-and-replace' ),
 			),
 		);
 

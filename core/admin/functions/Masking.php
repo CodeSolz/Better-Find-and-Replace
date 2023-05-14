@@ -63,7 +63,7 @@ class Masking {
 	public function insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time, $user_query ) {
 		global $wpdb;
 
-		if ( $type == 'regex' || $type == 'advance_regex' ) {
+		if ( $type == 'regex' || $type == 'advance_regex' || $type == 'regexCustom' ) {
 			$find    = Util::cs_addslashes( $find );
 			$replace = Util::cs_addslashes( $replace );
 		} else {
@@ -77,6 +77,7 @@ class Masking {
 			'type'             => Util::check_evil_script( $type ),
 			'where_to_replace' => Util::check_evil_script( $replace_where ),
 			'delay'            => $delay_time,
+			'html_charset'     => isset( $user_query['html_charset'] ) ? Util::check_evil_script( $user_query['html_charset'] ) : ''
 		);
 
 		if ( has_filter( 'bfrp_before_insert_new_rule' ) &&

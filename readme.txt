@@ -3,20 +3,24 @@ Contributors: CodeSolz, m.tuhin
 Tags: database, search and replace, search replace, search, real-time replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
-Tested up to: 6.0
-Stable tag: 1.4.1
+Tested up to: 6.2
+Stable tag: 1.4.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Easily Search & replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real-time. Search replace within database too..
 
 == Description ==
-This plugin automatically finds a specific word (given by you) and will replace it with your own word. The changes will automatically happen before the website renders to the browser. It doesn't affect any other files or databases.
+The plugin provides an easy way to find for a target word and replace it with your desired word. It provides two exciting options for search & replacement : real-time and permanent.
 
-Easily find and replace text, HTML code, Media / Image's URL, Footer credits or anything in the website without touching the database. 
+The real-time option employs a clever word masking technique to replace text, url ( anything ), leaving no trace behind. The find and replace process takes place before the website is 
+rendered in the browser and does not impact any other files or databases. With this ultimate solution, easily find and replace text, HTML code, media/image URLs, footer credits, 
+or any other content within your website without touching the database with the help of an easy-to-use user interface.
 
-Also, It has powerful features which can be use to search and replace in Database permanently. It has an advanced feature that can be use to find and replace 
-any keyword on keys or values of serialized data. Also any element of the serialized data can be removed / unset by its key.
+On the other hand, the permanent replacer is the ultimate solution, ensuring that any replaced text, URL etc is eliminated from your database permanently.
+The plugin is equipped with powerful features that allow you to visualize the results of searching and replacing content withing your database as well as permanently erasing it. It has the ability to
+search within complex, serialized data structures and replace them with your own words, making it a powerful tool for managing website content for beginners and experienced users alike. 
+Additionally, it allows for the removal or un-setting of any element in serialized data by specifying its key.
 
 == Key Features ==
 
@@ -83,7 +87,7 @@ any keyword on keys or values of serialized data. Also any element of the serial
 
 
 = Advance Regex - Code blocks / multi lines find and replacement example - (Real-time Rendering) =
-*Find code block and replace with your own or keep blank *replament field* to remove code block. Let consider the following CSS code block for replace. Put following
+*Find code block and replace with your own or keep blank *replacement field* to remove code block. Let consider the following CSS code block for replace. Put following
 code block in find field*
 
 	<style media="screen">
@@ -113,9 +117,9 @@ code block in find field*
 
 👉 Real-time search and replace
 
-* General options for filteting
+* General options for filtering
     * [Live Demo & Documentation](https://docs.codesolz.net/better-find-and-replace/real-time-find-replace/general-options/)
-* Advance options for filteting
+* Advance options for filtering
     * [Live Demo & Documentation](https://docs.codesolz.net/better-find-and-replace/real-time-find-replace/advance-filters/)
 
 
@@ -166,10 +170,46 @@ code block in find field*
 
 == Changelog ==
 
+= Version: 1.4.9 ( May 15, 2023 ) =
+* **Fix:** preg_replace - issue on real-time find and replace
+* **Fix:** Pro plan activate issue
+
+= Version: 1.4.8 ( May 04, 2023 ) =
+* **Upgrade:** Speed up on Real-time word masking
+* **Upgrade:** Database search replacement results
+* **Upgrade:** Multi-byte charset
+
+= Version: 1.4.7 ( April 03, 2023 ) =
+* **Fix:** Multi-byte charset issue fixed
+* **Upgrade:** Optimized query in real-time search & replace
+* **New:** Country-based search and replace for real-time
+* **New:** language-based search and replace for real-time
+
+= Version: 1.4.6 ( February 21, 2023 ) =
+* **New:** Use your own REGEX for real-time find and replace
+* **New:** Find & Replace in Multibyte characters ( Supported lang: Arabic, Chinese etc )
+* **New:** Real-time Search and replace any HTML tags ( pro PRO / pro EXTEND )
+
+= Version: 1.4.5 ( February 06, 2023 ) =
+* **Upgrade:** Rules re-writing and rendering
+* **Upgrade:** Speed upgrade on real-time rendering
+
+= Version: 1.4.4 ( January 24, 2023 ) =
+* **Fix:** Little bug fixed
+* **Upgrade:** Speed up on real-time DOM loading 
+
+= Version: 1.4.3 ( December 08, 2022 ) =
+* **Upgrade:** JavaScript updated to fix little issue
+* **Upgrade:** Speed up for real-time search and replace
+
+= Version: 1.4.2 ( October 24, 2022 ) =
+* **Fix:** Speed up on real-time search replace
+* **Fix:** Bug fixed on real-time search replace
+* **Update:** Upgraded database replacement functionalities
+
 = Version: 1.4.1 ( September 19, 2022 ) =
 * **Upgrade:** JavaScript code has been modernize for latest browsers
 * **Improvement:** Support docs added
-
 
 = Version: 1.4.0 ( August 21, 2022 ) =
 * **Fix:** Bug fixed on real-time search replace
@@ -223,7 +263,7 @@ code block in find field*
 * **Fix:** PHP warnings
 
 = Version: 1.3.0 =
-* **Improvement:** string replacemnt 
+* **Improvement:** string replacement 
 * **Improvement:** loading time 
 
 = Version: 1.2.9 =
@@ -237,7 +277,7 @@ code block in find field*
 * **Improvement:** Database search and replacement 
 
 = Version: 1.2.6 =
-* **Feat:** Masking rule on Shortcode (pro)
+* **Feat:** Masking rule on Shortcodes (pro)
 * **Feat:** Masking on Old Comments - (pro)
 * **Feat:** Skip posts - if you don't want to apply rules on any specific posts - (pro)
 * **Feat:** Automatically filter New Posts before inserting into Database (good for auto posting websites) - (pro)

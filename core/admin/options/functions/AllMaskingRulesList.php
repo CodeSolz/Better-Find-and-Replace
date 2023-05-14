@@ -76,9 +76,21 @@ class AllMaskingRulesList extends \WP_List_Table {
 		return sprintf( '<input type="checkbox" name="id[]" value="%1$s" />', $item->id );
 	}
 
+	/**
+	 * Column Find
+	 *
+	 * @param [type] $item
+	 * @return void
+	 */
 	public function column_find( $item ) {
+
 		echo Util::cs_sanitize_prnt_str( $item->find );
 		$edit_link = admin_url( "admin.php?page=cs-add-replacement-rule&action=update&rule_id={$item->id}" );
+
+		if ( has_action( 'bfrp_column_find' ) ) {
+			do_action( 'bfrp_column_find', $item );
+		}
+
 		echo '<div class="row-actions"><span class="edit">';
 		echo '<a href="' . $edit_link . '">Edit</a>';
 		echo '</span></div>';
@@ -92,16 +104,30 @@ class AllMaskingRulesList extends \WP_List_Table {
 		if ( $item->type == 'plain' ) {
 			return __( 'Plain Text', 'real-time-auto-find-and-replace' );
 		} elseif ( $item->type == 'regex' ) {
-			return __( 'Regular Expression', 'real-time-auto-find-and-replace' );
-		} elseif ( $item->type == 'ajaxContent' ) {
 			return sprintf(
-				__( 'jQuery / Ajax %1$s Delay Time : %2$s ', 'real-time-auto-find-and-replace' ),
-				'<br>',
-				$item->delay . ' seconds <br>'
+				__( 'Regular Expression %1$s Managed %2$s ', 'real-time-auto-find-and-replace' ),
+				'<br><span class="dt-col-sm-des">',
+				'</span>'
 			);
+		} elseif ( $item->type == 'ajaxContent' ) {
+			return sprintf( __( 'jQuery / Ajax %s', 'real-time-auto-find-and-replace' ), '<br> <span class="dt-col-sm-des"> Delay Time : '. $item->delay . ' seconds</span>' );
+
 		} elseif ( $item->type == 'advance_regex' ) {
-			return __( 'Advance Regular Expression (multiple lines at once / code blocks )', 'real-time-auto-find-and-replace' );
-		} else {
+			return sprintf(
+				__( 'Advance Regular Expression %1$s (multiple lines at once / code blocks) %2$s ', 'real-time-auto-find-and-replace' ),
+				'<span class="dt-col-sm-des">',
+				'</span>'
+			);
+		} elseif ( $item->type == 'regexCustom' ) {
+			return sprintf(
+				__( 'Regular Expression %1$s Custom %2$s ', 'real-time-auto-find-and-replace' ),
+				'<br><span class="dt-col-sm-des">',
+				'</span>'
+			);
+		} elseif ( $item->type == 'multiByte' ) {
+			return sprintf( __( 'MultiByte %s', 'real-time-auto-find-and-replace' ), '<br> <span class="dt-col-sm-des"> Encoding : '. $item->html_charset . '</span>' );
+		} 
+		else {
 			if ( has_filter( 'bfrp_column_type_text' ) ) {
 				return apply_filters( 'bfrp_column_type_text', $item );
 			}
@@ -129,6 +155,22 @@ class AllMaskingRulesList extends \WP_List_Table {
 	public function column_skip_posts( $item ) {
 		if ( has_action( 'bfrp_column_skip_posts' ) ) {
 			do_action( 'bfrp_column_skip_posts', $item );
+		} else {
+			return '---';
+		}
+	}
+
+	public function column_country_rules( $item ){
+		if ( has_action( 'bfrp_column_country_rules' ) ) {
+			do_action( 'bfrp_column_country_rules', $item );
+		} else {
+			return '---';
+		}
+	}
+
+	public function column_lang_rules( $item ){
+		if ( has_action( 'bfrp_column_lang_rules' ) ) {
+			do_action( 'bfrp_column_lang_rules', $item );
 		} else {
 			return '---';
 		}

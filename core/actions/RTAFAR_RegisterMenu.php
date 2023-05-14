@@ -137,7 +137,7 @@ class RTAFAR_RegisterMenu {
 		add_action( "load-{$this->rtafr_menus['replace_in_db']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['restore_in_db_pro']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 
-		remove_submenu_page( CS_RTAFAR_PLUGIN_IDENTIFIER, CS_RTAFAR_PLUGIN_IDENTIFIER );
+		\remove_submenu_page( CS_RTAFAR_PLUGIN_IDENTIFIER, CS_RTAFAR_PLUGIN_IDENTIFIER );
 
 		// init pages
 		$this->pages = new AdminPageBuilder();
@@ -162,7 +162,7 @@ class RTAFAR_RegisterMenu {
 
 		$page_info = array(
 			'title'     => sprintf( __( '%s Rule', 'real-time-auto-find-and-replace' ), $title ),
-			'sub_title' => __( 'Realtime masking find and replace rules will take place before the website renders to the browser. Besides Database masking will be affected in the Database.', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'The real-time masking find and replace rules will be applied prior to the website being rendered in the browser. Additionally, the database masking will take effect in the database.', 'real-time-auto-find-and-replace' ),
 		);
 
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( self::$nav_cap['add_masking_rule'] ) ) {
@@ -185,7 +185,7 @@ class RTAFAR_RegisterMenu {
 	public function rtafr_page_all_masking_rules() {
 		$page_info = array(
 			'title'     => __( 'All Replacement Rule', 'real-time-auto-find-and-replace' ),
-			'sub_title' => __( 'Following find replace rules will take place before the website renders to the browser.', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'The real-time find and replace rules will be executed before the website is displayed in the browser. The database replacement will take effect in the database permanently.', 'real-time-auto-find-and-replace' ),
 		);
 
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( self::$nav_cap['all_masking_rules'] ) ) {
@@ -213,7 +213,7 @@ class RTAFAR_RegisterMenu {
 	public function rtafr_page_replace_in_db() {
 		$page_info = array(
 			'title'     => __( 'Replace In Database', 'real-time-auto-find-and-replace' ),
-			'sub_title' => __( 'Instantly & permanently replace strings from database table\'s.', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'Effortlessly and permanently replace strings in database tables instantly.', 'real-time-auto-find-and-replace' ),
 		);
 
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( self::$nav_cap['replace_in_db'] ) ) {

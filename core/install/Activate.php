@@ -33,6 +33,7 @@ class Activate {
 				`replace` mediumtext,
 				`type` varchar(56),
 				`delay` float,
+				`html_charset` char(20),
 				`where_to_replace` varchar(128),
 				PRIMARY KEY ( `id`)
 				) $charset_collate",
@@ -80,6 +81,15 @@ class Activate {
 					$update_sqls,
 					array(
 						"ALTER TABLE `{$wpdb->prefix}rtafar_rules` DROP COLUMN tag_selector",
+					)
+				);
+			}
+
+			if ( \version_compare( $get_installed_db_version, '1.0.3', '<' ) ) {
+				$update_sqls = array_merge_recursive(
+					$update_sqls,
+					array(
+						"ALTER TABLE `{$wpdb->prefix}rtafar_rules` ADD COLUMN html_charset char(20)  AFTER delay",
 					)
 				);
 			}
