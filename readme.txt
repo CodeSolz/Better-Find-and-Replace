@@ -1,24 +1,24 @@
 === Better Find and Replace ===
 Contributors: CodeSolz, m.tuhin
-Tags: database, search and replace, search replace, search, real-time replace
+Tags: database, search and replace, search replace, search, real-time replace, gutenberg, block-editor
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 6.2
-Stable tag: 1.4.9
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily Search & replace text, code blocks, URLs, Footer credits, jQuery / Ajax loaded text or anything in real-time. Search replace within database too..
+Easily Search and replace text, code blocks, URLs, footer credits, jQuery / Ajax loaded text or anything in real-time. Search replace within database too..
 
 == Description ==
-The plugin provides an easy way to find for a target word and replace it with your desired word. It provides two exciting options for search & replacement : real-time and permanent.
+The plugin offers a seamless solution for efficient database search and replace, complemented by a dynamic real-time word masking feature. 
 
-The real-time option employs a clever word masking technique to replace text, url ( anything ), leaving no trace behind. The find and replace process takes place before the website is 
+The real-time option employs a clever word masking technique to search and replace text, url ( anything ), leaving no trace behind. The find and replace process takes place before the website is 
 rendered in the browser and does not impact any other files or databases. With this ultimate solution, easily find and replace text, HTML code, media/image URLs, footer credits, 
 or any other content within your website without touching the database with the help of an easy-to-use user interface.
 
-On the other hand, the permanent replacer is the ultimate solution, ensuring that any replaced text, URL etc is eliminated from your database permanently.
-The plugin is equipped with powerful features that allow you to visualize the results of searching and replacing content withing your database as well as permanently erasing it. It has the ability to
+On the other hand, the permanent replace ensuring that any replaced text, URL etc is eliminated from your database permanently.
+The plugin is equipped with powerful features that allow you to visualize the results of search and replace content within your database as well as permanently erasing it. It has the ability to
 search within complex, serialized data structures and replace them with your own words, making it a powerful tool for managing website content for beginners and experienced users alike. 
 Additionally, it allows for the removal or un-setting of any element in serialized data by specifying its key.
 
@@ -45,6 +45,7 @@ Additionally, it allows for the removal or un-setting of any element in serializ
 * Ultimate powerful options for Search and replace **Serialized Data** in Database
 * Remove any item from **Serialized Data** in Database 
 * Assign a specific role to manage this plugin for lower level of users
+* Real-time find and replace compatible with Gutenberg and other block / page builders
 
 == How to replace in DB? ==
 * First create a report by selecting *dry run* from bottom of the setting section 
@@ -154,8 +155,36 @@ code block in find field*
 
 
 == Installation ==
-1. Upload the real-time-auto-find-and-replace folder to the '/wp-content/plugins/' directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+The process of installing the plugin adheres to industry standards and is conveniently straightforward to navigate. Kindly inform us should you encounter any challenges during the installation procedure.
+
+
+### Automatic Installation From WordPress Dashboard
+
+1. Login to your admin panel
+2. Navigate to Plugins -> Add New
+3. Search **better find and replace**
+4. Click install and activate respectively.
+
+### Manual Installation From WordPress Dashboard
+
+If your not able to use the automatic installation, then you can use this method-
+
+1. Download the plugin from <a href="https://wordpress.org/plugins/real-time-auto-find-and-replace/">https://wordpress.org/plugins/real-time-auto-find-and-replace/</a>. A ZIP file will be downloaded.
+2. Login to your site's admin panel and navigate to Plugins -> Add New -> Upload.
+3. Click choose file, select the plugin file and click install
+
+### Installation Using FTP
+
+If you are unable to use any of the methods due to internet connectivity and file permission issues, then you can use this method-
+
+1. Download the plugin from <a href="https://wordpress.org/plugins/real-time-auto-find-and-replace/">https://wordpress.org/plugins/real-time-auto-find-and-replace/</a>. A ZIP file will be downloaded.
+2. Unzip the file.
+3. Launch your favorite FTP client. Such as FileZilla, FireFTP, CyberDuck etc. If you are a more advanced user, then you can use SSH too.
+4. Upload the folder to `wp-content/plugins/`
+5. Log in to your WordPress dashboard.
+6. Navigate to Plugins -> Installed
+7. Activate the plugin
+
 
 == Screenshots ==
 
@@ -169,6 +198,14 @@ code block in find field*
 7. List of All Masking Rules with pro features 
 
 == Changelog ==
+
+= Version: 1.5.1 ( June 22, 2023 ) =
+* **Fix:** Fixed issue created on previous version
+
+= Version: 1.5.0 ( June 19, 2023 ) =
+* **Upgrade:** Real-time find and replace compatible with Gutenberg and other block / page builders
+* **Upgrade:** Real-time find and replace buffering speed updated
+* **Upgrade:** jQuery / Ajax loaded text replacer for real-time find and replace
 
 = Version: 1.4.9 ( May 15, 2023 ) =
 * **Fix:** preg_replace - issue on real-time find and replace

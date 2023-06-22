@@ -73,16 +73,16 @@ class RTAFAR_WP_Hooks {
 	 * @return void
 	 */
 	private function get_filtered_content( $buffer, $replace_rules, $has_pro ) {
-		if ( $replace_rules ) {
+		if ( $replace_rules && $has_pro ) {
 			foreach ( $replace_rules as $item ) {
-				if( $has_pro ){
-					$buffer = apply_filters( 'bfrp_render_real_time_content', $item, $buffer );
-				}else{
-					$buffer = $this->replace( $item, $buffer );
-				}
+				$buffer = apply_filters( 'bfrp_render_real_time_content', $item, $buffer );
 			}
 		}
-
+		else if ( $replace_rules ) {
+			foreach ( $replace_rules as $item ) {
+				$buffer = $this->replace( $item, $buffer );
+			}
+		}
 		return $buffer;
 	}
 
