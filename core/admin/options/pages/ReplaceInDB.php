@@ -82,7 +82,7 @@ class ReplaceInDB {
 				'required'    => true,
 				'options'     => array(
 					'tables' => __( 'Database Tables', 'real-time-auto-find-and-replace' ),
-					'urls'   => __( 'URLs', 'real-time-auto-find-and-replace' ),
+					'urls'   => __( 'All URLs', 'real-time-auto-find-and-replace' ),
 				),
 				'placeholder' => __( 'Select where to find and replace', 'real-time-auto-find-and-replace' ),
 				'desc_tip'    => __( 'Select where to find and replace. e.g : Database Tables', 'real-time-auto-find-and-replace' ),
@@ -92,7 +92,7 @@ class ReplaceInDB {
 				'title'             => sprintf( __( 'Large Table %1$s >= Pro Extend  - version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'checkbox',
 				'is_pro'            => true,
-				'pro_plan'     		=> '34', 
+				'pro_plan'          => '34',
 				'class'             => 'large-table',
 				'custom_attributes' => array(
 					'disabled' => 'disabled',

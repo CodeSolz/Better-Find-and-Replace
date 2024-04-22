@@ -55,7 +55,7 @@ class RTAFAR_WP_Hooks {
 	 */
 	public function rtafar_filter_contents() {
 		$replace_rules = Masking::get_rules( 'all' );
-		$has_pro = ProActions::hasPro();
+		$has_pro       = ProActions::hasPro();
 
 		// pre_print( $replace_rules );
 
@@ -75,10 +75,9 @@ class RTAFAR_WP_Hooks {
 	private function get_filtered_content( $buffer, $replace_rules, $has_pro ) {
 		if ( $replace_rules && $has_pro ) {
 			foreach ( $replace_rules as $item ) {
-				$buffer = apply_filters( 'bfrp_render_real_time_content', $item, $buffer );
+				$buffer = apply_filters( 'bfrp_render_real_time_rules', $item, $buffer );
 			}
-		}
-		else if ( $replace_rules ) {
+		} elseif ( $replace_rules ) {
 			foreach ( $replace_rules as $item ) {
 				$buffer = $this->replace( $item, $buffer );
 			}
@@ -102,17 +101,14 @@ class RTAFAR_WP_Hooks {
 			$find    = '#' . Util::cs_stripslashes( $find ) . '#';
 			$replace = Util::cs_stripslashes( $item->replace );
 			return \preg_replace( $find, $replace, $buffer );
-		} 
-		elseif ( $item->type == 'regexCustom' ) {
-			//NOTE: search with custom pattern  
+		} elseif ( $item->type == 'regexCustom' ) {
+			// NOTE: search with custom pattern
 			return \preg_replace( $find, $item->replace, $buffer );
-		} 
-		elseif ( $item->type == 'multiByte' ) {
-			//NOTE: search and replace on multiByte string
+		} elseif ( $item->type == 'multiByte' ) {
+			// NOTE: search and replace on multiByte string
 			\mb_regex_encoding( $item->html_charset );
 			return \mb_ereg_replace( $find, Util::cs_stripslashes( $item->replace ), $buffer );
-		} 
-		else {
+		} else {
 			return \str_replace( Util::cs_stripslashes( $find ), Util::cs_stripslashes( $item->replace ), $buffer );
 		}
 

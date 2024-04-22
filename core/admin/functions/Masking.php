@@ -77,7 +77,7 @@ class Masking {
 			'type'             => Util::check_evil_script( $type ),
 			'where_to_replace' => Util::check_evil_script( $replace_where ),
 			'delay'            => $delay_time,
-			'html_charset'     => isset( $user_query['html_charset'] ) ? Util::check_evil_script( $user_query['html_charset'] ) : ''
+			'html_charset'     => isset( $user_query['html_charset'] ) ? Util::check_evil_script( $user_query['html_charset'] ) : '',
 		);
 
 		if ( has_filter( 'bfrp_before_insert_new_rule' ) &&

@@ -91,7 +91,9 @@ class RTAFAR_EnqueueScript {
 	 * @return void
 	 */
 	public function rtrarAppEnqueueScripts() {
-		wp_enqueue_script( 'rtrar.app', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.app.min.js', array(), CS_RTAFAR_VERSION, true );
+		if ( ! ProActions::hasPro() ) {
+			wp_enqueue_script( 'rtrar.app', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.app.min.js', array(), CS_RTAFAR_VERSION, true );
+		}
 	}
 
 }

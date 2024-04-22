@@ -122,16 +122,17 @@ class AddNewRule {
 				'required'    => true,
 				'placeholder' => __( 'Please select %s rule type', 'real-time-auto-find-and-replace' ),
 				'options'     => apply_filters(
-					'bfrp_masking_rules',
+					'bfrp_masking_rule_options',
 					array(
 						'hasGroup' => array(
 							__( 'Realtime Masking  (no effect in Database)', 'real-time-auto-find-and-replace' ) => array(
 								'plain'                  => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
 								'regex'                  => __( 'Regular Expression - Managed', 'real-time-auto-find-and-replace' ),
-								'regexCustom'                  => __( 'Regular Expression - Custom', 'real-time-auto-find-and-replace' ),
-								'ajaxContent'            => __( 'jQuery / Ajax - Onload', 'real-time-auto-find-and-replace' ),
-								'multiByte'            => __( 'Multibyte characters ( lang: Arabic / Chinese etc)', 'real-time-auto-find-and-replace' ),
-								'htmlTags_disabled234' => __( 'Replace HTML tag(s) - pro version only (pro PRO & above)', 'real-time-auto-find-and-replace' ),
+								'regexCustom'            => __( 'Regular Expression - Custom', 'real-time-auto-find-and-replace' ),
+								'ajaxContent'            => __( 'jQuery / Ajax - Basic', 'real-time-auto-find-and-replace' ),
+								'ajaxContentAdvanced_disabled' => __( 'jQuery / Ajax - Advanced - pro version only', 'real-time-auto-find-and-replace' ),
+								'multiByte'              => __( 'Multibyte characters ( lang: Arabic / Chinese etc)', 'real-time-auto-find-and-replace' ),
+								'htmlTags_disabled234'   => __( 'Replace HTML tag(s) - pro version only (pro PRO & above)', 'real-time-auto-find-and-replace' ),
 								'advance_regex_disabled' => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
 								'filterShortCodes_disabled' => __( 'Shortcode   - pro version only', 'real-time-auto-find-and-replace' ),
 								'filterOldComments_disabled' => __( 'Old Comments  - pro version only', 'real-time-auto-find-and-replace' ),
@@ -146,14 +147,14 @@ class AddNewRule {
 				'value'       => FormBuilder::get_value( 'type', $option, '' ),
 				'desc_tip'    => __( 'Select find and replacement rule\'s type. e.g : Plain Text', 'real-time-auto-find-and-replace' ),
 			),
-			'cs_masking_rule[html_charset]'                  => array(
-				'wrapper_class'     => "html-charset {$ajaxMultiByte}",
-				'title'       => __( 'Website Charset', 'real-time-auto-find-and-replace' ),
-				'type'        => 'text',
-				'class'       => 'form-control',
-				'value'       => FormBuilder::get_value( 'html_charset', $option, '' ),
-				'placeholder' => __( 'Enter website charset', 'real-time-auto-find-and-replace' ),
-				'desc_tip'    => __( 'Enter website charset. It supports 25 character encoding types.. e.g: UTF-8', 'real-time-auto-find-and-replace' ),
+			'cs_masking_rule[html_charset]'          => array(
+				'wrapper_class' => "html-charset {$ajaxMultiByte}",
+				'title'         => __( 'Website Charset', 'real-time-auto-find-and-replace' ),
+				'type'          => 'text',
+				'class'         => 'form-control',
+				'value'         => FormBuilder::get_value( 'html_charset', $option, '' ),
+				'placeholder'   => __( 'Enter website charset', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Enter website charset. It supports 25 character encoding types.. e.g: UTF-8', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[delay]'                 => array(
 				'wrapper_class'     => "delay-time {$ajaxSeRepFields}",
@@ -176,7 +177,7 @@ class AddNewRule {
 				'required'      => true,
 				'placeholder'   => __( 'Please select where to replace', 'real-time-auto-find-and-replace' ),
 				'options'       => apply_filters(
-					'bfrp_masking_location',
+					'bfrp_masking_location_options',
 					array(
 						'all'                       => __( 'All over the website', 'real-time-auto-find-and-replace' ),
 						'specificPagePost_disabled' => __( 'On specific page or post - pro version only', 'real-time-auto-find-and-replace' ),

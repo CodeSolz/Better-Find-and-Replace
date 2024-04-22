@@ -8,48 +8,47 @@
  * @author M.Tuhin <info@codesolz.net>
  */
 
-if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
-	die();
+if (!defined('CS_RTAFAR_VERSION')) {
+    die();
 }
 
-use RealTimeAutoFindReplace\lib\Util;
+class DbFuncReplaceInDb
+{
 
-class DbFuncReplaceInDb {
+    /**
+     * Get tables list
+     *
+     * @param array $user_input
+     * @return json
+     */
+    public function get_tables_in_select_options($user_input = array())
+    {
+        $tables = \apply_filters('bfrp_select_tables', array());
 
-	/**
-	 * Get tables list
-	 *
-	 * @param array $user_input
-	 * @return json
-	 */
-	public function get_tables_in_select_options( $user_input = array() ) {
-		$tables = \apply_filters( 'bfrp_selectTables', array() );
+        return wp_send_json(array('tables' => $tables));
 
-		return wp_send_json( array( 'tables' => $tables ) );
+    }
 
-	}
+    /**
+     * Get urls
+     *
+     * @param array $user_input
+     * @return json
+     */
+    public function get_urls_in_select_options($user_input = array())
+    {
+        $urls = \apply_filters(
+            'bfrp_url_types',
+            array(
+                'all' => __('Select All', 'real-time-auto-find-and-replace'),
+                'unselect_all' => __('Unselect All', 'real-time-auto-find-and-replace'),
+                'post' => __('Post URLs', 'real-time-auto-find-and-replace'),
+                'page' => __('Page URLs', 'real-time-auto-find-and-replace'),
+                'attachment' => __('Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace'),
+            )
+        );
 
-	/**
-	 * Get urls
-	 *
-	 * @param array $user_input
-	 * @return json
-	 */
-	public function get_urls_in_select_options( $user_input = array() ) {
-		$urls = \apply_filters(
-			'bfrp_urlOptions',
-			array(
-				'all'          => __( 'Select All', 'real-time-auto-find-and-replace' ),
-				'unselect_all' => __( 'Unselect All', 'real-time-auto-find-and-replace' ),
-				'post'         => __( 'Post URLs', 'real-time-auto-find-and-replace' ),
-				'page'         => __( 'Page URLs', 'real-time-auto-find-and-replace' ),
-				'attachment'   => __( 'Media URLs (images, attachments etc..)', 'real-time-auto-find-and-replace' ),
-			)
-		);
-
-		return wp_send_json( array( 'urls' => $urls ) );
-	}
-
-
+        return wp_send_json(array('urls' => $urls));
+    }
 
 }

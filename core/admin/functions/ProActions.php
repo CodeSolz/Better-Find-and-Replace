@@ -79,7 +79,7 @@ class ProActions {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
-		
+
 		return \is_plugin_active( 'better-find-and-replace-pro/better-find-and-replace-pro.php' );
 	}
 

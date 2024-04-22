@@ -110,7 +110,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 				'</span>'
 			);
 		} elseif ( $item->type == 'ajaxContent' ) {
-			return sprintf( __( 'jQuery / Ajax %s', 'real-time-auto-find-and-replace' ), '<br> <span class="dt-col-sm-des"> Delay Time : '. $item->delay . ' seconds</span>' );
+			return sprintf( __( 'jQuery / Ajax %s', 'real-time-auto-find-and-replace' ), '<br> <span class="dt-col-sm-des"> Delay Time : ' . $item->delay . ' seconds</span>' );
 
 		} elseif ( $item->type == 'advance_regex' ) {
 			return sprintf(
@@ -125,9 +125,8 @@ class AllMaskingRulesList extends \WP_List_Table {
 				'</span>'
 			);
 		} elseif ( $item->type == 'multiByte' ) {
-			return sprintf( __( 'MultiByte %s', 'real-time-auto-find-and-replace' ), '<br> <span class="dt-col-sm-des"> Encoding : '. $item->html_charset . '</span>' );
-		} 
-		else {
+			return sprintf( __( 'MultiByte %s', 'real-time-auto-find-and-replace' ), '<br> <span class="dt-col-sm-des"> Encoding : ' . $item->html_charset . '</span>' );
+		} else {
 			if ( has_filter( 'bfrp_column_type_text' ) ) {
 				return apply_filters( 'bfrp_column_type_text', $item );
 			}
@@ -160,7 +159,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 		}
 	}
 
-	public function column_country_rules( $item ){
+	public function column_country_rules( $item ) {
 		if ( has_action( 'bfrp_column_country_rules' ) ) {
 			do_action( 'bfrp_column_country_rules', $item );
 		} else {
@@ -168,7 +167,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 		}
 	}
 
-	public function column_lang_rules( $item ){
+	public function column_lang_rules( $item ) {
 		if ( has_action( 'bfrp_column_lang_rules' ) ) {
 			do_action( 'bfrp_column_lang_rules', $item );
 		} else {
