@@ -66,7 +66,7 @@ class FormBuilder {
 			}
 
 			$html_fields[] = $input;
-			$i++;
+			++$i;
 		}
 
 		// return html as string
@@ -376,8 +376,8 @@ class FormBuilder {
 	private function generate_select_options( $options, $placeholder_text, $selected_item ) {
 		if ( empty( $options ) ) {
 			return '<option value ="" >' . __( 'No option available', 'real-time-auto-find-and-replace' ) . '</option>';
-
 		}
+
 		// $item = '';
 		$item = '<option value="" disabled class="placeholder" >==================== ' . $placeholder_text . ' ====================</option>';
 		foreach ( $options as $key => $val ) {
@@ -444,6 +444,7 @@ class FormBuilder {
 		if ( is_array( $value ) ) {
 			return ' value = "invalid value" ';
 		}
+
 		return ' value = "' . $value . '" ';
 	}
 
@@ -528,6 +529,4 @@ class FormBuilder {
 		}
 		return '';
 	}
-
 }
-

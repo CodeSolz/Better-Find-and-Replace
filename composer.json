@@ -25,17 +25,15 @@
     "require": {
         "php" : ">=7.0.0"
     },
-    "minimum-stability": "dev",
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "require-dev": {
-        "wp-coding-standards/wpcs": "dev-master",
-        "dealerdirect/phpcodesniffer-composer-installer": "dev-master",
+        "wp-coding-standards/wpcs": "^3.1",
         "phpcompatibility/php-compatibility": "^9.3",
         "phpcompatibility/phpcompatibility-wp": "^2.1",
-        "tuhin18003/advance-var-dumper": "dev-master"
+        "tuhin18003/advance-var-dumper": "^1.0"
     }
 }

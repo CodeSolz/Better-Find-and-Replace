@@ -3,8 +3,8 @@ Contributors: CodeSolz, m.tuhin
 Tags: database, search replace, search, replace, search and replace, real-time replace, find, find and replace, gutenberg, block-editor, search replace elementor 
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
-Tested up to: 6.3
-Stable tag: 1.5.3
+Tested up to: 6.6
+Stable tag: 1.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,7 @@ Additionally, it allows for the removal or un-setting of any element in serializ
 * Remove any item from **Serialized Data** in Database 
 * Assign a specific role to manage this plugin for lower level of users
 * Real-time find and replace compatible with Gutenberg and other block / page builders
+* Refine your search results for database replacements by targeting post or page titles, content, or excerpts.
 
 == How to replace in DB? ==
 * First create a report by selecting *dry run* from bottom of the setting section 
@@ -170,6 +171,39 @@ code block in find field*
 7. List of All Masking Rules with pro features 
 
 == Changelog ==
+
+= Version: 1.6.3 ( August 12, 2024 ) =
+* **Fix:** Little bug fixed
+
+= Version: 1.6.2 ( July 26, 2024 ) =
+* **Fix:** Security patch updated
+
+= Version: 1.6.1 ( July 17, 2024 ) =
+* **Fix:** Security patch updated to enhance data organization
+
+= Version: 1.6.0 ( July 01, 2024 ) =
+* **New:** Refined Search Results - Narrow your search for precise database replacements. 
+* **New:** Targeted Content - Focus on post or page titles, content, and excerpts for more control.
+
+= Version: 1.5.9 ( April 13, 2024 ) =
+* **Upgrade:** Updated for WordPress latest version
+
+= Version: 1.5.8 ( March 13, 2024 ) =
+* **Upgrade:** Code updated for smooth functionalities
+* **Upgrade:** Hooks updated for modernize
+
+= Version: 1.5.7 ( February 26, 2024 ) =
+* **Upgrade:** Minor JS issue updated
+
+= Version: 1.5.6 ( January 09, 2024 ) =
+* **Upgrade:** Minor issue fixed on Real-time word masking
+* **Upgrade:** JS has modernize
+
+= Version: 1.5.5 ( November 14, 2023 ) =
+* **Upgrade:** Updated for WordPress latest version
+
+= Version: 1.5.4 ( September 27, 2023 ) =
+* **New:** Search and replace jQuery / Ajax loaded text - Advanced option ( pro )
 
 = Version: 1.5.3 ( August 24, 2023 ) =
 * **Fix:** Possible conflict fixed on JS 

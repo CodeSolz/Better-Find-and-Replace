@@ -23,7 +23,6 @@ class RTAFAR_EnqueueScript {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'rtrarAppRegisterVars' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'rtrarAppEnqueueScripts' ), 90 );
-
 	}
 
 	/**
@@ -35,7 +34,7 @@ class RTAFAR_EnqueueScript {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'admin.app.global', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.admin.global.min.js', array(), CS_RTAFAR_VERSION, true );
 
-		wp_enqueue_style( 'rtafar-global', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-global-style.min.css', false );
+		wp_enqueue_style( 'rtafar-global', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-global-style.min.css', array(), CS_RTAFAR_VERSION );
 
 		// register custom data
 		wp_localize_script(
@@ -72,17 +71,21 @@ class RTAFAR_EnqueueScript {
 	 * @return void
 	 */
 	public function rtrarAppRegisterVars() {
-		wp_enqueue_script( 'rtrar.appLocal', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.local.js', array(), CS_RTAFAR_VERSION, true );
 
-		// get jquery / ajax replace rule
-		$rules = Masking::get_rules( 'all', '', 'ajaxContent' );
-
-		// register custom data
-		wp_localize_script(
-			'rtrar.appLocal',
-			'rtafr',
-			array( 'rules' => $rules )
-		);
+		//load scripts on frontend
+		if( ! is_admin() ) {
+			wp_enqueue_script( 'rtrar.appLocal', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.local.js', array(), CS_RTAFAR_VERSION, true );
+	
+			// get jquery / ajax replace rule
+			$rules = Masking::get_rules( 'all', '', 'ajaxContent' );
+	
+			// register custom data
+			wp_localize_script(
+				'rtrar.appLocal',
+				'rtafr',
+				array( 'rules' => $rules )
+			);
+		}
 	}
 
 	/**
@@ -92,11 +95,10 @@ class RTAFAR_EnqueueScript {
 	 */
 	public function rtrarAppEnqueueScripts() {
 		if ( ! ProActions::hasPro() ) {
-			wp_enqueue_script( 'rtrar.app', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.app.min.js', array(), CS_RTAFAR_VERSION, true );
+			//load scripts on frontend
+			if( ! is_admin() ) {
+				wp_enqueue_script( 'rtrar.app', CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.app.min.js', array(), CS_RTAFAR_VERSION, true );
+			}
 		}
 	}
-
 }
-
-
-

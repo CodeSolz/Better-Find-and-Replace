@@ -21,105 +21,54 @@ class ScOptnAddNewRule {
 	 * @return void
 	 */
 	public static function rtafar_arr_screen_options() {
-		$screen = \get_current_screen();
-		if ( self::help_tabs() ) {
-			foreach ( self::help_tabs() as $tab ) {
-				$tab = (object) $tab;
-				$screen->add_help_tab(
-					array(
-						'id'       => $tab->id,
-						'title'    => $tab->title,
-						'content'  => $tab->content,
-						'callback' => $tab->callback,
-						'priority' => $tab->priority,
-					)
-				);
-			}
-		}
-		$screen->set_help_sidebar( self::arr_help_sidebar_content() );
-	}
 
-	/**
-	 * Help tabs
-	 *
-	 * @return void
-	 */
-	public static function help_tabs() {
-		return array(
+		$screen = get_current_screen();
+
+		$screen->add_help_tab(
 			array(
-				'id'       => 'overview',
-				'title'    => __( 'Overview', 'real-time-auto-find-and-replace' ),
-				'content'  => '',
-				'callback' => array( __class__, 'arr_overview' ),
-				'priority' => 1,
-			),
+				'id'      => 'rtafar_support_tab',
+				'title'   => __( 'Help &amp; Support', 'real-time-auto-find-and-replace' ),
+				'content' =>
+					'<h2>' . __( 'Help &amp; Support', 'real-time-auto-find-and-replace' ) . '</h2>' .
+					'<p>' . sprintf(
+						/* translators: %s: Documentation URL */
+						__( 'If you need assistance with understanding or using Better Find and Replace, please read our <a href="%s" target="_blank" >documentation</a>. It offers a variety of resources, including code snippets, written & video tutorials, and much more.', 'real-time-auto-find-and-replace' ),
+						'https://docs.codesolz.net/better-find-and-replace/'
+					) . '</p>' .
+					'<p>' . sprintf(
+						/* translators: %s: Forum URL */
+						__( 'For additional support with the BFR, please visit WordPress default <a href="%1$s" target="_blank" >community forum </a> or our <a href="%2$s" target="_blank">dedicated community forum</a>. If you need assistance with premium extensions purchased from <a href="%3$s" target="_blank">CodeSolz.net</a>, kindly submit a support request through live chat on <a href="%3$s" target="_blank">CodeSolz.net</a> website or via support email.', 'real-time-auto-find-and-replace' ),
+						'https://wordpress.org/support/plugin/real-time-auto-find-and-replace/',
+						'https://codesolz.net/forum/viewforum.php?f=3&utm_source=helptab&utm_medium=product',
+						'https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=helptab&utm_medium=product&utm_content=support&utm_campaign=bfrPlugin'
+					) . '</p>' .
+					'<p>' . __( 'We encourage you to review the documentation and tutorials before seeking assistance.', 'real-time-auto-find-and-replace' ) . '</p>' .
+					'<p> <a target="_blank" href="https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=helptab&utm_medium=product&utm_content=liveSupport&utm_campaign=bfrPlugin" class="button button-primary">' . __( 'Live Support', 'real-time-auto-find-and-replace' ) . '</a> <a target="_blank" href="https://codesolz.net/forum/viewforum.php?f=3" class="button ">' . __( 'BFR Dedicated Forum', 'real-time-auto-find-and-replace' ) . '</a> <a target="_blank" href="https://wordpress.org/support/plugin/real-time-auto-find-and-replace/" class="button">' . __( 'Community Forum', 'real-time-auto-find-and-replace' ) . '</a></p>',
+			)
+		);
+
+		$screen->add_help_tab(
 			array(
-				'id'       => 'available_features',
-				'title'    => __( 'Available Features', 'real-time-auto-find-and-replace' ),
-				'content'  => '',
-				'callback' => array( __class__, 'arr_available_features' ),
-				'priority' => 1,
-			),
+				'id'      => 'rtafar_bugs_tab',
+				'title'   => __( 'Found a bug?', 'real-time-auto-find-and-replace' ),
+				'content' =>
+					'<h2>' . __( 'Found a bug?', 'real-time-auto-find-and-replace' ) . '</h2>' .
+					/* translators: 1: GitHub issues URL 2: GitHub contribution guide URL 3: System status report URL */
+					'<p>' . sprintf( __('If you have discovered a bug or issue with the plugin, we wouldd appreciate your help in improving it. You can create a ticket via GitHub Issues to report the problem, and we will look into it as soon as possible. Please include any relevant details or steps to reproduce the issue here: <a href="%1$s" target="_blank">GitHub Issues</a>.Thank you for your support!', 'real-time-auto-find-and-replace' ), 'https://github.com/CodeSolz/Better-Find-and-Replace/issues?state=open' ) . '</p>' .
+					'<p><a target="_blank" href="https://github.com/CodeSolz/Better-Find-and-Replace/issues/new?assignees=&labels=&template=1-bug-report.yml" class="button button-primary">' . __( 'Report a bug', 'real-time-auto-find-and-replace' ) . '</a></p>',
+
+			)
 		);
+
+		$screen->set_help_sidebar(
+			'<p><strong>' . __( 'For more information:', 'real-time-auto-find-and-replace' ) . '</strong></p>' .
+			'<p><a href="https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=helptab&utm_medium=product&utm_content=about&utm_campaign=bfrPlugin" target="_blank">' . __( 'About Better Find & Replace', 'real-time-auto-find-and-replace' ) . '</a></p>' .
+			'<p><a href="https://wordpress.org/plugins/real-time-auto-find-and-replace/" target="_blank">' . __( 'WordPress.org project', 'real-time-auto-find-and-replace' ) . '</a></p>' .
+			'<p><a href="https://github.com/CodeSolz/Better-Find-and-Replace" target="_blank">' . __( 'GitHub project', 'real-time-auto-find-and-replace' ) . '</a></p>' .
+			'<p><a href="https://wordpress.org/plugins/real-time-auto-find-and-replace/#developers" target="_blank">' . __( 'Changelog', 'real-time-auto-find-and-replace' ) . '</a></p>' .
+			'<p><a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank">' . __( 'Documentation', 'real-time-auto-find-and-replace' ) . '</a></p>' .
+			'<p><a href="https://codesolz-plugins.dev/wp-admin/plugin-install.php?s=codesolz&tab=search&type=author" target="_blank">' . __( 'Useful Free Plugins', 'real-time-auto-find-and-replace' ) . '</a></p>' 
+		);	
 	}
-
-	/**
-	 * Overview
-	 *
-	 * @return void
-	 */
-	public static function arr_overview() {
-		echo \sprintf(
-			__( '%1$s This screen provides the  the functionalities to add new rule. You can add real-time rules as well as some specific rules in Database. After installing the pro version, these muted pro features will be activated automatically. %2$s', 'real-time-auto-find-and-replace' ),
-			'<p>',
-			'</p>'
-		);
-	}
-
-
-	/**
-	 * available Features
-	 *
-	 * @return void
-	 */
-	public static function arr_available_features() {
-		?>
-			<p>
-				<?php _e( 'You can perform the following Features:', 'real-time-auto-find-and-replace' ); ?>
-			</p>
-			<ul>
-				<li>
-					<?php echo sprintf( __( '%1$s Rule\'s Type %2$s allows to specify the type of a search and replacement rule. You can add real-time rule or rule for database. Real-time (masking) rules will take places before your website renders to the browser. It it will not effect anything on database.', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); ?>
-				</li>
-				<li>
-					<?php echo sprintf( __( '%1$s Where to Replace %2$s allows to specify where you want to apply the rules. You need pro version to avail the muted features.', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); ?>
-				</li>
-			</ul>
-			
-			<p>
-				<?php echo sprintf( __( '%1$s Tutorial %2$s : To read more about the features,  %3$scheck plugin\'s documentation%4$s from our website', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>', '<a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank">', '</a>' ); ?>
-			</p>
-		<?php
-	}
-
-	/**
-	 * Help Sidebar Content
-	 *
-	 * @return void
-	 */
-	public static function arr_help_sidebar_content() {
-		ob_start();
-		?>
-			<p><strong><?php _e( 'For more information: ', 'real-time-auto-find-and-replace' ); ?></strong></p>
-			<p>
-				<?php _e( 'Looking for features details? Check plugin\'s ', 'real-time-auto-find-and-replace' ); ?>
-				<a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank"><?php _e( 'Documentation', 'real-time-auto-find-and-replace' ); ?></a></p>
-			<p><a href="https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/" target="_blank"><?php _e( 'Support', 'real-time-auto-find-and-replace' ); ?></a></p>					
-		<?php
-		$html = ob_get_clean();
-
-		return $html;
-	}
-
-
+	
 }

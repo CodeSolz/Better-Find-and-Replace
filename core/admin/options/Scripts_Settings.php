@@ -64,6 +64,7 @@ class Scripts_Settings {
 				array(
 					'mgt'    => 'admin\\options\\functions\\DbFuncReplaceInDb@get_tables_in_select_options',
 					'mgurls' => 'admin\\options\\functions\\DbFuncReplaceInDb@get_urls_in_select_options',
+					'ppoptn' => 'admin\\options\\functions\\DbFuncReplaceInDb@get_db_cols_select_options',
 				)
 			);
 
@@ -82,7 +83,7 @@ class Scripts_Settings {
 				);
 		}
 
-		wp_enqueue_style( 'wapg', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-style.min.css', false );
+		wp_enqueue_style( 'wapg', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-style.min.css', array(), CS_RTAFAR_VERSION );
 
 		return;
 	}
@@ -99,7 +100,7 @@ class Scripts_Settings {
 
 		// load form submit script on footer
 		if ( ( isset( $rtafr_menu['add_masking_rule'] ) && $page_id == $rtafr_menu['add_masking_rule'] ) ||
-		 ( isset( $rtafr_menu['replace_in_db'] ) && $page_id == $rtafr_menu['replace_in_db'] )
+		( isset( $rtafr_menu['replace_in_db'] ) && $page_id == $rtafr_menu['replace_in_db'] )
 		) {
 			// custom scripts here
 		}
@@ -108,7 +109,4 @@ class Scripts_Settings {
 
 		return;
 	}
-
 }
-
-

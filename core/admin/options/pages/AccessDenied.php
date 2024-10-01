@@ -57,5 +57,4 @@ class AccessDenied {
 
 		return $this->Admin_Page_Generator->generate_page( $args );
 	}
-
 }

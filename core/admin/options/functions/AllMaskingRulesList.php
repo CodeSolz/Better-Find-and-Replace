@@ -92,7 +92,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 		}
 
 		echo '<div class="row-actions"><span class="edit">';
-		echo '<a href="' . $edit_link . '">Edit</a>';
+		echo '<a href="' . \esc_url( $edit_link ) . '">Edit</a>';
 		echo '</span></div>';
 	}
 
@@ -126,20 +126,16 @@ class AllMaskingRulesList extends \WP_List_Table {
 			);
 		} elseif ( $item->type == 'multiByte' ) {
 			return sprintf( __( 'MultiByte %s', 'real-time-auto-find-and-replace' ), '<br> <span class="dt-col-sm-des"> Encoding : ' . $item->html_charset . '</span>' );
-		} else {
-			if ( has_filter( 'bfrp_column_type_text' ) ) {
+		} elseif ( has_filter( 'bfrp_column_type_text' ) ) {
 				return apply_filters( 'bfrp_column_type_text', $item );
-			}
 		}
 	}
 
 	public function column_where_to_replace( $item ) {
 		if ( strtolower( $item->where_to_replace ) == 'all' ) {
 			return __( 'All over the website', 'real-time-auto-find-and-replace' );
-		} else {
-			if ( has_filter( 'bfrp_where_to_replace' ) ) {
+		} elseif ( has_filter( 'bfrp_where_to_replace' ) ) {
 				return apply_filters( 'bfrp_where_to_replace', $item );
-			}
 		}
 	}
 
@@ -177,7 +173,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 
 
 	public function no_items() {
-		_e( 'Sorry! No Rule Found!', 'real-time-auto-find-and-replace' );
+		esc_html_e( 'Sorry! No Rule Found!', 'real-time-auto-find-and-replace' );
 	}
 
 	function get_views() {
@@ -248,7 +244,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 
 	function process_bulk_action() {
 		global $wpdb, $wapg_tables;
-		  // security check!
+			// security check!
 		if ( isset( $_GET['_wpnonce'] ) && ! empty( $_GET['_wpnonce'] ) ) {
 
 			$action = 'bulk-' . $this->_args['plural'];
@@ -277,7 +273,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 	public function success_admin_notice() {
 		?>
 		<div class="updated">
-			<p><?php _e( 'Rule has been deleted successfully!', 'real-time-auto-find-and-replace' ); ?></p>
+			<p><?php esc_html_e( 'Rule has been deleted successfully!', 'real-time-auto-find-and-replace' ); ?></p>
 		</div>
 		<?php
 	}
@@ -296,7 +292,7 @@ class AllMaskingRulesList extends \WP_List_Table {
 		unset( $data['count'] );
 		$this->items = $data;
 
-		 // Set the pagination
+		// Set the pagination
 		$this->set_pagination_args(
 			array(
 				'total_items' => $count,
@@ -305,5 +301,4 @@ class AllMaskingRulesList extends \WP_List_Table {
 			)
 		);
 	}
-
 }

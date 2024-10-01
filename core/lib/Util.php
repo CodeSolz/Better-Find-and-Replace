@@ -31,7 +31,7 @@ class Util {
 	 * @param type $tagline
 	 */
 	public static function markup_tag( $tagline ) {
-		 echo sprintf( "\n<!--%s - %s-->\n", CS_RTAFAR_PLUGIN_NAME, $tagline );
+		printf( "\n<!--%s - %s-->\n", \esc_html__( CS_RTAFAR_PLUGIN_NAME ), \esc_html__( $tagline ) );
 	}
 
 	/**
@@ -356,5 +356,157 @@ class Util {
 		return \self_admin_url( 'plugin-install.php?s=codesolz&tab=search&type=author' );
 	}
 
-}
+	/**
+	 * Allowed HTML
+	 *
+	 * @return void
+	 */
+	public static function cs_allowed_html() {
+		return array(
+			'div'      => array(
+				'id'    => array(),
+				'class' => array(),
+			),
+			'h1'       => array( 'class' => array() ),
+			'h2'       => array( 'class' => array() ),
+			'h3'       => array( 'class' => array() ),
+			'h4'       => array( 'class' => array() ),
+			'h5'       => array( 'class' => array() ),
+			'h6'       => array( 'class' => array() ),
+			'p'        => array( 'class' => array() ),
+			'b'        => array( 'class' => array() ),
+			'strong'   => array( 'class' => array() ),
+			'br'       => array( 'class' => array() ),
+			'button'   => array(
+				'class'     => array(),
+				'type'      => array(),
+				'id'        => array(),
+				'data-type' => array(),
+			),
+			'form'     => array(
+				'method'  => array(),
+				'enctype' => array(),
+				'class'   => array(),
+				'name'    => array(),
+				'id'      => array(),
+			),
+			'textarea' => array(
+				'class'       => array(),
+				'required'    => array(),
+				'placeholder' => array(),
+				'name'        => array(),
+				'id'          => array(),
+			),
+			'label'    => array(
+				'for'   => array(),
+				'class' => array(),
+			),
+			'input'    => array(
+				'class'             => array(),
+				'type'              => array( "checkbox"),
+				'required'          => array(),
+				'placeholder'       => array(),
+				'name'              => array(),
+				'id'                => array(),
+				'value'             => array(),
+				'min'               => array(),
+				'max'               => array(),
 
+				'tabindex'          => array(),
+				'autocomplete'      => array(),
+				'autocorrect'       => array(),
+				'autocapitalize'    => array(),
+				'spellcheck'        => array(),
+				'role'              => array(),
+				'aria-autocomplete' => array(),
+				'style'             => array(),
+			),
+			'select'   => array(
+				'class'           => array(),
+				'required'        => array(),
+				'name'            => array(),
+				'id'              => array(),
+
+				'multiple'        => array(),
+				'data-select2-id' => array(),
+				'tabindex'        => array(),
+				'aria-hidden'     => array(),
+			),
+			'option'   => array(
+				'value'           => array(),
+				'disabled'        => array(),
+				'class'           => array(),
+				'label'           => array(),
+				'data-select2-id' => array(),
+			),
+			'optgroup' => array(
+				'label' => array(),
+			),
+			'span'     => array(
+				'class'           => array(),
+				'dir'             => array(),
+				'data-select2-id' => array(),
+				'style'           => array(),
+			),
+			'ul'       => array(
+				'class' => array(),
+				'id'    => array(),
+			),
+			'li'       => array(
+				'class' => array(),
+				'id'    => array(),
+			),
+			'ol'       => array(
+				'class' => array(),
+				'id'    => array(),
+			),
+			'code'     => array(),
+			'a'        => array(
+				'href'   => array(),
+				'target' => array(),
+				'title'  => array(),
+				'class'  => array(),
+				'id'     => array(),
+				'name'   => array(),
+			),
+			'table'    => array(
+				'class' => array(),
+			),
+			'thead'    => array(
+				'id'            => array(),
+				'class'         => array(),
+				'data-wp-lists' => array(),
+			),
+			'tbody'    => array(
+				'id'            => array(),
+				'class'         => array(),
+				'data-wp-lists' => array(),
+			),
+			'tfoot'    => array(),
+			'tr'       => array(
+				'id'    => array(),
+				'class' => array(),
+			),
+			'th'       => array(
+				'scope'        => array(),
+				'id'           => array(),
+				'class'        => array(),
+				'data-colname' => array(),
+				'colspan'      => array(),
+				'rowspan'      => array(),
+				'width'        => array(),
+				'style'        => array(),
+			),
+			'td'       => array(
+				'scope'        => array(),
+				'id'           => array(),
+				'class'        => array(),
+				'data-colname' => array(),
+				'colspan'      => array(),
+				'rowspan'      => array(),
+				'width'        => array(),
+				'style'        => array(),
+			),
+		);
+	}
+}

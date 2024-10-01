@@ -173,9 +173,4 @@ class Masking {
 		}
 		return false;
 	}
-
-
-
 }
-
-

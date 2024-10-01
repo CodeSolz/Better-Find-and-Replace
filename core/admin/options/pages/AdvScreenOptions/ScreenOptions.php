@@ -64,5 +64,4 @@ class ScreenOptions {
 	public static function rtafar_get_amr_per_page() {
 		return ScOptnAllMaskRules::rtafar_get_amr_per_page();
 	}
-
 }

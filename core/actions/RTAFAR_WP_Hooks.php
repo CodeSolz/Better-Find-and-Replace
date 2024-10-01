@@ -26,7 +26,7 @@ class RTAFAR_WP_Hooks {
 	function __construct() {
 
 		/*** add settings link */
-		add_filter( 'plugin_action_links_' . CS_RTAFAR_PLUGIN_IDENTIFIER, array( __class__, 'rtafarSettingsLink' ) );
+		add_filter( 'plugin_action_links_' . CS_RTAFAR_PLUGIN_IDENTIFIER, array( __CLASS__, 'rtafarSettingsLink' ) );
 
 		/*** add docs link */
 		add_filter( 'plugin_row_meta', array( $this, 'rtafar_plugin_row_meta' ), 10, 2 );
@@ -34,7 +34,7 @@ class RTAFAR_WP_Hooks {
 		add_action( 'template_redirect', array( $this, 'rtafar_filter_contents' ) );
 
 		/*** add function after upgrade process complete */
-		add_action( 'upgrader_process_complete', array( __class__, 'rtafarAfterUpgrade' ), 10, 2 );
+		add_action( 'upgrader_process_complete', array( __CLASS__, 'rtafarAfterUpgrade' ), 10, 2 );
 
 		/*** screen options */
 		add_action( 'admin_menu', array( $this, 'rtafar_current_screen_options' ), 25 );
@@ -44,7 +44,6 @@ class RTAFAR_WP_Hooks {
 		add_action( 'init', array( $this, 'rtafar_role_caps' ), 11 );
 		add_filter( 'ure_capabilities_groups_tree', array( $this, 'rtafar_ure_capabilities' ), 15 );
 		add_filter( 'ure_custom_capability_groups', array( $this, 'rtafar_ure_custom_capability_groups' ), 15, 2 );
-
 	}
 
 
@@ -60,7 +59,7 @@ class RTAFAR_WP_Hooks {
 		// pre_print( $replace_rules );
 
 		return ob_start(
-			function( $buffer ) use ( $replace_rules, $has_pro ) {
+			function ( $buffer ) use ( $replace_rules, $has_pro ) {
 				return $this->get_filtered_content( $buffer, $replace_rules, $has_pro );
 			}
 		);
@@ -111,7 +110,6 @@ class RTAFAR_WP_Hooks {
 		} else {
 			return \str_replace( Util::cs_stripslashes( $find ), Util::cs_stripslashes( $item->replace ), $buffer );
 		}
-
 	}
 
 	/**
@@ -159,7 +157,6 @@ class RTAFAR_WP_Hooks {
 		);
 
 		return array_merge( $links, $row_meta );
-
 	}
 
 	/**
@@ -170,9 +167,9 @@ class RTAFAR_WP_Hooks {
 	 */
 	public static function rtafarAfterUpgrade( $upgrader_object, $options ) {
 		if ( isset( $options['action'] ) && $options['action'] == 'update' &&
-			 isset( $options['type'] ) && $options['type'] == 'plugin' &&
-			 isset( $options['plugins'] )
-			 ) {
+			isset( $options['type'] ) && $options['type'] == 'plugin' &&
+			isset( $options['plugins'] )
+			) {
 
 			foreach ( $options['plugins'] as $eachPlugin ) {
 				if ( $eachPlugin == CS_RTAFAR_PLUGIN_IDENTIFIER ) {
@@ -195,7 +192,7 @@ class RTAFAR_WP_Hooks {
 		$ScreenOptions = new ScreenOptions();
 
 		if ( isset( $rtafr_menu['add_masking_rule'] ) && ! empty( $rtafr_menu['add_masking_rule'] ) ) {
-			// add_action( 'load-' . $rtafr_menu['add_masking_rule'], array( $ScreenOptions, 'rtafar_arr_screen_options' ) );
+			add_action( 'load-' . $rtafr_menu['add_masking_rule'], array( $ScreenOptions, 'rtafar_arr_screen_options' ) );
 		}
 
 		if ( isset( $rtafr_menu['all_masking_rules'] ) && ! empty( $rtafr_menu['all_masking_rules'] ) ) {
@@ -203,7 +200,7 @@ class RTAFAR_WP_Hooks {
 		}
 
 		if ( isset( $rtafr_menu['replace_in_db'] ) && ! empty( $rtafr_menu['replace_in_db'] ) ) {
-			// add_action( 'load-' . $rtafr_menu['replace_in_db'], array( $ScreenOptions, 'rtafar_screen_options_replace_in_db' ) );
+			add_action( 'load-' . $rtafr_menu['replace_in_db'], array( $ScreenOptions, 'rtafar_arr_screen_options' ) );
 		}
 	}
 
@@ -263,6 +260,4 @@ class RTAFAR_WP_Hooks {
 		}
 		return $groups;
 	}
-
 }
-

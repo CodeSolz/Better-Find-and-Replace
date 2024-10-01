@@ -47,13 +47,17 @@ class NoticeBuilder {
 	 * @return void
 	 */
 	public function action_admin_init() {
-		$dismiss_option = filter_input( INPUT_GET, CS_NOTICE_ID, FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		if ( isset($_GET[ CS_NOTICE_ID ]) ) {
+			$dismiss_option = filter_input( INPUT_GET, CS_NOTICE_ID, FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
-		if ( is_string( $dismiss_option ) ) {
+			if( empty($dismiss_option)){
+				return false;
+			}
+
 			update_option( CS_NOTICE_ID . 'ed_' . $dismiss_option, true );
 			return wp_send_json(
 				array(
-					'status' => 'success',
+					'status' => 'success' 
 				)
 			);
 		}
@@ -92,14 +96,14 @@ class NoticeBuilder {
 					$canDissmiss = '';
 					if ( $admin_notice->dismiss_option ) {
 						$canDissmiss = ' is-dismissible';
-						$dissmissUrl = ' data-dismiss-url="' . esc_url( $dismiss_url ) . '"';
+						$dissmissUrl = ' data-dismiss-url=' . esc_url( $dismiss_url ) ;
 					}
 
-					?><div class="notice cs-notice notice-<?php echo $type . $canDissmiss; ?>" <?php echo $dissmissUrl; ?>>
+					?><div class="notice cs-notice notice-<?php echo \esc_attr( $type . $canDissmiss ); ?>" <?php echo \esc_attr( $dissmissUrl ); ?>>
 						<p>
-							<strong><?php echo CS_RTAFAR_PLUGIN_NAME; ?></strong>
+							<strong><?php echo \esc_html( CS_RTAFAR_PLUGIN_NAME ); ?></strong>
 						</p>
-						<p><?php echo $admin_notice->message; ?></p>
+						<p><?php echo \wp_kses_post( $admin_notice->message ); ?></p>
 
 					</div>
 						<?php
@@ -131,7 +135,6 @@ class NoticeBuilder {
 
 		$this->admin_notices->{$type}[] = $notice;
 	}
-
 }
 
 

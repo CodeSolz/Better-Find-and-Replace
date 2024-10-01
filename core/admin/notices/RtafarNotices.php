@@ -82,14 +82,10 @@ class RtafarNotices {
 		);
 
 		$message .= '<div class="cs-notice-action-btn-holder"><button class="button-primary bfar-review-now">Let\'s do it now! </button> '
-		. '<button class="button-secondary bfar-review-never">I\'ve already done it!</button> '
-			. '<button class="button-secondary bfar-review-later">I\'ll do it later!</button> '
-			. '<button class="button-secondary bfar-review-never">Please don\'t bother me again :(</button> </div>';
+		. '<button type="button" class="button-secondary bfar-review-never">I\'ve already done it!</button> '
+			. '<button type="button" class="button-secondary bfar-review-later">I\'ll do it later!</button> '
+			. '<button type="button" class="button-secondary bfar-review-never">Please don\'t bother me again :(</button> </div>';
 
 		$notice->info( $message, 'Feedback' );
 	}
-
-
 }
-
-

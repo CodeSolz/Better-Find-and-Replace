@@ -48,16 +48,16 @@ class ScOptnReplaceInDb {
 		return array(
 			array(
 				'id'       => 'overview',
-				'title'    => __( 'Overview', 'real-time-auto-find-and-replace' ),
+				'title'    => esc_htmlesc_html__( 'Overview', 'real-time-auto-find-and-replace' ),
 				'content'  => '',
-				'callback' => array( __class__, 'arr_overview' ),
+				'callback' => array( __CLASS__, 'arr_overview' ),
 				'priority' => 1,
 			),
 			array(
 				'id'       => 'available_features',
-				'title'    => __( 'Available Features', 'real-time-auto-find-and-replace' ),
+				'title'    => esc_htmlesc_html__( 'Available Features', 'real-time-auto-find-and-replace' ),
 				'content'  => '',
-				'callback' => array( __class__, 'arr_available_features' ),
+				'callback' => array( __CLASS__, 'arr_available_features' ),
 				'priority' => 1,
 			),
 		);
@@ -69,8 +69,8 @@ class ScOptnReplaceInDb {
 	 * @return void
 	 */
 	public static function arr_overview() {
-		echo \sprintf(
-			__( '%1$s This screen provides the  the functionalities to search and replace in Database. You can search on a specific table or for URL. After installing the pro version, these muted pro features will be activated automatically. %2$s', 'real-time-auto-find-and-replace' ),
+		\printf(
+			esc_html__( '%1$s This screen provides the  the functionalities to search and replace in Database. You can search on a specific table or for URL. After installing the pro version, these muted pro features will be activated automatically. %2$s', 'real-time-auto-find-and-replace' ),
 			'<p>',
 			'</p>'
 		);
@@ -85,19 +85,19 @@ class ScOptnReplaceInDb {
 	public static function arr_available_features() {
 		?>
 			<p>
-				<?php _e( 'You can perform the following Features:', 'real-time-auto-find-and-replace' ); ?>
+				<?php esc_html_e( 'You can perform the following Features:', 'real-time-auto-find-and-replace' ); ?>
 			</p>
 			<ul>
 				<li>
-					<?php echo sprintf( __( '%1$s Where to Replace %2$s allows to specify where you want to search and replace. ', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); ?>
+					<?php printf( esc_html__( '%1$s Where to Replace %2$s allows to specify where you want to search and replace. ', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); ?>
 				</li>
 				<li>
-					<?php echo sprintf( __( '%1$s Dry Run %2$s allows to create a visual report of the items you have searched for or if its unchecked, the searched item will be replaced if its found. ', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); ?>
+					<?php printf( esc_html__( '%1$s Dry Run %2$s allows to create a visual report of the items you have searched for or if its unchecked, the searched item will be replaced if its found. ', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); ?>
 				</li>
 			</ul>
 			
 			<p>
-				<?php echo sprintf( __( '%1$s Tutorial %2$s : To read more about the features,  %3$scheck plugin\'s documentation%4$s from our website', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>', '<a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank">', '</a>' ); ?>
+				<?php printf( esc_html__( '%1$s Tutorial %2$s : To read more about the features,  %3$scheck plugin\'s documentation%4$s from our website', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>', '<a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank">', '</a>' ); ?>
 			</p>
 		<?php
 	}
@@ -110,16 +110,14 @@ class ScOptnReplaceInDb {
 	public static function arr_help_sidebar_content() {
 		ob_start();
 		?>
-			<p><strong><?php _e( 'For more information: ', 'real-time-auto-find-and-replace' ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'For more information: ', 'real-time-auto-find-and-replace' ); ?></strong></p>
 			<p>
-				<?php _e( 'Looking for features details? Check plugin\'s ', 'real-time-auto-find-and-replace' ); ?>
-				<a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank"><?php _e( 'Documentation', 'real-time-auto-find-and-replace' ); ?></a></p>
-			<p><a href="https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/" target="_blank"><?php _e( 'Support', 'real-time-auto-find-and-replace' ); ?></a></p>					
+				<?php esc_html_e( 'Looking for features details? Check plugin\'s ', 'real-time-auto-find-and-replace' ); ?>
+				<a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank"><?php esc_html_e( 'Documentation', 'real-time-auto-find-and-replace' ); ?></a></p>
+			<p><a href="https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/" target="_blank"><?php esc_html_e( 'Support', 'real-time-auto-find-and-replace' ); ?></a></p>					
 		<?php
 		$html = ob_get_clean();
 
 		return $html;
 	}
-
-
 }

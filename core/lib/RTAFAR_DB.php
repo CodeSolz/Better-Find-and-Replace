@@ -145,5 +145,4 @@ class RTAFAR_DB {
 			$wpdb->base_prefix . 'options',
 		);
 	}
-
 }

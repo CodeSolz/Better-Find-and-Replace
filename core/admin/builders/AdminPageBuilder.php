@@ -182,5 +182,3 @@ class AdminPageBuilder {
         </div>';
 	}
 }
-
-

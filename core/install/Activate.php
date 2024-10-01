@@ -114,7 +114,6 @@ class Activate {
 
 		// update plugin version
 		update_option( 'rtafar_plugin_version', CS_RTAFAR_VERSION );
-
 	}
 
 	/**
@@ -161,6 +160,4 @@ class Activate {
 
 		return true;
 	}
-
-
 }

@@ -42,16 +42,16 @@ class AllMaskingRules {
 		if ( isset( $_GET['s'] ) && ! empty( $_GET['s'] ) ) {
 			$back_url     = Util::cs_generate_admin_url( $page );
 			$args['well'] = "<p class='search-keyword'>"
-			 . __( 'Search results for', 'real-time-auto-find-and-replace' )
-			 . " : '<b>" . Util::cs_sanitize_prnt_str( $_GET['s'] ) . "</b>' </p> <a href='{$back_url}' class='button'><< "
-			 . __( 'Back to all', 'real-time-auto-find-and-replace' )
-			 . '</a> ';
+			. __( 'Search results for', 'real-time-auto-find-and-replace' )
+			. " : '<b>" . Util::cs_sanitize_prnt_str( $_GET['s'] ) . "</b>' </p> <a href='{$back_url}' class='button'><< "
+			. __( 'Back to all', 'real-time-auto-find-and-replace' )
+			. '</a> ';
 		}
 
 		ob_start();
 		$adCodeList = new AllMaskingRulesList();
 		$adCodeList->prepare_items();
-		echo '<form id="plugins-filter" method="get"><input type="hidden" name="page" value="' . $page . '" />';
+		echo '<form id="plugins-filter" method="get"><input type="hidden" name="page" value="' . \esc_attr( $page ) . '" />';
 		$adCodeList->views();
 		$adCodeList->search_box( __( 'Search Rule', 'real-time-auto-find-and-replace' ), '' );
 		$adCodeList->display();
@@ -88,7 +88,6 @@ class AllMaskingRules {
 
 		return $html;
 	}
-
 }
 
 

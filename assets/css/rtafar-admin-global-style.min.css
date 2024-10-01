@@ -1,1 +1,30 @@
-.btn-bulk-replace{margin-left:8px!important;margin-top:14px!important}.bfr-pop-bulk-select{margin-top:-4px}#toplevel_page_real-time-auto-find-and-replace-real-time-auto-find-and-replace>ul>li:nth-child(6)>a,#toplevel_page_real-time-auto-find-and-replace-real-time-auto-find-and-replace>ul>li:nth-child(6)>a:hover{color:#c60051;font-weight:700}.cs-notice p span.dashicons-star-filled{color:#ffc107}.cs-bfar-go-pro-action-link{color:#c60051;font-size:13px;font-weight:700}.cs-bfar-go-pro-action-link:before{content:"\f155";font-family:dashicons;position:relative;top:2px}.cs-bfar-go-pro-action-link a{color:#c60051}
+/*!*********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/global.scss ***!
+  \*********************************************************************************************************************************************************/
+.btn-bulk-replace {
+  margin-top: 14px !important;
+  margin-left: 8px !important; }
+
+.bfr-pop-bulk-select {
+  margin-top: -4px; }
+
+#toplevel_page_real-time-auto-find-and-replace-real-time-auto-find-and-replace > ul > li:nth-child(6) > a,
+#toplevel_page_real-time-auto-find-and-replace-real-time-auto-find-and-replace > ul > li:nth-child(6) > a:hover {
+  color: #c60051;
+  font-weight: bold; }
+
+.cs-notice p span.dashicons-star-filled {
+  color: #ffc107; }
+
+.cs-bfar-go-pro-action-link {
+  font-size: 13px;
+  font-weight: bold;
+  color: #c60051; }
+  .cs-bfar-go-pro-action-link::before {
+    content: "\f155";
+    font-family: dashicons;
+    top: 2px;
+    position: relative; }
+  .cs-bfar-go-pro-action-link a {
+    color: #c60051; }
+

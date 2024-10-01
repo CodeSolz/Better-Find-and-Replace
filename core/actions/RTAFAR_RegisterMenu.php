@@ -57,7 +57,7 @@ class RTAFAR_RegisterMenu {
 	private static $_instance;
 
 	public function __construct() {
-		 // call WordPress admin menu hook
+		// call WordPress admin menu hook
 		add_action( 'admin_menu', array( $this, 'rtafar_register_menu' ) );
 	}
 
@@ -67,7 +67,7 @@ class RTAFAR_RegisterMenu {
 	 * @return type
 	 */
 	public function init_current_screen() {
-		 $this->current_screen = \get_current_screen();
+		$this->current_screen = \get_current_screen();
 		return $this->current_screen;
 	}
 
@@ -142,7 +142,6 @@ class RTAFAR_RegisterMenu {
 		// init pages
 		$this->pages = new AdminPageBuilder();
 		$rtafr_menu  = $this->rtafr_menus;
-
 	}
 
 	/**
@@ -170,14 +169,14 @@ class RTAFAR_RegisterMenu {
 			if ( is_object( $AddNewRule ) ) {
 				echo $AddNewRule->generate_page( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ), $option );
 			} else {
-				echo $AddNewRule;
+				echo $AddNewRule, Util::cs_allowed_html();
 			}
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( is_object( $AccessDenied ) ) {
 				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
-				echo $AccessDenied;
+				echo $AccessDenied, Util::cs_allowed_html();
 			}
 		}
 	}
@@ -193,14 +192,14 @@ class RTAFAR_RegisterMenu {
 			if ( is_object( $AllMaskingRules ) ) {
 				echo $AllMaskingRules->generate_page( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
-				echo $AllMaskingRules;
+				echo $AllMaskingRules, Util::cs_allowed_html();
 			}
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( is_object( $AccessDenied ) ) {
 				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
-				echo $AccessDenied;
+				echo $AccessDenied, Util::cs_allowed_html();
 			}
 		}
 	}
@@ -221,14 +220,14 @@ class RTAFAR_RegisterMenu {
 			if ( is_object( $Default_Settings ) ) {
 				echo $Default_Settings->generate_default_settings( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
-				echo $Default_Settings;
+				echo $Default_Settings, Util::cs_allowed_html();
 			}
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
-			if ( is_object( $AccessDenied ) ) {
+			if ( \is_object( $AccessDenied ) ) {
 				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
-				echo $AccessDenied;
+				echo $AccessDenied, Util::cs_allowed_html();
 			}
 		}
 	}
@@ -246,14 +245,14 @@ class RTAFAR_RegisterMenu {
 
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( self::$nav_cap['restore_in_db'] ) ) {
 			?>
-				<img src="<?php echo CS_RTAFAR_PLUGIN_ASSET_URI; ?>img/restore-db-pro.png" style="width: 99%" />
+				<img src="<?php echo \esc_html( CS_RTAFAR_PLUGIN_ASSET_URI ); ?>img/restore-db-pro.png" style="width: 99%" />
 			<?php
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( \is_object( $AccessDenied ) ) {
 				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
 			} else {
-				echo $AccessDenied;
+				echo $AccessDenied, Util::cs_allowed_html();
 			}
 		}
 	}
@@ -290,7 +289,6 @@ class RTAFAR_RegisterMenu {
 	 */
 	public function rtafar_load_settings_scripts( $page_id ) {
 		return Scripts_Settings::load_admin_settings_scripts( $page_id, $this->rtafr_menus );
-
 	}
 
 	/**
@@ -313,22 +311,19 @@ class RTAFAR_RegisterMenu {
 		}
 
 		if ( 'cs-bfar-go-pro' === $_GET['page'] ) {
-			_e( 'Please wait a while redirecting..', 'real-time-auto-find-and-replace' );
+			esc_html_e( 'Please wait a while redirecting..', 'real-time-auto-find-and-replace' );
 
 			add_action(
 				'admin_footer',
-				function() {
+				function () {
 					$redirect_url = Util::cs_get_pro_link( Util::cs_pro_link() . '?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
 					?>
 					<script type="text/javascript">
-						window.location.href = '<?php echo $redirect_url; ?>';
+						window.location.href = '<?php echo \esc_url( $redirect_url ); ?>';
 					</script>
 					<?php
 				}
 			);
 		}
 	}
-
-
-
 }
