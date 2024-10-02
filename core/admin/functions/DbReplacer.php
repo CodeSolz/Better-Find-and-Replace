@@ -183,6 +183,7 @@ class DbReplacer {
 				array(
 					'status'        => true,
 					'title'         => __( 'Success!', 'real-time-auto-find-and-replace' ),
+					/* translators: %1$s: Total rows %2$s : replaced rows */
 					'text'          => sprintf( __( 'Thank you! replacement completed!. Total %1$s replaced : %2$d', 'real-time-auto-find-and-replace' ), $replaceType, $i ),
 					'nothing_found' => __( 'Sorry! Nothing Found!', 'real-time-auto-find-and-replace' ),
 				),

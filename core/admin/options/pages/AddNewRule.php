@@ -120,6 +120,7 @@ class AddNewRule {
 				'type'        => 'select',
 				'class'       => 'form-control rule-type',
 				'required'    => true,
+				/* translators: %s: rule type (e.g., regular expression, string, etc.) */
 				'placeholder' => __( 'Please select %s rule type', 'real-time-auto-find-and-replace' ),
 				'options'     => apply_filters(
 					'bfrp_masking_rule_options',
@@ -194,6 +195,7 @@ class AddNewRule {
 			),
 			'cs_masking_rule[bypass_rule_is_active]' => array(
 				'wrapper_class'     => "bypass-rule {$hiddenBypassRule}",
+				/* translators: %1$s: opening <span> tag for pro version notice, %2$s: closing </span> tag */
 				'title'             => sprintf( __( 'Activate Bypass Rule %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'checkbox',
 				'is_pro'            => true,
@@ -204,6 +206,7 @@ class AddNewRule {
 				'desc_tip'          => __( 'Check this checkbox if you want to apply Bypass rule', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_masking_rule[bypass_rule]'           => array(
+				/* translators: %1$s: opening <span> tag for pro version notice, %2$s: closing </span> tag */
 				'title'         => sprintf( __( 'Bypass Rule %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'wrapper_class' => "bypass-rule {$hiddenBypassRule}",
 				'type'          => 'miscellaneous',
@@ -230,6 +233,7 @@ class AddNewRule {
 				),
 			),
 			'cs_masking_rule[remove_bypass_wrapper]' => array(
+				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
 				'title'             => sprintf( __( 'Remove Wrapper %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'wrapper_class'     => "bypass-rule {$hiddenBypassRule}",
 				'type'              => 'checkbox',
@@ -238,6 +242,7 @@ class AddNewRule {
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
 				),
+				// Translators: %1$s and %2$s are HTML <code> tags for formatting.
 				'desc_tip'          => sprintf( __( 'Check this checkbox if you want to remove the bypass rule wrapper on final output. eg. %1$s{test}%2$s will render finally %1$stest%2$s.', 'real-time-auto-find-and-replace' ), '<code>', '</code>' ),
 			),
 			'st2'                                    => array(
@@ -248,6 +253,7 @@ class AddNewRule {
 			),
 			'cs_masking_rule[skip_pages][]'          => array(
 				'wrapper_class'     => "advance-filter wrap-skip-pages {$isShowSkipPage}",
+				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
 				'title'             => \apply_filters( 'bfrp_skip_pages_title', sprintf( __( 'Skip Pages %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ), $option ),
 				'type'              => 'select',
 				'class'             => 'form-control skip-pages',
@@ -263,6 +269,7 @@ class AddNewRule {
 			),
 			'cs_masking_rule[skip_posts][]'          => array(
 				'wrapper_class'     => "advance-filter wrap-skip-posts {$isShowSkipPost}",
+				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
 				'title'             => \apply_filters( 'bfrp_skip_posts_title', sprintf( __( 'Skip Posts %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ), $option ),
 				'type'              => 'select',
 				'class'             => 'form-control skip-posts',
@@ -278,6 +285,7 @@ class AddNewRule {
 			),
 			'cs_masking_rule[skip_base_url]'         => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
+				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
 				'title'             => sprintf( __( 'Skip Base URLs %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'checkbox',
 				'is_pro'            => true,
@@ -286,6 +294,7 @@ class AddNewRule {
 					'disabled' => 'disabled',
 				),
 				'desc_tip'          => sprintf(
+						// Translators: %1$s and %2$s are HTML <code> tags for formatting; %3$s is the site URL.
 					__(
 						'Check this checkbox, if you want to keep unchanged the URLs match with the website URL. 
 							e.g. If you desire to modify the word %1$stest%2$s within a post or page, but it appears within the URL as %1$s%3$s%2$s, please note that applying the find and replace rule will alter the 
@@ -299,6 +308,7 @@ class AddNewRule {
 				),
 			),
 			'cs_masking_rule[skip_css]'              => array(
+				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
 				'title'                    => sprintf( __( 'Skip CSS %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'wrapper_class'            => "bypass-rule {$hiddenBypassRule}",
 				'type'                     => 'miscellaneous',
@@ -316,6 +326,7 @@ class AddNewRule {
 							'disabled' => 'disabled',
 						),
 						'after_text'        => sprintf(
+							// Translators: %1$s and %2$s are HTML tags for formatting; %3$s is an example of an HTML link tag.
 							__(
 								' External CSS URL %1$s e.g: The CSS loaded with a tag like this - %3$s %2$s',
 								'real-time-auto-find-and-replace'
@@ -332,6 +343,7 @@ class AddNewRule {
 							'disabled' => 'disabled',
 						),
 						'after_text'        => sprintf(
+							// Translators: %1$s and %2$s are HTML tags for formatting; %3$s is an example of an internal CSS tag.
 							__(
 								' Internal CSS %1$s e.g: The CSS loaded with a internal tag like this - %3$s %2$s',
 								'real-time-auto-find-and-replace'
@@ -348,6 +360,7 @@ class AddNewRule {
 							'disabled' => 'disabled',
 						),
 						'after_text'        => sprintf(
+							// Translators: %1$s and %2$s are HTML tags for formatting; %3$s is an example of inline CSS within a body tag.
 							__(
 								' Inline CSS %1$s e.g: The CSS loaded with a tag like this - %3$s %2$s',
 								'real-time-auto-find-and-replace'
@@ -360,6 +373,7 @@ class AddNewRule {
 				),
 			),
 			'cs_masking_rule[skip_js]'               => array(
+				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
 				'title'                    => sprintf( __( 'Skip JavaScript %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'wrapper_class'            => "bypass-rule {$hiddenBypassRule}",
 				'type'                     => 'miscellaneous',
@@ -377,6 +391,7 @@ class AddNewRule {
 							'disabled' => 'disabled',
 						),
 						'after_text'        => sprintf(
+							// Translators: %1$s and %2$s are HTML tags for formatting; %3$s is an example of an external JS script tag.
 							__(
 								' External JS URL %1$s e.g: The JS loaded with a tag like this - %3$s %2$s',
 								'real-time-auto-find-and-replace'
@@ -393,6 +408,7 @@ class AddNewRule {
 							'disabled' => 'disabled',
 						),
 						'after_text'        => sprintf(
+							// Translators: %1$s and %2$s are HTML tags for formatting; %3$s is an example of an internal JS script tag.
 							__(
 								' Internal JS %1$s e.g: The JS loaded with a internal tag like this - %3$s %2$s',
 								'real-time-auto-find-and-replace'
@@ -409,6 +425,7 @@ class AddNewRule {
 
 			'cs_masking_rule[case_insensitive]'      => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
+				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
 				'title'             => sprintf( __( 'Case-Insensitive %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'checkbox',
 				'value'             => FormBuilder::get_value( 'case_insensitive', $option, '' ),
@@ -420,6 +437,7 @@ class AddNewRule {
 			),
 			'cs_masking_rule[whole_word]'            => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
+				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
 				'title'             => sprintf( __( 'Whole Words Only %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'checkbox',
 				'is_pro'            => true,
@@ -428,6 +446,7 @@ class AddNewRule {
 					'disabled' => 'disabled',
 				),
 				'desc_tip'          => \sprintf(
+					// Translators: %1$s and %2$s are HTML <code> tags for formatting; %3$s and %4$s are HTML <em> tags for emphasis.
 					__( 'Check this checkbox, if you want the find and replace function to only match complete words. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
 					'<code>',
 					'</code>',
@@ -437,6 +456,7 @@ class AddNewRule {
 			),
 			'cs_masking_rule[unicode_modifier]'      => array(
 				'wrapper_class'     => "advance-filter {$hiddenAdvanceFilter}",
+				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
 				'title'             => sprintf( __( 'Unicode Characters %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'checkbox',
 				'is_pro'            => true,

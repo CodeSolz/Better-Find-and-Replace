@@ -105,6 +105,7 @@ class ReplaceInDB {
 			),
 			'cs_db_string_replace[large_table]'      => array(
 				'wrapper_class'     => 'large-table',
+				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
 				'title'             => sprintf( __( 'Large Table %1$s >= Pro Extend  - version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'checkbox',
 				'is_pro'            => true,
@@ -151,6 +152,7 @@ class ReplaceInDB {
 				'title'    => __( 'Whole Words Only', 'real-time-auto-find-and-replace' ),
 				'type'     => 'checkbox',
 				'desc_tip' => \sprintf(
+					// Translators: %1$s and %2$s are HTML <code> tags for formatting; %3$s and %4$s are HTML <em> tags for emphasis.
 					__( 'Check this checkbox, if you want the find and replace function to only match complete words. e.g : if you want to replace - %1$stest%2$s from - %1$sThis is a test sentence for testing%2$s, then only replacement will be on -  %1$sThis is a %3$stest%4$s sentence for testing%2$s ', 'real-time-auto-find-and-replace' ),
 					'<code>',
 					'</code>',
@@ -159,6 +161,7 @@ class ReplaceInDB {
 				),
 			),
 			'cs_db_string_replace[unicode_modifier]' => array(
+				// Translators: %1$s is a line break with a span element for indicating pro features; %2$s is the closing span tag.
 				'title'             => sprintf( __( 'Unicode Characters %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'checkbox',
 				'is_pro'            => true,

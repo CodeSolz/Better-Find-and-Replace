@@ -105,26 +105,31 @@ class AllMaskingRulesList extends \WP_List_Table {
 			return __( 'Plain Text', 'real-time-auto-find-and-replace' );
 		} elseif ( $item->type == 'regex' ) {
 			return sprintf(
+				/* translators: %1$s: opening <span> tag with a class, %2$s: closing </span> tag */ 
 				__( 'Regular Expression %1$s Managed %2$s ', 'real-time-auto-find-and-replace' ),
 				'<br><span class="dt-col-sm-des">',
 				'</span>'
 			);
 		} elseif ( $item->type == 'ajaxContent' ) {
+			/* translators: %s: HTML markup and text, including delay time and seconds */
 			return sprintf( __( 'jQuery / Ajax %s', 'real-time-auto-find-and-replace' ), '<br> <span class="dt-col-sm-des"> Delay Time : ' . $item->delay . ' seconds</span>' );
 
 		} elseif ( $item->type == 'advance_regex' ) {
 			return sprintf(
+				/* translators: %1$s: opening <span> tag with a class, %2$s: closing </span> tag */
 				__( 'Advance Regular Expression %1$s (multiple lines at once / code blocks) %2$s ', 'real-time-auto-find-and-replace' ),
 				'<span class="dt-col-sm-des">',
 				'</span>'
 			);
 		} elseif ( $item->type == 'regexCustom' ) {
 			return sprintf(
+				/* translators: %1$s: opening <span> tag with a class, %2$s: closing </span> tag */
 				__( 'Regular Expression %1$s Custom %2$s ', 'real-time-auto-find-and-replace' ),
 				'<br><span class="dt-col-sm-des">',
 				'</span>'
 			);
 		} elseif ( $item->type == 'multiByte' ) {
+			/* translators: %s: HTML markup with encoding information */
 			return sprintf( __( 'MultiByte %s', 'real-time-auto-find-and-replace' ), '<br> <span class="dt-col-sm-des"> Encoding : ' . $item->html_charset . '</span>' );
 		} elseif ( has_filter( 'bfrp_column_type_text' ) ) {
 				return apply_filters( 'bfrp_column_type_text', $item );

@@ -41,7 +41,8 @@ class ScreenOptions {
 	 * @return void
 	 */
 	public function rtafar_all_rules_screen_options() {
-		return ScOptnAllMaskRules::rtafar_screen_options();
+		ScOptnAddNewRule::rtafar_arr_screen_options();
+		ScOptnAllMaskRules::rtafar_screen_options();
 	}
 
 	/**

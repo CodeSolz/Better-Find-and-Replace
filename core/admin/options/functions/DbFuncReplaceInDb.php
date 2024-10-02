@@ -67,9 +67,12 @@ class DbFuncReplaceInDb {
 			array(
 				'all'          => __( 'Select All', 'real-time-auto-find-and-replace' ),
 				'unselect_all' => __( 'Unselect All', 'real-time-auto-find-and-replace' ),
-				'post_title'   => \ucwords( __( "{$type} Title", 'real-time-auto-find-and-replace' ) ),
-				'post_content' => \ucwords( __( "{$type} Content", 'real-time-auto-find-and-replace' ) ),
-				'post_excerpt' => \ucwords( __( "{$type} Excerpt", 'real-time-auto-find-and-replace' ) ),
+				/* translators: %s: post type (e.g., post, page, or custom post type) */
+				'post_title'   =>  \ucwords(sprintf( __(  "%s Title" , 'real-time-auto-find-and-replace' ), $type)),
+				/* translators: %s: post type (e.g., post, page, or custom post type) */
+				'post_content' => \ucwords( sprintf( __( "%s Content" , 'real-time-auto-find-and-replace' ), $type)),
+				/* translators: %s: post type (e.g., post, page, or custom post type) */
+				'post_excerpt' => \ucwords( sprintf( __(  "%s Excerpt" , 'real-time-auto-find-and-replace' ), $type) ),
 			)
 		);
 

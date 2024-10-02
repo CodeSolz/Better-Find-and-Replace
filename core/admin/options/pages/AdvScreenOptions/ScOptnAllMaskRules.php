@@ -35,7 +35,7 @@ class ScOptnAllMaskRules {
 		);
 
 		$screen = \get_current_screen();
-		if ( self::help_tabs() ) {
+		// if ( self::help_tabs() ) {
 			// foreach ( self::help_tabs() as $tab ) {
 			// $tab = (object) $tab;
 			// $screen->add_help_tab(
@@ -48,8 +48,8 @@ class ScOptnAllMaskRules {
 			// )
 			// );
 			// }
-		}
-		$screen->set_help_sidebar( self::amr_help_sidebar_content() );
+		// }
+		// $screen->set_help_sidebar( self::amr_help_sidebar_content() );
 	}
 
 
@@ -80,124 +80,5 @@ class ScOptnAllMaskRules {
 		return false;
 	}
 
-	/**
-	 * Help tabs
-	 *
-	 * @return void
-	 */
-	public static function help_tabs() {
-		return array(
-			array(
-				'id'       => 'overview',
-				'title'    => esc_html__( 'Overview', 'real-time-auto-find-and-replace' ),
-				'content'  => '',
-				'callback' => array( __CLASS__, 'amr_overview' ),
-				'priority' => 1,
-			),
-			array(
-				'id'       => 'screen_content',
-				'title'    => esc_html__( 'Screen Content', 'real-time-auto-find-and-replace' ),
-				'content'  => '',
-				'callback' => array( __CLASS__, 'amr_screen_content' ),
-				'priority' => 2,
-			),
-			array(
-				'id'       => 'available_actions',
-				'title'    => esc_html__( 'Available Actions', 'real-time-auto-find-and-replace' ),
-				'content'  => '',
-				'callback' => array( __CLASS__, 'amr_available_actions' ),
-				'priority' => 3,
-			),
-			array(
-				'id'       => 'bulk_actions',
-				'title'    => esc_html__( 'Bulk Actions', 'real-time-auto-find-and-replace' ),
-				'content'  => '',
-				'callback' => array( __CLASS__, 'amr_bulk_actions' ),
-				'priority' => 4,
-			),
-		);
-	}
 
-	/**
-	 * Overview
-	 *
-	 * @return void
-	 */
-	public static function amr_overview() {
-		\printf(
-			esc_html__( '%1$s This screen provides the  the functionalities to add new rule. You can add real-time rules as well as some specific rules in Database. After installing the pro version, these muted pro features will be activated automatically. %2$s', 'real-time-auto-find-and-replace' ),
-			'<p>',
-			'</p>'
-		);
-	}
-
-
-	/**
-	 * available actions
-	 *
-	 * @return void
-	 */
-	public static function amr_available_actions() {
-		?>
-			<p>
-				<?php esc_html_e( 'Hovering over a row in the item list will display action links that allow you to manage your item. You can perform the following actions:', 'real-time-auto-find-and-replace' ); ?>
-			</p>
-			<ul>
-				<li>
-					<?php printf( esc_html__( '%1$s Edit %2$s takes you to the editing screen for that rule. ', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); ?>
-				</li>
-			</ul>
-		<?php
-		do_action( 'bfar_amr_available_actions_content' );
-	}
-
-	/**
-	 * Screen content tab
-	 *
-	 * @return void
-	 */
-	public static function amr_screen_content() {
-		ob_start();
-		?>
-			<p>
-				<?php esc_html_e( 'You can customize the display of this screen’s contents in a number of ways:', 'real-time-auto-find-and-replace' ); ?>
-			</p>
-			<ul>
-				<li>
-					<?php esc_html_e( 'You can decide how many item to list per screen using the Screen Options tab.', 'real-time-auto-find-and-replace' ); ?>
-				</li>
-			</ul>
-			<?php
-			$html = ob_get_clean();
-
-			echo \esc_html_e( $html );
-	}
-
-	public static function amr_bulk_actions() {
-		?>
-			<p>
-				<?php \esc_html_e( 'You can also delete one or multiple item(s) at once. Select the item(s) you want to act on using the checkboxes, then select the action you want to take from the Bulk actions menu and click Apply.', 'real-time-auto-find-and-replace' ); ?>
-			</p>
-		
-		<?php
-	}
-
-	/**
-	 * Help Sidebar Content
-	 *
-	 * @return void
-	 */
-	public static function amr_help_sidebar_content() {
-		ob_start();
-		?>
-			<p><strong><?php esc_html_e( 'For more information: ', 'real-time-auto-find-and-replace' ); ?></strong></p>
-			<p>
-				<?php esc_html_e( 'Looking for features details? Check plugin\'s ', 'real-time-auto-find-and-replace' ); ?>
-				<a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank"><?php esc_html_e( 'Documentation', 'real-time-auto-find-and-replace' ); ?></a></p>
-			<p><a href="https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/" target="_blank"><?php esc_html_e( 'Support', 'real-time-auto-find-and-replace' ); ?></a></p>					
-		<?php
-		$html = ob_get_clean();
-
-		return $html;
-	}
 }

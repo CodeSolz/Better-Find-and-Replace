@@ -70,6 +70,7 @@ class ScOptnReplaceInDb {
 	 */
 	public static function arr_overview() {
 		\printf(
+			// Translators: %1$s and %2$s are HTML <p> tags for formatting.
 			esc_html__( '%1$s This screen provides the  the functionalities to search and replace in Database. You can search on a specific table or for URL. After installing the pro version, these muted pro features will be activated automatically. %2$s', 'real-time-auto-find-and-replace' ),
 			'<p>',
 			'</p>'
@@ -89,15 +90,24 @@ class ScOptnReplaceInDb {
 			</p>
 			<ul>
 				<li>
-					<?php printf( esc_html__( '%1$s Where to Replace %2$s allows to specify where you want to search and replace. ', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); ?>
+					<?php 
+						// Translators: %1$s and %2$s are HTML <strong> tags for emphasis.
+						printf( esc_html__( '%1$s Where to Replace %2$s allows to specify where you want to search and replace. ', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); 
+					?>
 				</li>
 				<li>
-					<?php printf( esc_html__( '%1$s Dry Run %2$s allows to create a visual report of the items you have searched for or if its unchecked, the searched item will be replaced if its found. ', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); ?>
+					<?php 
+						// Translators: %1$s and %2$s are HTML <strong> tags for emphasis.
+						printf( esc_html__( '%1$s Dry Run %2$s allows to create a visual report of the items you have searched for or if its unchecked, the searched item will be replaced if its found. ', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>' ); 
+					?>
 				</li>
 			</ul>
 			
 			<p>
-				<?php printf( esc_html__( '%1$s Tutorial %2$s : To read more about the features,  %3$scheck plugin\'s documentation%4$s from our website', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>', '<a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank">', '</a>' ); ?>
+				<?php 
+					// Translators: %1$s and %2$s are HTML <strong> tags for emphasis; %3$s and %4$s are HTML <a> tags for a link.
+					printf( esc_html__( '%1$s Tutorial %2$s : To read more about the features,  %3$scheck plugin\'s documentation%4$s from our website', 'real-time-auto-find-and-replace' ), '<strong>', '</strong>', '<a href="https://docs.codesolz.net/better-find-and-replace/" target="_blank">', '</a>' ); 
+				?>
 			</p>
 		<?php
 	}

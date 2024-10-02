@@ -38,6 +38,7 @@ class ProActions {
 		if ( $taxonomies ) {
 			foreach ( $taxonomies as $taxonomy ) {
 				if ( $type == 'selectOptions' ) {
+					/* translators: %s: label */
 					$args[ 'tblp_taxonomy_' . $taxonomy->name . '_disabled' ] = sprintf( __( 'Taxonomy URLs ( %s ) - Pro version only!', 'real-time-auto-find-and-replace' ), $taxonomy->label );
 				}
 			}

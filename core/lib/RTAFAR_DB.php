@@ -52,8 +52,10 @@ class RTAFAR_DB {
 				}
 
 				if ( $type && ! \in_array( $table['Name'], $freeVersionTbls ) ) {
+					// Translators: %1$s is the table name; %2$s is the size in MB; %3$s is the number of rows.
 					$sizes[ $table['Name'] . '_disabled' ] = sprintf( __( '%1$s - ( %2$s MB - %3$s Rows) - Pro version only!', 'real-time-auto-find-and-replace' ), $table['Name'], $size, $table['Rows'] );
 				} else {
+					// Translators: %1$s is the table name; %2$s is the size in MB; %3$s is the number of rows.
 					$active[ $table['Name'] ] = sprintf( __( '%1$s - ( %2$s MB - %3$s Rows )', 'real-time-auto-find-and-replace' ), $table['Name'], $size, $table['Rows'] );
 				}
 			}

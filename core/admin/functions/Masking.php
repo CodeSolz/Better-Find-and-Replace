@@ -49,7 +49,8 @@ class Masking {
 			array(
 				'status'       => true,
 				'title'        => __( 'Success!', 'real-time-auto-find-and-replace' ),
-				'text'         => __( "Thank you! replacement rule {$msg} successfully.", 'real-time-auto-find-and-replace' ),
+				/* translators: %s: action type */
+				'text'         => sprintf( __( "Thank you! replacement rule %s successfully.", 'real-time-auto-find-and-replace' ), $msg ),
 				'redirect_url' => admin_url( 'admin.php?page=cs-all-masking-rules' ),
 			)
 		);

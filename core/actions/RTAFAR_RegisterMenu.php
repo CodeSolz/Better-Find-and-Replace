@@ -160,6 +160,7 @@ class RTAFAR_RegisterMenu {
 		}
 
 		$page_info = array(
+			/* translators: %s: Page title */
 			'title'     => sprintf( __( '%s Rule', 'real-time-auto-find-and-replace' ), $title ),
 			'sub_title' => __( 'The real-time masking find and replace rules will be applied prior to the website being rendered in the browser. Additionally, the database masking will take effect in the database.', 'real-time-auto-find-and-replace' ),
 		);

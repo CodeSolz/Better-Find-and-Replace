@@ -30,6 +30,7 @@ class RtafarNotices {
 	 * @return String
 	 */
 	public static function activated( $notice ) {
+		/* translators: %1$s: link, %2$s : link*/
 		$message       = __( 'Thank you for choosing us. Let\'s %1$s set some find & replace rules. %2$s', 'real-time-auto-find-and-replace' );
 		$register_link = admin_url( 'admin.php?page=cs-add-replacement-rule' );
 		$default_link  = site_url( '' );
@@ -62,11 +63,11 @@ class RtafarNotices {
 			return false;
 		}
 		$timeDiff    = \human_time_diff( \strtotime( $installedOn ), current_time( 'U' ) );
-		$message     = __(
-			'You are using the plugin quite a while! If you are enjoying it, %3$splease consider giving us a 5-star (%5$s) rating.%4$s 
-			%1$s Your valuable review %2$s will %1$s inspire us %2$s to make it more better.',
-			'real-time-auto-find-and-replace'
-		);
+		
+		/* Translators: %1$s: opening bold HTML tag (e.g., <b>), %2$s: closing bold HTML tag (e.g., </b>), %3$s: opening anchor and strong HTML tags for review link (e.g., <a href="..."><strong>), %4$s: closing strong and anchor tags (e.g., </strong></a>), %5$s: HTML for the 5-star rating (e.g., <span> with dashicons) */
+		$message     = __( 
+			'You are using the plugin quite a while! If you are enjoying it, %3$s please consider giving us a 5-star (%5$s) rating.%4$s %1$s Your valuable review %2$s will %1$s inspire us %2$s to make it more better.', 
+		'real-time-auto-find-and-replace' );
 		$review_link = 'https://login.wordpress.org/?redirect_to=https%3A%2F%2Fwordpress.org%2Fsupport%2Fplugin%2Freal-time-auto-find-and-replace%2Freviews%2F%23new-post&locale=en_US';
 		$message     = sprintf(
 			$message,
