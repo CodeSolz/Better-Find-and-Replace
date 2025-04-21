@@ -58,6 +58,15 @@ jobs:
           echo "$BODY" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
+	  - name: 📂 Check for build folder before zip
+        run: |
+          if [ -d "release-tmp/real-time-auto-find-and-replace/build" ]; then
+            echo "❌ build folder still exists!"
+            exit 1
+          else
+            echo "✅ No build folder detected. Clean to zip."
+          fi
+	
       - name: 📁 Prepare ZIP and TAR.GZ with proper structure
         run: |
           VERSION="${{ steps.extract_version.outputs.VERSION }}"
