@@ -34,11 +34,10 @@ jobs:
         id: changelog
         run: |
           VERSION="${{ steps.extract_version.outputs.VERSION }}"
-          HEADER="### Version: ${VERSION}"
-          CHANGELOG=$(awk -v header="$HEADER" '
-            $0 ~ header {
+          CHANGELOG=$(awk -v version="### Version: ${VERSION}" '
+            $0 ~ version {
               capture = 1
-              print $0
+              print
               next
             }
             capture && /^### Version:/ {
