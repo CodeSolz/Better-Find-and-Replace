@@ -84,9 +84,9 @@ jobs:
           name: Version ${{ steps.extract_version.outputs.VERSION }}
           tag_name: v${{ steps.extract_version.outputs.VERSION }}
           body: |
-            ## Changelog – Version ${{ steps.extract_version.outputs.VERSION }}
+            ## ${{ env.CHANGELOG_HEADER }}
 
-            ${{ env.CHANGELOG }}
+            ${{ env.CHANGELOG_BODY }}
           files: |
             ${{ env.ZIP_NAME }}
             ${{ env.TAR_NAME }}
