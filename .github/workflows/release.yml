@@ -90,7 +90,7 @@ jobs:
           name: Version ${{ steps.extract_version.outputs.VERSION }}
           tag_name: v${{ steps.extract_version.outputs.VERSION }}
           body: |
-            ## ${{ env.CHANGELOG_HEADER }}
+            ${{ env.CHANGELOG_HEADER }}
 
             ${{ env.CHANGELOG_BODY }}
           files: |
