@@ -8,9 +8,9 @@ composer.phar
 /node_modules/
 
 ### Webpack Pre-Bundles ###
-assets/js/*.min.js
-assets/css/*.min.css
-build
+# assets/js/*.min.js
+# assets/css/*.min.css
+# build
 
 # End 
 .qodo
