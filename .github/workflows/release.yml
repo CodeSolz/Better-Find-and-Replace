@@ -68,20 +68,21 @@ jobs:
           ZIP_NAME="${PLUGIN_SLUG}.${VERSION}.zip"
           TAR_NAME="${PLUGIN_SLUG}.${VERSION}.tar.gz"
 
-          mkdir -p build/${PLUGIN_SLUG}
+          # Prepare clean plugin directory
+          mkdir -p dist/${PLUGIN_SLUG}
 
-          # Copy plugin files into clean subfolder (no nesting)
           rsync -av --exclude=".git" --exclude=".github" --exclude="node_modules" \
-            --exclude="build" --exclude="${ZIP_NAME}" --exclude="${TAR_NAME}" ./ build/${PLUGIN_SLUG}/
+            --exclude="build" --exclude="dist" --exclude="${ZIP_NAME}" --exclude="${TAR_NAME}" ./ dist/${PLUGIN_SLUG}/
 
-          cp -r vendor build/${PLUGIN_SLUG}/
+          cp -r vendor dist/${PLUGIN_SLUG}/
 
-          cd build
+          # Archive from root (so the plugin folder is the root of the zip)
+          zip -r "${ZIP_NAME}" "dist/${PLUGIN_SLUG}"
+          tar -czf "${TAR_NAME}" -C dist "${PLUGIN_SLUG}"
 
-          zip -r "../${ZIP_NAME}" "${PLUGIN_SLUG}"
-          tar -czf "../${TAR_NAME}" "${PLUGIN_SLUG}"
+          # ✅ Clean up
+          rm -rf dist
 
-          cd ..
           echo "ZIP_NAME=${ZIP_NAME}" >> $GITHUB_ENV
           echo "TAR_NAME=${TAR_NAME}" >> $GITHUB_ENV
 
