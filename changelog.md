@@ -149,7 +149,7 @@
 - **Update:** Updated Select2 version to: 4.0.13
 - **Fix:** Data sanitize issues
 
-### Version: 1.3.5 ###
+### Version: 1.3.5 ( April 26, 2022 ) ###
 - **Fix:** Data sanitize issues
 
 ### Version: 1.3.4 ###

@@ -65,32 +65,38 @@ jobs:
           ZIP_NAME="${PLUGIN_SLUG}.${VERSION}.zip"
           TAR_NAME="${PLUGIN_SLUG}.${VERSION}.tar.gz"
 
-          # Start clean
-          rm -rf dist
-          mkdir -p dist/${PLUGIN_SLUG}
+          # 🧹 Clean up temp workspace
+          rm -rf release-tmp
+          mkdir -p release-tmp/${PLUGIN_SLUG}
 
-          # Only copy needed files (excluding any previous build outputs)
-          rsync -av ./ dist/${PLUGIN_SLUG} \
+          echo "🗂️ Copying clean files..."
+          rsync -av ./ release-tmp/${PLUGIN_SLUG} \
             --exclude=".git" \
             --exclude=".github" \
             --exclude="node_modules" \
             --exclude="build" \
-            --exclude="dist" \
+            --exclude="release-tmp" \
             --exclude="${ZIP_NAME}" \
             --exclude="${TAR_NAME}"
 
-          # Double-check: remove build folder if it slipped through (safety net)
-          rm -rf dist/${PLUGIN_SLUG}/build
+          # ✅ Remove build folder if it was created again after rsync
+          rm -rf release-tmp/${PLUGIN_SLUG}/build
 
-          # Ensure vendor is included
-          cp -r vendor dist/${PLUGIN_SLUG}/
+          # ✅ Ensure vendor is present
+          cp -r vendor release-tmp/${PLUGIN_SLUG}/
 
-          # Create zip/tar.gz from outside the folder
-          zip -r "${ZIP_NAME}" "dist/${PLUGIN_SLUG}"
-          tar -czf "${TAR_NAME}" -C dist "${PLUGIN_SLUG}"
+          # 🔍 Show copied folder before packaging
+          echo "✅ Final contents to be zipped:"
+          ls -la release-tmp/${PLUGIN_SLUG}
 
-          # Cleanup temp folders
-          rm -rf dist
+          echo "📦 Creating zip and tar.gz"
+          cd release-tmp
+          zip -r "../${ZIP_NAME}" "${PLUGIN_SLUG}"
+          tar -czf "../${TAR_NAME}" "${PLUGIN_SLUG}"
+          cd ..
+
+          # 🧼 Final clean
+          rm -rf release-tmp
 
           echo "ZIP_NAME=${ZIP_NAME}" >> $GITHUB_ENV
           echo "TAR_NAME=${TAR_NAME}" >> $GITHUB_ENV
