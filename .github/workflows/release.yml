@@ -34,19 +34,17 @@ jobs:
         id: changelog
         run: |
           VERSION="${{ steps.extract_version.outputs.VERSION }}"
-          START="### Version: ${VERSION} ###"
-          CHANGELOG=$(awk -v start="$START" '
-            $0 == start {
+          HEADER="### Version: ${VERSION}"
+          CHANGELOG=$(awk -v header="$HEADER" '
+            $0 ~ header {
               capture = 1
               print $0
               next
             }
-            capture && /^### Version: .* ###/ {
+            capture && /^### Version:/ {
               exit
             }
-            capture {
-              print
-            }
+            capture { print }
           ' "${GITHUB_WORKSPACE}/changelog.md")
 
           if [ -z "$CHANGELOG" ]; then
