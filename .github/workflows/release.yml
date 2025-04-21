@@ -81,7 +81,7 @@ jobs:
           tar -czf "${TAR_NAME}" -C dist "${PLUGIN_SLUG}"
 
           # ✅ Clean up
-          rm -rf dist
+          rm -rf dist build
 
           echo "ZIP_NAME=${ZIP_NAME}" >> $GITHUB_ENV
           echo "TAR_NAME=${TAR_NAME}" >> $GITHUB_ENV
