@@ -1,8 +1,9 @@
-# Better find and replace
+# Better find and replace - Changelog
 
 ![BFR](https://static.codesolz.net/cs/our-products/bfar/page-title.webp)
 
 ### Changelog
+---------------------------------------------------------
 
 👉 **Version: 1.7.0 ( March 26, 2025 )**
 * **Update:** Media replacer updated
