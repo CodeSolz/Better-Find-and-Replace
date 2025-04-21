@@ -182,10 +182,10 @@ code block in find field*
 <ul>
     <li> Visit our <a target="_blank" href="https://codesolz.net/forum/?utm_source=wordpress.org&utm_medium=README&utm_campaign=real-time-auto-find-and-replace">forum</a></li>
 </ul>
+</blockquote>
 
-
-### useful links
-- Free download from WordPress.org plugins directory - [More Free Plugins by CodeSolz](https://profiles.wordpress.org/codesolz/#content-plugins)
+### WordPress free plugins - by CodeSolz
+- Free download from WordPress.org plugins directory - [Download Must Have Free Plugins](https://profiles.wordpress.org/codesolz/#content-plugins)
 
 ### Credentials
 - *Created & Supported by - [M.Tuhin](https://codesolz.net/)  - [CodeSolz.net](https://codesolz.net/)*
