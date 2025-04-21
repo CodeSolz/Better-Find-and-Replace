@@ -48,31 +48,35 @@ jobs:
       - name: 📁 Prepare ZIP and TAR.GZ with proper structure
         run: |
           VERSION="${{ steps.extract_version.outputs.VERSION }}"
-          PLUGIN_DIR="real-time-auto-find-and-replace"
-          ZIP_NAME="real-time-auto-find-and-replace.${VERSION}.zip"
-          TAR_NAME="real-time-auto-find-and-replace.${VERSION}.tar.gz"
+          PLUGIN_SLUG="real-time-auto-find-and-replace"
+          ZIP_NAME="${PLUGIN_SLUG}.${VERSION}.zip"
+          TAR_NAME="${PLUGIN_SLUG}.${VERSION}.tar.gz"
 
-          mkdir "$PLUGIN_DIR"
+          mkdir -p build/${PLUGIN_SLUG}
 
-          # Copy all files except excluded ones into plugin folder
-          rsync -av --exclude=".git" --exclude=".github" --exclude="node_modules" --exclude="$ZIP_NAME" --exclude="$TAR_NAME" ./ "$PLUGIN_DIR"
+          # Copy all files into clean plugin folder (exclude trash)
+          rsync -av --exclude=".git" --exclude=".github" --exclude="node_modules" \
+            --exclude="${ZIP_NAME}" --exclude="${TAR_NAME}" ./ build/${PLUGIN_SLUG}/
 
-          # Include vendor explicitly
-          cp -r vendor "$PLUGIN_DIR/"
+          # Ensure vendor is included
+          cp -r vendor build/${PLUGIN_SLUG}/
 
-          # Create zip and tar.gz
-          zip -r "$ZIP_NAME" "$PLUGIN_DIR"
-          tar -czf "$TAR_NAME" "$PLUGIN_DIR"
+          cd build
+          zip -r "../${ZIP_NAME}" "${PLUGIN_SLUG}"
+          tar -czf "../${TAR_NAME}" "${PLUGIN_SLUG}"
 
-          echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
-          echo "TAR_NAME=$TAR_NAME" >> $GITHUB_ENV
+          echo "ZIP_NAME=${ZIP_NAME}" >> $GITHUB_ENV
+          echo "TAR_NAME=${TAR_NAME}" >> $GITHUB_ENV
 
       - name: 🚀 Create GitHub Release (with zip and tar.gz)
         uses: softprops/action-gh-release@v1
         with:
           name: Version ${{ steps.extract_version.outputs.VERSION }}
           tag_name: v${{ steps.extract_version.outputs.VERSION }}
-          body: ${{ env.CHANGELOG }}
+          body: |
+            ## Changelog – Version ${{ steps.extract_version.outputs.VERSION }}
+
+            ${{ env.CHANGELOG }}
           files: |
             ${{ env.ZIP_NAME }}
             ${{ env.TAR_NAME }}
