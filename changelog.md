@@ -11,7 +11,7 @@
 #### **Version: 1.6.9 ( January 30, 2025 )**
 * **Update:** Small issue fixed
 
-= Version: 1.6.8 ( January 22, 2025 ) =
+#### **Version: 1.6.8 ( January 22, 2025 )**
 * **Update:** Security patch updated
 
 = Version: 1.6.7 ( January 19, 2025 ) =
