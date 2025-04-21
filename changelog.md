@@ -1,3 +1,6 @@
+### Version: 1.7.1 ( April 22, 2025 ) ###
+- **Update:** Media replacer updated
+
 ### Version: 1.7.0 ( March 26, 2025 ) ###
 - **Update:** Media replacer updated
 - **Update:** Video replacer - media replacer
