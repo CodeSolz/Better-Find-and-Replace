@@ -14,7 +14,7 @@
 **Version: 1.6.8 ( January 22, 2025 )**
 * **Update:** Security patch updated
 
-= Version: 1.6.7 ( January 19, 2025 ) =
+**Version: 1.6.7 ( January 19, 2025 )**
 * **New:** <a href="https://docs.codesolz.net/better-find-and-replace/real-time-find-replace/media-replacer/">Visual Media Replacer:</a> Effortlessly update images with seamless precision! 
 * **Update:** JS script has been modernize for latest browsers
 
