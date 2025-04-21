@@ -45,7 +45,7 @@ jobs:
           echo "$CHANGELOG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: 📁 Prepare ZIP and TAR.GZ with proper structure
+            - name: 📁 Prepare ZIP and TAR.GZ with proper structure
         run: |
           VERSION="${{ steps.extract_version.outputs.VERSION }}"
           PLUGIN_DIR="real-time-auto-find-and-replace"
@@ -53,10 +53,14 @@ jobs:
           TAR_NAME="real-time-auto-find-and-replace.${VERSION}.tar.gz"
 
           mkdir "$PLUGIN_DIR"
-          shopt -s dotglob
-          cp -r !(vendor|node_modules|.git|.github|*.zip|*.tar.gz) "$PLUGIN_DIR" || true
-          cp -r vendor "$PLUGIN_DIR"
 
+          # Copy all files except excluded ones into plugin folder
+          rsync -av --exclude=".git" --exclude=".github" --exclude="node_modules" --exclude="$ZIP_NAME" --exclude="$TAR_NAME" ./ "$PLUGIN_DIR"
+
+          # Include vendor explicitly
+          cp -r vendor "$PLUGIN_DIR/"
+
+          # Create zip and tar.gz
           zip -r "$ZIP_NAME" "$PLUGIN_DIR"
           tar -czf "$TAR_NAME" "$PLUGIN_DIR"
 
