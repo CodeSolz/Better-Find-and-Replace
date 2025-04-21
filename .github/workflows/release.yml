@@ -33,13 +33,24 @@ jobs:
       - name: 📝 Extract changelog for version
         id: changelog
         run: |
-          VERSION="👉 **Version: ${{ steps.extract_version.outputs.VERSION }}"
-          CHANGELOG=$(awk -v ver="$VERSION" '
-            $0 ~ ver {
-                capture=1; print $0; next
+          VERSION="${{ steps.extract_version.outputs.VERSION }}"
+          START="👉 **Version: ${VERSION}"
+          CHANGELOG=$(awk -v start="$START" '
+            $0 ~ start {
+              capture = 1
+              print $0
+              next
             }
-            capture && /^👉 \*\*Version:/ { capture=0; exit }
+            capture && /^👉 \*\*Version:/ {
+              exit
+            }
+            capture { print }
           ' "${GITHUB_WORKSPACE}/changelog.md")
+
+          if [ -z "$CHANGELOG" ]; then
+            echo "❌ No changelog found for version $VERSION"
+            exit 1
+          fi
 
           echo "CHANGELOG<<EOF" >> $GITHUB_ENV
           echo "$CHANGELOG" >> $GITHUB_ENV
@@ -54,11 +65,9 @@ jobs:
 
           mkdir -p build/${PLUGIN_SLUG}
 
-          # Copy all files into clean plugin folder (exclude trash)
           rsync -av --exclude=".git" --exclude=".github" --exclude="node_modules" \
             --exclude="${ZIP_NAME}" --exclude="${TAR_NAME}" ./ build/${PLUGIN_SLUG}/
 
-          # Ensure vendor is included
           cp -r vendor build/${PLUGIN_SLUG}/
 
           cd build
