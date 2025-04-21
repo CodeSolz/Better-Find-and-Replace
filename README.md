@@ -188,9 +188,9 @@ code block in find field*
 - Free download from WordPress.org plugins directory - [Download Must Have Free Plugins](https://profiles.wordpress.org/codesolz/#content-plugins)
 
 ### Credentials
-- *Created & Supported by - [M.Tuhin](https://codesolz.net/) & CodeSolz Support Team[support@codesolz.net]  - [CodeSolz.net](https://codesolz.net/)*
-- *For real-time support visit our website - [CodeSolz.net](https://codesolz.net/)*
-- *For more dedicated support or feature request write to us at - [support@codesolz.net](mailto:support@codesolz.net)*
+- *Created & Supported by - [M.Tuhin](https://codesolz.net/) & [CodeSolz Support Team](https://codesolz.net/) *
+- *For real-time support visit our website - [CodeSolz.net](https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/)*
+- *For more dedicated support or feature request write to us at - [info@codesolz.net](mailto:info@codesolz.net)*
 
 <a href="https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/">
   <img src="https://static.codesolz.net/cs/logo.webp" alt="codesolz.net"/>
