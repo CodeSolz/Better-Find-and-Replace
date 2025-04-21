@@ -33,12 +33,12 @@ jobs:
       - name: 📝 Extract changelog for version
         id: changelog
         run: |
-          VERSION="👉 **Version: ${{ steps.extract_version.outputs.VERSION }}"
+          VERSION="**Version: ${{ steps.extract_version.outputs.VERSION }}"
           CHANGELOG=$(awk -v ver="$VERSION" '
             $0 ~ ver {
                 capture=1; print $0; next
             }
-            capture && /^👉 \*\*Version:/ { capture=0; exit }
+            capture && /^\*\*Version:/ { capture=0; exit }
             capture { print }
           ' changelog.md)
           echo "CHANGELOG<<EOF" >> $GITHUB_ENV
