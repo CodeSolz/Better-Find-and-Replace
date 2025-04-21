@@ -1,5 +1,5 @@
 ### Version: 1.7.1 ( April 22, 2025 ) ###
-- **Update:** Media replacer updated
+- **Update:** updated for the latest release
 
 ### Version: 1.7.0 ( March 26, 2025 ) ###
 - **Update:** Media replacer updated
@@ -12,7 +12,7 @@
 - **Update:** Security patch updated
 
 ### Version: 1.6.7 ( January 19, 2025 ) ###
-- **New:** <a href="https://docs.codesolz.net/better-find-and-replace/real-time-find-replace/media-replacer/">Visual Media Replacer:</a> Effortlessly update images with seamless precision! 
+- **New:** <a href="https://docs.codesolz.net/better-find-and-replace/real-time-find-replace/media-replacer/">Visual Media Replacer:</a> Effortlessly update images with drag and drop features
 - **Update:** JS script has been modernize for latest browsers
 
 ### Version: 1.6.6 ( January 07, 2025 ) ###
