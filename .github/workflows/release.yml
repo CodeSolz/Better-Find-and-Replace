@@ -23,9 +23,6 @@ jobs:
       - name: 📦 Install dependencies (include vendor)
         run: composer install --no-dev
 
-      - name: 🛠️ Build plugin
-        run: composer run build
-
       - name: 🏷️ Extract version
         id: extract_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
@@ -98,9 +95,6 @@ jobs:
           echo "ZIP_NAME=${ZIP_NAME}" >> $GITHUB_ENV
           echo "TAR_NAME=${TAR_NAME}" >> $GITHUB_ENV
 
-	  - name: 🧪 Check contents before zip
-        run: ls -la dist/${PLUGIN_SLUG}
-
       - name: 🚀 Create GitHub Release (with zip and tar.gz)
         uses: softprops/action-gh-release@v1
         with:
@@ -113,6 +107,5 @@ jobs:
           files: |
             ${{ env.ZIP_NAME }}
             ${{ env.TAR_NAME }}
-			
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
