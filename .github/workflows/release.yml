@@ -18,10 +18,10 @@ jobs:
         with:
           php-version: '8.1'
           extensions: mbstring, intl, dom, curl
-          tools: composer
+          tools: composer:v2
 
       - name: 📦 Install dependencies (include vendor)
-        run: composer install --no-dev
+        run: composer install --no-dev -o
 
       - name: 🏷️ Extract version
         id: extract_version
