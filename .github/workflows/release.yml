@@ -45,7 +45,7 @@ jobs:
           echo "$CHANGELOG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-            - name: 📁 Prepare ZIP and TAR.GZ with proper structure
+      - name: 📁 Prepare ZIP and TAR.GZ with proper structure
         run: |
           VERSION="${{ steps.extract_version.outputs.VERSION }}"
           PLUGIN_DIR="real-time-auto-find-and-replace"
