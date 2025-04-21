@@ -36,7 +36,7 @@ jobs:
           VERSION="${{ steps.extract_version.outputs.VERSION }}"
           HEADER_REGEX="^### Version: ${VERSION}"
 
-          HEADER_LINE=$(grep -m1 "$HEADER_REGEX" "${GITHUB_WORKSPACE}/changelog.md")
+          HEADER_LINE=$(grep -m1 "$HEADER_REGEX" "${GITHUB_WORKSPACE}/changelog.md" | sed 's/^### /## /')
           BODY=$(awk -v header="### Version: ${VERSION}" '
             $0 ~ header {
               capture = 1
