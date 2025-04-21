@@ -27,7 +27,7 @@
 * **Update:** Updated for the WordPress latest version
 * **Update:** Script updated / modernize
 
-= Version: 1.6.4 ( October 02, 2024 ) =
+**Version: 1.6.4 ( October 02, 2024 )**
 * **Update:** Translators updated
 * **Fix:** Notification issue 
 * **Fix:** Little bug fixed
