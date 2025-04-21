@@ -18,7 +18,7 @@
 * **New:** <a href="https://docs.codesolz.net/better-find-and-replace/real-time-find-replace/media-replacer/">Visual Media Replacer:</a> Effortlessly update images with seamless precision! 
 * **Update:** JS script has been modernize for latest browsers
 
-= Version: 1.6.6 ( January 07, 2025 ) =
+**Version: 1.6.6 ( January 07, 2025 )**
 * **Update:** Small JS issue fixed
 * **Update:** JS script has been updated to work smoothly
 * **DB:** Installation function updated
