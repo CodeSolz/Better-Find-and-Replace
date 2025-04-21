@@ -33,24 +33,13 @@ jobs:
       - name: 📝 Extract changelog for version
         id: changelog
         run: |
-          VERSION="${{ steps.extract_version.outputs.VERSION }}"
-          START="👉 **Version: ${VERSION}"
-          CHANGELOG=$(awk -v start="$START" '
-            $0 ~ start {
-              capture = 1
-              print $0
-              next
+          VERSION="👉 **Version: ${{ steps.extract_version.outputs.VERSION }}"
+          CHANGELOG=$(awk -v ver="$VERSION" '
+            $0 ~ ver {
+                capture=1; print $0; next
             }
-            capture && /^👉 \*\*Version:/ {
-              exit
-            }
-            capture { print }
+            capture && /^👉 \*\*Version:/ { capture=0; exit }
           ' "${GITHUB_WORKSPACE}/changelog.md")
-
-          if [ -z "$CHANGELOG" ]; then
-            echo "❌ No changelog found for version $VERSION"
-            exit 1
-          fi
 
           echo "CHANGELOG<<EOF" >> $GITHUB_ENV
           echo "$CHANGELOG" >> $GITHUB_ENV
