@@ -1,0 +1,41 @@
+{
+    "name": "tuhin18003/real-time-auto-find-and-replace",
+    "description": "Real Time Auto Find and Replace - Wordpress plugin",
+    "type": "composer-plugin",
+    "license": "mit",
+    "authors": [
+        {
+            "name": "M.Tuhin",
+            "email": "info@codesolz.net"
+        }
+    ],
+    "scripts": {
+        "build" : "composer install --no-dev",
+        "phpcs" : "php ./vendor/bin/phpcs -i ",
+        "phpcsCheckError" : "php ./vendor/bin/phpcs --standard=WordPress ./core ./real-time-auto-find-and-replace.php",
+        "phpcsFixError" : "php ./vendor/bin/phpcbf --standard=WordPress ./core ./real-time-auto-find-and-replace.php",
+        "phpcsCheckPHPDetail" : "php ./vendor/bin/phpcs --standard=PHPCompatibilityWP -p ./real-time-auto-find-and-replace.php ./core --runtime-set testVersion 7.0-",
+        "phpcsCheckPHPDetailSingle" : "php ./vendor/bin/phpcs --standard=WordPress ./real-time-auto-find-and-replace.php",
+        "fixTranslatorsComments": "php ./vendor/tuhin18003/fix-translators-comments/src/FixTranslatorsCommand.php --openApiKey=sk-proj-Tux0UeRNli3GbfmCiGQg1c_zz-pZy6gndKEBNH --directory=./core/actions "
+    },
+    "autoload": {
+        "psr-4" : {
+            "RealTimeAutoFindReplace\\" : "core/"
+        }
+    },
+    "require": {
+        "php" : ">=7.0.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^3.1",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "tuhin18003/advance-var-dumper": "^1.0",
+        "tuhin18003/fix-translators-comments": "^1.1"
+    }
+}
