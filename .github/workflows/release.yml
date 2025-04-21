@@ -39,8 +39,8 @@ jobs:
                 capture=1; print $0; next
             }
             capture && /^👉 \*\*Version:/ { capture=0; exit }
-            capture { print }
-          ' changelog.md)
+          ' "${GITHUB_WORKSPACE}/changelog.md")
+
           echo "CHANGELOG<<EOF" >> $GITHUB_ENV
           echo "$CHANGELOG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
