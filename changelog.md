@@ -23,7 +23,7 @@
 * **Update:** JS script has been updated to work smoothly
 * **DB:** Installation function updated
 
-= Version: 1.6.5 ( November 15, 2024 ) =
+**Version: 1.6.5 ( November 15, 2024 )**
 * **Update:** Updated for the WordPress latest version
 * **Update:** Script updated / modernize
 
