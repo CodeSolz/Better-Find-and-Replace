@@ -34,10 +34,12 @@ jobs:
         id: changelog
         run: |
           VERSION="${{ steps.extract_version.outputs.VERSION }}"
-          CHANGELOG=$(awk -v version="### Version: ${VERSION}" '
-            $0 ~ version {
+          HEADER_REGEX="^### Version: ${VERSION}"
+
+          HEADER_LINE=$(grep -m1 "$HEADER_REGEX" "${GITHUB_WORKSPACE}/changelog.md")
+          BODY=$(awk -v header="### Version: ${VERSION}" '
+            $0 ~ header {
               capture = 1
-              print
               next
             }
             capture && /^### Version:/ {
@@ -46,13 +48,17 @@ jobs:
             capture { print }
           ' "${GITHUB_WORKSPACE}/changelog.md")
 
-          if [ -z "$CHANGELOG" ]; then
-            echo "❌ No changelog found for version $VERSION"
+          if [ -z "$HEADER_LINE" ] || [ -z "$BODY" ]; then
+            echo "❌ Changelog not found for version $VERSION"
             exit 1
           fi
 
-          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
-          echo "$CHANGELOG" >> $GITHUB_ENV
+          echo "CHANGELOG_HEADER<<EOF" >> $GITHUB_ENV
+          echo "$HEADER_LINE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "CHANGELOG_BODY<<EOF" >> $GITHUB_ENV
+          echo "$BODY" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: 📁 Prepare ZIP and TAR.GZ with proper structure
