@@ -87,7 +87,7 @@ jobs:
       - name: 🚀 Create GitHub Release (with zip and tar.gz)
         uses: softprops/action-gh-release@v1
         with:
-          name: Version ${{ steps.extract_version.outputs.VERSION }}
+          name: Better Find and Replace
           tag_name: v${{ steps.extract_version.outputs.VERSION }}
           body: |
             ${{ env.CHANGELOG_HEADER }}
