@@ -4,22 +4,26 @@ Tags: database, search replace, search, replace, find and replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 6.8
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Search and replace anything: text, images, URLs, code blocks, jQuery-Ajax loaded content in real time or Database. Advanced filters, no coding needed.
 
 == Description ==
+
+= AI-Powered Search & Replacement Suggestions =
+
 Better Find and Replace offers advanced search and replace functionality, providing a powerful solution for efficient database management without requiring coding experience. Additionally, it incorporates a dynamic real-time word / text replacing feature.
+
+With built-in AI integration, you can now generate smart replacement suggestions using OpenAI. Just enter your text and let the AI suggest improvements, making your workflow faster and more accurate.
 
 Perfect for post-migration cleanup and bulk edits, Better Find and Replace offers powerful tools to search and replace text, images, and media across your database. With features like case-sensitive matching, serialized data handling, table-specific targeting, and dry-run previews, it ensures safe, precise updates with zero hassle. 
 
-The **permanent replace** ensuring that any replaced text, URL etc is eliminated from your database permanently.
 Better find and replace is equipped with powerful features that allow you to visualize the results of search and replace content within your database as well as permanently erasing it. It has the ability to search within complex, serialized data structures and replace them with your own words, making it a powerful tool for managing website content for beginners and experienced users alike. 
-Additionally, it allows for the removal or un-setting of any element in serialized data by specifying its key.
+Additionally, it allows for the removal or un-setting of any element in serialized data by specifying its key. The permanent replace ensuring that any replaced text, URL etc is eliminated from your database permanently.
 
-Effortlessly replace images using a drag-and-drop interface directly from the preview, while ensuring seamless thumbnail regeneration for consistent visuals. Enjoy a blazing-fast image replacement process with enhanced efficiency and precision. When replacing an image, you can also update its alt text, caption, and description — a valuable boost for your SEO.
+Easily replace images / media using a drag-and-drop interface directly from the preview, while ensuring seamless thumbnail regeneration for consistent visuals. Enjoy a blazing-fast image replacement process with enhanced efficiency and precision. When replacing an image, you can also update its alt text, caption, and description — a valuable boost for your SEO.
 
 Another exciting feature: The real-time functionality provides an advanced word masking technique to search and replace text, url ( anything ), leaving no trace behind. The find and replace process takes place before the website is 
 rendered in the browser and does not impact any other files or databases. With this ultimate solution, easily find and replace text, HTML code, media/image URLs, footer credits, 
@@ -27,6 +31,7 @@ or any other content within your website without touching the database with the 
 
 == Key Features ==
 
+* **AI-Powered Suggestions** - Use artificial intelligence (AI) to get smart replacement suggestions, enhancing accuracy and efficiency.
 * **Easy to Use** – Clean, user-friendly interface designed for effortless navigation and configuration.
 * **Search and Replace Text** – Find and replace any text across your site, whether in static or dynamic content.
 * **Search and Replace Ajax/jQuery Content** – Works seamlessly with content loaded via Ajax or jQuery on the frontend.
@@ -178,6 +183,10 @@ code block in find field*
 
 == Changelog ==
 
+= Version: 1.7.2 ( May 16, 2025 ) =
+* **New:** ✨ AI-Powered Suggestions – Generate intelligent replacement suggestions using OpenAI.
+* **New:** AI suggestion - preview with Apply / Regenerate options.
+
 = Version: 1.7.1 ( April 22, 2025 ) =
 * **Update:** updated for the latest release
 
@@ -190,9 +199,5 @@ code block in find field*
 
 = Version: 1.6.8 ( January 22, 2025 ) =
 * **Update:** Security patch updated
-
-= Version: 1.6.7 ( January 19, 2025 ) =
-* **New:** <a href="https://docs.codesolz.net/better-find-and-replace/real-time-find-replace/media-replacer/">Visual Media Replacer:</a> Effortlessly update images with seamless precision! 
-* **Update:** JS script has been modernize for latest browsers
 
 [CHECK THE FULL CHANGELOG](https://github.com/CodeSolz/Better-Find-and-Replace/blob/master/CHANGELOG.md).

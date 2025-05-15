@@ -1,3 +1,7 @@
+### Version: 1.7.2 ( May 16, 2025 ) ###
+- **New:** ✨ AI-Powered Suggestions – Generate intelligent replacement suggestions using OpenAI.
+- **New:** AI suggestion - preview with Apply / Regenerate options.
+
 ### Version: 1.7.1 ( April 22, 2025 ) ###
 - **Update:** updated for the latest release
 

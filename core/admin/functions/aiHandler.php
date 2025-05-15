@@ -166,7 +166,7 @@ class aiHandler {
 				'status' => true,
 				'title'  => __( 'Applied', 'real-time-auto-find-and-replace' ),
 				'text'   => __( 'The replacement text has been updated.', 'real-time-auto-find-and-replace' ),
-				'suggestion' => trim($body['choices'][0]['message']['content'])
+				'suggestion' => trim($body['choices'][0]['message']['content'], '"')
 		));
 	}
 
