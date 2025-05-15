@@ -167,31 +167,51 @@ class MediaReplacer {
 				</div>
 			</div>
 
-			<div class="settings">
+			<div class="settings media-popup-settings">
 				
 				
 				<span class="setting alt-text has-description" data-setting="alt">
-					<label for="attachment-details-two-column-alt-text" class="name">Alternative Text</label>
-					<textarea id="attachment-details-two-column-alt-text" aria-describedby="alt-text-description"></textarea>
+					<div class="label">
+						<label for="attachment-details-two-column-alt-text" class="name media-alternative-text">Alternative Text</label>
+					</div>
+					<div class="input">
+						<textarea id="attachment-details-two-column-alt-text" aria-describedby="alt-text-description"></textarea>
+					</div>
 				</span>
 
 				<span class="setting" data-setting="title">
-					<label for="attachment-details-two-column-title" class="name">Title</label>
-					<input type="text" id="attachment-details-two-column-title" value="" style="border: 1px solid #8c8f94" />
+					<div class="label">
+						<label for="attachment-details-two-column-title" class="name media-title">Title</label>
+					</div>
+					<div class="input">
+						<input type="text" id="attachment-details-two-column-title" value="" style="border: 1px solid #8c8f94" />
+					</div>
 				</span>
 					
 								
 				<span class="setting" data-setting="caption">
-					<label for="attachment-details-two-column-caption" class="name">Caption</label>
-					<textarea id="attachment-details-two-column-caption"></textarea>
+					<div class="label">
+						<label for="attachment-details-two-column-caption" class="name media-caption">Caption</label>
+					</div>
+					<div class="input">
+						<textarea id="attachment-details-two-column-caption"></textarea>
+					</div>
 				</span>
-				<span class="setting" data-setting="description">
-					<label for="attachment-details-two-column-description" class="name">Description</label>
-					<textarea id="attachment-details-two-column-description"></textarea>
-				</span>
+				<div class="setting" data-setting="description">
+					<div class="label">
+						<label for="attachment-details-two-column-description" class="name media-description">Description</label>
+					</div>
+					<div class="input">
+						<textarea id="attachment-details-two-column-description"></textarea>
+					</div>
+				</div>
 				<span class="setting" data-setting="url">
-					<label for="attachment-details-two-column-copy-link" class="name">File URL:</label>
-					<input type="text" class="attachment-details-copy-link" id="attachment-details-two-column-copy-link" value="" readonly="">
+					<div class="label">
+						<label for="attachment-details-two-column-copy-link" class="name">File URL:</label>
+					</div>
+					<div class="input">
+						<input type="text" class="attachment-details-copy-link" id="attachment-details-two-column-copy-link" value="" readonly="">
+					</div>
 				</span>
 				
 			</div>

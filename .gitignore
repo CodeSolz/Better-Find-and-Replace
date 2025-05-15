@@ -7,6 +7,9 @@ composer.phar
 ### Node ###
 /node_modules/
 
+/assets/js/*.min.js
+/assets/js/*.min.css
+
 ### Webpack Pre-Bundles ###
 # assets/js/*.min.js
 # assets/css/*.min.css

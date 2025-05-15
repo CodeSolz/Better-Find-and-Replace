@@ -25,7 +25,8 @@ class Scripts_Settings {
 		$rtafr_menu = apply_filters( 'rtafar_menu_scripts', $rtafr_menu );
 
 		if ( ( isset( $rtafr_menu['add_masking_rule'] ) && $page_id === $rtafr_menu['add_masking_rule'] ) ||
-				( isset( $rtafr_menu['replace_in_db'] ) && $page_id === $rtafr_menu['replace_in_db'] )
+				( isset( $rtafr_menu['replace_in_db'] ) && $page_id === $rtafr_menu['replace_in_db'] ) ||
+				( isset( $rtafr_menu['media_replacer'] ) && $page_id === $rtafr_menu['media_replacer'] )
 			) {
 			wp_enqueue_style(
 				'select2',
