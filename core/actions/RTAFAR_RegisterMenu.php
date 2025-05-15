@@ -16,6 +16,7 @@ use RealTimeAutoFindReplace\lib\Util;
 use RealTimeAutoFindReplace\admin\functions\Masking;
 use RealTimeAutoFindReplace\admin\options\Scripts_Settings;
 use RealTimeAutoFindReplace\admin\builders\AdminPageBuilder;
+use RealTimeAutoFindReplace\admin\functions\aiHandler;
 
 
 class RTAFAR_RegisterMenu {
@@ -83,13 +84,24 @@ class RTAFAR_RegisterMenu {
 			57
 		);
 
+		$this->rtafr_menus['ai_settings'] = add_submenu_page(
+			CS_RTAFAR_PLUGIN_IDENTIFIER,
+			__( 'AI Configuration', 'real-time-auto-find-and-replace' ),
+			__( 'AI Settings', 'real-time-auto-find-and-replace' ),
+			'read',
+			'cs-bfar-ai-settings',
+			array( $this, 'rtafar_page_ai_settings' ),
+			1
+		);
+
 		$this->rtafr_menus['add_masking_rule'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Add Replacement Rule', 'real-time-auto-find-and-replace' ),
 			__( 'Add New Rule', 'real-time-auto-find-and-replace' ),
 			'read',
 			'cs-add-replacement-rule',
-			array( $this, 'rtafr_page_add_rule' )
+			array( $this, 'rtafr_page_add_rule' ),
+			2
 		);
 
 		$this->rtafr_menus['all_masking_rules'] = add_submenu_page(
@@ -98,7 +110,8 @@ class RTAFAR_RegisterMenu {
 			__( 'All Replacement Rules', 'real-time-auto-find-and-replace' ),
 			'read',
 			'cs-all-masking-rules',
-			array( $this, 'rtafr_page_all_masking_rules' )
+			array( $this, 'rtafr_page_all_masking_rules' ),
+			3
 		);
 
 		$this->rtafr_menus['replace_in_db'] = add_submenu_page(
@@ -107,7 +120,8 @@ class RTAFAR_RegisterMenu {
 			__( 'Replace in Database', 'real-time-auto-find-and-replace' ),
 			'read',
 			'cs-replace-in-database',
-			array( $this, 'rtafr_page_replace_in_db' )
+			array( $this, 'rtafr_page_replace_in_db' ),
+			4
 		);
 
 		$this->rtafr_menus['media_replacer'] = add_submenu_page(
@@ -116,7 +130,8 @@ class RTAFAR_RegisterMenu {
 			__( 'Media Replacer', 'real-time-auto-find-and-replace' ),
 			'read',
 			'cs-bfar-media-replacer',
-			array( $this, 'rtafar_page_media_replacer' )
+			array( $this, 'rtafar_page_media_replacer' ),
+			5
 		);
 
 		$this->rtafr_menus['restore_in_db_pro'] = add_submenu_page(
@@ -125,8 +140,11 @@ class RTAFAR_RegisterMenu {
 			__( 'Restore', 'real-time-auto-find-and-replace' ),
 			'read',
 			'cs-bfar-restore-database-pro',
-			array( $this, 'rtafar_page_restore_db' )
+			array( $this, 'rtafar_page_restore_db' ),
+			6
 		);
+
+		
 
 		$this->rtafr_menus['go_pro'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
@@ -134,7 +152,8 @@ class RTAFAR_RegisterMenu {
 			'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . __( 'Go Pro', 'real-time-auto-find-and-replace' ),
 			'read',
 			'cs-bfar-go-pro',
-			array( $this, 'rtafar_handle_external_redirects' )
+			array( $this, 'rtafar_handle_external_redirects' ),
+			7
 		);
 
 		// load script
@@ -143,6 +162,7 @@ class RTAFAR_RegisterMenu {
 		add_action( "load-{$this->rtafr_menus['replace_in_db']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['restore_in_db_pro']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['media_replacer']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
+		add_action( "load-{$this->rtafr_menus['ai_settings']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 
 		\remove_submenu_page( CS_RTAFAR_PLUGIN_IDENTIFIER, CS_RTAFAR_PLUGIN_IDENTIFIER );
 
@@ -277,7 +297,7 @@ class RTAFAR_RegisterMenu {
 			'sub_title' => __( 'Search for specific media files by name and easily replace them with new uploads', 'real-time-auto-find-and-replace' ),
 		);
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap('restore_in_db') ) ) {
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap('media_replacer') ) ) {
 			
 			$MediaReplacer = $this->pages->MediaReplacer();
 			if ( \is_object( $MediaReplacer ) ) {
@@ -290,6 +310,36 @@ class RTAFAR_RegisterMenu {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( \is_object( $AccessDenied ) ) {
 				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
+			} else {
+				echo $AccessDenied, Util::cs_allowed_html();
+			}
+		}
+	}
+
+	public function rtafar_page_ai_settings() {
+		$page_info = array(
+			'title'     => __( 'Optional: Enable AI-Powered Suggestions', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'To use AI-generated text suggestions in your replacement, complete the following settings. Leave this blank if you don\'t wish to use AI features.', 'real-time-auto-find-and-replace' ),
+		);
+
+		$get_settings = aiHandler::getSettings();
+		if ( empty( $get_settings ) ) {
+			$get_settings = array();
+		}
+
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap('ai_settings') ) ) {
+			
+			$AISettings = $this->pages->AISettings();
+			if ( \is_object( $AISettings ) ) {
+				echo $AISettings->generate_page( array_merge_recursive( $page_info, array( 'default_settings' => array() ), $get_settings ) );
+			} else {
+				echo $AISettings, Util::cs_allowed_html();
+			}
+
+		} else {
+			$AccessDenied = $this->pages->AccessDenied();
+			if ( \is_object( $AccessDenied ) ) {
+				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ), $get_settings ) );
 			} else {
 				echo $AccessDenied, Util::cs_allowed_html();
 			}

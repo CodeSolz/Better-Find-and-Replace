@@ -41,6 +41,24 @@ class Scripts_Settings {
 				true
 			);
 
+			
+			wp_enqueue_script(
+				'ratfar.ai.features',
+				CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.ai.min.js',
+				array(),
+				CS_RTAFAR_VERSION,
+				true
+			);
+
+			// load vars
+			wp_localize_script(
+				'ratfar.ai.features',
+				'ratfar',
+				array(
+					'ai_icon' => CS_RTAFAR_PLUGIN_ASSET_URI . 'img/ai-technology.png',
+				)
+			);
+
 		}
 
 		if ( ( isset( $rtafr_menu['replace_in_db'] ) && $page_id == $rtafr_menu['replace_in_db'] )
@@ -69,7 +87,8 @@ class Scripts_Settings {
 
 		if ( ( isset( $rtafr_menu['add_masking_rule'] ) && $page_id == $rtafr_menu['add_masking_rule'] ) ||
 				( isset( $rtafr_menu['replace_in_db'] ) && $page_id == $rtafr_menu['replace_in_db'] ) ||
-				( isset( $rtafr_menu['brafp_license'] ) && $page_id == $rtafr_menu['brafp_license'] )
+				( isset( $rtafr_menu['brafp_license'] ) && $page_id == $rtafr_menu['brafp_license'] ) ||
+				( isset( $rtafr_menu['ai_settings'] ) && $page_id == $rtafr_menu['ai_settings'] ) 
 			) {
 				wp_enqueue_script(
 					'rtafar.app.admin.min',

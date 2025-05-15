@@ -102,7 +102,8 @@ class FormBuilder {
 	 * @param type $field
 	 */
 	private function generate_field( $field_name, $field, $field_id ) {
-		$input  = '<div class="label"><label>';
+
+		$input  = '<div class="label"><label class="label-'.$field_id.'">';
 		$input .= $this->generate_title( $field );
 		$input .= '</label></div>';
 		$input .= '<div class="input-group">';

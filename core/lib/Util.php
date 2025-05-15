@@ -522,6 +522,8 @@ class Util {
 			'all_masking_rules' => 'bfar_menu_all_replacement_rules',
 			'replace_in_db'     => 'bfar_menu_replace_in_database',
 			'restore_in_db'     => 'bfar_menu_restore_in_database',
+			'media_replacer'     => 'bfar_menu_media_replacer',
+			'ai_settings'      => 'bfar_menu_ai_settings',
 		));
 
 		return !empty( $cap_key ) && isset( $nav_caps[$cap_key] ) ? $nav_caps[$cap_key] : $nav_caps;
