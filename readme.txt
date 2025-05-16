@@ -1,4 +1,4 @@
-=== Better Find and Replace ===
+=== Better Find and Replace - AI-Powered Suggestions ===
 Contributors: codesolz, m.tuhin
 Tags: database, search replace, search, replace, find and replace 
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
