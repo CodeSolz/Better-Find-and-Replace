@@ -524,7 +524,7 @@ class FormBuilder {
 	 */
 	public static function get_value( $id, $values = array(), $default_value = '' ) {
 		if ( isset( $values[ $id ] ) && ! empty( $values[ $id ] ) ) {
-			return Util::cs_esc_html( $values[ $id ] );
+			return $values[ $id ];
 		} elseif ( ! empty( $default_value ) ) {
 			return Util::cs_esc_html( $default_value );
 		}

@@ -1,33 +1,29 @@
 === Better Find and Replace - AI-Powered Suggestions ===
 Contributors: codesolz, m.tuhin
-Tags: database, search replace, search, replace, find and replace 
+Tags: database, search replace, search, replace, search and replace, real-time replace, find, find and replace, gutenberg, block-editor, search replace elementor
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 6.8
-Stable tag: 1.7.2
+Stable tag: 1.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Search and replace anything: text, images, URLs, code blocks, jQuery-Ajax loaded content in real time or Database. Advanced filters, no coding needed.
+Easily search and replace anything - text, images, URLs, code blocks or jQuery-Ajax content in real time or Database using filters, easy user-interface
 
 == Description ==
 
-= AI-Powered Search & Replacement Suggestions =
+= Smart Search, Replace & Media Tool (with AI) for WordPress =
 
-Better Find and Replace offers advanced search and replace functionality, providing a powerful solution for efficient database management without requiring coding experience. Additionally, it incorporates a dynamic real-time word / text replacing feature.
+[Better Find and Replace](https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_campaign=wordpress-org-visitor&utm_medium=learn_more_about_dokan&utm_source=WordPress.org) lets you easily search and replace text, HTML, links and media across your entire WordPress site — no coding needed. Perfect for database cleanup, content updates or post-migration edits.
 
-With built-in AI integration, you can now generate smart replacement suggestions using OpenAI. Just enter your text and let the AI suggest improvements, making your workflow faster and more accurate.
+Replace text or media in bulk with full support for serialized data, custom tables and dry-run previews. AI-powered suggestions help you rewrite or improve content instantly, making your edits smarter and faster.
 
-Perfect for post-migration cleanup and bulk edits, Better Find and Replace offers powerful tools to search and replace text, images, and media across your database. With features like case-sensitive matching, serialized data handling, table-specific targeting, and dry-run previews, it ensures safe, precise updates with zero hassle. 
+Easily replace images using drag-and-drop and auto-regenerate thumbnails. You can also update or add  alt text, captions and metadata with the suggestion of AI for better SEO.
 
-Better find and replace is equipped with powerful features that allow you to visualize the results of search and replace content within your database as well as permanently erasing it. It has the ability to search within complex, serialized data structures and replace them with your own words, making it a powerful tool for managing website content for beginners and experienced users alike. 
-Additionally, it allows for the removal or un-setting of any element in serialized data by specifying its key. The permanent replace ensuring that any replaced text, URL etc is eliminated from your database permanently.
+Want to **change content without editing your database**? Use real-time masking to update text, links or HTML before the page loads — instantly and safely.
 
-Easily replace images / media using a drag-and-drop interface directly from the preview, while ensuring seamless thumbnail regeneration for consistent visuals. Enjoy a blazing-fast image replacement process with enhanced efficiency and precision. When replacing an image, you can also update its alt text, caption, and description — a valuable boost for your SEO.
+Built for developers, agencies and site owners who want fast, accurate control over their content — all in one clean, intuitive interface.
 
-Another exciting feature: The real-time functionality provides an advanced word masking technique to search and replace text, url ( anything ), leaving no trace behind. The find and replace process takes place before the website is 
-rendered in the browser and does not impact any other files or databases. With this ultimate solution, easily find and replace text, HTML code, media/image URLs, footer credits, 
-or any other content within your website without touching the database with the help of an easy-to-use user interface.
 
 == Key Features ==
 
@@ -36,7 +32,7 @@ or any other content within your website without touching the database with the 
 * **Search and Replace Text** – Find and replace any text across your site, whether in static or dynamic content.
 * **Search and Replace Ajax/jQuery Content** – Works seamlessly with content loaded via Ajax or jQuery on the frontend.
 * **Find and Replace URLs** – Quickly search and replace outdated or incorrect URLs throughout your website.
-* **Replace Images and Attachment URLs** – Swap out image links and attachment URLs site-wide with precision.
+* **Replace Images and Attachment URLs** – Replace image links and attachment URLs site-wide with precision.
 * **Word Masking** – Mask specific words site-wide using flexible find and replace rules.
 * **Temporary Find-Replace Rules** – Create live, non-permanent replacements without altering your database.
 * **Edit Footer Credit** – Remove or update footer text without modifying HTML or database content.
@@ -182,6 +178,13 @@ code block in find field*
 11. Media replacer
 
 == Changelog ==
+
+= Version: 1.7.3 ( May 23, 2025 ) =
+* **New PRO:** Snippet Manager – Create, edit, and manage reusable CSS & JS code snippets from the admin panel.
+* **New PRO:** Apply snippets conditionally to specific posts, pages, or custom post types with a visual list of where each snippet is used.
+* **New PRO:** Snippets are saved as physical files and loaded for better performance and compatibility.
+* **New PRO:** Supports both CSS and JS snippets with real-time page/post targeting.
+* **Improved:** Frontend only loads the exact snippets needed for the current page, reducing bloat.
 
 = Version: 1.7.2 ( May 16, 2025 ) =
 * **New:** ✨ AI-Powered Suggestions – Generate intelligent replacement suggestions using OpenAI.

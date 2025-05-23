@@ -83,4 +83,7 @@ class ProActions {
 
 		return \is_plugin_active( 'better-find-and-replace-pro/better-find-and-replace-pro.php' );
 	}
+
+	
+
 }

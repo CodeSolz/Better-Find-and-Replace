@@ -23,11 +23,7 @@ class Scripts_Settings {
 	public static function load_admin_settings_scripts( $page_id, $rtafr_menu ) {
 
 		$rtafr_menu = apply_filters( 'rtafar_menu_scripts', $rtafr_menu );
-
-		if ( ( isset( $rtafr_menu['add_masking_rule'] ) && $page_id === $rtafr_menu['add_masking_rule'] ) ||
-				( isset( $rtafr_menu['replace_in_db'] ) && $page_id === $rtafr_menu['replace_in_db'] ) ||
-				( isset( $rtafr_menu['media_replacer'] ) && $page_id === $rtafr_menu['media_replacer'] )
-			) {
+		if ( apply_filters( 'bfrp_should_load_form_assets', false, $page_id, $rtafr_menu ) ) {
 			wp_enqueue_style(
 				'select2',
 				CS_RTAFAR_PLUGIN_ASSET_URI . 'plugins/select2/css/select2.min.css',
@@ -83,14 +79,10 @@ class Scripts_Settings {
 					'ppoptn' => 'admin\\options\\functions\\DbFuncReplaceInDb@get_db_cols_select_options',
 				)
 			);
-
 		}
 
-		if ( ( isset( $rtafr_menu['add_masking_rule'] ) && $page_id == $rtafr_menu['add_masking_rule'] ) ||
-				( isset( $rtafr_menu['replace_in_db'] ) && $page_id == $rtafr_menu['replace_in_db'] ) ||
-				( isset( $rtafr_menu['brafp_license'] ) && $page_id == $rtafr_menu['brafp_license'] ) ||
-				( isset( $rtafr_menu['ai_settings'] ) && $page_id == $rtafr_menu['ai_settings'] ) 
-			) {
+		
+		if ( apply_filters( 'bfrp_should_load_page_assets', false, $page_id, $rtafr_menu ) ) {
 				wp_enqueue_script(
 					'rtafar.app.admin.min',
 					CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.app.admin.min.js',
@@ -118,6 +110,46 @@ class Scripts_Settings {
 		wp_enqueue_style( 'wapg', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-style.min.css', array(), CS_RTAFAR_VERSION );
 
 		return;
+	}
+
+
+	/**
+	 * Check if should load page assets
+	 *
+	 * @param [type] $should_load
+	 * @param [type] $page_id
+	 * @param [type] $pages
+	 * @return void
+	 */	
+	public static function bfrpShouldLoadPageAssets( $should_load, $page_id, $pages ) {
+		//default plugin pages
+		$target_pages = [
+			$pages['add_masking_rule'] ?? '',
+			$pages['replace_in_db'] ?? '',
+			$pages['brafp_license'] ?? '',
+			$pages['ai_settings'] ?? '',
+		];
+
+		return $should_load || in_array( $page_id, $target_pages, true );
+	}
+
+	/**
+	 * Check if should load form assets
+	 *
+	 * @param [type] $should_load
+	 * @param [type] $page_id
+	 * @param [type] $pages
+	 * @return void
+	 */
+	public static function bfrpShouldLoadFormAssets( $should_load, $page_id, $pages ) {
+		//default plugin pages
+		$target_pages = [
+			$pages['add_masking_rule'] ?? '',
+			$pages['replace_in_db'] ?? '',
+			$pages['media_replacer'] ?? '',
+		];
+
+		return $should_load || in_array( $page_id, $target_pages, true );
 	}
 
 	/**

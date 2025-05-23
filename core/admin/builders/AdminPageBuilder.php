@@ -158,7 +158,7 @@ class AdminPageBuilder {
 	 * @return string
 	 */
 	private function generate_button_block( $argc ) {
-		if ( ! isset( $argc['show_btn'] ) ) {
+		if ( ! isset( $argc['show_btn'] ) || false === $argc['show_btn'] ) {
 			return false;
 		}
 		$btn_text      = isset( $argc['btn_text'] ) ? $argc['btn_text'] : 'Submit';
