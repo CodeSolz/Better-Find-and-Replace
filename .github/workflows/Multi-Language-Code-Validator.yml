@@ -1,0 +1,100 @@
+name: 🧪 Multi-Language Code Validator
+
+on:
+  push:
+    branches: [ main ]  # ← change to 'master' if you're using that
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        language: [php, node, python, shell]
+
+    steps:
+      - name: 🧾 Checkout Code
+        uses: actions/checkout@v3
+
+      # ⛔ Exit early if required files not present
+      - name: 🚧 Check language-specific files
+        run: |
+          case "${{ matrix.language }}" in
+            php)
+              [ -f "composer.json" ] || { echo "🛑 No composer.json found. Skipping PHP job."; exit 0; }
+              ;;
+            node)
+              [ -f "package.json" ] || { echo "🛑 No package.json found. Skipping Node.js job."; exit 0; }
+              ;;
+            python)
+              [ -f "requirements.txt" ] || { echo "🛑 No requirements.txt found. Skipping Python job."; exit 0; }
+              ;;
+            shell)
+              find . -name "*.sh" | grep -q . || { echo "🛑 No .sh files found. Skipping Shell job."; exit 0; }
+              ;;
+          esac
+
+      # =============== PHP Composer ==================
+      - name: 🛠 Setup PHP
+        if: matrix.language == 'php'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+
+      - name: ✅ Validate composer.json and composer.lock
+        if: matrix.language == 'php'
+        run: composer validate --strict
+
+      - name: 💾 Cache Composer packages
+        if: matrix.language == 'php'
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: 📦 Install PHP dependencies
+        if: matrix.language == 'php'
+        run: composer install --prefer-dist --no-progress
+
+      - name: 🧪 Run PHP test suite
+        if: matrix.language == 'php'
+        run: |
+          if composer run-script test; then
+            echo "✅ PHP tests passed"
+          else
+            echo "❌ PHP tests failed"
+            exit 1
+          fi
+
+      # =============== Node.js ==================
+      - name: 🟢 Node.js: Lint & Test
+        if: matrix.language == 'node'
+        run: |
+          node -v
+          npm ci
+          if npm run | grep -q lint; then npm run lint; fi
+          if npm test; then echo "✅ Node tests passed"; else echo "❌ Node tests failed"; exit 1; fi
+
+      # =============== Python ==================
+      - name: 🐍 Python: Install & Test
+        if: matrix.language == 'python'
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+          if command -v pytest >/dev/null 2>&1; then pytest || exit 1; fi
+
+      # =============== Shell ==================
+      - name: 🧪 ShellCheck all scripts
+        if: matrix.language == 'shell'
+        run: |
+          sudo apt-get update && sudo apt-get install -y shellcheck
+          find . -type f -name "*.sh" -exec shellcheck {} +
