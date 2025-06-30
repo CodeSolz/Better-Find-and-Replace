@@ -4,11 +4,11 @@ Tags: database, search replace, search, replace, search and replace, real-time r
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 6.8
-Stable tag: 1.7.3
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily search and replace anything - text, images, URLs, code blocks or jQuery-Ajax content in real time or Database using filters, easy user-interface
+Search and replace text, images, URLs, footer credits, code blocks or jQuery-Ajax content in real time or in Database, easy user-interface
 
 == Description ==
 
@@ -18,11 +18,11 @@ Easily search and replace anything - text, images, URLs, code blocks or jQuery-A
 
 Replace text or media in bulk with full support for serialized data, custom tables and dry-run previews. AI-powered suggestions help you rewrite or improve content instantly, making your edits smarter and faster.
 
-Easily replace images using drag-and-drop and auto-regenerate thumbnails. You can also update or add  alt text, captions and metadata with the suggestion of AI for better SEO.
+Easily find and replace images using drag-and-drop and auto-regenerate thumbnails. You can also update or add  alt text, captions and metadata with the suggestion of AI for better SEO.
 
 Want to **change content without editing your database**? Use real-time masking to update text, links or HTML before the page loads — instantly and safely.
 
-Built for developers, agencies and site owners who want fast, accurate control over their content — all in one clean, intuitive interface.
+Built for developers, agencies and site owners, individual ( everyone ) who want fast, accurate control over their content management system — all in one clean, intuitive interface.
 
 
 == Key Features ==
@@ -178,6 +178,9 @@ code block in find field*
 11. Media replacer
 
 == Changelog ==
+
+= Version: 1.7.4 ( July 01, 2025 ) =
+* **Fix:** Flags **translation loading issue** on the `plugins_loaded` hook (requires `init` or later).
 
 = Version: 1.7.3 ( May 23, 2025 ) =
 * **New PRO:** Snippet Manager – Create, edit, and manage reusable CSS & JS code snippets from the admin panel.

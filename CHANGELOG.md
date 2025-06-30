@@ -1,3 +1,6 @@
+### Version: 1.7.4 ( July 01, 2025 ) ###
+- **Fix:** Flags **translation loading issue** on the `plugins_loaded` hook (requires `init` or later).
+
 ### Version: 1.7.3 ( May 23, 2025 ) ###
 - **New PRO:** Snippet Manager – Create, edit, and manage reusable CSS & JS code snippets from the admin panel.
 - **New PRO:** Apply snippets conditionally to specific posts, pages, or custom post types with a visual list of where each snippet is used.
