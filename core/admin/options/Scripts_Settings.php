@@ -130,6 +130,8 @@ class Scripts_Settings {
 			$pages['ai_settings'] ?? '',
 		];
 
+		// pre_print( $target_pages);
+
 		return $should_load || in_array( $page_id, $target_pages, true );
 	}
 

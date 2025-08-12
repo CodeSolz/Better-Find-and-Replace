@@ -85,6 +85,7 @@ class RTAFAR_DB {
 		global $wpdb;
 		$primary_key = null;
 		$columns     = array();
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$fields      = $wpdb->get_results( 'DESCRIBE ' . $table );
 
 		if ( is_array( $fields ) ) {

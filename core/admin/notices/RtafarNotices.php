@@ -53,12 +53,12 @@ class RtafarNotices {
 		// check installed time
 		$installedOn = get_option( 'rtafar_plugin_install_date' );
 		if ( empty( $installedOn ) ) {
-			add_option( 'rtafar_plugin_install_date', date( 'Y-m-d H:i:s' ) );
+			add_option( 'rtafar_plugin_install_date', gmdate( 'Y-m-d H:i:s' ) );
 			return false;
 		}
 
-		$date1 = new \DateTime( \date( 'Y-m-d', \strtotime( $installedOn ) ) );
-		$date2 = new \DateTime( \date( 'Y-m-d' ) );
+		$date1 = new \DateTime( \gmdate( 'Y-m-d', \strtotime( $installedOn ) ) );
+		$date2 = new \DateTime( \gmdate( 'Y-m-d' ) );
 		if ( $date1->diff( $date2 )->days < 14 ) {
 			return false;
 		}

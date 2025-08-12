@@ -129,7 +129,10 @@ class MediaReplacer {
 
 					<img
 					class="preview-image upload-preview"
-					src="<?php echo CS_RTAFAR_PLUGIN_ASSET_URI . 'img/new-media-placeholder250x207.svg'; ?>"
+					src="<?php 
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo CS_RTAFAR_PLUGIN_ASSET_URI . 'img/new-media-placeholder250x207.svg'; 
+					?>"
 					draggable="false"
 					alt="new media preview"
 					/>

@@ -1,11 +1,11 @@
 <?php namespace RealTimeAutoFindReplace\admin\options\pages;
 
 /**
- * Class: Add New Coin
+ * Class: AISettings
  *
  * @package Admin
  * @since 1.0.0
- * @author CodeSolz <customer-support@codesolz.net>
+ * @author CodeSolz <info@codesolz.net>
  */
 
 if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
@@ -61,6 +61,7 @@ class AISettings {
 				'required'    => true,
 				'value'       => FormBuilder::get_value( 'api_key', $args, '' ),
 				'placeholder' => __( 'Enter your API Key', 'real-time-auto-find-and-replace' ),
+				/* Translators: This code generates a message instructing users to enter their API Key, with a link to the API Keys Menu in the openapi platform. */
 				'desc_tip'    => sprintf( __( 'Enter your API Key. You can find your API Key in the openapi platform in %1$s API Keys Menu %2$s .', 'real-time-auto-find-and-replace' ), "<a href='https://platform.openai.com/api-keys' target='_blank'>", '</a>' ),
 			),
 			'cs_ai_config[language_model]'      => array(
@@ -165,3 +166,4 @@ class AISettings {
 		return $this->Admin_Page_Generator->generate_page( $args );
 	}
 }
+

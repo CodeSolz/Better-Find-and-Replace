@@ -1,3 +1,7 @@
+### Version: 1.7.5 ( August 12, 2025 ) ###
+- **Upgrade:** The JavaScript code has been modernized
+- **Fix:** Detects **translation loading** on the `plugins_loaded` hook and requires moving it to the `init` hook.
+
 ### Version: 1.7.4 ( July 01, 2025 ) ###
 - **Fix:** Flags **translation loading issue** on the `plugins_loaded` hook (requires `init` or later).
 

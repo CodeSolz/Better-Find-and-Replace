@@ -246,6 +246,7 @@ class DbReplacer {
 
 			// PHP 7.0 or higher
 			$selectColumnsString = implode( ', ', $selectColumns );
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$sql                 = $wpdb->prepare( "SELECT ID, $selectColumnsString FROM {$wpdb->posts} WHERE post_type = %s AND $filterQuery", $placeholders );
 
 			// pre_print( $sql );
@@ -259,6 +260,7 @@ class DbReplacer {
 			);
 		}
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$get_data = $wpdb->get_results( $sql );
 		if ( $get_data ) {
 

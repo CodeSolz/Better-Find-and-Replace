@@ -4,7 +4,7 @@ Tags: database, search replace, search, replace, search and replace, real-time r
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 4.0
 Tested up to: 6.8
-Stable tag: 1.7.4
+Stable tag: 1.7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,6 +178,10 @@ code block in find field*
 11. Media replacer
 
 == Changelog ==
+
+= Version: 1.7.5 ( August 12, 2025 ) =
+* **Upgrade:** The JavaScript code has been modernized
+* **Fix:** Detects **translation loading** on the `plugins_loaded` hook and requires moving it to the `init` hook.
 
 = Version: 1.7.4 ( July 01, 2025 ) =
 * **Fix:** Flags **translation loading issue** on the `plugins_loaded` hook (requires `init` or later).

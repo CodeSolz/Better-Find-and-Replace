@@ -45,14 +45,14 @@ class Activate {
 
 			// Log any errors from dbDelta
 			if ( ! empty( $wpdb->last_error ) ) {
-				error_log( 'BFR DB installation error: ' . $wpdb->last_error );
+				wp_die( esc_html__( 'BFR Database installation failed. Error: ', 'real-time-auto-find-and-replace' ) . esc_html( $wpdb->last_error ) );
 			}
 		}
 
 		// add db version to db
 		add_option( 'rtafar_db_version', CS_RTAFAR_DB_VERSION );
 		add_option( 'rtafar_plugin_version', CS_RTAFAR_VERSION );
-		add_option( 'rtafar_plugin_install_date', date( 'Y-m-d H:i:s' ) );
+		add_option( 'rtafar_plugin_install_date', gmdate( 'Y-m-d H:i:s' ) );
 	}
 
 	/**
@@ -106,7 +106,7 @@ class Activate {
 
 					// Log any errors from dbDelta
 					if ( ! empty( $wpdb->last_error ) ) {
-						error_log( 'BFR DB update error: ' . $wpdb->last_error );
+						wp_die( esc_html__( 'BFR Database update failed. Error: ', 'real-time-auto-find-and-replace' ) . esc_html( $wpdb->last_error ) );
 					}
 				}
 			}

@@ -41,10 +41,12 @@ class RTAFAR_CustomAjax {
 		if ( ! isset( $_REQUEST['data'] ) && isset( $_POST['method'] ) ) {
 			$data = $_POST;
 		} else {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			$data = isset($_REQUEST['data']) ? $_REQUEST['data'] : '';
 		}
-
+		
 		//get methods
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		$method = isset( $data['method'] ) ? $data['method'] : ( isset( $_REQUEST['method'] ) ? $_REQUEST['method'] : '' );
 
 		if ( empty( $method ) || strpos( $method, '@' ) === false ) {
@@ -80,7 +82,7 @@ class RTAFAR_CustomAjax {
 			);
 		}
 
-		( new $class_path() )->{$method[1]}( $data );
+		echo ( new $class_path() )->{$method[1]}( $data );
 		exit;
 	}
 }

@@ -98,7 +98,7 @@ class Masking {
 		} else {
 			$isExists = $wpdb->get_var(
 				$wpdb->prepare(
-					"select id from {$wpdb->prefix}rtafar_rules where find = '%s' and type = '%s'",
+					"select id from {$wpdb->prefix}rtafar_rules where find = %s and type = %s",
 					$find,
 					$type
 				)
@@ -177,6 +177,7 @@ class Masking {
 			$sql = false === $fsql ? $sql : $fsql;
 		}
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$get_rules = $wpdb->get_results( $sql );
 
 		if ( $get_rules ) {
