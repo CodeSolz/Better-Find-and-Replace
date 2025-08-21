@@ -354,7 +354,7 @@ class Util {
 	 * @return void
 	 */
 	public static function cs_free_plugins() {
-		return \self_admin_url( 'plugin-install.php?s=codesolz&tab=search&type=author' );
+		return 'https://codesolz.net/our-products/wordpress-plugins/';
 	}
 
 	/**
