@@ -103,7 +103,7 @@ class FormBuilder {
 	 */
 	private function generate_field( $field_name, $field, $field_id ) {
 
-		$input  = '<div class="label"><label class="label-'.$field_id.'">';
+		$input  = '<div class="label"><label class="label-'.$field_id.'" for="cs_field_'.$field_id.'" >';
 		$input .= $this->generate_title( $field );
 		$input .= '</label></div>';
 		$input .= '<div class="input-group">';
@@ -121,6 +121,7 @@ class FormBuilder {
 		} elseif ( $field['type'] == 'checkbox' ) {
 			$input .= $this->generate_checkbox_field( $field_name, $field, $field_id );
 		} elseif ( $field['type'] == 'miscellaneous' ) {
+			$misFieldNo = 1;
 			foreach ( $field['options'] as $item_name => $item_assets ) {
 
 				// check has wrapper class
@@ -129,13 +130,13 @@ class FormBuilder {
 				}
 
 				if ( $item_assets['type'] == 'text' || $field['type'] == 'email' || $item_assets['type'] == 'number' || $item_assets['type'] == 'password' ) {
-					$input .= $this->generate_text_field( $item_name, $item_assets, 'mis_' . $field_id );
+					$input .= $this->generate_text_field( $item_name, $item_assets, 'mis_' . $field_id . '_' . $misFieldNo );
 				} elseif ( $item_assets['type'] == 'select' ) {
-					$input .= $this->generate_select_field( $item_name, $item_assets, 'mis_' . $field_id );
+					$input .= $this->generate_select_field( $item_name, $item_assets, 'mis_' . $field_id . '_' . $misFieldNo );
 				} elseif ( $item_assets['type'] == 'checkbox' ) {
-					$input .= $this->generate_checkbox_field( $item_name, $item_assets, 'mis_' . $field_id );
+					$input .= $this->generate_checkbox_field( $item_name, $item_assets, 'mis_' . $field_id . '_' . $misFieldNo );
 				} elseif ( $item_assets['type'] == 'textarea' ) {
-					$input .= $this->generate_textarea_field( $item_name, $item_assets, 'mis_' . $field_id );
+					$input .= $this->generate_textarea_field( $item_name, $item_assets, 'mis_' . $field_id . '_' . $misFieldNo );
 				}
 
 				if ( isset( $item_assets['after_text'] ) ) {
@@ -145,6 +146,8 @@ class FormBuilder {
 				if ( isset( $field['after_text_wrapper_class'] ) ) {
 					$input .= '</span>';
 				}
+
+				$misFieldNo++;
 			}
 		}
 
@@ -258,8 +261,8 @@ class FormBuilder {
 	 */
 	private function get_hidden_field_val( $field_name, $field, $field_id ) {
 		if ( isset( $field['disabled'] ) && true === $field['disabled'] ) {
-			$input_value = $field['value'];
-			return '<input type="hidden" value ="' . $input_value . '" name ="' . $field_name . '" />';
+			$input_value = esc_attr( $field['value'] );
+			return '<input type="hidden" value ="' . $input_value . '" name ="' . esc_attr( $field_name ) . '" />';
 		}
 		return false;
 	}
@@ -288,7 +291,8 @@ class FormBuilder {
 	 */
 	private function generate_textarea_field( $field_name, $field, $field_id ) {
 		$input_item = $this->generate_attribute( $field_name, $field, $field_id );
-		return "<textarea  {$input_item} >" . $field['value'] . '</textarea>';
+		$val = isset( $field['value'] ) ? $field['value'] : '';
+		return "<textarea {$input_item}>" . esc_textarea( $val ) . '</textarea>';
 	}
 
 	/**
@@ -392,7 +396,8 @@ class FormBuilder {
 				$disabled = 'disabled';
 			}
 
-			$item .= '<option value ="' . $key . '" ' . $selected . ' ' . $disabled . ' >' . $val . '</option>';
+			$item .= '<option value="' . esc_attr( $key ) . '" ' . $selected . ' ' . $disabled . '>' . esc_html( $val ) . '</option>';
+
 		}
 
 		return $item;
@@ -402,7 +407,7 @@ class FormBuilder {
 	 * Generate title
 	 */
 	private function generate_title( $field ) {
-		return isset( $field['title'] ) ? $field['title'] : '&nbsp';
+		return isset( $field['title'] ) ?  $field['title'] : '&nbsp';
 	}
 
 	/**
@@ -412,7 +417,7 @@ class FormBuilder {
 	 * @return type
 	 */
 	private function attr_type( $type ) {
-		return ' type = "' . $type . '"';
+		return ' type = "' . esc_attr( $type ) . '"';
 	}
 
 	/**
@@ -421,9 +426,8 @@ class FormBuilder {
 	 * @param type $class
 	 * @return string
 	 */
-	private function attr_class( $class ) {
-		return ' class = "' . $class . '" ';
-	}
+	private function attr_class( $class ) { return ' class="' . esc_attr( $class ) . '" '; }
+
 
 	/**
 	 * attr placeholder
@@ -431,9 +435,25 @@ class FormBuilder {
 	 * @param type $placeholder
 	 * @return string
 	 */
-	private function attr_placeholder( $placeholder ) {
-		return ' placeholder = "' . $placeholder . '" ';
-	}
+	private function attr_placeholder( $txt ) { return ' placeholder="' . esc_attr( $txt ) . '" '; }
+
+	/**
+	 * attr name
+	 *
+	 * @param type $field_name
+	 * @return string
+	 */
+	private function attr_name( $name ) { return ' name="' . esc_attr( $name ) . '" '; }
+
+
+	/**
+	 * attr name
+	 *
+	 * @param type $field_id
+	 * @return string
+	 */
+	private function attr_id( $field_id ) { return ' id="cs_field_' . esc_attr( $field_id ) . '" '; }
+
 
 	/**
 	 * attr value
@@ -446,7 +466,7 @@ class FormBuilder {
 			return ' value = "invalid value" ';
 		}
 
-		return ' value = "' . $value . '" ';
+		return ' value="' . esc_attr( $value ) . '"';
 	}
 
 	/**
@@ -485,25 +505,8 @@ class FormBuilder {
 		}
 	}
 
-	/**
-	 * attr name
-	 *
-	 * @param type $field_name
-	 * @return string
-	 */
-	private function attr_name( $field_name ) {
-		return ' name = "' . $field_name . '" ';
-	}
+	
 
-	/**
-	 * attr name
-	 *
-	 * @param type $field_id
-	 * @return string
-	 */
-	private function attr_id( $field_id ) {
-		return ' id = "cs_field_' . $field_id . '" ';
-	}
 
 	/**
 	 * attr multiple
@@ -524,7 +527,7 @@ class FormBuilder {
 	 */
 	public static function get_value( $id, $values = array(), $default_value = '' ) {
 		if ( isset( $values[ $id ] ) && ! empty( $values[ $id ] ) ) {
-			return $values[ $id ];
+			return esc_attr( $values[ $id ] );
 		} elseif ( ! empty( $default_value ) ) {
 			return Util::cs_esc_html( $default_value );
 		}
