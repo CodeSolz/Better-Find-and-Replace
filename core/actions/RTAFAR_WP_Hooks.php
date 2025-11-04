@@ -127,14 +127,14 @@ class RTAFAR_WP_Hooks {
 		);
 
 		$pro_links = array(
-			'cs-bfar-go-pro-action-link' => '<a target="_blank" href="' . esc_url( Util::cs_pro_link() . '?utm_campaign=gopro&utm_source=pl-actions-links&utm_medium=wp-dash' ) . '" aria-label="' . esc_attr__( 'Go Pro', 'real-time-auto-find-and-replace' ) . '"> ' . esc_html__( 'Go Pro', 'real-time-auto-find-and-replace' ) . '</a>',
+			'cs-bfar-go-pro-action-link' => '<a target="_blank" href="' . esc_url( Util::cs_pro_link() . '?utm_campaign=gopro&utm_source=pl-actions-links&utm_medium=wp-dash' ) . '" aria-label="' . esc_attr__( 'Upgrade To Premium', 'real-time-auto-find-and-replace' ) . '"> ' . esc_html__( 'Upgrade To Premium', 'real-time-auto-find-and-replace' ) . '</a>',
 		);
 
 		if ( ProActions::hasPro() ) {
 			$pro_links = array();
 		}
 
-		return array_merge( $custom_links, $links, $pro_links );
+		return array_merge( $pro_links, $custom_links, $links );
 	}
 
 	/**

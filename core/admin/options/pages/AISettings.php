@@ -106,11 +106,10 @@ class AISettings {
 		$args['content'] = $this->Form_Generator->generate_html_fields( $fields );
 
 		$hidden_fields = array(
-			
 			'method'                          => array(
 				'id'    => 'method',
 				'type'  => 'hidden',
-				'value' => 'admin\\functions\\aiHandler@saveSettings',
+				'value' => 'aiHandler@saveSettings',
 			),
 			'swal_title'                      => array(
 				'id'    => 'swal_title',

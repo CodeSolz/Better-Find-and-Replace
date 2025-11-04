@@ -512,7 +512,7 @@ class Util {
 	}
 
 	/**
-	 * Nav Caps
+	 * Plugins Caps
 	 *
 	 * @return String or array
 	 */

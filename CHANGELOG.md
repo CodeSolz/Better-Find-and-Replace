@@ -1,3 +1,6 @@
+### Version: 1.7.8 ( November 05, 2025 ) ###
+* **Update:** Security patch updated
+
 ### Version: 1.7.7 ( September 29, 2025 ) ###
 * **Update:** Security patch updated
 

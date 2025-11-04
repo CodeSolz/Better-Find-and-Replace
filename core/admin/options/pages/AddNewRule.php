@@ -495,7 +495,7 @@ class AddNewRule {
 				'method'           => array(
 					'id'    => 'method',
 					'type'  => 'hidden',
-					'value' => "admin\\functions\\Masking@add_masking_rule",
+					'value' => "Masking@add_masking_rule",
 				),
 				'swal_title'       => array(
 					'id'    => 'swal_title',

@@ -74,9 +74,9 @@ class Scripts_Settings {
 				'rtafar.admin.replace.in.db',
 				'repndb',
 				array(
-					'mgt'    => 'admin\\options\\functions\\DbFuncReplaceInDb@get_tables_in_select_options',
-					'mgurls' => 'admin\\options\\functions\\DbFuncReplaceInDb@get_urls_in_select_options',
-					'ppoptn' => 'admin\\options\\functions\\DbFuncReplaceInDb@get_db_cols_select_options',
+					'mgt'    => 'DbFuncReplaceInDb@get_tables_in_select_options',
+					'mgurls' => 'DbFuncReplaceInDb@get_urls_in_select_options',
+					'ppoptn' => 'DbFuncReplaceInDb@get_db_cols_select_options',
 				)
 			);
 		}

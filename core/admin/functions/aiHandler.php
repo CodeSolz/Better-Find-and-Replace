@@ -92,6 +92,9 @@ class aiHandler {
 	 */
 	public function getAiSuggestion( $userInput ){
 		$AISettings = self::getSettings();
+
+			// pre_print( $userInput );
+
 		if ( empty( $AISettings ) || empty( $AISettings['api_key'] ) ) {
 			return wp_send_json( array(
 				'status' => false,

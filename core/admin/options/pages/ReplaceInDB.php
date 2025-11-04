@@ -189,7 +189,7 @@ class ReplaceInDB {
 			'method'           => array(
 				'id'    => 'method',
 				'type'  => 'hidden',
-				'value' => "admin\\functions\\DbReplacer@db_string_replace",
+				'value' => "DbReplacer@db_string_replace",
 			),
 			'swal_title'       => array(
 				'id'    => 'swal_title',

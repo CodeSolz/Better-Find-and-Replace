@@ -148,8 +148,8 @@ class RTAFAR_RegisterMenu {
 
 		$this->rtafr_menus['go_pro'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
-			__( 'Go Pro', 'real-time-auto-find-and-replace' ),
-			'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . __( 'Go Pro', 'real-time-auto-find-and-replace' ),
+			__( 'Upgrade To Premium', 'real-time-auto-find-and-replace' ),
+			'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . __( 'Upgrade To Premium', 'real-time-auto-find-and-replace' ),
 			'read',
 			'cs-bfar-go-pro',
 			array( $this, 'rtafar_handle_external_redirects' ),
