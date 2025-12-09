@@ -2,9 +2,9 @@
 Contributors: codesolz, m.tuhin
 Tags: database, search replace, search, replace, search and replace, real-time replace, find, find and replace, gutenberg, block-editor, search replace elementor
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
-Requires at least: 4.0
-Tested up to: 6.8
-Stable tag: 1.7.8
+Requires at least: 5.2
+Tested up to: 6.9
+Stable tag: 1.7.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,6 +178,9 @@ code block in find field*
 11. Media replacer
 
 == Changelog ==
+
+= Version: 1.7.9 ( December 09, 2025 ) =
+* **Update:** Updated for the latest WP release compatibility
 
 = Version: 1.7.8 ( November 05, 2025 ) =
 * **Update:** Security patch updated

@@ -1,3 +1,6 @@
+### Version: 1.7.9 ( December 09, 2025 ) ###
+* **Update:** Updated for the latest WP release compatibility
+
 ### Version: 1.7.8 ( November 05, 2025 ) ###
 * **Update:** Security patch updated
 
