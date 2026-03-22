@@ -13,6 +13,7 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 }
 
 use RealTimeAutoFindReplace\admin\builders\AdminPageBuilder;
+use RealTimeAutoFindReplace\admin\functions\ProActions;
 
 class AboutUs {
 
@@ -172,9 +173,11 @@ class AboutUs {
 							<a href="<?php echo esc_url( $wporg_url ); ?>" target="_blank" rel="noopener noreferrer" class="rtafar-btn secondary">
 								<?php esc_html_e( 'WordPress.org Page', 'real-time-auto-find-and-replace' ); ?>
 							</a>
-							<a href="<?php echo esc_url( $upgrade_url ); ?>" target="_blank" rel="noopener noreferrer" class="rtafar-btn outline-purple">
-								&#9733; <?php esc_html_e( 'Upgrade to Pro', 'real-time-auto-find-and-replace' ); ?>
-							</a>
+							<?php if ( ! ProActions::hasPro() ) { ?>
+								<a href="<?php echo esc_url( $upgrade_url ); ?>" target="_blank" rel="noopener noreferrer" class="rtafar-btn outline-purple">
+									&#9733; <?php esc_html_e( 'Upgrade to Pro', 'real-time-auto-find-and-replace' ); ?>
+								</a>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
