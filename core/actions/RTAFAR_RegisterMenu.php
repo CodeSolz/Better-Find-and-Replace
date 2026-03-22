@@ -57,6 +57,7 @@ class RTAFAR_RegisterMenu {
 	public function __construct() {
 		// call WordPress admin menu hook
 		add_action( 'admin_menu', array( $this, 'rtafar_register_menu' ) );
+		add_action( 'admin_menu', array( $this, 'rtafar_move_about_us_last' ), 9999 );
 	}
 
 	/**
@@ -156,6 +157,16 @@ class RTAFAR_RegisterMenu {
 			7
 		);
 
+		$this->rtafr_menus['about_us'] = add_submenu_page(
+			CS_RTAFAR_PLUGIN_IDENTIFIER,
+			__( 'About Us', 'real-time-auto-find-and-replace' ),
+			__( 'About Us', 'real-time-auto-find-and-replace' ),
+			'read',
+			'cs-bfar-about-us',
+			array( $this, 'rtafar_page_about_us' ),
+			999
+		);
+
 		// load script
 		add_action( "load-{$this->rtafr_menus['add_masking_rule']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['all_masking_rules']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
@@ -163,6 +174,7 @@ class RTAFAR_RegisterMenu {
 		add_action( "load-{$this->rtafr_menus['restore_in_db_pro']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['media_replacer']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['ai_settings']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
+		add_action( "load-{$this->rtafr_menus['about_us']}", array( $this, 'rtafar_register_about_scripts' ) );
 
 		\remove_submenu_page( CS_RTAFAR_PLUGIN_IDENTIFIER, CS_RTAFAR_PLUGIN_IDENTIFIER );
 
@@ -353,6 +365,65 @@ class RTAFAR_RegisterMenu {
 				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ), $get_settings ) );
 			} else {
 				echo wp_kses( $AccessDenied, Util::cs_allowed_html() );
+			}
+		}
+	}
+
+	/**
+	 * About Us page callback
+	 *
+	 * @return void
+	 */
+	public function rtafar_page_about_us() {
+		$AboutUs = $this->pages->AboutUs();
+		if ( is_object( $AboutUs ) ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $AboutUs->generate_page();
+		} else {
+			echo wp_kses( $AboutUs, Util::cs_allowed_html() );
+		}
+	}
+
+	/**
+	 * Enqueue styles for the About Us page only.
+	 *
+	 * @return void
+	 */
+	public function rtafar_register_about_scripts() {
+		add_action( 'admin_enqueue_scripts', array( $this, 'rtafar_load_about_scripts' ) );
+	}
+
+	/**
+	 * Load About Us stylesheet.
+	 *
+	 * @return void
+	 */
+	public function rtafar_load_about_scripts() {
+		wp_enqueue_style(
+			'rtafar-about',
+			CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-about.css',
+			array(),
+			CS_RTAFAR_VERSION
+		);
+	}
+
+	/**
+	 * Move About Us to the end of the submenu, after all other plugins have registered their items.
+	 *
+	 * @return void
+	 */
+	public function rtafar_move_about_us_last() {
+		global $submenu;
+		$parent = CS_RTAFAR_PLUGIN_IDENTIFIER;
+		if ( empty( $submenu[ $parent ] ) ) {
+			return;
+		}
+		foreach ( $submenu[ $parent ] as $key => $item ) {
+			if ( isset( $item[2] ) && 'cs-bfar-about-us' === $item[2] ) {
+				$about_item = $item;
+				unset( $submenu[ $parent ][ $key ] );
+				$submenu[ $parent ][] = $about_item;
+				break;
 			}
 		}
 	}
