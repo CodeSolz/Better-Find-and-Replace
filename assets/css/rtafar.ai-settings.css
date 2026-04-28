@@ -1,0 +1,281 @@
+/* AI Settings page styles */
+
+.rtafar-ai-section {
+	margin: 24px 0;
+}
+
+.rtafar-ai-section-title {
+	font-size: 16px;
+	margin: 0 0 4px;
+	font-weight: 600;
+}
+
+.rtafar-ai-section-sub {
+	color: #666;
+	margin: 0 0 14px;
+}
+
+/* Provider grid */
+.rtafar-ai-provider-grid {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 12px;
+}
+
+@media (max-width: 1100px) {
+	.rtafar-ai-provider-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+	.rtafar-ai-provider-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.rtafar-ai-provider-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 14px 10px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: border-color .12s, box-shadow .12s, background .12s;
+	text-align: center;
+	min-height: 110px;
+}
+
+.rtafar-ai-provider-card:hover {
+	border-color: #2271b1;
+	background: #f6fbff;
+}
+
+.rtafar-ai-provider-card.is-active {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 2px rgba(34, 113, 177, .2);
+	background: #f0f7fc;
+}
+
+.rtafar-ai-provider-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #2271b1;
+	color: #fff;
+	font-weight: 700;
+	font-size: 14px;
+	letter-spacing: .5px;
+}
+
+.rtafar-ai-provider-name {
+	font-weight: 600;
+	font-size: 13px;
+}
+
+.rtafar-ai-provider-badges {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 4px;
+}
+
+.rtafar-ai-badge {
+	display: inline-block;
+	padding: 1px 8px;
+	border-radius: 10px;
+	font-size: 10px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: .3px;
+}
+
+.rtafar-ai-badge-free {
+	background: #d1fae5;
+	color: #065f46;
+}
+
+.rtafar-ai-badge-oauth {
+	background: #dbeafe;
+	color: #1e40af;
+}
+
+/* Provider config panel */
+.rtafar-ai-panels-wrap {
+	border-top: 1px solid #eee;
+	padding-top: 16px;
+}
+
+.rtafar-ai-provider-panel {
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	border-radius: 8px;
+	padding: 18px 20px;
+}
+
+.rtafar-ai-panel-header h4 {
+	margin: 0 0 4px;
+	font-size: 16px;
+}
+
+.rtafar-ai-panel-notes {
+	color: #666;
+	margin: 0 0 14px;
+	font-size: 13px;
+}
+
+.rtafar-ai-field {
+	margin-bottom: 14px;
+}
+
+.rtafar-ai-field label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.rtafar-ai-field input[type="text"],
+.rtafar-ai-field input[type="password"],
+.rtafar-ai-field select,
+.rtafar-ai-field textarea {
+	width: 100%;
+	max-width: 540px;
+	padding: 6px 10px;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	font-size: 13px;
+	box-sizing: border-box;
+}
+
+.rtafar-ai-field textarea {
+	font-family: inherit;
+	resize: vertical;
+}
+
+.rtafar-ai-key-row,
+.rtafar-ai-model-row {
+	display: flex;
+	gap: 8px;
+	max-width: 700px;
+	flex-wrap: wrap;
+}
+
+.rtafar-ai-key-row .rtafar-ai-key-input {
+	flex: 1 1 280px;
+}
+
+.rtafar-ai-model-row .rtafar-ai-model-select {
+	flex: 1 1 280px;
+}
+
+.rtafar-ai-toggle-visibility {
+	min-width: 36px;
+}
+
+.rtafar-ai-hint {
+	color: #777;
+	font-size: 12px;
+	margin: 6px 0 0;
+}
+
+.rtafar-ai-test-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-top: 4px;
+}
+
+.rtafar-ai-test-status {
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.rtafar-ai-test-status.is-ok {
+	color: #065f46;
+}
+
+.rtafar-ai-test-status.is-err {
+	color: #b91c1c;
+}
+
+/* Intro hints */
+.rtafar-ai-intro ol {
+	margin-left: 18px;
+}
+
+.rtafar-ai-intro .highlight-red {
+	color: #b91c1c;
+}
+
+/* OAuth section */
+.rtafar-ai-oauth-banner {
+	margin: 0 0 16px;
+}
+
+.rtafar-ai-oauth-section {
+	background: #f8fafc;
+	border: 1px solid #dbeafe;
+	border-radius: 6px;
+	padding: 14px 16px;
+	margin-bottom: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.rtafar-ai-oauth-section.is-connected {
+	background: #f0fdf4;
+	border-color: #bbf7d0;
+}
+
+.rtafar-ai-oauth-state {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+}
+
+.rtafar-ai-oauth-state strong {
+	display: block;
+	font-size: 14px;
+}
+
+.rtafar-ai-oauth-state .rtafar-ai-hint {
+	margin: 2px 0 0;
+}
+
+.rtafar-ai-oauth-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: #2271b1;
+	color: #fff;
+	font-size: 14px;
+	flex-shrink: 0;
+}
+
+.rtafar-ai-oauth-section.is-connected .rtafar-ai-oauth-icon {
+	background: #16a34a;
+}
+
+.rtafar-ai-oauth-start {
+	font-weight: 600;
+}
+
+.rtafar-ai-oauth-start .rtafar-ai-oauth-icon {
+	width: 18px;
+	height: 18px;
+	background: transparent;
+	margin-right: 4px;
+	font-size: 13px;
+}
+
+.rtafar-ai-oauth-disconnect {
+	flex-shrink: 0;
+}

@@ -34,6 +34,21 @@ class AboutUs {
 	private function get_plugins_data() {
 		return array(
 			array(
+				'title'        => 'Advanced AI Content Generator',
+				'description'  => 'Create AI-powered WordPress content faster with smart generation workflows designed to help you draft, refine, and publish more efficiently from your dashboard.',
+				'icon'         => '📝',
+				'icon_class'   => 'rtafar-icon-green',
+				'badge'        => 'AI-Powered',
+				'badge_type'   => 'premium',
+				'features'     => array(
+					'Generate content with AI assistance',
+					'Speed up drafting and publishing workflows',
+					'Built for WordPress content creators',
+				),
+				'button_label' => 'View Plugin',
+				'button_url'   => 'https://codesolz.net/our-products/wordpress-plugin/advanced-ai-content-generator/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page',
+			),
+			array(
 				'title'        => 'SchemaPilot AI',
 				'description'  => 'Automatically generates, validates, and optimizes schema markup so your WordPress content appears with Google rich results. AI-powered, bulk-ready, WooCommerce compatible.',
 				'icon'         => '🤖',
@@ -120,14 +135,58 @@ class AboutUs {
 			     HERO SECTION
 			     ================================================ -->
 			<div class="rtafar-about-hero">
-				<div class="rtafar-hero-badge">✦ Trusted WordPress Plugins</div>
-				<h1 class="rtafar-hero-title">Discover More Tools<br>from CodeSolz</h1>
-				<p class="rtafar-hero-subtitle">
-					We build practical, powerful WordPress plugins used by thousands of developers and site owners worldwide. Every tool is crafted for simplicity, performance, and real-world usefulness.
-				</p>
-				<a href="<?php echo esc_url( $products_url ); ?>" target="_blank" rel="noopener noreferrer" class="rtafar-hero-cta">
-					Explore Our Full Ecosystem <span aria-hidden="true">↗</span>
-				</a>
+				<div class="rtafar-hero-grid">
+					<div class="rtafar-hero-copy">
+						<div class="rtafar-hero-badge">Premium WordPress Plugin Suite</div>
+						<h1 class="rtafar-hero-title">Tools That Make WordPress Work Faster, Smarter, and Better</h1>
+						<p class="rtafar-hero-subtitle">
+							CodeSolz builds premium-quality plugins for real websites. From AI-powered content and schema automation to safer search-and-replace, media organization, and WooCommerce enhancements, every product is crafted to save time and deliver clean results.
+						</p>
+						<div class="rtafar-hero-points">
+							<span class="rtafar-hero-point">Built for agencies, publishers, and store owners</span>
+							<span class="rtafar-hero-point">AI-powered workflows with practical controls</span>
+							<span class="rtafar-hero-point">Performance-focused tools without the bloat</span>
+						</div>
+						<div class="rtafar-hero-actions">
+							<a href="<?php echo esc_url( $products_url ); ?>" target="_blank" rel="noopener noreferrer" class="rtafar-hero-cta">
+								Browse Our Plugins <span aria-hidden="true">&#8599;</span>
+							</a>
+							<a href="<?php echo esc_url( $website_url ); ?>" target="_blank" rel="noopener noreferrer" class="rtafar-hero-link">
+								Visit CodeSolz
+							</a>
+						</div>
+					</div>
+					<div class="rtafar-hero-showcase">
+						<div class="rtafar-hero-panel">
+							<div class="rtafar-hero-panel-label">Why Users Explore More</div>
+							<h2 class="rtafar-hero-panel-title">A focused toolkit for modern WordPress teams</h2>
+							<div class="rtafar-hero-feature-list">
+								<div class="rtafar-hero-feature">
+									<strong>AI Content and Schema</strong>
+									<span>Generate content faster and automate structured data with practical AI workflows.</span>
+								</div>
+								<div class="rtafar-hero-feature">
+									<strong>Safe Site Cleanup</strong>
+									<span>Handle search, replace, and content updates with tools built for real production work.</span>
+								</div>
+								<div class="rtafar-hero-feature">
+									<strong>Growth and Organization</strong>
+									<span>Improve media management, user engagement, and WooCommerce experiences from one ecosystem.</span>
+								</div>
+							</div>
+							<div class="rtafar-hero-proof">
+								<div class="rtafar-hero-proof-item">
+									<span class="rtafar-hero-proof-value">50k+</span>
+									<span class="rtafar-hero-proof-label">Active installs for Better Find &amp; Replace on WordPress.org</span>
+								</div>
+								<div class="rtafar-hero-proof-item">
+									<span class="rtafar-hero-proof-value">Practical</span>
+									<span class="rtafar-hero-proof-label">Built to solve everyday WordPress problems with premium polish</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<!-- ================================================

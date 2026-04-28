@@ -58,6 +58,45 @@ class RTAFAR_RegisterMenu {
 		// call WordPress admin menu hook
 		add_action( 'admin_menu', array( $this, 'rtafar_register_menu' ) );
 		add_action( 'admin_menu', array( $this, 'rtafar_move_about_us_last' ), 9999 );
+		add_action( 'admin_menu', array( $this, 'rtafar_rewrite_go_pro_url' ), 9999 );
+		add_action( 'admin_footer', array( $this, 'rtafar_go_pro_target_blank' ) );
+	}
+
+	/** External "Upgrade to Premium" URL with UTMs. */
+	private function rtafar_go_pro_url() {
+		return Util::cs_get_pro_link( Util::cs_pro_link() . '?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
+	}
+
+	/** Swap the submenu slug for the external URL so the link points straight at codesolz.net. */
+	public function rtafar_rewrite_go_pro_url() {
+		global $submenu;
+		$parent = CS_RTAFAR_PLUGIN_IDENTIFIER;
+		if ( empty( $submenu[ $parent ] ) ) {
+			return;
+		}
+		foreach ( $submenu[ $parent ] as $key => $item ) {
+			if ( isset( $item[2] ) && 'cs-bfar-go-pro' === $item[2] ) {
+				$submenu[ $parent ][ $key ][2] = $this->rtafar_go_pro_url();
+				break;
+			}
+		}
+	}
+
+	/** Open the rewritten menu link in a new tab. */
+	public function rtafar_go_pro_target_blank() {
+		$url = $this->rtafar_go_pro_url();
+		?>
+		<script>
+		(function(){
+			var url = <?php echo wp_json_encode( $url ); ?>;
+			var nodes = document.querySelectorAll('#adminmenu a[href="' + url.replace(/"/g, '\\"') + '"]');
+			for (var i = 0; i < nodes.length; i++) {
+				nodes[i].setAttribute('target', '_blank');
+				nodes[i].setAttribute('rel', 'noopener noreferrer');
+			}
+		})();
+		</script>
+		<?php
 	}
 
 	/**
@@ -85,15 +124,7 @@ class RTAFAR_RegisterMenu {
 			57
 		);
 
-		$this->rtafr_menus['ai_settings'] = add_submenu_page(
-			CS_RTAFAR_PLUGIN_IDENTIFIER,
-			__( 'AI Configuration', 'real-time-auto-find-and-replace' ),
-			__( 'AI Settings', 'real-time-auto-find-and-replace' ),
-			'read',
-			'cs-bfar-ai-settings',
-			array( $this, 'rtafar_page_ai_settings' ),
-			1
-		);
+		
 
 		$this->rtafr_menus['add_masking_rule'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
@@ -102,7 +133,7 @@ class RTAFAR_RegisterMenu {
 			'read',
 			'cs-add-replacement-rule',
 			array( $this, 'rtafr_page_add_rule' ),
-			2
+			1
 		);
 
 		$this->rtafr_menus['all_masking_rules'] = add_submenu_page(
@@ -112,7 +143,7 @@ class RTAFAR_RegisterMenu {
 			'read',
 			'cs-all-masking-rules',
 			array( $this, 'rtafr_page_all_masking_rules' ),
-			3
+			2
 		);
 
 		$this->rtafr_menus['replace_in_db'] = add_submenu_page(
@@ -122,7 +153,7 @@ class RTAFAR_RegisterMenu {
 			'read',
 			'cs-replace-in-database',
 			array( $this, 'rtafr_page_replace_in_db' ),
-			4
+			3
 		);
 
 		$this->rtafr_menus['media_replacer'] = add_submenu_page(
@@ -132,7 +163,7 @@ class RTAFAR_RegisterMenu {
 			'read',
 			'cs-bfar-media-replacer',
 			array( $this, 'rtafar_page_media_replacer' ),
-			5
+			4
 		);
 
 		$this->rtafr_menus['restore_in_db_pro'] = add_submenu_page(
@@ -142,6 +173,16 @@ class RTAFAR_RegisterMenu {
 			'read',
 			'cs-bfar-restore-database-pro',
 			array( $this, 'rtafar_page_restore_db' ),
+			5
+		);
+
+		$this->rtafr_menus['ai_settings'] = add_submenu_page(
+			CS_RTAFAR_PLUGIN_IDENTIFIER,
+			__( 'AI Configuration', 'real-time-auto-find-and-replace' ),
+			__( 'AI Settings', 'real-time-auto-find-and-replace' ),
+			'read',
+			'cs-bfar-ai-settings',
+			array( $this, 'rtafar_page_ai_settings' ),
 			6
 		);
 
@@ -150,7 +191,7 @@ class RTAFAR_RegisterMenu {
 		$this->rtafr_menus['go_pro'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Upgrade To Premium', 'real-time-auto-find-and-replace' ),
-			'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . __( 'Upgrade To Premium', 'real-time-auto-find-and-replace' ),
+			'<span class="rtafar-go-pro-label" style="color:#c60051"><span class="dashicons dashicons-star-filled" style="font-size:17px;color:#c60051"></span> ' . __( 'Upgrade To Premium', 'real-time-auto-find-and-replace' ) . '</span>',
 			'read',
 			'cs-bfar-go-pro',
 			array( $this, 'rtafar_handle_external_redirects' ),

@@ -93,11 +93,11 @@ class Scripts_Settings {
 		}
 
 
-		if ( ( isset( $rtafr_menu['media_replacer'] ) && $page_id == $rtafr_menu['media_replacer'] ) 
+		if ( ( isset( $rtafr_menu['media_replacer'] ) && $page_id == $rtafr_menu['media_replacer'] )
 			) {
 				// Enqueue WordPress Media Uploader
 				wp_enqueue_media();
-				
+
 				wp_enqueue_script(
 					'rtafar.media.replacer.min',
 					CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.media.replacer.min.js',
@@ -105,6 +105,22 @@ class Scripts_Settings {
 					CS_RTAFAR_VERSION,
 					true
 				);
+		}
+
+		if ( isset( $rtafr_menu['ai_settings'] ) && $page_id == $rtafr_menu['ai_settings'] ) {
+			wp_enqueue_style(
+				'rtafar.ai-settings',
+				CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar.ai-settings.css',
+				array(),
+				CS_RTAFAR_VERSION
+			);
+			wp_enqueue_script(
+				'rtafar.ai-settings',
+				CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.ai-settings.min.js',
+				array(),
+				CS_RTAFAR_VERSION,
+				true
+			);
 		}
 
 		wp_enqueue_style( 'wapg', CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-admin-style.min.css', array(), CS_RTAFAR_VERSION );

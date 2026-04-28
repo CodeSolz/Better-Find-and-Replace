@@ -526,10 +526,11 @@ class FormBuilder {
 	 * @return stringGet field's value
 	 */
 	public static function get_value( $id, $values = array(), $default_value = '' ) {
+		// Raw — renderers escape on output. Encoding here double-encodes textareas.
 		if ( isset( $values[ $id ] ) && ! empty( $values[ $id ] ) ) {
-			return esc_attr( $values[ $id ] );
+			return $values[ $id ];
 		} elseif ( ! empty( $default_value ) ) {
-			return Util::cs_esc_html( $default_value );
+			return $default_value;
 		}
 		return '';
 	}

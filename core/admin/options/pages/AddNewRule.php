@@ -540,15 +540,21 @@ class AddNewRule {
 			<script type="text/javascript">
 				jQuery(document).ready(function(){
 					jQuery("body").on('change', '.rule-type', function(){
-						jQuery(".delay-time, .tag-selector, .html-charset").addClass('force-hidden');
+						var ruleType = jQuery(this).val();
+						jQuery(".delay-time, .tag-selector, .html-charset, .advance-filter").addClass('force-hidden');
 						jQuery(".delay-time-input, .tag-selector-input").removeAttr('required');
-						if( jQuery(this).val() === 'ajaxContent' ){
+						if( ruleType === 'ajaxContent' ){
 							jQuery(".delay-time, .tag-selector").removeClass('force-hidden');
 							jQuery(".delay-time-input, .tag-selector-input").attr('required', 'required');
 						}
-						
-						if( jQuery(this).val() === 'multiByte' ){ 
+
+						if( ruleType === 'multiByte' ){
 							jQuery(".html-charset").removeClass('force-hidden');
+						}
+
+						// Modifier checkboxes apply only to plain / managed regex.
+						if( ruleType === 'plain' || ruleType === 'regex' ){
+							jQuery(".advance-filter").removeClass('force-hidden');
 						}
 					});
 

@@ -18,8 +18,8 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 class RTAFAR_CustomAjax {
 
 	function __construct() {
+		// Logged-in admins only — every callback requires `manage_options`.
 		add_action( 'wp_ajax_rtafar_ajax', array( $this, 'rtafar_ajax' ) );
-		add_action( 'wp_ajax_nopriv_rtafar_ajax', array( $this, 'rtafar_ajax' ) );
 	}
 
 
@@ -36,6 +36,14 @@ class RTAFAR_CustomAjax {
 			),
 			'aihandler@getaisuggestion' => array(
 				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\aiHandler', 'getAiSuggestion' ),
+				'cap'      => 'manage_options',
+			),
+			'aihandler@testconnection' => array(
+				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\aiHandler', 'testConnection' ),
+				'cap'      => 'manage_options',
+			),
+			'aihandler@listmodels' => array(
+				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\aiHandler', 'listModels' ),
 				'cap'      => 'manage_options',
 			),
 			'masking@add_masking_rule' => array(
@@ -162,13 +170,19 @@ class RTAFAR_CustomAjax {
 			}
 
 			wp_send_json_success( $result );
-		} catch ( Throwable $t ) {
-			error_log( 'rtafar : ajax handler error: ' . $t->getMessage() );
+		} catch ( \Throwable $t ) {
+			// Leading `\` anchors to global — bare Throwable in a namespaced file does not catch.
+			error_log( sprintf(
+				'rtafar : ajax handler error in %s at %s:%d',
+				get_class( $t ),
+				$t->getFile(),
+				$t->getLine()
+			) );
 			wp_send_json(
 				array(
 					'status' => false,
 					'title'  => __( 'Error!', 'real-time-auto-find-and-replace' ),
-					'text'   => 'Internal error'
+					'text'   => 'Internal error',
 				)
 			);
 		}

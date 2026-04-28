@@ -1,9 +1,7 @@
 <?php namespace RealTimeAutoFindReplace\admin\functions;
 
-
-
 /**
- * Class: DB replacer
+ * AI Handler — facade over the multi-provider AI subsystem.
  *
  * @package Admin
  * @since 1.3.1
@@ -15,165 +13,241 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 }
 
 use RealTimeAutoFindReplace\lib\Util;
+use RealTimeAutoFindReplace\admin\functions\ai\Settings as AiSettings;
+use RealTimeAutoFindReplace\admin\functions\ai\ProviderRegistry;
+use RealTimeAutoFindReplace\admin\functions\ai\ProviderFactory;
+use RealTimeAutoFindReplace\admin\functions\ai\PromptTemplates;
 
 class aiHandler {
 
-	/**
-	 * Get AI settings
-	 *
-	 * @return array
-	 */
-	private static $optionKey = 'cs_ai_config';
-	private static $openAiEndpoint = 'https://api.openai.com/v1/chat/completions';
-
-	/**
-	 * Get AI settings
-	 *
-	 * @return array
-	 */
-	public static function getSettings() {
-		$settings = get_option( self::$optionKey, array() );
-
-		if ( ! empty( $settings ) ) {
-			return $settings;
-		}
-
-		return array();
+	private static function userCanWrite() {
+		return current_user_can( 'manage_options' )
+			|| current_user_can( Util::bfar_nav_cap( 'replace_in_db' ) )
+			|| current_user_can( Util::bfar_nav_cap( 'ai_settings' ) );
 	}
 
-	/**
-	 * Save AI settings
-	 *
-	 * @param array $data
-	 */
+	public static function getSettings() {
+		return AiSettings::get();
+	}
+
+	/** Falls back to the legacy { api_key, language_model } shape if posted. */
 	public static function saveSettings( $data ) {
-		if ( ! empty( $data['cs_ai_config'] ) ) {
-			$settings = array(
-				'api_key' => sanitize_text_field( $data['cs_ai_config']['api_key'] ),
-				'language_model' => sanitize_text_field( $data['cs_ai_config']['language_model'] ),
-			);
-
-			// Check if the user has permission to save settings
-			if ( !current_user_can( 'manage_options' ) && !current_user_can( Util::bfar_nav_cap('replace_in_db') ) ) {
-				return wp_send_json(
-					array(
-						'status' => false,
-						'title'  => __( 'Access Denied', 'real-time-auto-find-and-replace' ),
-						'text'   => __( 'You do not have permission to perform this action.', 'real-time-auto-find-and-replace' ),
-					)
-				);
-			}
-
-			update_option( self::$optionKey, $settings );
+		if ( ! self::userCanWrite() ) {
 			return wp_send_json(
 				array(
-					'status' => true,
-					'title'  => __( 'Success', 'real-time-auto-find-and-replace' ),
-					'text'   => __( 'Settings saved successfully.', 'real-time-auto-find-and-replace' ),
+					'status' => false,
+					'title'  => __( 'Access Denied', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'You do not have permission to perform this action.', 'real-time-auto-find-and-replace' ),
 				)
 			);
-			
 		}
+
+		if ( empty( $data['cs_ai_config'] ) || ! is_array( $data['cs_ai_config'] ) ) {
+			return wp_send_json(
+				array(
+					'status' => false,
+					'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'No settings provided.', 'real-time-auto-find-and-replace' ),
+				)
+			);
+		}
+
+		$payload = $data['cs_ai_config'];
+
+		// Legacy shape → OpenAI provider slot.
+		if ( ! isset( $payload['providers'] ) && isset( $payload['api_key'] ) ) {
+			$payload = array(
+				'active_provider' => 'openai',
+				'providers'       => array(
+					'openai' => array(
+						'auth_type' => 'api_key',
+						'api_key'   => $payload['api_key'],
+						'model'     => isset( $payload['language_model'] ) ? $payload['language_model'] : 'gpt-4o-mini',
+					),
+				),
+			);
+		}
+
+		AiSettings::save( $payload );
 
 		return wp_send_json(
 			array(
-				'status' => false,
-				'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
-				'text'   => __( 'Failed to save settings.', 'real-time-auto-find-and-replace' ),
+				'status' => true,
+				'title'  => __( 'Success', 'real-time-auto-find-and-replace' ),
+				'text'   => __( 'Settings saved successfully.', 'real-time-auto-find-and-replace' ),
 			)
 		);
 	}
-	
-	/**
-	 * Get AI suggestion
-	 *
-	 * @param array $userInput
-	 * @return array
-	 */
-	public function getAiSuggestion( $userInput ){
-		$AISettings = self::getSettings();
 
-			// pre_print( $userInput );
+	public static function testConnection( $data ) {
+		if ( ! self::userCanWrite() ) {
+			return wp_send_json(
+				array(
+					'status' => false,
+					'title'  => __( 'Access Denied', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'You do not have permission to perform this action.', 'real-time-auto-find-and-replace' ),
+				)
+			);
+		}
 
-		if ( empty( $AISettings ) || empty( $AISettings['api_key'] ) ) {
-			return wp_send_json( array(
-				'status' => false,
-				'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
-				'text'   => __( 'API key is not set.', 'real-time-auto-find-and-replace' ),
-			));
+		$slug = isset( $data['provider'] ) ? sanitize_key( $data['provider'] ) : '';
+		if ( ! $slug || ! ProviderRegistry::get( $slug ) ) {
+			return wp_send_json(
+				array(
+					'status' => false,
+					'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'Unknown provider.', 'real-time-auto-find-and-replace' ),
+				)
+			);
+		}
+
+		$config = AiSettings::getProviderConfig( $slug );
+
+		// Live overrides from the form (no save needed first).
+		foreach ( array( 'api_key', 'model', 'base_url' ) as $field ) {
+			if ( isset( $data[ $field ] ) && $data[ $field ] !== '' ) {
+				$config[ $field ] = sanitize_text_field( $data[ $field ] );
+			}
+		}
+
+		$provider = ProviderFactory::make( $slug, $config );
+		if ( ! $provider ) {
+			return wp_send_json(
+				array(
+					'status' => false,
+					'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'Provider not available.', 'real-time-auto-find-and-replace' ),
+				)
+			);
+		}
+
+		$res = $provider->testConnection();
+
+		return wp_send_json(
+			array(
+				'status' => ! empty( $res['status'] ),
+				'title'  => ! empty( $res['status'] )
+					? __( 'Connected', 'real-time-auto-find-and-replace' )
+					: __( 'Connection failed', 'real-time-auto-find-and-replace' ),
+				'text'   => isset( $res['message'] ) ? $res['message'] : '',
+			)
+		);
+	}
+
+	public static function listModels( $data ) {
+		if ( ! self::userCanWrite() ) {
+			return wp_send_json(
+				array(
+					'status' => false,
+					'title'  => __( 'Access Denied', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'You do not have permission to perform this action.', 'real-time-auto-find-and-replace' ),
+				)
+			);
+		}
+
+		$slug = isset( $data['provider'] ) ? sanitize_key( $data['provider'] ) : '';
+		if ( ! $slug || ! ProviderRegistry::get( $slug ) ) {
+			return wp_send_json(
+				array(
+					'status' => false,
+					'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'Unknown provider.', 'real-time-auto-find-and-replace' ),
+				)
+			);
+		}
+
+		$config = AiSettings::getProviderConfig( $slug );
+		foreach ( array( 'api_key', 'base_url' ) as $field ) {
+			if ( isset( $data[ $field ] ) && $data[ $field ] !== '' ) {
+				$config[ $field ] = sanitize_text_field( $data[ $field ] );
+			}
+		}
+
+		$provider = ProviderFactory::make( $slug, $config );
+		if ( ! $provider ) {
+			return wp_send_json(
+				array(
+					'status' => false,
+					'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'Provider not available.', 'real-time-auto-find-and-replace' ),
+				)
+			);
+		}
+
+		$res = $provider->listModels();
+
+		return wp_send_json(
+			array(
+				'status' => ! empty( $res['status'] ),
+				'title'  => ! empty( $res['status'] )
+					? __( 'Models loaded', 'real-time-auto-find-and-replace' )
+					: __( 'Could not fetch models', 'real-time-auto-find-and-replace' ),
+				'text'   => isset( $res['error'] ) ? $res['error'] : '',
+				'models' => isset( $res['models'] ) ? $res['models'] : array(),
+			)
+		);
+	}
+
+	public function getAiSuggestion( $userInput ) {
+		$settings = AiSettings::get();
+		$slug     = $settings['active_provider'];
+
+		$registry = ProviderRegistry::get( $slug );
+		if ( ! $registry ) {
+			return wp_send_json(
+				array(
+					'status' => false,
+					'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'No AI provider configured.', 'real-time-auto-find-and-replace' ),
+				)
+			);
+		}
+
+		$config   = AiSettings::getProviderConfig( $slug );
+		$provider = ProviderFactory::make( $slug, $config, $registry );
+		if ( ! $provider ) {
+			return wp_send_json(
+				array(
+					'status' => false,
+					'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'AI provider could not be initialized.', 'real-time-auto-find-and-replace' ),
+				)
+			);
 		}
 
 		$text = Util::check_evil_script( $userInput['find'] );
 		if ( empty( $text ) ) {
-			return wp_send_json( array(
-				'status' => false,
-				'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
-				'text'   => __( 'Please enter find text to get suggestion.', 'real-time-auto-find-and-replace' ),
-			));
-		}
-
-		$body = [
-			'model' => $AISettings['language_model'],
-			'messages' => [
-				['role' => 'system', 'content' => 'You are a helpful assistant that rewrites text to be more persuasive and SEO-friendly.'],
-				['role' => 'user', 'content' => "Rewrite this phrase for a website: \"$text\""]
-			],
-			'temperature' => 0.7,
-			'max_tokens' => 60
-		];
-
-		$response = wp_remote_post( self::$openAiEndpoint , [
-			'headers' => [
-				'Authorization' => 'Bearer ' . $AISettings['api_key'],
-				'Content-Type'  => 'application/json',
-			],
-			'body'    => json_encode($body),
-			'timeout' => 20,
-		]);
-
-		$response_code = wp_remote_retrieve_response_code( $response );
-
-		if ( $response_code !== 200 ) {
-			$body = wp_remote_retrieve_body( $response );
-			$data = json_decode( $body, true );
-
-			// pre_print( $data );
-
-			if ( isset( $data['error']['message'] ) ) {
-
-				return wp_send_json( array(
+			return wp_send_json(
+				array(
 					'status' => false,
-					'title'  => __( 'API Error', 'real-time-auto-find-and-replace' ),
-					'text'   => esc_html( $data['error']['message'] ),
-				));
-			} else {
-				return wp_send_json(array(
+					'title'  => __( 'Error', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'Please enter find text to get suggestion.', 'real-time-auto-find-and-replace' ),
+				)
+			);
+		}
+
+		$prompts = PromptTemplates::resolve( $settings );
+		$res     = $provider->getSuggestion( $text, $prompts['system_prompt'], $prompts['user_format'] );
+
+		if ( empty( $res['status'] ) ) {
+			$message = isset( $res['error'] ) ? $res['error']
+				: __( 'API returned an error.', 'real-time-auto-find-and-replace' );
+			return wp_send_json(
+				array(
 					'status' => false,
-					'title'  => __( 'API Error', 'real-time-auto-find-and-replace' ),
-					'text'   => esc_html( 'API returned HTTP ' . $response_code ),
-				));
-			}
+					'title'  => __( 'AI Error', 'real-time-auto-find-and-replace' ),
+					'text'   => esc_html( $message ),
+				)
+			);
 		}
 
-		$body = json_decode(wp_remote_retrieve_body($response), true);
-
-		if (!isset($body['choices'][0]['message']['content'])) {
-			return wp_send_json( array(
-				'status' => false,
-				'title'  => __( 'AI Error', 'real-time-auto-find-and-replace' ),
-				'text'   => __( 'Invalid AI response.', 'real-time-auto-find-and-replace' ),
-			));
-		}
-
-		return wp_send_json( array(
-				'status' => true,
-				'title'  => __( 'Applied', 'real-time-auto-find-and-replace' ),
-				'text'   => __( 'The replacement text has been updated.', 'real-time-auto-find-and-replace' ),
-				'suggestion' => trim($body['choices'][0]['message']['content'], '"')
-		));
+		return wp_send_json(
+			array(
+				'status'     => true,
+				'title'      => __( 'Applied', 'real-time-auto-find-and-replace' ),
+				'text'       => __( 'The replacement text has been updated.', 'real-time-auto-find-and-replace' ),
+				'suggestion' => $res['suggestion'],
+			)
+		);
 	}
-
 }
-
-
-?>

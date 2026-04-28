@@ -34,6 +34,7 @@ class Activate {
 				`type` varchar(56),
 				`delay` float,
 				`html_charset` char(20),
+				`flags` varchar(8),
 				`where_to_replace` varchar(128),
 				PRIMARY KEY ( `id`)
 				) $charset_collate",
@@ -111,6 +112,12 @@ class Activate {
 				}
 			}
 
+			// dbDelta ignores raw ALTER, so these run directly.
+			if ( \version_compare( $get_installed_db_version, '1.0.4', '<' ) ) {
+				self::ensure_flags_column();
+				self::strip_legacy_slashes_in_rules();
+			}
+
 			// update plugin db version
 			update_option( 'rtafar_db_version', CS_RTAFAR_DB_VERSION );
 
@@ -124,6 +131,72 @@ class Activate {
 		update_option( 'rtafar_plugin_version', CS_RTAFAR_VERSION );
 	}
 
+	/** Adds the `flags` column to the rules table if missing (idempotent). */
+	private static function ensure_flags_column() {
+		global $wpdb;
+
+		$table = $wpdb->prefix . 'rtafar_rules';
+
+		$exists = $wpdb->get_var(
+			$wpdb->prepare(
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				"SHOW COLUMNS FROM `{$table}` LIKE %s",
+				'flags'
+			)
+		);
+
+		if ( $exists ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( "ALTER TABLE `{$table}` ADD COLUMN `flags` varchar(8) AFTER `html_charset`" );
+
+		if ( ! empty( $wpdb->last_error ) && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			error_log( 'rtafar: failed to add flags column — ' . $wpdb->last_error );
+		}
+	}
+
+	/** Strips literal backslashes from rule rows saved before 1.0.4. */
+	private static function strip_legacy_slashes_in_rules() {
+		global $wpdb;
+
+		$table = $wpdb->prefix . 'rtafar_rules';
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = $wpdb->get_results( "SELECT id, find, replace FROM `{$table}`" );
+
+		if ( ! $rows ) {
+			return;
+		}
+
+		$failed = 0;
+		foreach ( $rows as $row ) {
+			$find_clean    = stripslashes( $row->find );
+			$replace_clean = stripslashes( $row->replace );
+			if ( $find_clean === $row->find && $replace_clean === $row->replace ) {
+				continue;
+			}
+			$updated = $wpdb->update(
+				$table,
+				array(
+					'find'    => $find_clean,
+					'replace' => $replace_clean,
+				),
+				array( 'id' => $row->id ),
+				array( '%s', '%s' ),
+				array( '%d' )
+			);
+			if ( false === $updated ) {
+				$failed++;
+			}
+		}
+
+		if ( $failed > 0 && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			error_log( sprintf( 'rtafar: 1.0.4 migration left %d rule row(s) un-cleaned', $failed ) );
+		}
+	}
+
 	/**
 	 * Import old settings
 	 *
@@ -134,7 +207,9 @@ class Activate {
 		if ( ! empty( $get_Rtfar ) && is_array( $get_Rtfar ) ) {
 			$Masking = new Masking();
 			foreach ( $get_Rtfar as $find => $replace ) {
-				$Masking->insert_masking_rules( $find, $replace, 'plain', 'all', '' );
+				// Args (in order): find, replace, type, replace_where, id,
+				// delay_time, user_query — all required since 1.9.0.
+				$Masking->insert_masking_rules( $find, $replace, 'plain', 'all', '', 0, array() );
 			}
 			delete_option( 'rtafar_settings' );
 		}

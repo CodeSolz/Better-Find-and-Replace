@@ -45,6 +45,17 @@ class Masking {
 		$replace_where = isset( $user_query['where_to_replace'] ) ? $user_query['where_to_replace'] : '';
 		$delay_time    = isset( $user_query['delay'] ) ? (float) $user_query['delay'] : '';
 
+		$validation = self::validate_rule( $find, $type );
+		if ( true !== $validation ) {
+			return wp_send_json(
+				array(
+					'status' => false,
+					'title'  => __( 'Invalid rule', 'real-time-auto-find-and-replace' ),
+					'text'   => $validation,
+				)
+			);
+		}
+
 		$id  = isset( $user_query['id'] ) ? $user_query['id'] : '';
 		$msg = $this->insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time, $user_query );
 
@@ -74,9 +85,10 @@ class Masking {
 	public function insert_masking_rules( $find, $replace, $type, $replace_where, $id, $delay_time, $user_query ) {
 		global $wpdb;
 
+		// wpdb expects raw values — wp_slash here would store literal backslashes.
 		if ( $type == 'regex' || $type == 'advance_regex' || $type == 'regexCustom' ) {
-			$find    = Util::cs_addslashes( $find );
-			$replace = Util::cs_addslashes( $replace );
+			$find    = is_string( $find ) ? trim( $find ) : $find;
+			$replace = is_string( $replace ) ? trim( $replace ) : $replace;
 		} else {
 			$find    = Util::check_evil_script( $find );
 			$replace = Util::check_evil_script( $replace );
@@ -89,6 +101,7 @@ class Masking {
 			'where_to_replace' => Util::check_evil_script( $replace_where ),
 			'delay'            => $delay_time,
 			'html_charset'     => isset( $user_query['html_charset'] ) ? Util::check_evil_script( $user_query['html_charset'] ) : '',
+			'flags'            => self::build_flags( $user_query ),
 		);
 
 		if ( has_filter( 'bfrp_before_insert_new_rule' ) &&
@@ -119,6 +132,58 @@ class Masking {
 		do_action( 'bfrp_save_masking_rule', $isExists, $user_query );
 
 		return $msg;
+	}
+
+	/** Returns true on success or an error message string. */
+	private static function validate_rule( $find, $type ) {
+		$is_regex = in_array( $type, array( 'regex', 'regexCustom', 'advance_regex' ), true );
+
+		if ( ! $is_regex ) {
+			return true;
+		}
+
+		if ( ! is_string( $find ) || trim( $find ) === '' ) {
+			return __( 'A regex rule needs a non-empty find pattern.', 'real-time-auto-find-and-replace' );
+		}
+
+		$pattern = ( 'regex' === $type )
+			? self::build_managed_pattern( $find, '' )
+			: $find;
+
+		set_error_handler( function () {} );
+		$res = preg_match( $pattern, '' );
+		restore_error_handler();
+
+		if ( false === $res ) {
+			return __( 'Regex pattern did not compile. Check delimiters and special characters.', 'real-time-auto-find-and-replace' );
+		}
+
+		return true;
+	}
+
+	/** Concatenates persisted modifier letters: i (case-insensitive), u (unicode), w (whole-word). */
+	private static function build_flags( $user_query ) {
+		$flags = '';
+		if ( ! empty( $user_query['case_insensitive'] ) ) {
+			$flags .= 'i';
+		}
+		if ( ! empty( $user_query['unicode_modifier'] ) ) {
+			$flags .= 'u';
+		}
+		if ( ! empty( $user_query['whole_word'] ) ) {
+			$flags .= 'w';
+		}
+		return $flags;
+	}
+
+	/** SOH-delimited so user `#` is harmless; `w` flag wraps in \b…\b. */
+	public static function build_managed_pattern( $find, $flags ) {
+		$pcre_flags = preg_replace( '/[^imsux]/', '', (string) $flags );
+		$body       = $find;
+		if ( false !== strpos( (string) $flags, 'w' ) ) {
+			$body = '\b' . $body . '\b';
+		}
+		return "\x01" . $body . "\x01" . $pcre_flags;
 	}
 
 	/**

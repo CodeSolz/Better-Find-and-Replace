@@ -4,7 +4,7 @@ Tags: database, search replace, search, replace, search and replace, real-time r
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 5.2
 Tested up to: 6.9
-Stable tag: 1.8.2
+Stable tag: 1.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,6 +178,20 @@ code block in find field*
 11. Media replacer
 
 == Changelog ==
+
+= Version: 1.9.0 ( April 29, 2026 ) =
+* **New:** AI suggestions now support 10 providers — OpenAI, Anthropic Claude, Google Gemini, Groq, Mistral, OpenRouter, DeepSeek, xAI Grok, Hugging Face, and Ollama (local).
+* **New:** Sign in with OpenRouter via OAuth — access 100+ models without copying an API key.
+* **New:** Per-provider configuration with "Get free key" deep links and live model-list fetching.
+* **New:** Test Connection button on every provider card.
+* **New:** Prompt template selector for AI rewrites — Persuasive, Concise, Formal, Friendly, Fix Grammar, or fully custom.
+* **Fix:** Regex / Custom-Regex rules containing HTML with quotes (e.g. `<a href="tel:$1">$0</a>`) are saved cleanly — no more stray backslashes in the database.
+* **Fix:** Editing a saved rule no longer shows double-encoded `&lt;` / `&quot;` in the textarea.
+* **Fix:** Managed-regex rules no longer break the front-end page when the pattern contains `#`, is syntactically invalid, or is empty.
+* **Fix:** A failing regex now preserves the original page content instead of rendering a blank page.
+* **Fix:** Save-time regex validation rejects invalid patterns with a clear error message.
+* **Update:** Modifier checkboxes (case-insensitive / whole-word / unicode) are now persisted via a new `flags` column and hidden for rule types that don't use them.
+* **Update:** Database migration to 1.0.4 — adds the `flags` column and repairs legacy escape sequences in existing rules.
 
 = Version: 1.8.2 ( March 23, 2026 ) =
 * **Fix:** removed some unnecessary files

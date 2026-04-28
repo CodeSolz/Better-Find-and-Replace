@@ -98,20 +98,43 @@ class RTAFAR_WP_Hooks {
 	private function replace( $item, $buffer, $find = false ) {
 		$find = false !== $find ? $find : $item->find;
 
-		if ( $item->type == 'regex' ) {
-			$find    = '#' . Util::cs_stripslashes( $find ) . '#';
-			$replace = Util::cs_stripslashes( $item->replace );
-			return \preg_replace( $find, $replace, $buffer );
-		} elseif ( $item->type == 'regexCustom' ) {
-			// NOTE: search with custom pattern
-			return \preg_replace( $find, $item->replace, $buffer );
-		} elseif ( $item->type == 'multiByte' ) {
-			// NOTE: search and replace on multiByte string
-			\mb_regex_encoding( $item->html_charset );
-			return \mb_ereg_replace( $find, Util::cs_stripslashes( $item->replace ), $buffer );
-		} else {
-			return \str_replace( Util::cs_stripslashes( $find ), Util::cs_stripslashes( $item->replace ), $buffer );
+		// Empty find with preg_replace inserts at every position — skip.
+		if ( ! is_string( $find ) || $find === '' ) {
+			return $buffer;
 		}
+
+		$flags = isset( $item->flags ) ? (string) $item->flags : '';
+
+		$rule_id = isset( $item->id ) ? (int) $item->id : 0;
+
+		if ( $item->type == 'regex' ) {
+			$pattern = Masking::build_managed_pattern( $find, $flags );
+			return self::safe_preg_replace( $pattern, $item->replace, $buffer, $rule_id );
+		} elseif ( $item->type == 'regexCustom' ) {
+			return self::safe_preg_replace( $find, $item->replace, $buffer, $rule_id );
+		} elseif ( $item->type == 'multiByte' ) {
+			\mb_regex_encoding( $item->html_charset );
+			$out = \mb_ereg_replace( $find, $item->replace, $buffer );
+			return ( false === $out || null === $out ) ? $buffer : $out;
+		} else {
+			return \str_replace( $find, $item->replace, $buffer );
+		}
+	}
+
+	/** Returns the original buffer if the regex returns null, so a bad rule can't blank the page. */
+	private static function safe_preg_replace( $pattern, $replace, $buffer, $rule_id = 0 ) {
+		$result = @\preg_replace( $pattern, $replace, $buffer );
+		if ( null === $result ) {
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( sprintf(
+					'rtafar: preg_replace failed (rule_id=%d, preg_last_error=%d)',
+					(int) $rule_id,
+					preg_last_error()
+				) );
+			}
+			return $buffer;
+		}
+		return $result;
 	}
 
 	/**
