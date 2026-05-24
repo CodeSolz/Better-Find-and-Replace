@@ -51,9 +51,38 @@ class Settings {
 	}
 
 	public static function save( array $settings ) {
+		$existing   = self::get();
 		$normalized = self::normalize( $settings );
+		$normalized = self::preserveSecrets( $normalized, $existing );
 		update_option( self::OPTION_KEY, $normalized );
 		return $normalized;
+	}
+
+	/**
+	 * Keep previously-stored credentials when the incoming payload omits or
+	 * blanks them. The settings form never echoes secrets back to the browser,
+	 * so an empty field means "leave unchanged", not "clear". Also stops a
+	 * normal settings save from wiping an OAuth token (not a form field).
+	 */
+	private static function preserveSecrets( array $incoming, array $existing ) {
+		$secret_fields = array( 'api_key', 'token', 'refresh_token', 'token_expires_at' );
+
+		if ( empty( $incoming['providers'] ) || ! is_array( $incoming['providers'] ) ) {
+			return $incoming;
+		}
+
+		foreach ( $incoming['providers'] as $slug => $cfg ) {
+			$old = isset( $existing['providers'][ $slug ] ) ? $existing['providers'][ $slug ] : array();
+
+			foreach ( $secret_fields as $field ) {
+				$new_val = isset( $cfg[ $field ] ) ? $cfg[ $field ] : '';
+				if ( ( '' === $new_val || 0 === $new_val ) && ! empty( $old[ $field ] ) ) {
+					$incoming['providers'][ $slug ][ $field ] = $old[ $field ];
+				}
+			}
+		}
+
+		return $incoming;
 	}
 
 	/** Merges with existing config for that provider. */

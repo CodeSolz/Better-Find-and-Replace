@@ -4,7 +4,7 @@ Tags: database, search replace, search, replace, search and replace, real-time r
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 5.2
 Tested up to: 6.9
-Stable tag: 1.9.0
+Stable tag: 1.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,6 +178,20 @@ code block in find field*
 11. Media replacer
 
 == Changelog ==
+
+= Version: 1.9.1 ( May 24, 2026 ) =
+* **New:** "Replace media" action in the Media Library (upload.php) — in both list view (row action) and grid view (the attachment details popup) — replace any file without opening the dedicated Media Replacer page.
+* **New:** Two replacement methods — keep the current file name, or adopt the new file's name and automatically repoint every link to it across your content.
+* **New:** "Page Builders" targeting on Replace in Database — Elementor, Beaver Builder, Divi / WPBakery, Oxygen and Bricks — with automatic cache regeneration after a replace.
+* **New:** "Escaped & Encoded URLs" option that also matches JSON-escaped (https:\/\/) and percent-encoded URLs, so replacing links inside Elementor and other page builders just works.
+* **Fix:** Database replacement no longer corrupts PHP-serialized data (Beaver Builder, widgets, ACF, theme options, Bricks) when the replacement changes the text length.
+* **Fix:** HTML inside serialized data is now preserved during replacement instead of being stripped.
+* **Fix:** Numeric values inside serialized data keep their original type after a replace.
+* **Fix:** AI provider API keys are no longer printed into the AI Settings page; leaving the key field blank keeps the saved key and preserves OAuth connections.
+* **Fix:** Hardened internal input sanitization (nested arrays) and database column lookups.
+* **Update:** Builder and object caches (Elementor CSS, Beaver Builder, post cache) are refreshed automatically after a live database replace.
+* **Update:** Redesigned, collapsible "Replacement method" selector in the media replacer to save space.
+* **Dev:** New hooks — `bfrp_builder_registry`, `bfrp_after_db_replace`, `bfrp_flush_object_cache` — plus unit and WordPress integration test suites.
 
 = Version: 1.9.0 ( April 29, 2026 ) =
 * **New:** AI suggestions now support 10 providers — OpenAI, Anthropic Claude, Google Gemini, Groq, Mistral, OpenRouter, DeepSeek, xAI Grok, Hugging Face, and Ollama (local).

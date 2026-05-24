@@ -62,6 +62,10 @@ class RTAFAR_CustomAjax {
 				'callback' => array( '\RealTimeAutoFindReplace\admin\options\functions\DbFuncReplaceInDb', 'get_db_cols_select_options' ),
 				'cap'      => 'manage_options',
 			),
+			'dbfuncreplaceindb@get_page_builders_select_options' => array(
+				'callback' => array( '\RealTimeAutoFindReplace\admin\options\functions\DbFuncReplaceInDb', 'get_page_builders_select_options' ),
+				'cap'      => 'manage_options',
+			),
 			'dbreplacer@db_string_replace' => array(
 				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\DbReplacer', 'db_string_replace' ),
 				'cap'      => 'manage_options',

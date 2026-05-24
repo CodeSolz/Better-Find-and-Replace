@@ -63,8 +63,8 @@ class ReplaceInDB {
 				'class'       => 'form-control',
 				'required'    => true,
 				'value'       => '',
-				'placeholder' => __( 'Enter word to find ', 'real-time-auto-find-and-replace' ),
-				'desc_tip'    => __( 'Enter a word / phrase you want to find in Database. e.g: _test ', 'real-time-auto-find-and-replace' ),
+				'placeholder' => __( 'Enter a word or phrase to find', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Enter the word or phrase you want to find in the database. e.g. _test', 'real-time-auto-find-and-replace' ),
 			),
 
 			'cs_db_string_replace[replace]'          => array(
@@ -72,8 +72,8 @@ class ReplaceInDB {
 				'type'        => 'text',
 				'class'       => 'form-control',
 				'value'       => '',
-				'placeholder' => __( 'Enter word to replace with', 'real-time-auto-find-and-replace' ),
-				'desc_tip'    => __( 'Enter word / phrase you want to replace with. e.g : test', 'real-time-auto-find-and-replace' ),
+				'placeholder' => __( 'Enter a word or phrase to replace with', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Enter the word or phrase you want to replace it with. e.g. test', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[where_to_replace]' => array(
 				'title'       => __( 'Where to Replace', 'real-time-auto-find-and-replace' ),
@@ -90,7 +90,7 @@ class ReplaceInDB {
 					)
 				),
 				'placeholder' => __( 'Select where to find and replace', 'real-time-auto-find-and-replace' ),
-				'desc_tip'    => __( 'Select where to find and replace. e.g : Database Tables', 'real-time-auto-find-and-replace' ),
+				'desc_tip'    => __( 'Select where to find and replace. e.g. Database Tables', 'real-time-auto-find-and-replace' ),
 			),
 			'page_post_filters[]'                    => array(
 				'wrapper_class' => 'no-border page-post-filters-wrap force-hidden',
@@ -101,12 +101,12 @@ class ReplaceInDB {
 				'required'      => false,
 				'placeholder'   => __( 'Please select options', 'real-time-auto-find-and-replace' ),
 				'options'       => '', // loads dynamically
-				'desc_tip'      => __( 'Select / Enter option name where you want to replace. This will narrow down the search results to make them more accurate.. e.g : Page title.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Select the fields you want to replace in. This narrows the search to make the results more accurate. e.g. Page title.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[large_table]'      => array(
 				'wrapper_class'     => 'large-table',
 				// Translators: %1$s is a line break with a span element, %2$s is the closing span tag.
-				'title'             => sprintf( __( 'Large Table %1$s >= Pro Extend  - version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'title'             => sprintf( __( 'Large Table %1$s Pro Extend version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
 				'type'              => 'checkbox',
 				'is_pro'            => true,
 				'pro_plan'          => '34',
@@ -114,7 +114,7 @@ class ReplaceInDB {
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
 				),
-				'desc_tip'          => __( 'Check this checkbox, if you would like to search in a large table. Should select one table at a time.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'          => __( 'Check this box if you want to search in a large table. Select one table at a time.', 'real-time-auto-find-and-replace' ),
 			),
 			'db_tables[]'                            => array(
 				'wrapper_class' => 'no-border db-tables-wrap',
@@ -125,7 +125,18 @@ class ReplaceInDB {
 				'required'      => true,
 				'placeholder'   => __( 'Please select tables', 'real-time-auto-find-and-replace' ),
 				'options'       => '', // loads dynamically
-				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Select the tables you want to replace in. e.g. posts', 'real-time-auto-find-and-replace' ),
+			),
+			'bfrp_page_builders[]'                   => array(
+				'wrapper_class' => 'no-border bfrp-page-builders-wrap force-hidden',
+				'title'         => __( 'Page Builders (optional)', 'real-time-auto-find-and-replace' ),
+				'type'          => 'select',
+				'class'         => 'form-control bfrp-page-builders',
+				'multiple'      => true,
+				'required'      => false,
+				'placeholder'   => __( 'Select page builders to target', 'real-time-auto-find-and-replace' ),
+				'options'       => '', // loads dynamically
+				'desc_tip'      => __( 'Optional. Select the page builders used on your site (Elementor, Beaver Builder, etc.). This matches their escaped JSON content and regenerates their caches after a live replace. Leaving it empty still works for normal content.', 'real-time-auto-find-and-replace' ),
 			),
 			'url_options[]'                          => array(
 				'wrapper_class' => 'url-options force-hidden',
@@ -135,13 +146,13 @@ class ReplaceInDB {
 				'multiple'      => true,
 				'placeholder'   => __( 'Please select options', 'real-time-auto-find-and-replace' ),
 				'options'       => '', // loads value dynamically
-				'desc_tip'      => __( 'Select / Enter table name where you want to replace. e.g : post', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Select which URL types to replace (Post, Page or Media URLs). At least one is required. The find &amp; replace runs everywhere the URL appears — content, custom fields and site options.', 'real-time-auto-find-and-replace' ),
 			),
 			'st2'                                    => array(
 				'wrapper_class' => 'advance-filter ',
 				'type'          => 'section_title',
-				'title'         => __( 'Advance Filters', 'real-time-auto-find-and-replace' ),
-				'desc_tip'      => __( 'Activate the following settings if you wish to apply special filtering options.', 'real-time-auto-find-and-replace' ),
+				'title'         => __( 'Advanced Filters', 'real-time-auto-find-and-replace' ),
+				'desc_tip'      => __( 'Enable the settings below if you want to apply special filtering options.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[case_insensitive]' => array(
 				'title'    => __( 'Case-Insensitive', 'real-time-auto-find-and-replace' ),
@@ -159,6 +170,28 @@ class ReplaceInDB {
 					'<em>',
 					'</em>'
 				),
+			),
+			'cs_db_string_replace[encoded_urls]'     => array(
+				'wrapper_class'     => 'url-only-filter force-hidden',
+				// Translators: %1$s is a line break with a span element for indicating pro features; %2$s is the closing span tag.
+				'title'             => sprintf( __( 'Escaped &amp; Encoded URLs %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'checkbox',
+				'is_pro'            => true,
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'desc_tip'          => __( 'Check this checkbox, if you want find and replace to also match URLs stored in escaped or encoded form. e.g : JSON-escaped (https:\/\/) and percent-encoded (https%3A%2F%2F) variants, like the ones Elementor and other page builders store inside JSON.', 'real-time-auto-find-and-replace' ),
+			),
+			'cs_db_string_replace[url_formats]'      => array(
+				'wrapper_class'     => 'url-only-filter force-hidden',
+				// Translators: %1$s is a line break with a span element for indicating pro features; %2$s is the closing span tag.
+				'title'             => sprintf( __( 'Match all URL formats %1$s Pro version only %2$s', 'real-time-auto-find-and-replace' ), '<br/><span class="pro-version-only">', '</span>' ),
+				'type'              => 'checkbox',
+				'is_pro'            => true,
+				'custom_attributes' => array(
+					'disabled' => 'disabled',
+				),
+				'desc_tip'          => __( 'Check this checkbox, if you want a URL search to also match other formats of the same address. e.g : searching https://old.com also catches http://old.com, //old.com (protocol-relative), and the www / non-www variants. Applies when "Where to Replace" is set to All URLs.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[unicode_modifier]' => array(
 				// Translators: %1$s is a line break with a span element for indicating pro features; %2$s is the closing span tag.
@@ -222,7 +255,7 @@ class ReplaceInDB {
                         <li> <b>' . __( 'Warning!', 'real-time-auto-find-and-replace' ) . '</b>
                             <ol>
                                 <li>'
-									. __( 'Replacement in the database is permanent. You can\'t un-done it, once it gets replaced.', 'real-time-auto-find-and-replace' )
+									. __( 'Replacement in the database is permanent and cannot be undone once it has been applied.', 'real-time-auto-find-and-replace' )
 								. '</li>
                             </ol>
                         </li>

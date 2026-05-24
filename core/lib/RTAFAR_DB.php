@@ -85,8 +85,18 @@ class RTAFAR_DB {
 		global $wpdb;
 		$primary_key = null;
 		$columns     = array();
+
+		// Table name can't be parameterized, so only allow names that actually
+		// exist in this database before interpolating into DESCRIBE.
+		if ( ! in_array( $table, (array) self::get_tables(), true ) ) {
+			return array( null, array() );
+		}
+
+		// Backtick-quote as defence in depth (escape any embedded backticks).
+		$safe_table = '`' . str_replace( '`', '``', $table ) . '`';
+
 		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$fields      = $wpdb->get_results( 'DESCRIBE ' . $table );
+		$fields = $wpdb->get_results( 'DESCRIBE ' . $safe_table );
 
 		if ( is_array( $fields ) ) {
 			foreach ( $fields as $column ) {

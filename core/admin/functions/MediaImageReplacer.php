@@ -36,7 +36,7 @@ class MediaImageReplacer{
      */
     public function handleMediaReplace( $user_input ){
 
-        if ( !current_user_can( 'manage_options' ) && !current_user_can( Util::bfar_nav_cap('add_masking_rule') ) ) {
+        if ( !current_user_can( 'manage_options' ) && !current_user_can( Util::bfar_nav_cap('media_replacer') ) ) {
 			return wp_send_json(
 				array(
 					'status' => false,
@@ -58,6 +58,13 @@ class MediaImageReplacer{
                 exit;
             }
 
+            // Replacement mode: 'new_name' renames the file and repoints links;
+            // anything else keeps the existing file name in place.
+            $replace_mode = ( isset( $user_input['replace_mode'] ) && 'new_name' === $user_input['replace_mode'] )
+                ? 'new_name'
+                : 'keep_name';
+
+            $old_url       = wp_get_attachment_url( $attachment_id );
             $old_file_path = get_attached_file( $attachment_id, true );
             $metadata     = wp_get_attachment_metadata( $attachment_id );
             $backup_sizes = get_post_meta( $attachment_id, '_wp_attachment_backup_sizes', true );
@@ -68,22 +75,30 @@ class MediaImageReplacer{
             require_once(ABSPATH . 'wp-admin/includes/image.php');
             require_once(ABSPATH . 'wp-admin/includes/media.php');
 
-            $new_file_path = $old_file_path;
             $this->old_file_path = $old_file_path;
 
             $uploaded_file = $_FILES['media_file'];
             $upload_overrides = [
                 'test_form' => false, // Bypass form submission check
-                'unique_filename_callback' => array( $this, 'unique_filename_callback' )
             ];
 
+            // Keep-name mode forces the original file name; new-name mode lets
+            // WordPress assign the uploaded file's own (sanitised, unique) name.
+            if ( 'keep_name' === $replace_mode ) {
+                $upload_overrides['unique_filename_callback'] = array( $this, 'unique_filename_callback' );
+            }
+
             $upload_result = wp_handle_upload(
-                $uploaded_file, 
+                $uploaded_file,
                 $upload_overrides,
                 \gmdate( 'Y/m', \strtotime( $attachment->post_date ) )
             );
 
             if (isset($upload_result['file'])) {
+
+                // Keep-name: the file is back at the old path. New-name: use the
+                // actual uploaded path (a different file name).
+                $new_file_path = ( 'keep_name' === $replace_mode ) ? $old_file_path : $upload_result['file'];
 
                 add_filter( 'big_image_size_threshold', '__return_false' );
                 $new_attachment_metadata = wp_generate_attachment_metadata($attachment_id, $new_file_path);
@@ -118,11 +133,25 @@ class MediaImageReplacer{
                     update_post_meta($attachment_id, '_wp_attachment_image_alt', $alt_text);
                 }
 
+                // New-name mode: repoint every reference from the old URL to the new one.
+                $links_updated = 0;
+                if ( 'new_name' === $replace_mode ) {
+                    $new_url = wp_get_attachment_url( $attachment_id );
+                    if ( $new_url && $old_url && $new_url !== $old_url ) {
+                        $links_updated = ( new DbReplacer() )->replace_links( $old_url, $new_url, true );
+                    }
+                }
+
                 return wp_send_json([
                     'success' => true,
-                    'message' => 'File replaced successfully. ',
+                    'message' => ( 'new_name' === $replace_mode )
+                        /* translators: %d: number of links updated */
+                        ? sprintf( __( 'File replaced and %d link(s) updated.', 'real-time-auto-find-and-replace' ), (int) $links_updated )
+                        : __( 'File replaced successfully.', 'real-time-auto-find-and-replace' ),
                     'new_media_url' => wp_get_attachment_url($attachment_id),
-                    'media_id' => $attachment_id
+                    'media_id' => $attachment_id,
+                    'mode' => $replace_mode,
+                    'links_updated' => (int) $links_updated,
                 ]);
             } else {
                 return wp_send_json([

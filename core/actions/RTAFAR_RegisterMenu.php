@@ -297,7 +297,7 @@ class RTAFAR_RegisterMenu {
 	public function rtafr_page_replace_in_db() {
 		$page_info = array(
 			'title'     => __( 'Replace In Database', 'real-time-auto-find-and-replace' ),
-			'sub_title' => __( 'Effortlessly and permanently replace strings in database tables instantly.', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'Instantly and permanently replace strings across your database tables.', 'real-time-auto-find-and-replace' ),
 		);
 
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap('replace_in_db') ) ) {

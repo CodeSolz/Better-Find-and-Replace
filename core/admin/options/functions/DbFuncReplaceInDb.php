@@ -78,4 +78,21 @@ class DbFuncReplaceInDb {
 
 		return wp_send_json( array( 'urls' => $options ) );
 	}
+
+	/**
+	 * Page-builder options for the targeting multi-select.
+	 *
+	 * @param array $user_input
+	 * @return json
+	 */
+	public function get_page_builders_select_options( $user_input = array() ) {
+		$builders = array(
+			'all'          => __( 'Select All', 'real-time-auto-find-and-replace' ),
+			'unselect_all' => __( 'Unselect All', 'real-time-auto-find-and-replace' ),
+		);
+
+		$builders = array_merge( $builders, \RealTimeAutoFindReplace\lib\BuilderRegistry::as_select_options() );
+
+		return wp_send_json( array( 'builders' => $builders ) );
+	}
 }

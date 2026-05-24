@@ -274,7 +274,8 @@ class AISettings {
 		$display     = $is_visible ? '' : 'style="display:none"';
 		$name_prefix = sprintf( 'cs_ai_config[providers][%s]', $slug );
 
-		$api_key  = isset( $cfg['api_key'] ) ? $cfg['api_key'] : '';
+		// Never render the stored key back to the browser — only whether one exists.
+		$has_key  = ( isset( $cfg['api_key'] ) && '' !== $cfg['api_key'] );
 		$base_url = isset( $cfg['base_url'] ) && $cfg['base_url'] !== '' ? $cfg['base_url'] : ( isset( $p['base_url'] ) ? $p['base_url'] : '' );
 		$model    = isset( $cfg['model'] ) && $cfg['model'] !== '' ? $cfg['model'] : ( isset( $p['default_model'] ) ? $p['default_model'] : '' );
 
@@ -303,11 +304,19 @@ class AISettings {
 				! empty( $p['free'] ) ? esc_html__( 'Get free key', 'real-time-auto-find-and-replace' ) : esc_html__( 'Get API key', 'real-time-auto-find-and-replace' )
 			) : '';
 
+			$key_placeholder = $has_key
+				? esc_attr__( 'API key saved — leave blank to keep it', 'real-time-auto-find-and-replace' )
+				: esc_attr__( 'Paste your API key', 'real-time-auto-find-and-replace' );
+
+			$key_hint = $has_key
+				? esc_html__( 'A key is already saved. Leave this blank to keep it, or paste a new one to replace it. The saved key is never shown here for security.', 'real-time-auto-find-and-replace' )
+				: esc_html__( 'Stored in your WordPress options table. Never sent anywhere except this provider.', 'real-time-auto-find-and-replace' );
+
 			$api_key_field = sprintf(
 				'<div class="rtafar-ai-field">
-					<label for="rtafar-ai-key-%1$s">%2$s</label>
+					<label for="rtafar-ai-key-%1$s">%2$s%9$s</label>
 					<div class="rtafar-ai-key-row">
-						<input type="password" id="rtafar-ai-key-%1$s" name="%3$s[api_key]" value="%4$s" autocomplete="off" placeholder="%5$s" class="rtafar-ai-key-input" />
+						<input type="password" id="rtafar-ai-key-%1$s" name="%3$s[api_key]" value="" autocomplete="off" placeholder="%5$s" class="rtafar-ai-key-input" />
 						<button type="button" class="button rtafar-ai-toggle-visibility" data-target="rtafar-ai-key-%1$s" title="%6$s" aria-label="%6$s">&#128065;</button>
 						%7$s
 					</div>
@@ -316,11 +325,12 @@ class AISettings {
 				esc_attr( $slug ),
 				esc_html__( 'API Key', 'real-time-auto-find-and-replace' ),
 				esc_attr( $name_prefix ),
-				esc_attr( $api_key ),
-				esc_attr__( 'Paste your API key', 'real-time-auto-find-and-replace' ),
+				'', // value is intentionally never populated with the secret.
+				$key_placeholder,
 				esc_attr__( 'Show / hide', 'real-time-auto-find-and-replace' ),
 				$key_link,
-				esc_html__( 'Stored in your WordPress options table. Never sent anywhere except this provider.', 'real-time-auto-find-and-replace' )
+				$key_hint,
+				$has_key ? ' <span class="rtafar-ai-key-saved" title="' . esc_attr__( 'A key is saved', 'real-time-auto-find-and-replace' ) . '">&#10004;</span>' : ''
 			);
 		}
 

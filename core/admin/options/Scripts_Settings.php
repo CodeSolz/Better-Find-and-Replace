@@ -74,9 +74,11 @@ class Scripts_Settings {
 				'rtafar.admin.replace.in.db',
 				'repndb',
 				array(
-					'mgt'    => 'DbFuncReplaceInDb@get_tables_in_select_options',
-					'mgurls' => 'DbFuncReplaceInDb@get_urls_in_select_options',
-					'ppoptn' => 'DbFuncReplaceInDb@get_db_cols_select_options',
+					'mgt'             => 'DbFuncReplaceInDb@get_tables_in_select_options',
+					'mgurls'          => 'DbFuncReplaceInDb@get_urls_in_select_options',
+					'ppoptn'          => 'DbFuncReplaceInDb@get_db_cols_select_options',
+					'mgpb'            => 'DbFuncReplaceInDb@get_page_builders_select_options',
+					'urlTypeRequired' => __( 'Please select at least one URL type (Post, Page or Media URLs) before running.', 'real-time-auto-find-and-replace' ),
 				)
 			);
 		}

@@ -60,9 +60,10 @@ class Util {
 	public static function cs_sanitize_recursive( $user_input, $textarea = false ) {
 		foreach ( $user_input as $key => $value ) {
 			if ( is_array( $value ) ) {
-				$value = self::cs_sanitize_recursive( $value, $textarea );
+				// Write back to the source key — assigning to the loop copy is a no-op.
+				$user_input[ $key ] = self::cs_sanitize_recursive( $value, $textarea );
 			} else {
-				$value = self::cs_sanitize_field( $value, $textarea );
+				$user_input[ $key ] = self::cs_sanitize_field( $value, $textarea );
 			}
 		}
 

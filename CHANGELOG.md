@@ -1,3 +1,40 @@
+### Version: 1.9.1 ( May 24, 2026 ) ###
+* **New:** "Replace media" action in the Media Library (upload.php) — in both list view (row action) and grid view (the attachment details popup) — replace any file without opening the dedicated Media Replacer page.
+* **New:** Two replacement methods — keep the current file name, or adopt the new file's name and automatically repoint every link to it across your content.
+* **New:** "Page Builders" targeting on Replace in Database — Elementor, Beaver Builder, Divi / WPBakery, Oxygen and Bricks — with automatic cache regeneration after a replace.
+* **New:** "Escaped & Encoded URLs" option that also matches JSON-escaped (https:\/\/) and percent-encoded URLs, so replacing links inside Elementor and other page builders just works.
+* **Fix:** Database replacement no longer corrupts PHP-serialized data (Beaver Builder, widgets, ACF, theme options, Bricks) when the replacement changes the text length.
+* **Fix:** HTML inside serialized data is now preserved during replacement instead of being stripped.
+* **Fix:** Numeric values inside serialized data keep their original type after a replace.
+* **Fix:** AI provider API keys are no longer printed into the AI Settings page; leaving the key field blank keeps the saved key and preserves OAuth connections.
+* **Fix:** Hardened internal input sanitization (nested arrays) and database column lookups.
+* **Update:** Builder and object caches (Elementor CSS, Beaver Builder, post cache) are refreshed automatically after a live database replace.
+* **Update:** Redesigned, collapsible "Replacement method" selector in the media replacer to save space.
+* **Dev:** New hooks — `bfrp_builder_registry`, `bfrp_after_db_replace`, `bfrp_flush_object_cache` — plus unit and WordPress integration test suites.
+
+### Version: 1.9.0 ( April 29, 2026 ) ###
+* **New:** AI suggestions now support 10 providers — OpenAI, Anthropic Claude, Google Gemini, Groq, Mistral, OpenRouter, DeepSeek, xAI Grok, Hugging Face, and Ollama (local).
+* **New:** Sign in with OpenRouter via OAuth — access 100+ models without copying an API key.
+* **New:** Per-provider configuration with "Get free key" deep links and live model-list fetching.
+* **New:** Test Connection button on every provider card.
+* **New:** Prompt template selector for AI rewrites — Persuasive, Concise, Formal, Friendly, Fix Grammar, or fully custom.
+* **Fix:** Regex / Custom-Regex rules containing HTML with quotes are saved cleanly — no more stray backslashes in the database.
+* **Fix:** Editing a saved rule no longer shows double-encoded characters in the textarea.
+* **Fix:** Managed-regex rules no longer break the front-end page when the pattern contains `#`, is invalid, or is empty.
+* **Fix:** A failing regex now preserves the original page content instead of rendering a blank page.
+* **Fix:** Save-time regex validation rejects invalid patterns with a clear error message.
+* **Update:** Modifier checkboxes (case-insensitive / whole-word / unicode) are now persisted via a new `flags` column.
+* **Update:** Database migration to 1.0.4 — adds the `flags` column and repairs legacy escape sequences in existing rules.
+
+### Version: 1.8.2 ( March 23, 2026 ) ###
+* **Fix:** Removed some unnecessary files
+
+### Version: 1.8.1 ( March 23, 2026 ) ###
+* **Fix:** Resolved admin submenu ordering issue
+
+### Version: 1.8.0 ( March 09, 2026 ) ###
+* **Fix:** Patched Media Replacer stored XSS
+
 ### Version: 1.7.9 ( December 09, 2025 ) ###
 * **Update:** Updated for the latest WP release compatibility
 
