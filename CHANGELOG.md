@@ -1,3 +1,6 @@
+### Version: 1.9.2 ( June 04, 2026 ) ###
+* **Update:** Compatible with the latest WordPress version
+
 ### Version: 1.9.1 ( May 24, 2026 ) ###
 * **New:** "Replace media" action in the Media Library (upload.php) — in both list view (row action) and grid view (the attachment details popup) — replace any file without opening the dedicated Media Replacer page.
 * **New:** Two replacement methods — keep the current file name, or adopt the new file's name and automatically repoint every link to it across your content.

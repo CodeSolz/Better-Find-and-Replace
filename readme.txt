@@ -3,10 +3,10 @@ Contributors: codesolz, m.tuhin
 Tags: database, search replace, search, replace, search and replace, real-time replace, find, find and replace, gutenberg, block-editor, search replace elementor
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 5.2
-Tested up to: 6.9
-Stable tag: 1.9.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tested up to: 7.0
+Stable tag: 1.9.2
+License: GPL-3.0+
+License URI: http://www.gnu.org/licenses
 
 Search and replace text, images, URLs, footer credits, code blocks or jQuery-Ajax content in real time or in Database, easy user-interface
 
@@ -178,6 +178,9 @@ code block in find field*
 11. Media replacer
 
 == Changelog ==
+
+= Version: 1.9.2 ( June 04, 2026 ) =
+* **Update:** Compatible with the latest WordPress version
 
 = Version: 1.9.1 ( May 24, 2026 ) =
 * **New:** "Replace media" action in the Media Library (upload.php) — in both list view (row action) and grid view (the attachment details popup) — replace any file without opening the dedicated Media Replacer page.

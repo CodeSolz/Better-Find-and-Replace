@@ -13,7 +13,7 @@
  * Text Domain:       real-time-auto-find-and-replace
  * Requires PHP: 7.2
  * Requires At Least: 5.2
- * Tested Up To: 6.9
+ * Tested Up To: 7.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
