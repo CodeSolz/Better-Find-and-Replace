@@ -1,10 +1,10 @@
 === Better Find and Replace - AI-Powered Suggestions ===
 Contributors: codesolz, m.tuhin
-Tags: find and replace, search and replace, database, search replace, real-time replace
+Tags: database, search replace, search, replace, search and replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 5.2
 Tested up to: 7.0
-Stable tag: 1.9.2
+Stable tag: 1.9.3
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses
 
@@ -179,7 +179,7 @@ code block in find field*
 
 == Changelog ==
 
-= Version: 1.9.2 ( June 04, 2026 ) =
+= Version: 1.9.3 ( June 04, 2026 ) =
 * **Update:** Compatible with the latest WordPress version
 
 = Version: 1.9.1 ( May 24, 2026 ) =

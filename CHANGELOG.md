@@ -1,4 +1,4 @@
-### Version: 1.9.2 ( June 04, 2026 ) ###
+### Version: 1.9.3 ( June 04, 2026 ) ###
 * **Update:** Compatible with the latest WordPress version
 
 ### Version: 1.9.1 ( May 24, 2026 ) ###
