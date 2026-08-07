@@ -55,6 +55,21 @@ class RTAFAR_EnqueueScript {
 				'bTsN'            => __( 'Search Next', 'real-time-auto-find-and-replace' ),
 				'bTsP'            => __( 'Search Prev', 'real-time-auto-find-and-replace' ),
 
+				// "Replace in DB" live-run confirmation (dry_run unchecked).
+				// Pro has a one-click Restore page (populated by the same
+				// bfar_save_item_history hook DbReplacer already fires), so its
+				// warning can point there instead of just saying "have a backup".
+				'dbCfmTitle'      => __( 'Are you sure?', 'real-time-auto-find-and-replace' ),
+				'dbCfmTextFree'   => __( 'This will make permanent changes to your database and cannot be undone. Please make sure you have a backup before proceeding.', 'real-time-auto-find-and-replace' ),
+				'dbCfmTextPro'    => sprintf(
+					/* translators: %1$s: opening <a> tag linking to the Restore page, %2$s: closing </a> tag */
+					__( 'This will make permanent changes to your database. No worries though — every replaced value is logged, so you can restore it with one click from the %1$sRestore%2$s section afterwards.', 'real-time-auto-find-and-replace' ),
+					'<a href="' . esc_url( admin_url( 'admin.php?page=cs-bfar-restore-database' ) ) . '" target="_blank" rel="noopener noreferrer">',
+					'</a>'
+				),
+				'dbCfmYes'        => __( 'Yes, replace it!', 'real-time-auto-find-and-replace' ),
+				'dbCfmNo'         => __( 'Cancel', 'real-time-auto-find-and-replace' ),
+
 				'fedNotOfPerm'    => add_query_arg(
 					array(
 						CS_NOTICE_ID => 'Feedback_offPerm',

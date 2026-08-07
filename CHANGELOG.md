@@ -1,3 +1,11 @@
+### Version: 1.9.4 ( August 07, 2026 ) ###
+* **New:** "Replace in Database" now also supports WordPress core content tables — comments, comment meta, terms, term meta, term descriptions, and links — alongside posts, postmeta, and options.
+* **New:** Confirmation prompt before a live (non-dry-run) database replace, warning that the change is permanent; with the PRO version active, it links straight to the one-click Restore section instead.
+* **Fix:** Resolved an Elementor "You must call the_content() function" error when editing or previewing a page — the real-time content filter no longer runs during Elementor, Divi, Beaver Builder, or WPBakery edit/preview modes.
+* **Fix:** Admin submenu items now require the correct plugin capability instead of the low-privilege `read` capability, so they're hidden from users who shouldn't see them.
+* **Fix:** Corrected the admin submenu ordering so PRO's Restore in Database, Pixel Manager, and License items appear in the right place.
+* **Update:** Removed the "About Us" page from the plugin menu.
+
 ### Version: 1.9.3 ( June 04, 2026 ) ###
 * **Update:** Compatible with the latest WordPress version
 

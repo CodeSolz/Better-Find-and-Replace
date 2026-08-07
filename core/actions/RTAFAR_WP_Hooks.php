@@ -55,6 +55,14 @@ class RTAFAR_WP_Hooks {
 	 * @return void
 	 */
 	public function rtafar_filter_contents() {
+		// A page builder's own editor/preview iframe is rendering this request —
+		// don't wrap it. Buffering + rewriting that output breaks the builder's
+		// own detection of the_content() having run (e.g. Elementor's
+		// "You must call the_content()" error).
+		if ( $this->should_skip_realtime_filter() ) {
+			return;
+		}
+
 		$replace_rules = Masking::get_rules( 'all' );
 		$has_pro       = ProActions::hasPro();
 
@@ -65,6 +73,47 @@ class RTAFAR_WP_Hooks {
 				return $this->get_filtered_content( $buffer, $replace_rules, $has_pro );
 			}
 		);
+	}
+
+	/**
+	 * True when a page builder's editor or live-preview canvas is rendering
+	 * the current request, rather than a normal front-end visitor view.
+	 *
+	 * @return bool
+	 */
+	private function should_skip_realtime_filter() {
+		// Elementor editor / preview.
+		if ( class_exists( '\Elementor\Plugin' ) ) {
+			$elementor = \Elementor\Plugin::$instance;
+			if ( isset( $elementor->editor ) && method_exists( $elementor->editor, 'is_edit_mode' ) && $elementor->editor->is_edit_mode() ) {
+				return true;
+			}
+			if ( isset( $elementor->preview ) && method_exists( $elementor->preview, 'is_preview_mode' ) && $elementor->preview->is_preview_mode() ) {
+				return true;
+			}
+		}
+		// Elementor's preview query var — covers the AJAX canvas refresh, which
+		// can run before Plugin::$instance's editor/preview state is set.
+		if ( isset( $_GET['elementor-preview'] ) ) {
+			return true;
+		}
+
+		// Divi Visual Builder.
+		if ( isset( $_GET['et_fb'] ) && '1' === $_GET['et_fb'] ) {
+			return true;
+		}
+
+		// Beaver Builder.
+		if ( class_exists( '\FLBuilderModel' ) && method_exists( '\FLBuilderModel', 'is_builder_active' ) && \FLBuilderModel::is_builder_active() ) {
+			return true;
+		}
+
+		// WPBakery frontend editor.
+		if ( isset( $_GET['vc_editable'] ) || isset( $_GET['vc_action'] ) ) {
+			return true;
+		}
+
+		return (bool) apply_filters( 'bfrp_skip_realtime_content_filter', false );
 	}
 
 	/**

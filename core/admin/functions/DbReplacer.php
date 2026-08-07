@@ -214,6 +214,18 @@ class DbReplacer {
 				}
 			}
 
+			// Content-only WordPress core tables (comments, terms, links). No
+			// authentication data (users/usermeta) is touched here — see
+			// docs/new-update for the reasoning.
+			$large_table_skip = ! empty( $userInput['large_table'] );
+
+			$i += $this->replace_core_table( $tables, $wpdb->base_prefix . 'comments', array( $this, 'tbl_comments' ), $find, $replace, $large_table_skip );
+			$i += $this->replace_core_table( $tables, $wpdb->base_prefix . 'commentmeta', array( $this, 'tbl_commentmeta' ), $find, $replace, $large_table_skip );
+			$i += $this->replace_core_table( $tables, $wpdb->base_prefix . 'terms', array( $this, 'tbl_terms' ), $find, $replace, $large_table_skip );
+			$i += $this->replace_core_table( $tables, $wpdb->base_prefix . 'termmeta', array( $this, 'tbl_termmeta' ), $find, $replace, $large_table_skip );
+			$i += $this->replace_core_table( $tables, $wpdb->base_prefix . 'term_taxonomy', array( $this, 'tbl_term_taxonomy' ), $find, $replace, $large_table_skip );
+			$i += $this->replace_core_table( $tables, $wpdb->base_prefix . 'links', array( $this, 'tbl_links' ), $find, $replace, $large_table_skip );
+
 			// pre_print( $this->settings );
 
 			$res = apply_filters( 'bfrp_custom_tables', $this->settings, $tables );
@@ -609,6 +621,339 @@ class DbReplacer {
 
 				if ( true === $is_replaced ) {
 					++$i;
+				}
+			}
+		}
+		return $i;
+	}
+
+	/**
+	 * Runs a whitelisted core-table handler if that table was selected, then
+	 * removes it from $tables so it isn't also passed to the (pro) custom
+	 * tables filter. Mirrors the inline pattern used above for posts/postmeta/options.
+	 *
+	 * @param array    $tables           Selected table names, checked by reference.
+	 * @param string   $table            Fully-prefixed table name to match against $tables.
+	 * @param callable $handler          [$this, 'tbl_x'] — called as $handler($find, $replace).
+	 * @param string   $find
+	 * @param string   $replace
+	 * @param bool     $large_table_skip Pro "large table" flag; core tables sit this out same as posts/postmeta/options.
+	 * @return int
+	 */
+	private function replace_core_table( &$tables, $table, $handler, $find, $replace, $large_table_skip ) {
+		if ( empty( $tables ) || $large_table_skip || ! in_array( $table, $tables, true ) ) {
+			return 0;
+		}
+
+		$count = (int) call_user_func( $handler, $find, $replace );
+
+		$key = array_search( $table, $tables, true );
+		if ( false !== $key ) {
+			unset( $tables[ $key ] );
+		}
+
+		return $count;
+	}
+
+	/**
+	 * Replace in comments table (author name/email/url + content). No IP or
+	 * user-agent columns — those aren't meaningful find/replace targets.
+	 *
+	 * @param string $find
+	 * @param string $replace
+	 * @return int
+	 */
+	private function tbl_comments( $find, $replace ) {
+		global $wpdb;
+		$i = 0;
+
+		$columns      = array( 'comment_author', 'comment_author_email', 'comment_author_url', 'comment_content' );
+		$variants     = $this->variants_for( $find, $replace );
+		$placeholders = array();
+		$clauses      = array();
+		foreach ( $columns as $column ) {
+			$clauses[] = $this->like_clause_for_variants( $column, $variants, $placeholders );
+		}
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$get_data = $wpdb->get_results(
+			$wpdb->prepare(
+				"select * from {$wpdb->comments} where " . implode( ' or ', $clauses ),
+				$placeholders
+			)
+		);
+
+		if ( $get_data ) {
+			foreach ( $get_data as $item ) {
+				foreach ( $columns as $column ) {
+					if ( ! isset( $item->$column ) ) {
+						continue;
+					}
+					$is_replaced = $this->bfrReplaceVariants(
+						$variants,
+						$item->$column,
+						$wpdb->base_prefix . 'comments',
+						$item->comment_ID,
+						'comment_ID',
+						$column,
+						array( 'comment_ID' => $item->comment_ID )
+					);
+					if ( true === $is_replaced ) {
+						++$i;
+					}
+				}
+			}
+		}
+		return $i;
+	}
+
+	/**
+	 * Replace in comment meta table.
+	 *
+	 * @param string $find
+	 * @param string $replace
+	 * @return int
+	 */
+	private function tbl_commentmeta( $find, $replace ) {
+		global $wpdb;
+		$i = 0;
+
+		$variants     = $this->variants_for( $find, $replace );
+		$placeholders = array();
+		$key_clause   = $this->like_clause_for_variants( 'meta_key', $variants, $placeholders );
+		$val_clause   = $this->like_clause_for_variants( 'meta_value', $variants, $placeholders );
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$get_data = $wpdb->get_results(
+			$wpdb->prepare(
+				"select * from {$wpdb->commentmeta} where {$key_clause} or {$val_clause}",
+				$placeholders
+			)
+		);
+
+		if ( $get_data ) {
+			foreach ( $get_data as $item ) {
+				$is_replaced = $this->bfrReplaceVariants(
+					$variants,
+					$item->meta_value,
+					$wpdb->base_prefix . 'commentmeta',
+					$item->meta_id,
+					'meta_id',
+					'meta_value',
+					array( 'meta_id' => $item->meta_id )
+				);
+				if ( true === $is_replaced ) {
+					++$i;
+				}
+
+				$is_replaced = $this->bfrReplaceVariants(
+					$variants,
+					$item->meta_key,
+					$wpdb->base_prefix . 'commentmeta',
+					$item->meta_id,
+					'meta_id',
+					'meta_key',
+					array( 'meta_id' => $item->meta_id )
+				);
+				if ( true === $is_replaced ) {
+					++$i;
+				}
+			}
+		}
+		return $i;
+	}
+
+	/**
+	 * Replace in terms table (name + slug). Note: replacing slug changes term
+	 * archive URLs, same tradeoff the plugin already accepts for post_name/guid.
+	 *
+	 * @param string $find
+	 * @param string $replace
+	 * @return int
+	 */
+	private function tbl_terms( $find, $replace ) {
+		global $wpdb;
+		$i = 0;
+
+		$variants     = $this->variants_for( $find, $replace );
+		$placeholders = array();
+		$name_clause  = $this->like_clause_for_variants( 'name', $variants, $placeholders );
+		$slug_clause  = $this->like_clause_for_variants( 'slug', $variants, $placeholders );
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$get_data = $wpdb->get_results(
+			$wpdb->prepare(
+				"select * from {$wpdb->terms} where {$name_clause} or {$slug_clause}",
+				$placeholders
+			)
+		);
+
+		if ( $get_data ) {
+			foreach ( $get_data as $item ) {
+				foreach ( array( 'name', 'slug' ) as $column ) {
+					$is_replaced = $this->bfrReplaceVariants(
+						$variants,
+						$item->$column,
+						$wpdb->base_prefix . 'terms',
+						$item->term_id,
+						'term_id',
+						$column,
+						array( 'term_id' => $item->term_id )
+					);
+					if ( true === $is_replaced ) {
+						++$i;
+					}
+				}
+			}
+		}
+		return $i;
+	}
+
+	/**
+	 * Replace in term meta table.
+	 *
+	 * @param string $find
+	 * @param string $replace
+	 * @return int
+	 */
+	private function tbl_termmeta( $find, $replace ) {
+		global $wpdb;
+		$i = 0;
+
+		$variants     = $this->variants_for( $find, $replace );
+		$placeholders = array();
+		$key_clause   = $this->like_clause_for_variants( 'meta_key', $variants, $placeholders );
+		$val_clause   = $this->like_clause_for_variants( 'meta_value', $variants, $placeholders );
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$get_data = $wpdb->get_results(
+			$wpdb->prepare(
+				"select * from {$wpdb->termmeta} where {$key_clause} or {$val_clause}",
+				$placeholders
+			)
+		);
+
+		if ( $get_data ) {
+			foreach ( $get_data as $item ) {
+				$is_replaced = $this->bfrReplaceVariants(
+					$variants,
+					$item->meta_value,
+					$wpdb->base_prefix . 'termmeta',
+					$item->meta_id,
+					'meta_id',
+					'meta_value',
+					array( 'meta_id' => $item->meta_id )
+				);
+				if ( true === $is_replaced ) {
+					++$i;
+				}
+
+				$is_replaced = $this->bfrReplaceVariants(
+					$variants,
+					$item->meta_key,
+					$wpdb->base_prefix . 'termmeta',
+					$item->meta_id,
+					'meta_id',
+					'meta_key',
+					array( 'meta_id' => $item->meta_id )
+				);
+				if ( true === $is_replaced ) {
+					++$i;
+				}
+			}
+		}
+		return $i;
+	}
+
+	/**
+	 * Replace in term_taxonomy table. Only `description` is touched — taxonomy,
+	 * parent and count are structural and must never be find/replace targets.
+	 *
+	 * @param string $find
+	 * @param string $replace
+	 * @return int
+	 */
+	private function tbl_term_taxonomy( $find, $replace ) {
+		global $wpdb;
+		$i = 0;
+
+		$variants     = $this->variants_for( $find, $replace );
+		$placeholders = array();
+		$desc_clause  = $this->like_clause_for_variants( 'description', $variants, $placeholders );
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$get_data = $wpdb->get_results(
+			$wpdb->prepare(
+				"select * from {$wpdb->term_taxonomy} where {$desc_clause}",
+				$placeholders
+			)
+		);
+
+		if ( $get_data ) {
+			foreach ( $get_data as $item ) {
+				$is_replaced = $this->bfrReplaceVariants(
+					$variants,
+					$item->description,
+					$wpdb->base_prefix . 'term_taxonomy',
+					$item->term_taxonomy_id,
+					'term_taxonomy_id',
+					'description',
+					array( 'term_taxonomy_id' => $item->term_taxonomy_id )
+				);
+				if ( true === $is_replaced ) {
+					++$i;
+				}
+			}
+		}
+		return $i;
+	}
+
+	/**
+	 * Replace in links table (Link Manager / blogroll — legacy but still present
+	 * on most installs). Only the content-bearing columns are touched.
+	 *
+	 * @param string $find
+	 * @param string $replace
+	 * @return int
+	 */
+	private function tbl_links( $find, $replace ) {
+		global $wpdb;
+		$i = 0;
+
+		$columns      = array( 'link_url', 'link_name', 'link_description', 'link_notes' );
+		$variants     = $this->variants_for( $find, $replace );
+		$placeholders = array();
+		$clauses      = array();
+		foreach ( $columns as $column ) {
+			$clauses[] = $this->like_clause_for_variants( $column, $variants, $placeholders );
+		}
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$get_data = $wpdb->get_results(
+			$wpdb->prepare(
+				"select * from {$wpdb->links} where " . implode( ' or ', $clauses ),
+				$placeholders
+			)
+		);
+
+		if ( $get_data ) {
+			foreach ( $get_data as $item ) {
+				foreach ( $columns as $column ) {
+					if ( ! isset( $item->$column ) ) {
+						continue;
+					}
+					$is_replaced = $this->bfrReplaceVariants(
+						$variants,
+						$item->$column,
+						$wpdb->base_prefix . 'links',
+						$item->link_id,
+						'link_id',
+						$column,
+						array( 'link_id' => $item->link_id )
+					);
+					if ( true === $is_replaced ) {
+						++$i;
+					}
 				}
 			}
 		}

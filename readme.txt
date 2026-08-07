@@ -4,7 +4,7 @@ Tags: database, search replace, search, replace, search and replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 5.2
 Tested up to: 7.0
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses
 
@@ -179,6 +179,14 @@ code block in find field*
 
 == Changelog ==
 
+= Version: 1.9.4 ( August 07, 2026 ) =
+* **New:** "Replace in Database" now also supports WordPress core content tables — comments, comment meta, terms, term meta, term descriptions, and links — alongside posts, postmeta, and options.
+* **New:** Confirmation prompt before a live (non-dry-run) database replace, warning that the change is permanent; with the PRO version active, it links straight to the one-click Restore section instead.
+* **Fix:** Resolved an Elementor "You must call the_content() function" error when editing or previewing a page — the real-time content filter no longer runs during Elementor, Divi, Beaver Builder, or WPBakery edit/preview modes.
+* **Fix:** Admin submenu items now require the correct plugin capability instead of the low-privilege `read` capability, so they're hidden from users who shouldn't see them.
+* **Fix:** Corrected the admin submenu ordering so PRO's Restore in Database, Pixel Manager, and License items appear in the right place.
+* **Update:** Removed the "About Us" page from the plugin menu.
+
 = Version: 1.9.3 ( June 04, 2026 ) =
 * **Update:** Compatible with the latest WordPress version
 
@@ -210,55 +218,5 @@ code block in find field*
 * **Update:** Modifier checkboxes (case-insensitive / whole-word / unicode) are now persisted via a new `flags` column and hidden for rule types that don't use them.
 * **Update:** Database migration to 1.0.4 — adds the `flags` column and repairs legacy escape sequences in existing rules.
 
-= Version: 1.8.2 ( March 23, 2026 ) =
-* **Fix:** removed some unnecessary files
-
-= Version: 1.8.1 ( March 23, 2026 ) =
-* **Fix:** Resolved admin submenu ordering issue
-
-= Version: 1.8.0 ( March 09, 2026 ) =
-* **Fix:** Patched Media Replacer stored XSS
-
-= Version: 1.7.9 ( December 09, 2025 ) =
-* **Update:** Updated for the latest WP release compatibility
-
-= Version: 1.7.8 ( November 05, 2025 ) =
-* **Update:** Security patch updated
-
-= Version: 1.7.7 ( September 29, 2025 ) =
-* **Update:** Security patch updated
-
-= Version: 1.7.6 ( August 21, 2025 ) =
-* **Fix:** Little bug fixed
-
-= Version: 1.7.5 ( August 12, 2025 ) =
-* **Fix:** Detects **translation loading** on the `plugins_loaded` hook and requires moving it to the `init` hook.
-
-= Version: 1.7.4 ( July 01, 2025 ) =
-* **Fix:** Flags **translation loading issue** on the `plugins_loaded` hook (requires `init` or later).
-
-= Version: 1.7.3 ( May 23, 2025 ) =
-* **New PRO:** Snippet Manager – Create, edit, and manage reusable CSS & JS code snippets from the admin panel.
-* **New PRO:** Apply snippets conditionally to specific posts, pages, or custom post types with a visual list of where each snippet is used.
-* **New PRO:** Snippets are saved as physical files and loaded for better performance and compatibility.
-* **New PRO:** Supports both CSS and JS snippets with real-time page/post targeting.
-* **Improved:** Frontend only loads the exact snippets needed for the current page, reducing bloat.
-
-= Version: 1.7.2 ( May 16, 2025 ) =
-* **New:** ✨ AI-Powered Suggestions – Generate intelligent replacement suggestions using OpenAI.
-* **New:** AI suggestion - preview with Apply / Regenerate options.
-
-= Version: 1.7.1 ( April 22, 2025 ) =
-* **Update:** updated for the latest release
-
-= Version: 1.7.0 ( March 26, 2025 ) =
-* **Update:** Media replacer updated
-* **Update:** Video replacer - media replacer
-
-= Version: 1.6.9 ( January 30, 2025 ) =
-* **Update:** Small issue fixed
-
-= Version: 1.6.8 ( January 22, 2025 ) =
-* **Update:** Security patch updated
 
 [CHECK THE FULL CHANGELOG](https://github.com/CodeSolz/Better-Find-and-Replace/blob/master/CHANGELOG.md).

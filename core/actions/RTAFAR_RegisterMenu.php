@@ -57,9 +57,76 @@ class RTAFAR_RegisterMenu {
 	public function __construct() {
 		// call WordPress admin menu hook
 		add_action( 'admin_menu', array( $this, 'rtafar_register_menu' ) );
-		add_action( 'admin_menu', array( $this, 'rtafar_move_about_us_last' ), 9999 );
+		// Must run before rtafar_rewrite_go_pro_url() (9999): that hook rewrites
+		// the go_pro item's slug to an external URL, after which it would no
+		// longer match 'cs-bfar-go-pro' in the reorder map below.
+		add_action( 'admin_menu', array( $this, 'rtafar_reorder_submenu' ), 9998 );
 		add_action( 'admin_menu', array( $this, 'rtafar_rewrite_go_pro_url' ), 9999 );
 		add_action( 'admin_footer', array( $this, 'rtafar_go_pro_target_blank' ) );
+	}
+
+	/**
+	 * Force the final on-screen submenu order.
+	 *
+	 * add_submenu_page()'s $position argument inserts against the item count
+	 * of $submenu[$parent] AT THAT EXACT CALL — it is not a stable, global
+	 * sort key. Since Pro registers its menu items (admin_menu priority 20,
+	 * after removing the free-tier placeholders) on top of what free already
+	 * registered (priority 10), mixing position numbers across the two
+	 * plugins produces an order that shifts unpredictably. Reordering the
+	 * $submenu array directly by slug, after both plugins have finished
+	 * registering, is the only reliable way to control this.
+	 *
+	 * @return void
+	 */
+	public function rtafar_reorder_submenu() {
+		global $submenu;
+		$parent = CS_RTAFAR_PLUGIN_IDENTIFIER;
+
+		if ( empty( $submenu[ $parent ] ) ) {
+			return;
+		}
+
+		$desired_order = array(
+			'cs-add-replacement-rule',
+			'cs-all-masking-rules',
+			'cs-replace-in-database',
+			'cs-bfar-restore-database',      // Pro's real Restore page.
+			'cs-bfar-restore-database-pro',  // Free placeholder (absent when Pro is active).
+			'cs-bfar-media-replacer',
+			'cs-bfar-pixel-tracker',         // Pro (pro-basic) only.
+			'cs-bfar-snippets-manager',      // Pro (pro-pro) only.
+			'cs-bfar-pixel-manager',         // Pro (pro-pro) only — pro-pro's Pixel Manager slug differs from pro-basic's.
+			'cs-bfar-ai-settings',
+			'cs-bfar-pro-license',           // Pro only.
+			'cs-bfar-go-pro',                // Free only (removed when Pro is active).
+		);
+
+		$by_slug = array();
+		foreach ( $submenu[ $parent ] as $item ) {
+			if ( isset( $item[2] ) ) {
+				$by_slug[ $item[2] ] = $item;
+			}
+		}
+
+		$ordered = array();
+		foreach ( $desired_order as $slug ) {
+			if ( isset( $by_slug[ $slug ] ) ) {
+				$ordered[]              = $by_slug[ $slug ];
+				unset( $by_slug[ $slug ] );
+			}
+		}
+
+		// Anything not in the known list (third-party filters, future items)
+		// keeps its existing relative order, appended after.
+		foreach ( $submenu[ $parent ] as $item ) {
+			if ( isset( $item[2] ) && isset( $by_slug[ $item[2] ] ) ) {
+				$ordered[] = $item;
+				unset( $by_slug[ $item[2] ] );
+			}
+		}
+
+		$submenu[ $parent ] = $ordered;
 	}
 
 	/** External "Upgrade to Premium" URL with UTMs. */
@@ -117,7 +184,7 @@ class RTAFAR_RegisterMenu {
 		add_menu_page(
 			__( 'Real time auto find and replace', 'real-time-auto-find-and-replace' ),
 			__( 'Find & Replace', 'real-time-auto-find-and-replace' ),
-			'read',
+			'manage_options',
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			'cs-woo-altcoin-gateway',
 			CS_RTAFAR_PLUGIN_ASSET_URI . 'img/icon-24x24.png',
@@ -130,7 +197,7 @@ class RTAFAR_RegisterMenu {
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Add Replacement Rule', 'real-time-auto-find-and-replace' ),
 			__( 'Add New Rule', 'real-time-auto-find-and-replace' ),
-			'read',
+			Util::bfar_nav_cap( 'add_masking_rule' ),
 			'cs-add-replacement-rule',
 			array( $this, 'rtafr_page_add_rule' ),
 			1
@@ -140,7 +207,7 @@ class RTAFAR_RegisterMenu {
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'All Replacement Rules', 'real-time-auto-find-and-replace' ),
 			__( 'All Replacement Rules', 'real-time-auto-find-and-replace' ),
-			'read',
+			Util::bfar_nav_cap( 'all_masking_rules' ),
 			'cs-all-masking-rules',
 			array( $this, 'rtafr_page_all_masking_rules' ),
 			2
@@ -150,29 +217,29 @@ class RTAFAR_RegisterMenu {
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Replace in DB', 'real-time-auto-find-and-replace' ),
 			__( 'Replace in Database', 'real-time-auto-find-and-replace' ),
-			'read',
+			Util::bfar_nav_cap( 'replace_in_db' ),
 			'cs-replace-in-database',
 			array( $this, 'rtafr_page_replace_in_db' ),
 			3
-		);
-
-		$this->rtafr_menus['media_replacer'] = add_submenu_page(
-			CS_RTAFAR_PLUGIN_IDENTIFIER,
-			__( 'Media Replacer', 'real-time-auto-find-and-replace' ),
-			__( 'Media Replacer', 'real-time-auto-find-and-replace' ),
-			'read',
-			'cs-bfar-media-replacer',
-			array( $this, 'rtafar_page_media_replacer' ),
-			4
 		);
 
 		$this->rtafr_menus['restore_in_db_pro'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Restore Database', 'real-time-auto-find-and-replace' ),
 			__( 'Restore', 'real-time-auto-find-and-replace' ),
-			'read',
+			Util::bfar_nav_cap( 'restore_in_db' ),
 			'cs-bfar-restore-database-pro',
 			array( $this, 'rtafar_page_restore_db' ),
+			4
+		);
+
+		$this->rtafr_menus['media_replacer'] = add_submenu_page(
+			CS_RTAFAR_PLUGIN_IDENTIFIER,
+			__( 'Media Replacer', 'real-time-auto-find-and-replace' ),
+			__( 'Media Replacer', 'real-time-auto-find-and-replace' ),
+			Util::bfar_nav_cap( 'media_replacer' ),
+			'cs-bfar-media-replacer',
+			array( $this, 'rtafar_page_media_replacer' ),
 			5
 		);
 
@@ -180,13 +247,11 @@ class RTAFAR_RegisterMenu {
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'AI Configuration', 'real-time-auto-find-and-replace' ),
 			__( 'AI Settings', 'real-time-auto-find-and-replace' ),
-			'read',
+			Util::bfar_nav_cap( 'ai_settings' ),
 			'cs-bfar-ai-settings',
 			array( $this, 'rtafar_page_ai_settings' ),
 			6
 		);
-
-		
 
 		$this->rtafr_menus['go_pro'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
@@ -198,16 +263,6 @@ class RTAFAR_RegisterMenu {
 			7
 		);
 
-		$this->rtafr_menus['about_us'] = add_submenu_page(
-			CS_RTAFAR_PLUGIN_IDENTIFIER,
-			__( 'About Us', 'real-time-auto-find-and-replace' ),
-			__( 'About Us', 'real-time-auto-find-and-replace' ),
-			'read',
-			'cs-bfar-about-us',
-			array( $this, 'rtafar_page_about_us' ),
-			999
-		);
-
 		// load script
 		add_action( "load-{$this->rtafr_menus['add_masking_rule']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['all_masking_rules']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
@@ -215,7 +270,6 @@ class RTAFAR_RegisterMenu {
 		add_action( "load-{$this->rtafr_menus['restore_in_db_pro']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['media_replacer']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['ai_settings']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
-		add_action( "load-{$this->rtafr_menus['about_us']}", array( $this, 'rtafar_register_about_scripts' ) );
 
 		\remove_submenu_page( CS_RTAFAR_PLUGIN_IDENTIFIER, CS_RTAFAR_PLUGIN_IDENTIFIER );
 
@@ -406,65 +460,6 @@ class RTAFAR_RegisterMenu {
 				echo $AccessDenied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ), $get_settings ) );
 			} else {
 				echo wp_kses( $AccessDenied, Util::cs_allowed_html() );
-			}
-		}
-	}
-
-	/**
-	 * About Us page callback
-	 *
-	 * @return void
-	 */
-	public function rtafar_page_about_us() {
-		$AboutUs = $this->pages->AboutUs();
-		if ( is_object( $AboutUs ) ) {
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo $AboutUs->generate_page();
-		} else {
-			echo wp_kses( $AboutUs, Util::cs_allowed_html() );
-		}
-	}
-
-	/**
-	 * Enqueue styles for the About Us page only.
-	 *
-	 * @return void
-	 */
-	public function rtafar_register_about_scripts() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'rtafar_load_about_scripts' ) );
-	}
-
-	/**
-	 * Load About Us stylesheet.
-	 *
-	 * @return void
-	 */
-	public function rtafar_load_about_scripts() {
-		wp_enqueue_style(
-			'rtafar-about',
-			CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-about.css',
-			array(),
-			CS_RTAFAR_VERSION
-		);
-	}
-
-	/**
-	 * Move About Us to the end of the submenu, after all other plugins have registered their items.
-	 *
-	 * @return void
-	 */
-	public function rtafar_move_about_us_last() {
-		global $submenu;
-		$parent = CS_RTAFAR_PLUGIN_IDENTIFIER;
-		if ( empty( $submenu[ $parent ] ) ) {
-			return;
-		}
-		foreach ( $submenu[ $parent ] as $key => $item ) {
-			if ( isset( $item[2] ) && 'cs-bfar-about-us' === $item[2] ) {
-				$about_item = $item;
-				unset( $submenu[ $parent ][ $key ] );
-				$submenu[ $parent ][] = $about_item;
-				break;
 			}
 		}
 	}

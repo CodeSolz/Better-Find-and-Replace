@@ -156,6 +156,15 @@ class RTAFAR_DB {
 			$wpdb->base_prefix . 'posts',
 			$wpdb->base_prefix . 'postmeta',
 			$wpdb->base_prefix . 'options',
+			// Content-only WordPress core tables. Deliberately excludes
+			// users/usermeta (auth data) and any third-party/custom table,
+			// which stay Pro-only via the bfrp_custom_tables filter.
+			$wpdb->base_prefix . 'comments',
+			$wpdb->base_prefix . 'commentmeta',
+			$wpdb->base_prefix . 'terms',
+			$wpdb->base_prefix . 'termmeta',
+			$wpdb->base_prefix . 'term_taxonomy',
+			$wpdb->base_prefix . 'links',
 		);
 	}
 }
