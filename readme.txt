@@ -4,7 +4,7 @@ Tags: database, search replace, search, replace, search and replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 5.2
 Tested up to: 7.0
-Stable tag: 1.9.4
+Stable tag: 1.9.5
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses
 
@@ -178,6 +178,9 @@ code block in find field*
 11. Media replacer
 
 == Changelog ==
+
+= Version: 1.9.5 ( August 21, 2026 ) =
+* **Update:** Minor admin menu and interface refinements.
 
 = Version: 1.9.4 ( August 07, 2026 ) =
 * **New:** "Replace in Database" now also supports WordPress core content tables — comments, comment meta, terms, term meta, term descriptions, and links — alongside posts, postmeta, and options.

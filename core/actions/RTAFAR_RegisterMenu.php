@@ -100,6 +100,7 @@ class RTAFAR_RegisterMenu {
 			'cs-bfar-ai-settings',
 			'cs-bfar-pro-license',           // Pro only.
 			'cs-bfar-go-pro',                // Free only (removed when Pro is active).
+			'cs-bfar-about-us',              // Informational page, always last.
 		);
 
 		$by_slug = array();
@@ -263,6 +264,16 @@ class RTAFAR_RegisterMenu {
 			7
 		);
 
+		$this->rtafr_menus['about_us'] = add_submenu_page(
+			CS_RTAFAR_PLUGIN_IDENTIFIER,
+			__( 'About Us', 'real-time-auto-find-and-replace' ),
+			__( 'About Us', 'real-time-auto-find-and-replace' ),
+			'read',
+			'cs-bfar-about-us',
+			array( $this, 'rtafar_page_about_us' ),
+			8
+		);
+
 		// load script
 		add_action( "load-{$this->rtafr_menus['add_masking_rule']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['all_masking_rules']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
@@ -270,6 +281,7 @@ class RTAFAR_RegisterMenu {
 		add_action( "load-{$this->rtafr_menus['restore_in_db_pro']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['media_replacer']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['ai_settings']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
+		add_action( "load-{$this->rtafr_menus['about_us']}", array( $this, 'rtafar_register_about_scripts' ) );
 
 		\remove_submenu_page( CS_RTAFAR_PLUGIN_IDENTIFIER, CS_RTAFAR_PLUGIN_IDENTIFIER );
 
@@ -462,6 +474,44 @@ class RTAFAR_RegisterMenu {
 				echo wp_kses( $AccessDenied, Util::cs_allowed_html() );
 			}
 		}
+	}
+
+	/**
+	 * About Us page callback
+	 *
+	 * @return void
+	 */
+	public function rtafar_page_about_us() {
+		$AboutUs = $this->pages->AboutUs();
+		if ( is_object( $AboutUs ) ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $AboutUs->generate_page();
+		} else {
+			echo wp_kses( $AboutUs, Util::cs_allowed_html() );
+		}
+	}
+
+	/**
+	 * Register the About Us stylesheet on that screen only.
+	 *
+	 * @return void
+	 */
+	public function rtafar_register_about_scripts() {
+		add_action( 'admin_enqueue_scripts', array( $this, 'rtafar_load_about_scripts' ) );
+	}
+
+	/**
+	 * Load About Us stylesheet.
+	 *
+	 * @return void
+	 */
+	public function rtafar_load_about_scripts() {
+		wp_enqueue_style(
+			'rtafar-about',
+			CS_RTAFAR_PLUGIN_ASSET_URI . 'css/rtafar-about.css',
+			array(),
+			CS_RTAFAR_VERSION
+		);
 	}
 
 	/**

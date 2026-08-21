@@ -1,3 +1,6 @@
+### Version: 1.9.5 ( August 21, 2026 ) ###
+* **Update:** Minor admin menu and interface refinements.
+
 ### Version: 1.9.4 ( August 07, 2026 ) ###
 * **New:** "Replace in Database" now also supports WordPress core content tables — comments, comment meta, terms, term meta, term descriptions, and links — alongside posts, postmeta, and options.
 * **New:** Confirmation prompt before a live (non-dry-run) database replace, warning that the change is permanent; with the PRO version active, it links straight to the one-click Restore section instead.
