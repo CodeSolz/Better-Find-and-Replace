@@ -62,7 +62,7 @@ class aiHandler {
 					'openai' => array(
 						'auth_type' => 'api_key',
 						'api_key'   => $payload['api_key'],
-						'model'     => isset( $payload['language_model'] ) ? $payload['language_model'] : 'gpt-4o-mini',
+						'model'     => isset( $payload['language_model'] ) ? $payload['language_model'] : AiSettings::defaultModelFor( 'openai' ),
 					),
 				),
 			);

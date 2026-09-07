@@ -80,6 +80,17 @@ class AdminPageBuilder {
 		// init current screen
 		$this->init_current_screen();
 
+		// Anything a page needs between its heading and its body - a banner
+		// that reports on work started from the heading, for instance. It sits
+		// outside the panel body on purpose: the body is the working surface,
+		// and a message that pushes the surface around while it is being used
+		// is worse than one that does not.
+		$header = $this->generate_header( $argc );
+
+		if ( isset( $argc['after_header'] ) && '' !== trim( $argc['after_header'] ) ) {
+			$header .= $argc['after_header'];
+		}
+
 		$content    = '';
 		$top_notice = isset( $argc['well'] ) ? $argc['well'] : '';
 		if ( ! empty( $top_notice ) ) {
@@ -97,7 +108,7 @@ class AdminPageBuilder {
 
 		return sprintf(
 			$this->page_wrapper( $argc ),
-			$this->generate_header( $argc ),
+			$header,
 			$content,
 			$this->generate_button_block( $argc ),
 			$before_footer,
@@ -138,18 +149,35 @@ class AdminPageBuilder {
 	/**
 	 * Generate page header block
 	 *
+	 * A page may hand the heading an action - the control that belongs to the
+	 * screen as a whole rather than to one row of it, such as "Scan for broken
+	 * links". It sits on the title's own row, at the far end. The heading only
+	 * becomes a two-column row when a page actually supplies one, so every
+	 * existing screen's heading markup is unchanged.
+	 *
 	 * @param type $argc
 	 * @return type
 	 */
 	private function generate_header( $argc ) {
 		$title     = isset( $argc['title'] ) ? $argc['title'] : '---';
 		$sub_title = isset( $argc['sub_title'] ) ? $argc['sub_title'] : '---';
-		$res       = '<div class="panel-heading">
-            <h3 class="title"> ' . $title . '</h3>
-            <p> ' . $sub_title . ' </p>
-        </div>';
+		$actions   = isset( $argc['header_actions'] ) ? trim( $argc['header_actions'] ) : '';
 
-		return $res;
+		$heading = '<h3 class="title"> ' . $title . '</h3>
+            <p> ' . $sub_title . ' </p>';
+
+		if ( '' === $actions ) {
+			return '<div class="panel-heading">
+            ' . $heading . '
+        </div>';
+		}
+
+		return '<div class="panel-heading panel-heading-with-actions">
+            <div class="panel-heading-text">
+            ' . $heading . '
+            </div>
+            <div class="panel-heading-actions">' . $actions . '</div>
+        </div>';
 	}
 
 	/**

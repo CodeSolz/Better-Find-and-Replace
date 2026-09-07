@@ -16,6 +16,21 @@ class Anthropic extends AbstractProvider {
 	const BASE_URL          = 'https://api.anthropic.com/v1';
 	const ANTHROPIC_VERSION = '2023-06-01';
 
+	/**
+	 * Output budget for one suggestion.
+	 *
+	 * The current Claude models (Opus 5, Sonnet 5 and above) run adaptive
+	 * thinking by default, and those thinking tokens are drawn from max_tokens
+	 * before any text block is produced. The old 200-token budget could be spent
+	 * entirely on thinking, which surfaced as "Empty response from Anthropic".
+	 *
+	 * No `thinking` parameter is sent: the shapes differ per model generation
+	 * (and Fable-class models reject an explicit one), so letting each model use
+	 * its own default and paying for a larger ceiling is the portable choice.
+	 * Unused budget is not billed.
+	 */
+	const MAX_TOKENS = 1024;
+
 	public function getSlug() {
 		return 'anthropic';
 	}
@@ -53,7 +68,7 @@ class Anthropic extends AbstractProvider {
 			array(
 				'model'      => $model,
 				'system'     => $systemPrompt,
-				'max_tokens' => 200,
+				'max_tokens' => self::MAX_TOKENS,
 				'messages'   => array(
 					array(
 						'role'    => 'user',
@@ -64,9 +79,10 @@ class Anthropic extends AbstractProvider {
 		);
 
 		if ( ! $res['status'] ) {
-			return $res;
+			return $this->withModelHint( $res );
 		}
 
+		// Only text blocks carry the answer; thinking blocks are skipped.
 		$content = '';
 		if ( isset( $res['body']['content'] ) && is_array( $res['body']['content'] ) ) {
 			foreach ( $res['body']['content'] as $block ) {
@@ -76,10 +92,24 @@ class Anthropic extends AbstractProvider {
 			}
 		}
 
-		if ( $content === '' ) {
-			return array(
-				'status' => false,
-				'error'  => 'Empty response from Anthropic.',
+		if ( trim( $content ) === '' ) {
+			$reason = isset( $res['body']['stop_reason'] ) ? $res['body']['stop_reason'] : '';
+
+			// A refusal carries a category worth showing.
+			if ( 'refusal' === $reason && ! empty( $res['body']['stop_details']['category'] ) ) {
+				return $this->withModelHint(
+					array(
+						'status' => false,
+						'error'  => sprintf(
+							'Claude declined to answer this request (%s).',
+							sanitize_text_field( $res['body']['stop_details']['category'] )
+						),
+					)
+				);
+			}
+
+			return $this->withModelHint(
+				$this->emptyResponseError( $reason, 'Empty response from Anthropic. The model returned no text — try another model.' )
 			);
 		}
 

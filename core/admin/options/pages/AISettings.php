@@ -342,13 +342,39 @@ class AISettings {
 			esc_attr( $current_auth )
 		);
 
-		$model_options = '';
-		$models_static = isset( $p['models_static'] ) ? $p['models_static'] : array();
+		$model_options  = '';
+		$models_static  = isset( $p['models_static'] ) ? $p['models_static'] : array();
+		$models_legacy  = ( isset( $p['models_legacy'] ) && is_array( $p['models_legacy'] ) ) ? $p['models_legacy'] : array();
+		$legacy_warning = '';
+
+		// A saved model that is not in the curated list still has to be selectable,
+		// otherwise saving the form would silently switch the user's model.
 		if ( $model !== '' && ! isset( $models_static[ $model ] ) ) {
+			$is_legacy = isset( $models_legacy[ $model ] );
+
 			$model_options .= sprintf(
-				'<option value="%1$s" selected>%1$s</option>',
-				esc_attr( $model )
+				'<option value="%1$s" selected>%2$s</option>',
+				esc_attr( $model ),
+				$is_legacy
+					/* Translators: %s: model id the provider has withdrawn. */
+					? esc_html( sprintf( __( '%s — no longer available', 'real-time-auto-find-and-replace' ), $model ) )
+					: esc_html( $model )
 			);
+
+			if ( $is_legacy ) {
+				$legacy_warning = sprintf(
+					'<p class="rtafar-ai-hint" style="color:#b32d2e"><strong>%s</strong> %s</p>',
+					esc_html__( 'Heads up:', 'real-time-auto-find-and-replace' ),
+					esc_html(
+						sprintf(
+							/* Translators: %1$s: withdrawn model id. %2$s: replacement model id. */
+							__( 'your saved model "%1$s" has been withdrawn by this provider, so requests using it will fail. Pick "%2$s" instead, or refresh the list.', 'real-time-auto-find-and-replace' ),
+							$model,
+							$models_legacy[ $model ]
+						)
+					)
+				);
+			}
 		}
 		foreach ( $models_static as $id => $label ) {
 			$model_options .= sprintf(
@@ -368,6 +394,7 @@ class AISettings {
 					</select>
 					<button type="button" class="button rtafar-ai-fetch-models" data-provider="%1$s">%5$s</button>
 				</div>
+				%7$s
 				<p class="rtafar-ai-hint">%6$s</p>
 			</div>',
 			esc_attr( $slug ),
@@ -375,7 +402,8 @@ class AISettings {
 			esc_attr( $name_prefix ),
 			$model_options,
 			esc_html__( 'Refresh from API', 'real-time-auto-find-and-replace' ),
-			esc_html__( 'Click "Refresh from API" after entering a key to load the live model list.', 'real-time-auto-find-and-replace' )
+			esc_html__( 'Click "Refresh from API" after entering a key to load the live model list.', 'real-time-auto-find-and-replace' ),
+			$legacy_warning
 		);
 
 		$show_base_url  = ( $slug === 'ollama' );

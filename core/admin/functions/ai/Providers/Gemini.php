@@ -15,6 +15,20 @@ class Gemini extends AbstractProvider {
 
 	const BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 
+	/**
+	 * Output budget for one suggestion.
+	 *
+	 * Gemini 2.5 and the 3.x line think before answering, and those thinking
+	 * tokens come out of maxOutputTokens — the previous 200 could be consumed
+	 * entirely, returning a candidate with finishReason MAX_TOKENS and no parts.
+	 *
+	 * thinkingConfig is deliberately not sent: the Flash models accept a zero
+	 * budget but the Pro models reject it, so an explicit value would trade one
+	 * failure for another. A larger ceiling works everywhere and unused budget
+	 * is not billed.
+	 */
+	const MAX_OUTPUT_TOKENS = 1024;
+
 	public function getSlug() {
 		return 'gemini';
 	}
@@ -64,7 +78,7 @@ class Gemini extends AbstractProvider {
 			),
 			'generationConfig'  => array(
 				'temperature'     => 0.7,
-				'maxOutputTokens' => 200,
+				'maxOutputTokens' => self::MAX_OUTPUT_TOKENS,
 			),
 		);
 
@@ -75,7 +89,7 @@ class Gemini extends AbstractProvider {
 		);
 
 		if ( ! $res['status'] ) {
-			return $res;
+			return $this->withModelHint( $res );
 		}
 
 		$content = '';
@@ -87,10 +101,23 @@ class Gemini extends AbstractProvider {
 			}
 		}
 
-		if ( $content === '' ) {
-			return array(
-				'status' => false,
-				'error'  => 'Empty response from Gemini.',
+		if ( trim( $content ) === '' ) {
+			// A prompt rejected before generation reports itself here, not on the candidate.
+			if ( ! empty( $res['body']['promptFeedback']['blockReason'] ) ) {
+				return $this->withModelHint(
+					$this->emptyResponseError(
+						$res['body']['promptFeedback']['blockReason'],
+						'Gemini blocked the prompt. Try rephrasing the find text.'
+					)
+				);
+			}
+
+			$reason = isset( $res['body']['candidates'][0]['finishReason'] )
+				? $res['body']['candidates'][0]['finishReason']
+				: '';
+
+			return $this->withModelHint(
+				$this->emptyResponseError( $reason, 'Empty response from Gemini. The model returned no text — try another model.' )
 			);
 		}
 

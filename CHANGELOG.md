@@ -1,3 +1,36 @@
+### Version: 2.0.0 ( September 07, 2026 ) ###
+* **New:** Site Health dashboard — an overall health score for your site, a count of every kind of problem found, and an activity log of every change the plugin has made.
+* **New:** Content Health screen — broken links and missing media in one list, showing the page each problem was found on, the link text, how many times it is used, and how urgent it is.
+* **New:** Broken link checking for internal links in posts, pages and public custom post types. Links are resolved against your database instead of by requesting your own pages, so a scan cannot slow your site down.
+* **New:** Fix a broken link from the list itself — replace the URL, unlink it, ignore it, or re-check it.
+* **New:** Redirect Manager — create 301 redirects, switch them on and off, and see how many times each has been used. Loops and self-redirects are rejected before they can be saved.
+* **New:** 404 Monitor — off until you switch it on. Records every "page not found" request with its referrer and hit count, filters out bot traffic, and turns any entry into a redirect with one click, or shows you where the missing URL is still linked from.
+* **New:** Replace + Redirect — change a URL across your content and create the matching redirect in one previewed operation, so links people have already shared keep working.
+* **New:** Missing media detection — finds content pointing at images and files that are no longer on the server, so you can replace them.
+* **New:** "Duplicate" and "Clone & Edit" actions for posts, pages and public custom post types. The copy is always created as a draft.
+* **New:** Code Inserts — global header, body-start and footer snippets in HTML, CSS or JavaScript, each with its own on/off switch and validated before it is saved. PHP is never executed.
+* **New:** Scans and checks run in the background through Action Scheduler when it is installed, or WP-Cron otherwise, so long scans never block your admin screens.
+* **New:** Every maintenance action is written to an activity log, and content changes create a post revision you can roll back to.
+* **New:** AI Content Refresher preview page, showing what the PRO scanner finds.
+* **New (PRO):** External link, image and embed checking, with scheduled scans, bulk fixes, AI replacement suggestions, and failures grouped by cause — timeout, DNS, SSL or rate limit.
+* **New (PRO):** 302 and 307 redirects, regex and prefix matching, automatic redirects when a slug changes, chain and loop detection across the whole set, import/export, and redirect analytics.
+* **New (PRO):** Safe Revision — see an AI suggestion as a full diff, approve parts of it, merge, publish, and roll back afterwards.
+* **New (PRO):** AI Content Refresher — scan a post for outdated years, software versions, prices and dead references, review every suggestion, and apply it as a reversible revision.
+* **New (PRO):** Maintenance Agent — groups related problems, ranks them, prepares a plan for your approval, carries out the batch you approved and reports back on what actually changed.
+* **Fix:** Replacing a media file is now crash-safe. The old files are moved aside rather than deleted and are put back automatically if the new upload fails at any point — including a fatal error part-way through — so a failed replacement can no longer leave an attachment with no file behind it.
+* **Fix:** A media replacement is now rejected before anything on disk is touched if the new file is a different kind of media than the one it replaces.
+* **Fix:** AI suggestions work again on current OpenAI models. The plugin always sent two parameters that today's reasoning models reject, so every request failed outright.
+* **Fix:** AI suggestions no longer come back as "Empty response" on models that think before answering — the reply allowance was too small for the model to reach an answer.
+* **Fix:** "Refresh from API" on the AI Settings screen no longer discards a saved model that the live list does not include, which could silently change your model the next time you saved.
+* **Update:** Refreshed the model list for all ten AI providers — OpenAI, Anthropic Claude, Google Gemini, Groq, Mistral, OpenRouter, DeepSeek, xAI Grok, Hugging Face and Ollama. Models the providers have withdrawn, including several that were selected by default, have been replaced with current ones.
+* **Update:** AI Settings now flags a saved model its provider has withdrawn and names the model that replaced it, instead of leaving you with an unexplained API error.
+* **Update:** The Content Refresher page now shows the feature at a glance instead of a disabled form.
+* **Update:** PRO-only areas are shown and plainly labelled rather than hidden, so you can always see that a problem exists even when the fix needs PRO.
+* **Update:** Separate role capabilities for the new maintenance screens, so access to them can be granted independently of find and replace.
+* **Update:** 404 records and activity history are pruned automatically, so the tables cannot grow without limit.
+* **Dev:** The maintenance modules are extended entirely through hooks and filters — tabs, screens and issue types can be registered without editing plugin files.
+* **Dev:** New test suites for the maintenance infrastructure, for every AI provider and model combination, and for WordPress integration against a live database — `composer test`, `composer test:ai`.
+
 ### Version: 1.9.5 ( August 21, 2026 ) ###
 * **Update:** Minor admin menu and interface refinements.
 

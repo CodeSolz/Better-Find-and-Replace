@@ -62,9 +62,12 @@ class HuggingFace extends OpenAiCompatibleProvider {
 			);
 		}
 
-		return array(
-			'status'  => false,
-			'message' => isset( $res['error'] ) ? $res['error'] : 'Connection failed.',
+		// The ping names a model, so a withdrawn one is worth calling out here.
+		return $this->withModelHint(
+			array(
+				'status'  => false,
+				'message' => isset( $res['error'] ) ? $res['error'] : 'Connection failed.',
+			)
 		);
 	}
 }

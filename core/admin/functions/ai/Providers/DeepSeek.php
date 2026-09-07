@@ -7,6 +7,9 @@ if ( ! defined( 'CS_RTAFAR_VERSION' ) ) {
 class DeepSeek extends OpenAiCompatibleProvider {
 	protected $baseUrl = 'https://api.deepseek.com/v1';
 
+	/** V4 Pro is a reasoner — its thinking is drawn from the same output budget. */
+	protected $maxOutputTokens = 2048;
+
 	public function getSlug() {
 		return 'deepseek';
 	}

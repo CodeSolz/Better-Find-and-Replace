@@ -1,0 +1,2540 @@
+/**
+ * Content Health and Redirects.
+ *
+ * These screens are built from the plugin's own AdminPageBuilder and
+ * FormBuilder, so the panel, heading, body, form rows, buttons and footer all
+ * come from rtafar-admin-style.min.css. This file only adds the few things that
+ * stylesheet has no equivalent for - issue badges, monospaced URLs, the scan bar
+ * and the Pro note - and it borrows that stylesheet's palette so the additions
+ * do not read as a second design:
+ *
+ *   #00aeff  primary action      (.btn-custom-submit)
+ *   #b2d7f7  panel heading
+ *   #f0f8ff  panel body
+ */
+
+/* --------------------------------------------------------------------------
+ * Scan bar. On Content Health it sits in the panel heading, on the title's own
+ * row; on the screens that still put it in the builder's "well" slot it is the
+ * same bar, one row above the list.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-scanbar {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+/* The heading becomes a two-column row only when the page supplies an action,
+   so every other screen's heading is exactly as it was. */
+.panel-heading-with-actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.panel-heading-with-actions .panel-heading-text {
+	flex: 1 1 320px;
+	min-width: 0;
+}
+
+.panel-heading-actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: flex-end;
+	margin-left: auto;
+}
+
+.panel-heading-actions .bfrmaint-scanbar {
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.bfrmaint-scanbar .btn-custom-submit {
+	min-width: auto;
+	padding: 8px 18px;
+}
+
+/* A scan that is already running disables its own button, so the button has to
+   look disabled - an unchanged button that ignores clicks reads as broken. */
+#product_binder .bfrmaint-scanbar .btn-custom-submit[disabled] {
+	opacity: .55;
+	cursor: not-allowed;
+}
+
+.bfrmaint-status {
+	color: #3c434a;
+	font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+ * The banner, between the heading and the section.
+ *
+ * Work started from the heading is reported here rather than beside the
+ * button: the message about a scan is about the whole screen, and text that
+ * appears and disappears inside a row of controls moves them around while
+ * somebody is using them.
+ * ----------------------------------------------------------------------- */
+/* display:flex would otherwise win against the browser's own rule for the
+   hidden attribute, and the empty banner would show as a bare strip. */
+.bfrmaint-banner[hidden] {
+	display: none;
+}
+
+.bfrmaint-banner {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 15px 0 0;
+	padding: 11px 16px;
+	border-left: 4px solid #00aeff;
+	border-radius: 3px;
+	background: #f0f8ff;
+	color: #1d2327;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.5;
+}
+
+.bfrmaint-banner.is-success {
+	border-left-color: #007017;
+	background: #edfaef;
+	color: #00450c;
+}
+
+.bfrmaint-banner.is-error {
+	border-left-color: #b32d2e;
+	background: #fcf0f1;
+	color: #8a2424;
+}
+
+/* Something is happening elsewhere and this is the only sign of it, so it
+   spins rather than sitting there looking like a finished sentence. */
+.bfrmaint-banner.is-busy::before {
+	content: "";
+	display: block;
+	flex: none;
+	width: 14px;
+	height: 14px;
+	border: 2px solid rgba(0, 174, 255, .3);
+	border-top-color: #00aeff;
+	border-radius: 50%;
+	animation: bfrmaint-spin 700ms linear infinite;
+}
+
+@keyframes bfrmaint-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.bfrmaint-banner.is-busy::before {
+		animation-duration: 3s;
+	}
+}
+
+/* Narrow screens: the action drops under the title rather than squeezing it. */
+@media screen and (max-width: 782px) {
+	.panel-heading-with-actions {
+		display: block;
+	}
+
+	.panel-heading-actions {
+		justify-content: flex-start;
+		margin-top: 12px;
+	}
+
+	.panel-heading-actions .bfrmaint-scanbar {
+		justify-content: flex-start;
+	}
+}
+
+/* --------------------------------------------------------------------------
+ * The controls that act on the list, in the band above it.
+ * ----------------------------------------------------------------------- */
+.tablenav .bfrmaint-list-actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	padding: 0;
+	margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+ * The tab strip.
+ *
+ * The strip *is* the section's top edge. It is pulled up out of the body's
+ * padding and out over the body's side borders - which is why it carries a
+ * white background, so those two stubs of border do not show beside the tabs -
+ * and the body gives up its top border in return. Below the strip's own line
+ * the box border continues as normal. With the open tab carrying the section's
+ * white through that line, the whole thing reads as one tab panel - a lid and
+ * the box it opens - instead of a row of links above a table.
+ *
+ * Every line here is #f0f8ff, the border colour .bg-white gives the panel
+ * body, so the strip is part of the panel rather than a second design sitting
+ * on it.
+ * ----------------------------------------------------------------------- */
+#product_binder .panel .bfrmaint-tabstrip {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 4px 16px;
+	margin: -15px -17px 16px;
+	padding: 0 17px;
+	background: #fff;
+	border-bottom: 2px solid #f0f8ff;
+}
+
+/* The section keeps the box border .bg-white gives it. Only the top edge goes:
+   the tab strip is that edge, and the strip covers the two stubs of side
+   border that would otherwise show beside the tabs. The house margin between
+   heading and body stays: they are separate blocks and should read as
+   separate. */
+#product_binder .panel .panel-body.bfrmaint-body {
+	border-top: 0;
+}
+
+#product_binder .panel .bfrmaint-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin: 0;
+	padding: 0;
+	border-bottom: 0;
+	line-height: inherit;
+}
+
+#product_binder .panel .bfrmaint-tabs .nav-tab {
+	float: none;
+	margin: 0 0 -2px;
+	padding: 8px 18px;
+	border: 2px solid #f0f8ff;
+	border-radius: 4px 4px 0 0;
+	background: #f0f8ff;
+	color: #50575e;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.5;
+}
+
+#product_binder .panel .bfrmaint-tabs .nav-tab:hover {
+	background: #e2f1fd;
+	color: #1d2327;
+}
+
+/* Keyboard focus keeps a ring of its own - the background change alone is not
+   a focus indicator. */
+#product_binder .panel .bfrmaint-tabs .nav-tab:focus-visible {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 3px #00aeff;
+	outline: 2px solid transparent;
+}
+
+/* The open one. Its bottom border is the section's white, laid over the
+   strip's line, which is what joins the tab to what it opened. */
+#product_binder .panel .bfrmaint-tabs .nav-tab-active,
+#product_binder .panel .bfrmaint-tabs .nav-tab-active:hover,
+#product_binder .panel .bfrmaint-tabs .nav-tab-active:focus {
+	background: #fff;
+	border-bottom-color: #fff;
+	color: #0073a8;
+}
+
+/* What the tab has to say about itself, at the far end of its own row. */
+#product_binder .panel .bfrmaint-tabstrip-meta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-left: auto;
+	padding-bottom: 10px;
+	font-size: 13px;
+}
+
+.bfrmaint-url {
+	font-family: Consolas, Monaco, monospace;
+	word-break: break-all;
+}
+
+.bfrmaint-anchor {
+	color: #646970;
+	font-style: italic;
+}
+
+/* The list tables sit inside .panel-body, which has its own tinted background;
+   white rows keep them readable against it. */
+.bfrmaint-wrap .wp-list-table,
+.panel-body .wp-list-table {
+	background: #fff;
+}
+
+/* --------------------------------------------------------------------------
+ * Issue badges.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-badge {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 10px;
+	font-size: 11px;
+	line-height: 1.7;
+	white-space: nowrap;
+	background: #e9f5fe;
+	color: #04527c;
+}
+
+.bfrmaint-badge-missing,
+.bfrmaint-badge-malformed {
+	background: #fcf0f1;
+	color: #b32d2e;
+}
+
+.bfrmaint-badge-trashed {
+	background: #fcf9e8;
+	color: #8a6d00;
+}
+
+.bfrmaint-badge-non_public {
+	background: #f0f0f1;
+	color: #50575e;
+}
+
+/* --------------------------------------------------------------------------
+ * The Pro note. Sits in the builder's before_footer slot, which already
+ * supplies the panel body wrapper, so this only marks it as an aside.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-pro-note {
+	border-left: 4px solid #00aeff;
+	padding: 4px 0 4px 14px;
+	max-width: 820px;
+}
+
+.bfrmaint-pro-note p {
+	margin: 0 0 8px;
+}
+
+.bfrmaint-pro-note p:last-child {
+	margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+ * Row feedback while an action is in flight.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-row-busy {
+	opacity: 0.5;
+}
+
+/* --------------------------------------------------------------------------
+ * Site Health.
+ *
+ * The score, what is open, and the log. All three used to be loose blocks in
+ * one undivided panel; they are cards now, like every other Maintenance screen
+ * - see the .bfrmaint-section block below.
+ *
+ * What is here is what goes *inside* those cards: the dial, the issue tiles and
+ * the activity timeline.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-scorecard {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 28px;
+}
+
+/* The dial. One arc, drawn inline - a charting library for a single circle
+   would be the only script this screen loads. */
+.bfrmaint-gauge {
+	position: relative;
+	flex: 0 0 auto;
+	width: 148px;
+	height: 148px;
+}
+
+.bfrmaint-gauge svg {
+	width: 100%;
+	height: 100%;
+	/* Start the arc at twelve o'clock rather than three. */
+	transform: rotate(-90deg);
+}
+
+.bfrmaint-gauge circle {
+	fill: none;
+	stroke-width: 10;
+	stroke-linecap: round;
+}
+
+.bfrmaint-gauge-track {
+	stroke: #edf4fa;
+}
+
+.bfrmaint-gauge-arc {
+	stroke: #1a7f37;
+	transition: stroke-dashoffset .6s ease-out;
+}
+
+.bfrmaint-gauge-fair .bfrmaint-gauge-arc {
+	stroke: #d9880a;
+}
+
+.bfrmaint-gauge-poor .bfrmaint-gauge-arc {
+	stroke: #d63638;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.bfrmaint-gauge-arc {
+		transition: none;
+	}
+}
+
+.bfrmaint-gauge-value {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	gap: 2px;
+}
+
+.bfrmaint-gauge-value strong {
+	color: #1d2327;
+	font-size: 40px;
+	font-weight: 700;
+	letter-spacing: -.03em;
+	line-height: 1;
+}
+
+.bfrmaint-gauge-value span {
+	color: #646970;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+}
+
+.bfrmaint-breakdown {
+	flex: 1 1 260px;
+	min-width: 0;
+}
+
+#product_binder .panel .panel-body .bfrmaint-breakdown-band {
+	margin: 0 0 3px;
+	color: #1d2327;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+#product_binder .panel .panel-body .bfrmaint-breakdown-lead {
+	margin: 0 0 12px;
+	color: #646970;
+	font-size: 12.5px;
+	font-weight: 400;
+}
+
+.bfrmaint-deductions {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	max-width: 340px;
+}
+
+.bfrmaint-deductions li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin: 0;
+	padding: 9px 0;
+	border-bottom: 1px solid #f2f7fc;
+}
+
+.bfrmaint-deductions li:last-child {
+	border-bottom: 0;
+}
+
+.bfrmaint-deduction-label {
+	color: #1d2327;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.bfrmaint-deductions li.is-clear .bfrmaint-deduction-label {
+	color: #135e2c;
+	font-weight: 400;
+}
+
+/* The points are the whole reason the list is here, so they are a chip rather
+   than a run of text: a column of them can be read down without reading across
+   to the label first. */
+.bfrmaint-deduction-points {
+	flex: 0 0 auto;
+	padding: 2px 10px;
+	border: 1px solid #f3d4d4;
+	border-radius: 999px;
+	background: #fdf1f1;
+	color: #b32d2e;
+	font-size: 12px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+ * What is open, as tiles.
+ *
+ * The whole tile is the link. A count you can see but not act on is a screen
+ * that tells you off without helping.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-tiles {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 14px;
+}
+
+/* Six or more of them. At the default track size the last one wraps onto a row
+   of its own and reads as an afterthought rather than as part of the set. */
+.bfrmaint-tiles.is-dense {
+	grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+}
+
+#product_binder a.bfrmaint-tile {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	padding: 16px 18px;
+	border: 1px solid #e4eff8;
+	border-radius: 9px;
+	background: #fbfdff;
+	box-shadow: 0 1px 2px rgba(15, 42, 68, .04);
+	color: inherit;
+	text-decoration: none;
+	transition: border-color .12s ease-in-out, box-shadow .12s ease-in-out, transform .12s ease-in-out;
+}
+
+#product_binder a.bfrmaint-tile:hover,
+#product_binder a.bfrmaint-tile:focus {
+	border-color: #9ed4f2;
+	box-shadow: 0 1px 2px rgba(15, 42, 68, .06), 0 10px 20px -14px rgba(0, 118, 179, .8);
+	transform: translateY(-1px);
+}
+
+#product_binder a.bfrmaint-tile:focus-visible {
+	outline: 2px solid #00aeff;
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#product_binder a.bfrmaint-tile {
+		transition: none;
+	}
+
+	#product_binder a.bfrmaint-tile:hover,
+	#product_binder a.bfrmaint-tile:focus {
+		transform: none;
+	}
+}
+
+.bfrmaint-tile-count {
+	color: #1d2327;
+	font-size: 30px;
+	font-weight: 700;
+	letter-spacing: -.02em;
+	line-height: 1.1;
+}
+
+.bfrmaint-tile-label {
+	color: #50575e;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.bfrmaint-tile-cta {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	margin-top: 8px;
+	color: #0073a8;
+	font-size: 12.5px;
+	font-weight: 600;
+}
+
+.bfrmaint-tile-cta .dashicons {
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+	line-height: 16px;
+	transition: transform .12s ease-in-out;
+}
+
+#product_binder a.bfrmaint-tile:hover .bfrmaint-tile-cta .dashicons {
+	transform: translateX(2px);
+}
+
+/* --------------------------------------------------------------------------
+ * The activity log, as a timeline.
+ *
+ * This is read after something happened, and what you want from it is *when*,
+ * in order. A three-column table of fifty rows makes the order the least
+ * visible thing on the screen; a rail makes it the first.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-timeline {
+	position: relative;
+	margin: 0;
+	padding: 0 0 0 4px;
+	list-style: none;
+}
+
+/* The rail, running between the first and last marks rather than past them.
+   22px is one event's padding plus half a mark. */
+.bfrmaint-timeline::before {
+	content: "";
+	position: absolute;
+	top: 22px;
+	bottom: 22px;
+	left: 19px;
+	width: 2px;
+	border-radius: 1px;
+	background: #dfeaf4;
+}
+
+.bfrmaint-event {
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+	margin: 0;
+	padding: 6px 0;
+}
+
+.bfrmaint-event-mark {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border: 3px solid #fff;
+	border-radius: 50%;
+	background: #eaf6ff;
+	color: #04527c;
+}
+
+.bfrmaint-event-mark .dashicons {
+	width: 15px;
+	height: 15px;
+	font-size: 15px;
+	line-height: 15px;
+}
+
+.bfrmaint-event-mark.is-add {
+	background: #e8f7ee;
+	color: #135e2c;
+}
+
+.bfrmaint-event-mark.is-remove {
+	background: #fdf1f1;
+	color: #b32d2e;
+}
+
+.bfrmaint-event-mark.is-start {
+	background: #f2f4f6;
+	color: #646970;
+}
+
+.bfrmaint-event-body {
+	flex: 1 1 auto;
+	min-width: 0;
+	padding-top: 3px;
+}
+
+#product_binder .panel .panel-body .bfrmaint-event-what {
+	margin: 0;
+	color: #1d2327;
+	font-size: 13.5px;
+	font-weight: 600;
+	line-height: 1.45;
+	overflow-wrap: anywhere;
+}
+
+#product_binder .panel .panel-body .bfrmaint-event-meta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 3px 0 0;
+	color: #646970;
+	font-size: 12.5px;
+	font-weight: 400;
+}
+
+/* The separator is drawn rather than typed, so it is never read aloud. */
+.bfrmaint-event-meta > * + *::before {
+	content: "";
+	display: inline-block;
+	width: 3px;
+	height: 3px;
+	margin-right: 8px;
+	border-radius: 50%;
+	background: #c3cdd7;
+	vertical-align: middle;
+}
+
+.bfrmaint-event-who {
+	color: #50575e;
+	font-weight: 600;
+}
+
+.bfrmaint-event-meta time {
+	cursor: help;
+}
+
+/* --------------------------------------------------------------------------
+ * A quiet line in a card footer, beside or instead of a button.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-foot-note {
+	color: #646970;
+	font-size: 12.5px;
+	line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+ * Replace + Redirect preview.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-rr-result {
+	margin-top: 18px;
+}
+
+.bfrmaint-rr-result table {
+	background: #fff;
+	margin-bottom: 12px;
+}
+
+/* Link-check verdicts. Same badge shape as the issue subtypes, because they
+ * answer the same kind of question and should not look like two systems. */
+.bfrmaint-badge-broken {
+	background: #fcf0f1;
+	color: #b32d2e;
+}
+
+.bfrmaint-badge-healthy {
+	background: #edfaef;
+	color: #00650f;
+}
+
+.bfrmaint-badge-warning {
+	background: #fcf9e8;
+	color: #8a6d00;
+}
+
+/* A form that lives inside the scan bar rather than under it. */
+.bfrmaint-inline-form {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+}
+
+.bfrmaint-inline-form select {
+	max-width: 180px;
+}
+
+/* The bulk-fix confirmation, which takes over the tab body for one request. */
+.bfrmaint-bulkfix h3 {
+	margin-top: 0;
+}
+
+.bfrmaint-bulkfix table.widefat {
+	margin: 12px 0;
+}
+
+.bfrmaint-bulkfix .description {
+	color: #50575e;
+	margin-top: 14px;
+}
+
+/* The export link. It sits in the band above the list, opposite the row count,
+   and it is a real control there rather than a stray line of link text - so it
+   is drawn as the secondary button it is, in the house blue. */
+a.bfrmaint-export {
+	box-sizing: border-box;
+	display: inline-block;
+	height: 30px;
+	padding: 0 14px;
+	border: 1px solid #00aeff;
+	border-radius: 3px;
+	background: #fff;
+	color: #0073a8;
+	font-weight: 600;
+	line-height: 28px;
+	text-decoration: none;
+}
+
+a.bfrmaint-export:hover,
+a.bfrmaint-export:focus {
+	background: #00aeff;
+	border-color: #09c;
+	color: #fff;
+}
+
+a.bfrmaint-export:focus {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 3px #00aeff;
+	outline: 2px solid transparent;
+}
+
+/* The "use this" cell in the suggestion list. */
+.bfrmaint-bulkfix td.bfrmaint-choose {
+	width: 1%;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.bfrmaint-bulkfix td.bfrmaint-choose form {
+	margin: 0;
+}
+
+/* A proposed change, and the two halves of it. Colour is not the only signal:
+ * <del> and <ins> carry the meaning for anyone who cannot see the difference. */
+.bfrmaint-hunk {
+	border-left: 4px solid #c3c4c7;
+	padding: 4px 0 4px 14px;
+	margin: 0 0 18px;
+	max-width: 820px;
+}
+
+.bfrmaint-hunk .bfrmaint-was,
+.bfrmaint-hunk .bfrmaint-now {
+	padding: 6px 10px;
+	margin: 4px 0;
+	border-radius: 3px;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.bfrmaint-hunk .bfrmaint-was {
+	background: #fcf0f1;
+}
+
+.bfrmaint-hunk .bfrmaint-now {
+	background: #edfaef;
+}
+
+.bfrmaint-hunk del {
+	text-decoration: line-through;
+	color: #8a2424;
+}
+
+.bfrmaint-hunk ins {
+	text-decoration: none;
+	color: #00450c;
+}
+
+/* ---------------------------------------------------------------------------
+ * Locked tabs
+ *
+ * A tab whose feature lives in Pro still opens; this is what it opens on. The
+ * measure line carries a real figure from the site, so it is given the visual
+ * weight of a finding rather than of an advert.
+ * ------------------------------------------------------------------------- */
+.bfrmaint-locked {
+	max-width: 640px;
+	margin: 4px 0 6px;
+	padding: 24px 28px;
+	border: 1px solid #e6e0cd;
+	border-left: 4px solid #f2b705;
+	/* The card family's corner and lift, so a locked tab reads as the same
+	   surface as the ones that are not locked. */
+	border-radius: 10px;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(15, 42, 68, .05), 0 12px 24px -20px rgba(15, 42, 68, .45);
+}
+
+.bfrmaint-locked-badge {
+	margin: 0 0 8px;
+	font-size: 11px;
+	font-style: italic;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	color: #8a6d00;
+}
+
+.bfrmaint-locked h3 {
+	margin: 0 0 12px;
+	font-size: 18px;
+}
+
+.bfrmaint-locked-measure {
+	margin: 0 0 12px;
+	padding: 10px 14px;
+	border-radius: 3px;
+	background: #fdf6e3;
+	font-size: 14px;
+}
+
+.bfrmaint-locked p {
+	margin: 0 0 12px;
+}
+
+.bfrmaint-locked-points {
+	margin: 0 0 18px;
+	padding: 0;
+	list-style: none;
+}
+
+.bfrmaint-locked-points li {
+	margin: 0 0 6px;
+	padding-left: 22px;
+	position: relative;
+}
+
+.bfrmaint-locked-points li::before {
+	content: "";
+	position: absolute;
+	top: 6px;
+	left: 4px;
+	width: 5px;
+	height: 9px;
+	border: solid #d0a208;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+/* ---------------------------------------------------------------------------
+ * The Pro marker in a tab strip.
+ *
+ * Gold rather than the admin blue on purpose: blue is what every link and
+ * button in wp-admin already is, so a blue badge reads as another control and
+ * gets skipped. This has to be recognisable in peripheral vision, at 10px,
+ * next to text it is not part of - so it is a different hue from anything
+ * else on the screen, italic, and uppercased.
+ * ------------------------------------------------------------------------- */
+.bfrmaint-tabs .bfrmaint-tab-pro {
+	display: inline-block;
+	margin-left: 7px;
+	padding: 0 7px;
+	border: 1px solid #d0a208;
+	border-radius: 3px;
+	background: linear-gradient(180deg, #ffd970 0%, #f2b705 100%);
+	color: #4a3600;
+	font-size: 10px;
+	font-style: italic;
+	font-weight: 700;
+	line-height: 17px;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	vertical-align: 1px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .45);
+	box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
+}
+
+/* On the active tab the strip inverts, so the badge needs its own contrast
+   rather than inheriting one that no longer works. */
+.bfrmaint-tabs .nav-tab-active .bfrmaint-tab-pro {
+	border-color: #b98c00;
+}
+
+/* The same marker inside the locked panel's heading badge, so the two read as
+   one thing rather than two different promotions. */
+.bfrmaint-locked-badge {
+	color: #8a6d00;
+}
+
+/* ---------------------------------------------------------------------------
+ * Dialogs.
+ *
+ * Every row action on this screen edits a published post, so the dialog has to
+ * carry a real explanation and a preview - which a browser confirm() cannot.
+ * SweetAlert draws the box; everything inside it is ours, so the buttons are
+ * the same buttons as the rest of the plugin rather than the library's.
+ * ------------------------------------------------------------------------- */
+.bfrmaint-swal.swal2-popup {
+	width: 40em;
+	max-width: 94vw;
+	padding: 26px 28px 22px;
+	border-radius: 6px;
+	font-size: 14px;
+}
+
+.bfrmaint-swal .bfrmaint-swal-title.swal2-title {
+	padding: 0;
+	color: #1d2327;
+	font-size: 20px;
+	font-weight: 700;
+	text-align: left;
+}
+
+.bfrmaint-swal .swal2-icon {
+	margin: 0 auto 14px;
+}
+
+.bfrmaint-swal .bfrmaint-swal-body.swal2-html-container {
+	margin: 12px 0 0;
+	color: #3c434a;
+	font-size: 13.5px;
+	line-height: 1.6;
+	text-align: left;
+	max-height: 52vh;
+	overflow-y: auto;
+}
+
+.bfrmaint-swal .bfrmaint-swal-body p {
+	margin: 0 0 10px;
+}
+
+.bfrmaint-swal .bfrmaint-swal-lead {
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.bfrmaint-swal .bfrmaint-swal-field {
+	margin: 0 0 16px;
+}
+
+.bfrmaint-swal .bfrmaint-swal-label {
+	display: block;
+	margin-bottom: 5px;
+	color: #50575e;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+}
+
+.bfrmaint-swal .bfrmaint-swal-url {
+	display: block;
+	padding: 9px 12px;
+	border: 2px solid #f0f8ff;
+	border-radius: 3px;
+	background: #f6fbff;
+	color: #8a2424;
+	font-family: Consolas, Monaco, monospace;
+	font-size: 12.5px;
+	word-break: break-all;
+}
+
+.bfrmaint-swal .bfrmaint-swal-input {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 9px 12px;
+	border: 2px solid #f0f8ff;
+	border-radius: 3px;
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.bfrmaint-swal .bfrmaint-swal-input:focus {
+	border-color: #00aeff;
+	box-shadow: none;
+	outline: 0;
+}
+
+.bfrmaint-swal .bfrmaint-swal-body .description {
+	margin: 8px 0 0;
+	color: #646970;
+	font-size: 12.5px;
+}
+
+.bfrmaint-swal .bfrmaint-swal-body .bfrmaint-hunk {
+	margin-bottom: 12px;
+	max-width: none;
+}
+
+.bfrmaint-swal .bfrmaint-swal-actions.swal2-actions {
+	margin: 22px 0 0;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+/* The house button rule is scoped to #product_binder, and a dialog is a child
+   of <body> - so the primary button has to be dressed again here or it comes
+   out as a bare browser button. */
+.bfrmaint-swal .btn-custom-submit {
+	padding: 10px 18px;
+	border: 2px solid #00aeff;
+	border-radius: 3px;
+	background: #00aeff;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.3;
+	cursor: pointer;
+}
+
+.bfrmaint-swal .btn-custom-submit:hover,
+.bfrmaint-swal .btn-custom-submit:focus {
+	border-color: #09c;
+	background: #09c;
+	color: #fff;
+}
+
+.bfrmaint-swal .swal2-validation-message {
+	margin: 12px 0 0;
+	border-radius: 3px;
+	background: #fcf0f1;
+	color: #8a2424;
+	font-size: 13px;
+}
+
+/* The quiet half of a pair of buttons: same size as .btn-custom-submit, and
+   plainly not the one that writes anything. */
+.bfrmaint-btn-ghost {
+	display: inline-block;
+	box-sizing: border-box;
+	padding: 10px 15px;
+	border: 2px solid #f0f8ff;
+	border-radius: 3px;
+	background: #fff;
+	color: #3c434a;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.3;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.bfrmaint-btn-ghost:hover,
+.bfrmaint-btn-ghost:focus {
+	background: #f0f8ff;
+	color: #1d2327;
+}
+
+/* ---------------------------------------------------------------------------
+ * Repair screens.
+ *
+ * Replace URL, Fix everywhere and Suggest a replacement are three doors into
+ * the same job, so they are one layout: the same card, the same way of showing
+ * the broken URL, the same button row, and a way back to the list on every one
+ * of them. A person who has learnt one of these screens has learnt all three.
+ * ------------------------------------------------------------------------- */
+.bfrmaint-workflow {
+	margin: 4px 0 8px;
+	border: 2px solid #f0f8ff;
+	border-radius: 5px;
+	background: #fff;
+}
+
+.bfrmaint-workflow-head {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 10px 16px;
+	padding: 16px 20px;
+	border-bottom: 2px solid #f0f8ff;
+	background: #f6fbff;
+	border-radius: 3px 3px 0 0;
+}
+
+.bfrmaint-workflow-eyebrow {
+	margin: 0 0 3px;
+	color: #0073a8;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+}
+
+.bfrmaint-workflow-title {
+	margin: 0;
+	color: #1d2327;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.bfrmaint-workflow-body {
+	padding: 20px;
+}
+
+.bfrmaint-workflow-body > p:first-child {
+	margin-top: 0;
+}
+
+.bfrmaint-workflow-body .description {
+	color: #646970;
+	font-size: 12.5px;
+}
+
+/* The URL the whole screen is about. Labelled, because "the broken one" and
+   "the one it will become" must never be guessed at from position alone. */
+.bfrmaint-urlcard {
+	margin: 0 0 18px;
+	padding: 12px 14px;
+	border: 2px solid #f0f8ff;
+	border-radius: 3px;
+	background: #f6fbff;
+}
+
+.bfrmaint-urlcard-label {
+	display: block;
+	margin-bottom: 5px;
+	color: #50575e;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+}
+
+.bfrmaint-urlcard code {
+	display: block;
+	padding: 0;
+	background: none;
+	color: #8a2424;
+	font-size: 12.5px;
+	word-break: break-all;
+}
+
+.bfrmaint-urlcard.is-target code {
+	color: #00450c;
+}
+
+.bfrmaint-field {
+	margin: 0 0 18px;
+	max-width: 560px;
+}
+
+.bfrmaint-field label {
+	display: block;
+	margin-bottom: 6px;
+	color: #1d2327;
+	font-weight: 600;
+}
+
+.bfrmaint-field input[type="url"],
+.bfrmaint-field input[type="text"] {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 9px 12px;
+	border: 2px solid #f0f8ff;
+	border-radius: 3px;
+	font-size: 14px;
+}
+
+.bfrmaint-field input[type="url"]:focus,
+.bfrmaint-field input[type="text"]:focus {
+	border-color: #00aeff;
+	box-shadow: none;
+	outline: 0;
+}
+
+/* The other way to do the same job, offered rather than hidden. */
+.bfrmaint-choice {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	margin: 0 0 18px;
+	padding: 12px 14px;
+	border: 2px solid #f0f8ff;
+	border-radius: 3px;
+	max-width: 560px;
+}
+
+.bfrmaint-choice input {
+	margin: 2px 0 0;
+}
+
+.bfrmaint-choice-text strong {
+	display: block;
+	color: #1d2327;
+}
+
+.bfrmaint-choice-text span {
+	color: #646970;
+	font-size: 12.5px;
+}
+
+.bfrmaint-actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 22px 0 0;
+	padding-top: 18px;
+	border-top: 2px solid #f0f8ff;
+}
+
+.bfrmaint-actions form {
+	margin: 0;
+}
+
+/* A row of buttons is one row: same height whether a step's control is a
+   <button> or a link, and a link that is a button is not underlined. The house
+   rule is scoped to the id, so these have to be too or they lose to it. */
+#product_binder .bfrmaint-actions .btn-custom-submit,
+#product_binder .bfrmaint-workflow a.btn-custom-submit {
+	display: inline-block;
+	box-sizing: border-box;
+	min-width: 0;
+	padding: 10px 18px;
+	border: 2px solid #00aeff;
+	border-radius: 3px;
+	background: #00aeff;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.3;
+	text-decoration: none;
+}
+
+#product_binder .bfrmaint-actions .btn-custom-submit:hover,
+#product_binder .bfrmaint-actions .btn-custom-submit:focus,
+#product_binder .bfrmaint-workflow a.btn-custom-submit:hover,
+#product_binder .bfrmaint-workflow a.btn-custom-submit:focus {
+	border-color: #09c;
+	background: #09c;
+	color: #fff;
+}
+
+/* What a change amounts to, before it is made. */
+.bfrmaint-tally {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 0 0 18px;
+	padding: 0;
+	list-style: none;
+}
+
+.bfrmaint-tally li {
+	flex: 1 1 140px;
+	margin: 0;
+	padding: 12px 14px;
+	border: 2px solid #f0f8ff;
+	border-radius: 3px;
+	background: #f6fbff;
+}
+
+.bfrmaint-tally strong {
+	display: block;
+	color: #1d2327;
+	font-size: 22px;
+	line-height: 1.2;
+}
+
+.bfrmaint-tally span {
+	color: #50575e;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+/* One candidate, and why it is being offered. */
+.bfrmaint-suggestions {
+	margin: 0 0 18px;
+	padding: 0;
+	list-style: none;
+}
+
+.bfrmaint-suggestion {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 10px 16px;
+	margin: 0 0 10px;
+	padding: 14px 16px;
+	border: 2px solid #f0f8ff;
+	border-radius: 3px;
+}
+
+.bfrmaint-suggestion.is-pick {
+	border-color: #b6e3ff;
+	background: #f6fbff;
+}
+
+.bfrmaint-suggestion-main {
+	flex: 1 1 320px;
+	min-width: 0;
+}
+
+.bfrmaint-suggestion-title {
+	margin: 0 0 4px;
+	color: #1d2327;
+	font-size: 14px;
+	font-weight: 700;
+}
+
+.bfrmaint-suggestion-url {
+	display: block;
+	color: #0073a8;
+	font-family: Consolas, Monaco, monospace;
+	font-size: 12.5px;
+	word-break: break-all;
+}
+
+.bfrmaint-suggestion-why {
+	margin: 6px 0 0;
+	color: #646970;
+	font-size: 12.5px;
+}
+
+.bfrmaint-suggestion form {
+	margin: 0;
+}
+
+.bfrmaint-progress {
+	height: 10px;
+	margin: 0 0 14px;
+	border-radius: 5px;
+	background: #f0f8ff;
+	overflow: hidden;
+}
+
+.bfrmaint-progress span {
+	display: block;
+	height: 100%;
+	background: #00aeff;
+	transition: width 400ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+ * Section cards.
+ *
+ * The screens under the tab strip used to be one flat column of <h3> and <p>:
+ * on Redirects the add form and the list of saved rules ran together with
+ * nothing but a heading between them, and on Tools four unrelated jobs read as
+ * one long page. Nothing on either screen told you where one thing ended and
+ * the next began.
+ *
+ * So everything that is a *thing you can do* is now a card: a tinted head with
+ * an icon, an eyebrow, a title and a sentence about it, a white body, and -
+ * when the card has a primary action - a footer bar the button lives in. The
+ * head is what does the work; a border alone was not enough separation against
+ * a white panel body, and the sentence under the title is where the
+ * explanation goes that used to be a loose paragraph in the flow.
+ *
+ * The block is shared: free renders it on this screen's own tabs and pro
+ * renders the same markup on the Tools tab, the way .bfrmaint-bulkfix and
+ * .bfrmaint-suggestion are already pro markup styled from here. The class
+ * names are therefore part of the contract between the two plugins.
+ *
+ * Palette is the house one - #00aeff primary, #f0f8ff panel tint - lightened
+ * for the card chrome so a page of cards does not read as a page of boxes.
+ * ------------------------------------------------------------------------- */
+.bfrmaint-stack {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	margin: 4px 0 6px;
+}
+
+.bfrmaint-section {
+	border: 1px solid #e1edf8;
+	border-radius: 10px;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(15, 42, 68, .05), 0 12px 24px -20px rgba(15, 42, 68, .45);
+}
+
+.bfrmaint-section-head {
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+	padding: 16px 20px;
+	border-bottom: 1px solid #ebf3fb;
+	border-radius: 9px 9px 0 0;
+	background: linear-gradient(180deg, #fbfdff 0%, #f3f9ff 100%);
+}
+
+/* The icon is decoration, not information - every card says what it is in
+   words directly beside it - so it is hidden from assistive technology. */
+.bfrmaint-section-icon {
+	display: flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	border-radius: 10px;
+	background: linear-gradient(135deg, #22bbff 0%, #0089cc 100%);
+	color: #fff;
+	box-shadow: 0 5px 12px -6px rgba(0, 118, 179, .85);
+}
+
+.bfrmaint-section-icon .dashicons {
+	width: 20px;
+	height: 20px;
+	font-size: 20px;
+	line-height: 20px;
+}
+
+.bfrmaint-section-heading {
+	flex: 1 1 240px;
+	min-width: 0;
+}
+
+.bfrmaint-section-eyebrow {
+	margin: 0 0 3px;
+	color: #0073a8;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+}
+
+#product_binder .panel .panel-body .bfrmaint-section-title {
+	margin: 0;
+	color: #1d2327;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+#product_binder .panel .panel-body .bfrmaint-section-desc {
+	margin: 5px 0 0;
+	max-width: 68ch;
+	color: #5b6b7b;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.5;
+}
+
+.bfrmaint-section-meta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-left: auto;
+	padding-top: 2px;
+}
+
+.bfrmaint-section-body {
+	padding: 20px;
+}
+
+.bfrmaint-section-body > :first-child {
+	margin-top: 0;
+}
+
+.bfrmaint-section-body > :last-child {
+	margin-bottom: 0;
+}
+
+/* The action bar. A card's primary button belongs on its own edge, so the eye
+   finds "what do I press" in the same place on every card. */
+.bfrmaint-section-foot {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 14px;
+	padding: 14px 20px;
+	border-top: 1px solid #ebf3fb;
+	border-radius: 0 0 9px 9px;
+	background: #f8fcff;
+}
+
+/* A card whose body is a list table: the table draws its own edges, so the
+   body gives up the padding that would double them. */
+.bfrmaint-section-body.is-flush {
+	padding: 0;
+}
+
+/* The top nav is hidden by default: on most of these tables it carries nothing
+   but the row count, which the card head already states, and an empty band
+   between the head and the first row reads as a rendering fault. A caller that
+   has something in there - a pager, a bulk-action picker - asks for it with
+   .has-tablenav. See RedirectsScreen::list_body_class(). */
+.bfrmaint-section-body.is-flush .tablenav.top {
+	display: none;
+}
+
+.bfrmaint-section-body.is-flush.has-tablenav .tablenav.top {
+	display: block;
+	height: auto;
+	min-height: 0;
+	margin: 0;
+	padding: 10px 20px 2px;
+}
+
+.bfrmaint-section-body.is-flush .tablenav.bottom {
+	height: auto;
+	min-height: 0;
+	margin: 0;
+	padding: 6px 20px 14px;
+}
+
+/* The top row's only job here is the pager. The row count is already in the
+   card head, and repeating it two lines below reads as two numbers rather than
+   one fact stated once. */
+.bfrmaint-section-body.is-flush .tablenav.top .displaying-num {
+	display: none;
+}
+
+.bfrmaint-section-body.is-flush .wp-list-table {
+	border-left: 0;
+	border-right: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+ * Two cards abreast where both are short. Falls to one column well before the
+ * point where either would be cramped.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 18px;
+	align-items: start;
+}
+
+/* The same shape one level down, inside a single card's body - export and
+   import are two halves of one job and should not be two cards. */
+.bfrmaint-split {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 16px;
+}
+
+.bfrmaint-subcard {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 16px;
+	border: 1px solid #e9f2fa;
+	border-radius: 8px;
+	background: #fbfdff;
+}
+
+#product_binder .panel .panel-body .bfrmaint-subcard-title {
+	margin: 0;
+	color: #1d2327;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+#product_binder .panel .panel-body .bfrmaint-subcard p {
+	margin: 0;
+	color: #5b6b7b;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.5;
+}
+
+.bfrmaint-subcard-actions {
+	margin-top: auto;
+}
+
+/* --------------------------------------------------------------------------
+ * Status chips. Small, uppercase, and never the only carrier of meaning - the
+ * sentence beside them says the same thing in words.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 11px;
+	border: 1px solid #cfe9fb;
+	border-radius: 999px;
+	background: #eaf6ff;
+	color: #04527c;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: .04em;
+	line-height: 1.5;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.bfrmaint-pill.is-on {
+	border-color: #c3e7d0;
+	background: #e8f7ee;
+	color: #135e2c;
+}
+
+.bfrmaint-pill.is-off {
+	border-color: #dcdcde;
+	background: #f4f5f6;
+	color: #646970;
+}
+
+.bfrmaint-pill.is-warn {
+	border-color: #f3e0ac;
+	background: #fdf5e0;
+	color: #8a6d00;
+}
+
+.bfrmaint-pill.is-bad {
+	border-color: #f3cfcf;
+	background: #fdf1f1;
+	color: #b32d2e;
+}
+
+/* --------------------------------------------------------------------------
+ * A measure and how close it is to its limit.
+ *
+ * The number is the headline because the number is the decision: a rule set
+ * near its cap is one where the next rule silently does nothing.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-metric {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+}
+
+.bfrmaint-metric-value {
+	color: #1d2327;
+	font-size: 34px;
+	font-weight: 700;
+	letter-spacing: -.02em;
+	line-height: 1;
+}
+
+.bfrmaint-metric-of {
+	color: #646970;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.bfrmaint-meter {
+	height: 8px;
+	margin: 14px 0 12px;
+	border-radius: 999px;
+	background: #edf4fa;
+	overflow: hidden;
+}
+
+.bfrmaint-meter-fill {
+	display: block;
+	height: 100%;
+	border-radius: 999px;
+	background: linear-gradient(90deg, #22bbff 0%, #0089cc 100%);
+}
+
+.bfrmaint-meter.is-full .bfrmaint-meter-fill {
+	background: linear-gradient(90deg, #f0a500 0%, #d63638 100%);
+}
+
+#product_binder .panel .panel-body .bfrmaint-metric-note {
+	margin: 0;
+	color: #5b6b7b;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.5;
+}
+
+/* The second note is the one that says something is wrong, so it does not run
+   straight on from the one that says how things are. */
+#product_binder .panel .panel-body .bfrmaint-metric-note + .bfrmaint-metric-note {
+	margin-top: 10px;
+	color: #8a2424;
+}
+
+/* The switch and the sentence explaining what it costs are one block. */
+#product_binder .panel .panel-body .bfrmaint-switch + .bfrmaint-metric-note {
+	margin-top: 12px;
+}
+
+/* --------------------------------------------------------------------------
+ * A setting that is on or off, where a bare checkbox in a run of text was not
+ * reading as a control at all.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-switch {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	color: #1d2327;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+/* Off-screen rather than display:none, so it keeps its place in the tab order
+   and still posts its value. */
+.bfrmaint-switch input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: 0;
+	opacity: 0;
+}
+
+.bfrmaint-switch-track {
+	position: relative;
+	flex: 0 0 auto;
+	width: 42px;
+	height: 24px;
+	border-radius: 999px;
+	background: #d5dde4;
+	transition: background .15s ease-in-out;
+}
+
+.bfrmaint-switch-track::after {
+	content: "";
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba(15, 42, 68, .3);
+	transition: transform .15s ease-in-out;
+}
+
+.bfrmaint-switch input:checked + .bfrmaint-switch-track {
+	background: #00aeff;
+}
+
+.bfrmaint-switch input:checked + .bfrmaint-switch-track::after {
+	transform: translateX(18px);
+}
+
+.bfrmaint-switch input:focus-visible + .bfrmaint-switch-track {
+	box-shadow: 0 0 0 3px rgba(0, 174, 255, .4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.bfrmaint-switch-track,
+	.bfrmaint-switch-track::after {
+		transition: none;
+	}
+}
+
+/* --------------------------------------------------------------------------
+ * The file this card is waiting for.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-filedrop {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	padding: 14px 16px;
+	border: 2px dashed #cfe4f5;
+	border-radius: 8px;
+	background: #f7fbff;
+}
+
+.bfrmaint-filedrop input[type="file"] {
+	max-width: 100%;
+	font-size: 13px;
+}
+
+/* --------------------------------------------------------------------------
+ * A short list of findings inside a card - the busiest rules, the ones nobody
+ * has followed. Not a list table: there is no sorting, paging or acting on
+ * these, and the list-table chrome would promise all three.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-minitable {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+}
+
+.bfrmaint-minitable th {
+	padding: 0 0 8px;
+	border-bottom: 1px solid #ebf3fb;
+	color: #646970;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-align: left;
+	text-transform: uppercase;
+}
+
+/* The measure goes at the right edge of a two-column table. A table with one
+   column has no measure - it is a list of addresses - and right-aligning that
+   leaves it hanging off the far side of the card. */
+.bfrmaint-minitable th:not(:only-child):last-child,
+.bfrmaint-minitable td:not(:only-child):last-child {
+	text-align: right;
+}
+
+.bfrmaint-minitable td {
+	padding: 9px 0;
+	border-bottom: 1px solid #f2f7fc;
+	vertical-align: top;
+}
+
+.bfrmaint-minitable tr:last-child td {
+	border-bottom: 0;
+}
+
+.bfrmaint-minitable code {
+	padding: 0;
+	background: none;
+	color: #1d2327;
+	font-size: 12.5px;
+	word-break: break-all;
+}
+
+.bfrmaint-minitable-count {
+	color: #0073a8;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+/* One address that moved, and where it moved to. */
+.bfrmaint-move {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 5px;
+	font-size: 12.5px;
+}
+
+.bfrmaint-move code {
+	padding: 2px 8px;
+	border: 1px solid #ebf3fb;
+	border-radius: 4px;
+	background: #f8fbfe;
+	color: #50575e;
+	word-break: break-all;
+}
+
+.bfrmaint-move code.is-target {
+	border-color: #cfe9dc;
+	background: #f2fbf5;
+	color: #135e2c;
+}
+
+.bfrmaint-move-arrow {
+	color: #8c9bab;
+}
+
+/* --------------------------------------------------------------------------
+ * Nothing to show, said once and calmly. An empty card with a bare sentence in
+ * it reads as a page that failed to load.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-blank {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 18px;
+	border: 1px dashed #dce8f3;
+	border-radius: 8px;
+	background: #fbfdff;
+}
+
+.bfrmaint-blank .dashicons {
+	flex: 0 0 auto;
+	color: #9fb4c7;
+}
+
+#product_binder .panel .panel-body .bfrmaint-blank p {
+	margin: 0;
+	color: #5b6b7b;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+ * Buttons inside a card.
+ *
+ * The house button is a 150px-wide square-cornered block, which is right in a
+ * form footer strip and wrong four-to-a-page inside cards. Scoped to the card,
+ * so every other screen's buttons are exactly as they were.
+ * ----------------------------------------------------------------------- */
+#product_binder .bfrmaint-section .btn-custom-submit {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-width: 0;
+	padding: 10px 20px;
+	border-radius: 6px;
+	background: linear-gradient(180deg, #16b7ff 0%, #00a2ef 100%);
+	box-shadow: 0 1px 2px rgba(0, 90, 140, .28);
+	font-size: 13px;
+	line-height: 1.4;
+	text-decoration: none;
+}
+
+#product_binder .bfrmaint-section .btn-custom-submit:hover,
+#product_binder .bfrmaint-section .btn-custom-submit:focus {
+	background: linear-gradient(180deg, #00a2ef 0%, #0086c7 100%);
+	color: #fff;
+}
+
+#product_binder .bfrmaint-section .btn-custom-submit:focus-visible {
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #00aeff;
+	outline: 2px solid transparent;
+}
+
+/* Rules in this stylesheet set display by class - on buttons, links, chips and
+   tiles - which out-specifies the browser's own [hidden]. Anything hidden while
+   a background job runs would otherwise stay on screen. Scoped to the plugin's
+   panel, and !important because that is the only thing that beats a specificity
+   war with a presentational default. */
+#product_binder [hidden] {
+	display: none !important;
+}
+
+#product_binder .bfrmaint-section .btn-custom-submit[disabled] {
+	background: #bcd9ea;
+	box-shadow: none;
+	cursor: default;
+}
+
+/* The quiet half of a pair. Same box, no fill. */
+#product_binder .bfrmaint-section .button,
+#product_binder .bfrmaint-section a.bfrmaint-btn-quiet,
+#product_binder .bfrmaint-section .bfrmaint-btn-quiet {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 0;
+	padding: 9px 18px;
+	border: 1px solid #c9dcea;
+	border-radius: 6px;
+	background: #fff;
+	color: #0073a8;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+	text-decoration: none;
+}
+
+#product_binder .bfrmaint-section .button:hover,
+#product_binder .bfrmaint-section a.bfrmaint-btn-quiet:hover,
+#product_binder .bfrmaint-section a.bfrmaint-btn-quiet:focus,
+#product_binder .bfrmaint-section .bfrmaint-btn-quiet:hover {
+	border-color: #00aeff;
+	background: #f4fbff;
+	color: #04527c;
+}
+
+/* The list table's own search submit keeps the house button, not the card one:
+   it sits in a row with the search field and has to match its height. */
+#product_binder .bfrmaint-section .search-box .button {
+	padding: 0 12px;
+	line-height: 2.15384615;
+}
+
+/* --------------------------------------------------------------------------
+ * The line that reports what just happened, beside the button that did it.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-notice {
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.bfrmaint-notice.is-error {
+	color: #b32d2e;
+}
+
+.bfrmaint-notice.is-success {
+	color: #1a7f37;
+}
+
+/* --------------------------------------------------------------------------
+ * The house form, inside a card.
+ *
+ * .bfrmaint-form is the hook; .bfrmaint-redirect-form is the name the Redirects
+ * screen has always used for the same thing, kept so that markup did not have
+ * to be rewritten to gain these rules.
+ *
+ * FormBuilder's row is built for a full-width settings page: a quarter-width
+ * label, a dashed rule under every row including the last, and 20px of margin
+ * top and bottom that doubles against the card's own padding. Inside a card it
+ * wants to be a form, not a settings table.
+ * ----------------------------------------------------------------------- */
+#product_binder .bfrmaint-section .bfrmaint-form .form-group ,
+#product_binder .bfrmaint-section .bfrmaint-redirect-form .form-group {
+	margin: 0;
+	padding: 16px 0;
+	border-bottom: 1px solid #eff5fb;
+}
+
+#product_binder .bfrmaint-section .bfrmaint-form .form-group:first-child ,
+#product_binder .bfrmaint-section .bfrmaint-redirect-form .form-group:first-child {
+	padding-top: 0;
+}
+
+#product_binder .bfrmaint-section .bfrmaint-form .form-group:last-child ,
+#product_binder .bfrmaint-section .bfrmaint-redirect-form .form-group:last-child {
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+
+#product_binder .bfrmaint-section .bfrmaint-form .label ,
+#product_binder .bfrmaint-section .bfrmaint-redirect-form .label {
+	flex: 0 0 180px;
+	width: 180px;
+	padding: 8px 16px 0 0;
+	font-size: 13px;
+}
+
+#product_binder .bfrmaint-section .bfrmaint-form .input-group ,
+#product_binder .bfrmaint-section .bfrmaint-redirect-form .input-group {
+	max-width: 560px;
+}
+
+#product_binder .bfrmaint-section .bfrmaint-form .form-control ,
+#product_binder .bfrmaint-section .bfrmaint-redirect-form .form-control {
+	margin-top: 0;
+	border-color: #dfeaf4;
+	border-radius: 6px;
+}
+
+#product_binder .bfrmaint-section .bfrmaint-form .description ,
+#product_binder .bfrmaint-section .bfrmaint-redirect-form .description {
+	margin: 7px 0 0;
+	color: #646970;
+	font-size: 12.5px;
+	font-weight: 400;
+}
+
+@media (max-width: 782px) {
+	#product_binder .bfrmaint-section .bfrmaint-form .label ,
+#product_binder .bfrmaint-section .bfrmaint-redirect-form .label {
+		flex: 1 1 100%;
+		width: 100%;
+		padding: 0 0 6px;
+	}
+}
+
+/* The preview lands in the stack, which already supplies the gap above it. */
+.bfrmaint-stack > .bfrmaint-rr-result {
+	margin-top: 0;
+}
+
+/* --------------------------------------------------------------------------
+ * The list's search box, in the card head.
+ *
+ * WP_List_Table puts it in a floated block above the table, which on a card
+ * leaves an empty band between the head and the first row. It belongs beside
+ * the title: searching is how you find your way around this card, and the head
+ * is where the card describes itself.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-section-meta .search-box {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	float: none;
+	margin: 0;
+	padding: 0;
+}
+
+#product_binder .bfrmaint-section-meta .search-box input[type="search"] {
+	width: 190px;
+	max-width: 100%;
+	padding: 6px 10px;
+	border: 1px solid #cfe0ee;
+	border-radius: 6px;
+	background: #fff;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+#product_binder .bfrmaint-section-meta .search-box input[type="search"]:focus {
+	border-color: #00aeff;
+	box-shadow: 0 0 0 1px #00aeff;
+	outline: 2px solid transparent;
+}
+
+#product_binder .bfrmaint-section-meta .search-box .button {
+	padding: 7px 14px;
+}
+
+@media (max-width: 782px) {
+	.bfrmaint-section-head {
+		flex-wrap: wrap;
+	}
+
+	.bfrmaint-section-meta {
+		margin-left: 52px;
+	}
+
+	#product_binder .bfrmaint-section-meta .search-box input[type="search"] {
+		width: 100%;
+	}
+}
+
+/* --------------------------------------------------------------------------
+ * A row's own controls, in the last cell of a mini table. The forms that carry
+ * them are markup, not layout, so they get out of the way.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-minitable td form {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	margin: 0;
+}
+
+.bfrmaint-minitable td .bfrmaint-move {
+	margin-top: 4px;
+}
+
+/* Why a row is the way it is, under the thing it is about. */
+.bfrmaint-minitable-note {
+	margin-top: 4px;
+	color: #646970;
+	font-size: 12.5px;
+	line-height: 1.5;
+}
+
+/* A card's body is sometimes one form. The form is markup, not layout, so it
+   inherits the column it stands in rather than collapsing it. */
+.bfrmaint-section-body > form,
+.bfrmaint-subcard-actions form {
+	margin: 0;
+}
+
+.bfrmaint-subcard > form {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: 12px;
+	margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+ * What a checked import file would do, under the two halves that produced it.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-import-report {
+	margin-top: 18px;
+	padding-top: 18px;
+	border-top: 1px solid #ebf3fb;
+}
+
+.bfrmaint-import-report .bfrmaint-tally {
+	margin-top: 12px;
+}
+
+.bfrmaint-import-report .bfrmaint-minitable {
+	margin-bottom: 16px;
+}
+
+/* --------------------------------------------------------------------------
+ * A card that is itself a grid item: the form wrapping it is the item, so the
+ * card has to fill it rather than sit at its natural height.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-grid > form,
+.bfrmaint-grid > .bfrmaint-section {
+	min-width: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+ * The Maintenance Agent.
+ *
+ * The only screen in the plugin that is a sequence rather than a surface: look
+ * at what is wrong, read a plan, approve it. Everything here exists to keep the
+ * reader's position in that sequence obvious, because the thing they need to
+ * know at every point is whether the writing has happened yet. It has not,
+ * until step three.
+ *
+ * Pro renders this markup; it is styled from here for the same reason
+ * .bfrmaint-bulkfix is - one stylesheet, one design.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-steps {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 2px 6px;
+	margin: 0;
+	padding: 10px 18px;
+	border: 1px solid #e1edf8;
+	border-radius: 10px;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(15, 42, 68, .05), 0 12px 24px -20px rgba(15, 42, 68, .45);
+	list-style: none;
+}
+
+.bfrmaint-step {
+	display: flex;
+	align-items: center;
+	flex: 1 1 190px;
+	gap: 10px;
+	margin: 0;
+	padding: 8px 0;
+	color: #8c9bab;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+/* The connector, drawn rather than typed so it is never read aloud. */
+.bfrmaint-step + .bfrmaint-step::before {
+	content: "";
+	flex: 0 0 auto;
+	width: 16px;
+	height: 2px;
+	margin-right: 4px;
+	border-radius: 1px;
+	background: #e4eef7;
+}
+
+.bfrmaint-step-mark {
+	display: flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: #eef4f9;
+	color: #8c9bab;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.bfrmaint-step.is-done {
+	color: #135e2c;
+}
+
+.bfrmaint-step.is-done .bfrmaint-step-mark {
+	background: #e8f7ee;
+	color: #135e2c;
+}
+
+.bfrmaint-step.is-current {
+	color: #04527c;
+}
+
+.bfrmaint-step.is-current .bfrmaint-step-mark {
+	background: linear-gradient(135deg, #22bbff 0%, #0089cc 100%);
+	color: #fff;
+	box-shadow: 0 4px 10px -5px rgba(0, 118, 179, .9);
+}
+
+/* The forms that wrap a card are markup, not layout. */
+.bfrmaint-stack > form {
+	margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+ * How a step works, before the button that starts it.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-howto {
+	margin: 0;
+	padding: 0;
+	counter-reset: bfrmaint-howto;
+	list-style: none;
+}
+
+.bfrmaint-howto li {
+	position: relative;
+	counter-increment: bfrmaint-howto;
+	margin: 0 0 12px;
+	padding-left: 34px;
+	color: #5b6b7b;
+	font-size: 13px;
+	line-height: 1.55;
+}
+
+.bfrmaint-howto li:last-child {
+	margin-bottom: 0;
+}
+
+.bfrmaint-howto li::before {
+	content: counter(bfrmaint-howto);
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background: #eaf6ff;
+	color: #04527c;
+	font-size: 11px;
+	font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+ * One proposed change.
+ *
+ * The whole row is the label, so the target is the proposal rather than a
+ * 16px square beside it - and the box stays unticked, because somebody says
+ * yes to each change rather than no to the ones they dislike.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-proposal {
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+	margin: 0 0 12px;
+	padding: 16px 18px;
+	border: 1px solid #e4eff8;
+	border-radius: 9px;
+	background: #fbfdff;
+	cursor: pointer;
+	transition: border-color .12s ease-in-out, background .12s ease-in-out, box-shadow .12s ease-in-out;
+}
+
+.bfrmaint-proposal:last-child {
+	margin-bottom: 0;
+}
+
+.bfrmaint-proposal:hover {
+	border-color: #9ed4f2;
+	background: #f7fcff;
+}
+
+.bfrmaint-proposal:focus-within {
+	border-color: #00aeff;
+	box-shadow: 0 0 0 3px rgba(0, 174, 255, .25);
+}
+
+/* Ticked rows stand out from the ones left alone. Where :has() is missing the
+   box itself still shows the state - this is the reinforcement, not the
+   signal. */
+.bfrmaint-proposal:has(.bfrmaint-proposal-box:checked) {
+	border-color: #7ecbef;
+	background: #f2faff;
+	box-shadow: inset 3px 0 0 #00aeff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.bfrmaint-proposal {
+		transition: none;
+	}
+}
+
+/* Left at wp-admin's own size. The tick inside it is a sized SVG that does not
+   survive being scaled, and the row already carries the state - a box that is
+   bigger but empty when ticked would be worse than one that is small and
+   right. */
+#product_binder .bfrmaint-proposal-box {
+	flex: 0 0 auto;
+	margin: 2px 0 0;
+}
+
+/* Unticked only: ticked, the box takes the reader's own admin colour scheme,
+   which is theirs to choose and not ours to override. */
+#product_binder .bfrmaint-proposal-box:not(:checked) {
+	border-color: #b9cfe0;
+}
+
+/* The rows that are listed rather than offered. */
+.bfrmaint-proposal.is-info {
+	border-style: dashed;
+	background: #fcfdfe;
+	cursor: default;
+}
+
+.bfrmaint-proposal.is-info:hover {
+	border-color: #e4eff8;
+	background: #fcfdfe;
+}
+
+.bfrmaint-proposal-icon {
+	display: flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	color: #9fb4c7;
+}
+
+.bfrmaint-proposal-icon .dashicons {
+	width: 18px;
+	height: 18px;
+	font-size: 18px;
+	line-height: 18px;
+}
+
+.bfrmaint-proposal-body {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+}
+
+.bfrmaint-proposal-what {
+	color: #1d2327;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.4;
+	overflow-wrap: anywhere;
+}
+
+.bfrmaint-proposal-why {
+	color: #5b6b7b;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.bfrmaint-proposal-scope {
+	color: #646970;
+	font-size: 12.5px;
+	line-height: 1.5;
+}
+
+.bfrmaint-proposal-tag {
+	align-self: flex-start;
+	margin-top: 4px;
+	padding: 3px 10px;
+	border: 1px solid #e2e4e7;
+	border-radius: 999px;
+	background: #f4f5f6;
+	color: #646970;
+	font-size: 11.5px;
+	font-style: italic;
+}
+
+#product_binder .panel .panel-body .bfrmaint-plan-more {
+	margin: 14px 0 0;
+	padding-top: 14px;
+	border-top: 1px solid #eff5fb;
+	color: #646970;
+	font-size: 12.5px;
+	font-weight: 400;
+}
+
+/* --------------------------------------------------------------------------
+ * The report.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-tally li.is-bad {
+	border-color: #f3d4d4;
+	background: #fdf3f3;
+}
+
+.bfrmaint-tally li.is-bad strong {
+	color: #b32d2e;
+}
+
+.bfrmaint-report-list {
+	margin-top: 18px;
+	padding-top: 16px;
+	border-top: 1px solid #eff5fb;
+}
+
+.bfrmaint-report-list .bfrmaint-minitable {
+	margin-top: 8px;
+}
+
+.bfrmaint-report-list + .bfrmaint-report-list {
+	margin-top: 16px;
+}
+
+/* --------------------------------------------------------------------------
+ * A blank slate that is reporting something rather than reporting nothing.
+ * ----------------------------------------------------------------------- */
+.bfrmaint-blank.is-warn {
+	border-color: #f0dcae;
+	background: #fffbf1;
+}
+
+.bfrmaint-blank.is-warn .dashicons {
+	color: #c99a00;
+}
+
+.bfrmaint-blank.is-error {
+	border-color: #f0cfcf;
+	background: #fdf5f5;
+}
+
+.bfrmaint-blank.is-error .dashicons {
+	color: #c0392f;
+}
+
+/* A measure and the table that breaks it down are one block. */
+.bfrmaint-metric + .bfrmaint-minitable {
+	margin-top: 18px;
+}

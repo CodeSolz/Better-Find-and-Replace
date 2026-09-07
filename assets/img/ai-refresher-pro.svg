@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1290 720" width="1290" height="720" role="img" aria-label="AI Content Refresher - available in Better Find and Replace Pro">
+<defs>
+<linearGradient id="hdr" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#2271b1"/><stop offset="1" stop-color="#5b3fa8"/>
+</linearGradient>
+<style>
+.f{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+.h1{font-size:38px;font-weight:700;fill:#fff}
+.tag{font-size:19px;fill:#dfe8f5}
+.pill{font-size:13px;font-weight:700;fill:#5b3fa8;letter-spacing:.9px}
+.ct{font-size:17px;font-weight:700;fill:#1d2327}
+.cn{font-size:14px;fill:#50575e}
+.step{font-size:12px;font-weight:700;fill:#2271b1;letter-spacing:1.1px}
+.mono{font-family:Consolas,Monaco,'Courier New',monospace;font-size:12.5px}
+.lbl{font-size:11.5px;fill:#646970}
+.trust{font-size:14.5px;fill:#1d2327}
+.cta{font-size:18px;font-weight:700;fill:#fff}
+.foot{font-size:13px;fill:#646970}
+</style>
+</defs>
+
+<rect width="1290" height="720" fill="#f6f7f7"/>
+<rect x="0" y="0" width="1290" height="150" fill="url(#hdr)"/>
+
+<!-- header -->
+<text x="56" y="62" class="f h1">AI Content Refresher</text>
+<rect x="437" y="36" width="52" height="24" rx="12" fill="#fff"/>
+<text x="449" y="53" class="f pill">PRO</text>
+<text x="56" y="98" class="f tag">Find outdated content before your visitors do.</text>
+<text x="56" y="126" class="f tag" font-size="15" fill="#c3d4ea">Scans your posts for stale years, prices, versions and dead links &#8212; then explains why each one deserves a look.</text>
+
+<!-- ── card 1 : scan ── -->
+<rect x="56" y="192" width="376" height="286" rx="10" fill="#fff" stroke="#dcdcde"/>
+<text x="84" y="228" class="f step">STEP 1 &#183; DISCOVER</text>
+<text x="84" y="256" class="f ct">Scan your content</text>
+<text x="84" y="280" class="f cn">Finds candidates locally first, so only</text>
+<text x="84" y="300" class="f cn">relevant snippets are ever sent to AI.</text>
+
+<rect x="84" y="318" width="320" height="134" rx="6" fill="#f6f7f7" stroke="#e6e6e8"/>
+<text x="100" y="342" class="f lbl">Scanning&#8230;</text>
+<text x="356" y="342" class="f lbl" text-anchor="end">27%</text>
+<rect x="100" y="352" width="256" height="8" rx="4" fill="#e0e0e2"/>
+<rect x="100" y="352" width="69" height="8" rx="4" fill="#2271b1"/>
+<text x="100" y="382" class="f lbl">342 / 1,284 posts</text>
+<circle cx="106" cy="404" r="3.5" fill="#d63638"/><text x="120" y="409" class="f cn" font-size="13">8 high priority</text>
+<circle cx="106" cy="426" r="3.5" fill="#dba617"/><text x="120" y="431" class="f cn" font-size="13">39 standard review</text>
+
+<!-- ── card 2 : review ── -->
+<rect x="457" y="192" width="376" height="286" rx="10" fill="#fff" stroke="#dcdcde"/>
+<text x="485" y="228" class="f step">STEP 2 &#183; REVIEW</text>
+<text x="485" y="256" class="f ct">You decide, every time</text>
+<text x="485" y="280" class="f cn">AI never edits your site on its own.</text>
+<text x="485" y="300" class="f cn">Nothing changes without your click.</text>
+
+<rect x="485" y="318" width="320" height="134" rx="6" fill="#f6f7f7" stroke="#e6e6e8"/>
+<text x="501" y="341" class="f lbl">Best WordPress Hosting in 2022</text>
+<rect x="501" y="350" width="288" height="26" rx="4" fill="#fff" stroke="#e6e6e8"/>
+<text x="509" y="368" class="f mono" fill="#50575e">our favorite hosting </text>
+<rect x="653" y="354" width="62" height="18" rx="3" fill="#fcf0f1"/>
+<text x="658" y="368" class="f mono" fill="#d63638">for 2022</text>
+<text x="501" y="398" class="f lbl">Time-sensitive &#8212; review before changing</text>
+<rect x="501" y="408" width="86" height="22" rx="3" fill="#fcf0f1"/>
+<text x="510" y="423" class="f" font-size="11.5" font-weight="700" fill="#d63638">VERIFY FIRST</text>
+<rect x="595" y="408" width="74" height="22" rx="3" fill="#f0f6fc"/>
+<text x="604" y="423" class="f" font-size="11.5" font-weight="700" fill="#2271b1">HIGH</text>
+
+<!-- ── card 3 : apply ── -->
+<rect x="858" y="192" width="376" height="286" rx="10" fill="#fff" stroke="#dcdcde"/>
+<text x="886" y="228" class="f step">STEP 3 &#183; APPLY SAFELY</text>
+<text x="886" y="256" class="f ct">Backed by BFR&#8217;s undo</text>
+<text x="886" y="280" class="f cn">Applied changes land in Restore in</text>
+<text x="886" y="300" class="f cn">Database. One click puts them back.</text>
+
+<rect x="886" y="318" width="320" height="134" rx="6" fill="#f6f7f7" stroke="#e6e6e8"/>
+<text x="902" y="342" class="f lbl">Applied &#8212; WordPress 5.9 &#8594; 6.x</text>
+<rect x="902" y="352" width="288" height="1" fill="#e6e6e8"/>
+<text x="902" y="376" class="f cn" font-size="13">Post revision created</text>
+<text x="902" y="400" class="f cn" font-size="13">Logged to Restore in Database</text>
+<rect x="902" y="414" width="76" height="26" rx="4" fill="#fff" stroke="#2271b1"/>
+<text x="916" y="431" class="f" font-size="13" font-weight="600" fill="#2271b1">Undo</text>
+<path d="M994 427 l7 0 M994 427 l3 -3 M994 427 l3 3" stroke="#8c8f94" stroke-width="1.5" fill="none"/>
+
+<!-- trust bar -->
+<rect x="56" y="512" width="1178" height="72" rx="10" fill="#fff" stroke="#dcdcde"/>
+<circle cx="106" cy="548" r="10" fill="#edf6ed"/><path d="M101 548 l3.4 3.6 L111 545" stroke="#00a32a" stroke-width="2" fill="none" stroke-linecap="round"/>
+<text x="124" y="553" class="f trust">Uses the AI provider you already set up in AI Settings</text>
+<circle cx="601" cy="548" r="10" fill="#edf6ed"/><path d="M596 548 l3.4 3.6 L606 545" stroke="#00a32a" stroke-width="2" fill="none" stroke-linecap="round"/>
+<text x="619" y="553" class="f trust">Never invents facts or prices</text>
+<circle cx="928" cy="548" r="10" fill="#edf6ed"/><path d="M923 548 l3.4 3.6 L933 545" stroke="#00a32a" stroke-width="2" fill="none" stroke-linecap="round"/>
+<text x="946" y="553" class="f trust">Every applied change is reversible</text>
+
+<!-- cta -->
+<rect x="56" y="616" width="232" height="52" rx="6" fill="#2271b1"/>
+<text x="99" y="649" class="f cta">Upgrade to Pro</text>
+<text x="312" y="641" class="f foot">Already have Pro? Activate it to unlock Content Refresher.</text>
+<text x="312" y="661" class="f foot">No extra API key needed &#8212; it uses your existing BFR AI Settings.</text>
+</svg>

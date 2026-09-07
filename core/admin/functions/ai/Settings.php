@@ -39,7 +39,9 @@ class Settings {
 			$migrated['providers']['openai'] = array(
 				'auth_type' => 'api_key',
 				'api_key'   => (string) $raw['api_key'],
-				'model'     => isset( $raw['language_model'] ) ? (string) $raw['language_model'] : 'gpt-4o-mini',
+				// An explicit old choice is kept; an absent one takes today's default
+				// rather than a model OpenAI has since moved on from.
+				'model'     => isset( $raw['language_model'] ) ? (string) $raw['language_model'] : self::defaultModelFor( 'openai' ),
 				'base_url'  => '',
 			);
 			$migrated['active_provider'] = 'openai';
@@ -117,6 +119,12 @@ class Settings {
 		);
 
 		return array_merge( $defaults, $saved );
+	}
+
+	/** The registry's current default model for a provider, or '' if unknown. */
+	public static function defaultModelFor( $slug ) {
+		$registry = ProviderRegistry::get( $slug );
+		return ( $registry && ! empty( $registry['default_model'] ) ) ? $registry['default_model'] : '';
 	}
 
 	public static function defaults() {

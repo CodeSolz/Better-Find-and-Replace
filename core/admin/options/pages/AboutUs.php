@@ -39,7 +39,22 @@ class AboutUs {
 	 */
 	private function get_plugins_data() {
 		return array(
-			
+			array(
+				'title'       => 'WatchSpire',
+				'description' => 'Catch silent WordPress failures before they cost you leads or sales. WatchSpire monitors forms, checkout, email delivery, uptime, SSL, and more then alerts you when something goes wrong.',
+				'icon_file'   => 'watchspire.png',
+				'subtitle'    => 'Your WordPress early warning system',
+				'features'    => array(
+					'Catch failed forms & checkout issues',
+					'Know what changed before a failure',
+					'Get alerts before problems cost you leads',
+					'Links failures to the update that caused them',
+					'See which update may have caused a failure'
+				),
+				'pro_url'     => 'https://codesolz.net/our-products/wordpress-plugin/watchspire/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page',
+				// No plugin page yet — point at the WordPress.org search until the listing is live.
+				'wporg_url'   => 'https://wordpress.org/plugins/watchspire/',
+			),
 			array(
 				'title'       => 'AI Store Signals for WooCommerce',
 				'description' => 'See how well AI systems can understand your WooCommerce store. Find visibility gaps, improve product data, generate AI-friendly feeds and llms.txt, and track AI bot activity.',
@@ -80,23 +95,7 @@ class AboutUs {
 				'pro_url'     => 'https://codesolz.net/our-products/wordpress-plugins/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page',
 				'wporg_url'   => 'https://wordpress.org/plugins/merchant-feed-booster-lite-for-woocommerce/',
 			),
-			array(
-				'title'       => 'WatchSpire',
-				'description' => 'Catch silent WordPress failures before they cost you leads or sales. WatchSpire monitors forms, checkout, email delivery, uptime, SSL, and more then alerts you when something goes wrong.',
-				'icon_file'   => 'watchspire.png',
-				'subtitle'    => 'Your WordPress early warning system',
-				'features'    => array(
-					'Catch failed forms & checkout issues',
-					'Know what changed before a failure',
-					'Get alerts before problems cost you leads',
-					'Links failures to the update that caused them',
-					'See which update may have caused a failure'
-				),
-				'badge'       => 'Coming Soon',
-				'pro_url'     => 'https://codesolz.net/our-products/wordpress-plugin/watchspire/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page',
-				// No plugin page yet — point at the WordPress.org search until the listing is live.
-				'wporg_url'   => 'https://wordpress.org/plugins/search/watchspire/',
-			),
+			
 		);
 	}
 
@@ -161,16 +160,6 @@ class AboutUs {
 								<div class="rtafar-hero-feature">
 									<strong>Growth and Organization</strong>
 									<span>Improve media management, user engagement, and WooCommerce experiences from one ecosystem.</span>
-								</div>
-							</div>
-							<div class="rtafar-hero-proof">
-								<div class="rtafar-hero-proof-item">
-									<span class="rtafar-hero-proof-value">50k+</span>
-									<span class="rtafar-hero-proof-label">Active installs for Better Find &amp; Replace on WordPress.org</span>
-								</div>
-								<div class="rtafar-hero-proof-item">
-									<span class="rtafar-hero-proof-value">Practical</span>
-									<span class="rtafar-hero-proof-label">Built to solve everyday WordPress problems with premium polish</span>
 								</div>
 							</div>
 						</div>

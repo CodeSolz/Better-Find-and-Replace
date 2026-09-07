@@ -20,6 +20,37 @@ abstract class OpenAiCompatibleProvider extends AbstractProvider {
 	protected $chatPath           = '/chat/completions';
 	protected $modelsPath         = '/models';
 
+	/**
+	 * Name of the output-limit parameter. OpenAI deprecated `max_tokens` in
+	 * favour of `max_completion_tokens` and rejects the old name on its
+	 * reasoning models; every other OpenAI-compatible vendor here still takes
+	 * `max_tokens`, so the name is per-provider rather than global.
+	 *
+	 * @var string
+	 */
+	protected $maxTokensParam = 'max_tokens';
+
+	/**
+	 * Whether to send `temperature`. Reasoning models reject any value other
+	 * than the default, so providers whose current line-up is reasoning-only
+	 * turn this off and inherit the server-side default.
+	 *
+	 * @var bool
+	 */
+	protected $sendTemperature = true;
+
+	/**
+	 * Output budget for a suggestion.
+	 *
+	 * A rewritten phrase is a few dozen tokens, but on a thinking model the
+	 * reasoning tokens come out of this same budget — too small a value returns
+	 * an empty message instead of an answer. Providers whose models reason
+	 * heavily raise it further.
+	 *
+	 * @var int
+	 */
+	protected $maxOutputTokens = 1024;
+
 	/** Config override beats class default. */
 	protected function resolveBaseUrl() {
 		$configured = $this->cfg( 'base_url', '' );
@@ -54,8 +85,8 @@ abstract class OpenAiCompatibleProvider extends AbstractProvider {
 		}
 
 		$body = array(
-			'model'       => $model,
-			'messages'    => array(
+			'model'    => $model,
+			'messages' => array(
 				array(
 					'role'    => 'system',
 					'content' => $systemPrompt,
@@ -65,9 +96,13 @@ abstract class OpenAiCompatibleProvider extends AbstractProvider {
 					'content' => sprintf( $userPromptFormat, $text ),
 				),
 			),
-			'temperature' => 0.7,
-			'max_tokens'  => 120,
 		);
+
+		$body[ $this->maxTokensParam ] = $this->maxOutputTokens;
+
+		if ( $this->sendTemperature ) {
+			$body['temperature'] = 0.7;
+		}
 
 		$res = $this->postJson(
 			$this->resolveBaseUrl() . $this->chatPath,
@@ -76,17 +111,22 @@ abstract class OpenAiCompatibleProvider extends AbstractProvider {
 		);
 
 		if ( ! $res['status'] ) {
-			return $res;
+			return $this->withModelHint( $res );
 		}
 
-		$content = isset( $res['body']['choices'][0]['message']['content'] )
-			? $res['body']['choices'][0]['message']['content']
+		$choice  = isset( $res['body']['choices'][0] ) ? $res['body']['choices'][0] : array();
+		$content = isset( $choice['message']['content'] ) && is_string( $choice['message']['content'] )
+			? $choice['message']['content']
 			: '';
 
-		if ( $content === '' ) {
-			return array(
-				'status' => false,
-				'error'  => 'Empty response from provider.',
+		if ( trim( $content ) === '' ) {
+			$reason = isset( $choice['finish_reason'] ) ? $choice['finish_reason'] : '';
+
+			return $this->withModelHint(
+				$this->emptyResponseError(
+					$reason,
+					sprintf( 'Empty response from %s. The model returned no text — try another model.', $this->getName() )
+				)
 			);
 		}
 

@@ -88,20 +88,38 @@ class RTAFAR_RegisterMenu {
 		}
 
 		$desired_order = array(
+			// Find and replace, the core workflow.
 			'cs-add-replacement-rule',
 			'cs-all-masking-rules',
 			'cs-replace-in-database',
 			'cs-bfar-restore-database',      // Pro's real Restore page.
 			'cs-bfar-restore-database-pro',  // Free placeholder (absent when Pro is active).
 			'cs-bfar-media-replacer',
+
+			// Site maintenance. Grouped together, and listed here rather than
+			// left out: a slug missing from this array is appended after
+			// everything else, which would put these below About Us.
+			'cs-bfar-maintenance',           // Site Health.
+			'cs-bfar-content-health',
+			'cs-bfar-redirects',
+			'cs-bfar-code-inserts',
+
+			// Pro tools.
 			'cs-bfar-pixel-tracker',         // Pro (pro-basic) only.
 			'cs-bfar-snippets-manager',      // Pro (pro-pro) only.
 			'cs-bfar-pixel-manager',         // Pro (pro-pro) only — pro-pro's Pixel Manager slug differs from pro-basic's.
+			'cs-bfar-ai-content-refresher',     // Pro's real Content Refresher page.
+			'cs-bfar-ai-content-refresher-pro', // Free placeholder (absent when Pro is active).
+
+			// Configuration, then the account entry, then the footer page.
 			'cs-bfar-ai-settings',
 			'cs-bfar-pro-license',           // Pro only.
 			'cs-bfar-go-pro',                // Free only (removed when Pro is active).
 			'cs-bfar-about-us',              // Informational page, always last.
 		);
+
+		// Only one of License / Upgrade To Premium is ever present - Pro removes
+		// the upsell and adds its own - so whichever it is lands second to last.
 
 		$by_slug = array();
 		foreach ( $submenu[ $parent ] as $item ) {
@@ -254,6 +272,16 @@ class RTAFAR_RegisterMenu {
 			6
 		);
 
+		$this->rtafr_menus['ai_content_refresher_pro'] = add_submenu_page(
+			CS_RTAFAR_PLUGIN_IDENTIFIER,
+			__( 'AI Content Refresher', 'real-time-auto-find-and-replace' ),
+			__( 'Content Refresher', 'real-time-auto-find-and-replace' ),
+			Util::bfar_nav_cap( 'ai_content_refresher' ),
+			'cs-bfar-ai-content-refresher-pro',
+			array( $this, 'rtafar_page_ai_content_refresher' ),
+			7
+		);
+
 		$this->rtafr_menus['go_pro'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
 			__( 'Upgrade To Premium', 'real-time-auto-find-and-replace' ),
@@ -281,6 +309,7 @@ class RTAFAR_RegisterMenu {
 		add_action( "load-{$this->rtafr_menus['restore_in_db_pro']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['media_replacer']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['ai_settings']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
+		add_action( "load-{$this->rtafr_menus['ai_content_refresher_pro']}", array( $this, 'rtafr_register_admin_settings_scripts' ) );
 		add_action( "load-{$this->rtafr_menus['about_us']}", array( $this, 'rtafar_register_about_scripts' ) );
 
 		\remove_submenu_page( CS_RTAFAR_PLUGIN_IDENTIFIER, CS_RTAFAR_PLUGIN_IDENTIFIER );
@@ -384,6 +413,41 @@ class RTAFAR_RegisterMenu {
 			}
 		}
 	}
+
+	/**
+	 * AI Content Refresher - Pro feature teaser.
+	 *
+	 * The free build advertises the feature with a single promotional image,
+	 * exactly like Restore In Database does. Pro removes this menu item at
+	 * admin_menu priority 20 and registers the real page at
+	 * cs-bfar-ai-content-refresher.
+	 *
+	 * @return void
+	 */
+	public function rtafar_page_ai_content_refresher() {
+		$page_info = array(
+			'title'     => __( 'AI Content Refresher', 'real-time-auto-find-and-replace' ),
+			'sub_title' => __( 'Find outdated content before your visitors do', 'real-time-auto-find-and-replace' ),
+		);
+
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap( 'ai_content_refresher' ) ) ) {
+			?>
+				<div style="position: relative; display: inline-block; width: 99%; max-width: 100%; container-type: inline-size;">
+					<img src="<?php echo \esc_url( CS_RTAFAR_PLUGIN_ASSET_URI . 'img/ai-content-refresher.png' ); ?>" alt="<?php echo \esc_attr__( 'AI Content Refresher', 'real-time-auto-find-and-replace' ); ?>" style="display: block; width: 100%; height: auto;" />
+					<span style="position: absolute; top: 3%; left: 50%; transform: translateX(-50%); background: #c60051; color: #fff; font-weight: 700; line-height: 1; font-size: clamp( 9px, 1.25cqw, 18px ); letter-spacing: .06em; text-transform: uppercase; padding: .65em 1.3em; border-radius: 999px; box-shadow: 0 3px 10px rgba( 0, 0, 0, .28 ); white-space: nowrap;"><?php echo \esc_html__( 'Pro Version Only', 'real-time-auto-find-and-replace' ); ?></span>
+				</div>
+			<?php
+		} else {
+			$access_denied = $this->pages->AccessDenied();
+			if ( \is_object( $access_denied ) ) {
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo $access_denied->generate_access_denided( array_merge_recursive( $page_info, array( 'default_settings' => array() ) ) );
+			} else {
+				echo wp_kses( $access_denied, Util::cs_allowed_html() );
+			}
+		}
+	}
+
 
 	/**
 	 * Restore DB
