@@ -3,7 +3,7 @@
         'name' => 'tuhin18003/real-time-auto-find-and-replace',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '51a4ea468231846de88a7ae42e5291116a0aceb8',
+        'reference' => '383fd08d604f73a06879ec7e86474aaf8be80624',
         'type' => 'composer-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'tuhin18003/real-time-auto-find-and-replace' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '51a4ea468231846de88a7ae42e5291116a0aceb8',
+            'reference' => '383fd08d604f73a06879ec7e86474aaf8be80624',
             'type' => 'composer-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

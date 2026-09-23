@@ -178,8 +178,8 @@ class Gemini extends AbstractProvider {
 					&& ! in_array( 'generateContent', $m['supportedGenerationMethods'], true ) ) {
 					continue;
 				}
-				$id    = preg_replace( '#^models/#', '', $m['name'] );
-				$label = isset( $m['displayName'] ) ? $m['displayName'] : $id;
+				$id            = preg_replace( '#^models/#', '', $m['name'] );
+				$label         = isset( $m['displayName'] ) ? $m['displayName'] : $id;
 				$models[ $id ] = $label;
 			}
 		}

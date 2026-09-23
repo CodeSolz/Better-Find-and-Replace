@@ -102,8 +102,8 @@ class AdminPageBuilder {
 		$content .= \wp_nonce_field( SECURE_AUTH_SALT, 'cs_token' );
 
 		$before_footer = isset( $argc['before_footer'] ) ? $argc['before_footer'] : '';
-		if( isset($argc['before_footer_wrapper']) && true === $argc['before_footer_wrapper'] ){
-			$before_footer = '<div class="panel-body bg-white no-bottom-margin">' . $before_footer .'</div>';
+		if ( isset( $argc['before_footer_wrapper'] ) && true === $argc['before_footer_wrapper'] ) {
+			$before_footer = '<div class="panel-body bg-white no-bottom-margin">' . $before_footer . '</div>';
 		}
 
 		return sprintf(

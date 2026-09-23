@@ -169,7 +169,7 @@ class Anthropic extends AbstractProvider {
 		if ( isset( $res['body']['data'] ) && is_array( $res['body']['data'] ) ) {
 			foreach ( $res['body']['data'] as $m ) {
 				if ( isset( $m['id'] ) ) {
-					$label = isset( $m['display_name'] ) ? $m['display_name'] : $m['id'];
+					$label              = isset( $m['display_name'] ) ? $m['display_name'] : $m['id'];
 					$models[ $m['id'] ] = $label;
 				}
 			}

@@ -51,7 +51,7 @@ class MediaReplacer {
 		$option = array();
 
 		$fields = array(
-			'cs_masking_rule[media_replacer]'                  => array(
+			'cs_masking_rule[media_replacer]' => array(
 				'title'       => __( 'Search Media by Name', 'real-time-auto-find-and-replace' ),
 				'type'        => 'text',
 				'class'       => 'form-control input-media-replace-query',
@@ -62,16 +62,15 @@ class MediaReplacer {
 			),
 		);
 
-		$fields          = apply_filters( 'bfrp_media_replacer_fields', $fields, $option );
-		$args['content'] = $this->Form_Generator->generate_html_fields( $fields ) . '';
+		$fields             = apply_filters( 'bfrp_media_replacer_fields', $fields, $option );
+		$args['content']    = $this->Form_Generator->generate_html_fields( $fields ) . '';
 		$args['body_class'] = 'no-bottom-margin';
-		
 
-		//Section to show search results
+		// Section to show search results
 
 		$before_footer_fields = array(
-			'st1'              => array(
-				'wrapper_class' => "search-results st1-wrapper ",
+			'st1' => array(
+				'wrapper_class' => 'search-results st1-wrapper ',
 				'type'          => 'section_title',
 				'title'         => __( 'Search Results...', 'real-time-auto-find-and-replace' ),
 				'desc_tip'      => __( 'The replacement action cannot be undone!', 'real-time-auto-find-and-replace' ),
@@ -87,9 +86,9 @@ class MediaReplacer {
 
 		$html = \ob_get_clean();
 
-		$args['hidden_content'] = $this->popupHtml();
-		$args['before_footer_wrapper']   = true;
-		$args['before_footer']   = $before_footer . $html;
+		$args['hidden_content']        = $this->popupHtml();
+		$args['before_footer_wrapper'] = true;
+		$args['before_footer']         = $before_footer . $html;
 
 		return $this->Admin_Page_Generator->generate_page( $args );
 	}

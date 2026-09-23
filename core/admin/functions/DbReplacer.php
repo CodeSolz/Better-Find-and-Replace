@@ -114,17 +114,17 @@ class DbReplacer {
 	 * @return void
 	 */
 	public function db_string_replace( $user_query ) {
-		if ( !current_user_can( 'manage_options' ) && !current_user_can( Util::bfar_nav_cap('replace_in_db') ) ) {
+		if ( ! current_user_can( 'manage_options' ) && ! current_user_can( Util::bfar_nav_cap( 'replace_in_db' ) ) ) {
 			return wp_send_json(
 				array(
 					'status' => false,
 					'title'  => __( 'Access Denied', 'real-time-auto-find-and-replace' ),
-                'text'   => __( 'You do not have permission to perform this action.', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'You do not have permission to perform this action.', 'real-time-auto-find-and-replace' ),
 				)
 			);
-        }
+		}
 
-		if( empty( $user_query) || ! \is_array($user_query) ){
+		if ( empty( $user_query ) || ! \is_array( $user_query ) ) {
 			return wp_send_json(
 				array(
 					'status' => false,
@@ -392,12 +392,12 @@ class DbReplacer {
 			// PHP 7.0 or higher
 			$selectColumnsString = empty( $selectColumns ) ? 'ID' : implode( ', ', $selectColumns );
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$sql                 = $wpdb->prepare( "SELECT ID, $selectColumnsString FROM {$wpdb->posts} WHERE post_type = %s AND ( $filterQuery )", $placeholders );
+			$sql = $wpdb->prepare( "SELECT ID, $selectColumnsString FROM {$wpdb->posts} WHERE post_type = %s AND ( $filterQuery )", $placeholders );
 
 			// pre_print( $sql );
 
 		} else {
-			$placeholders = array();
+			$placeholders   = array();
 			$title_clause   = $this->like_clause_for_variants( 'post_title', $variants, $placeholders );
 			$content_clause = $this->like_clause_for_variants( 'post_content', $variants, $placeholders );
 			$excerpt_clause = $this->like_clause_for_variants( 'post_excerpt', $variants, $placeholders );
@@ -1044,7 +1044,7 @@ class DbReplacer {
 		$guid_clause  = $this->like_clause_for_variants( 'guid', $variants, $placeholders );
 		$name_clause  = $this->like_clause_for_variants( 'post_name', $variants, $placeholders );
 
-		$con      = \implode( ' OR ', $urlTypes );
+		$con = \implode( ' OR ', $urlTypes );
 		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$get_data = $wpdb->get_results(
 			$wpdb->prepare(
@@ -1107,7 +1107,12 @@ class DbReplacer {
 	 */
 	public function bfrReplace( $find, $replace, $old_value, $tbl, $row_id, $primary_col, $update_col, $update_con ) {
 		return $this->bfrReplaceVariants(
-			array( array( 'find' => $find, 'replace' => $replace ) ),
+			array(
+				array(
+					'find'    => $find,
+					'replace' => $replace,
+				),
+			),
 			$old_value,
 			$tbl,
 			$row_id,
@@ -1140,11 +1145,11 @@ class DbReplacer {
 			return false;
 		}
 
-		$original     = $this->format_old_value( $old_value );
-		$current       = $original;
-		$totalFind    = 0;
-		$totalReplace = 0;
-		$display      = null;
+		$original          = $this->format_old_value( $old_value );
+		$current           = $original;
+		$totalFind         = 0;
+		$totalReplace      = 0;
+		$display           = null;
 		$isCaseInsensitive = false;
 
 		foreach ( $variants as $variant ) {
@@ -1153,10 +1158,10 @@ class DbReplacer {
 			}
 			$res = $this->compute_replacement( $variant['find'], $variant['replace'], $current );
 			if ( $res['changed'] ) {
-				$current            = $res['new_value'];
-				$totalFind         += $res['findCount'];
-				$totalReplace      += $res['replaceCount'];
-				$isCaseInsensitive  = $res['ici'];
+				$current           = $res['new_value'];
+				$totalFind        += $res['findCount'];
+				$totalReplace     += $res['replaceCount'];
+				$isCaseInsensitive = $res['ici'];
 				if ( null === $display ) {
 					$display = $res['display']; // first matching variant drives the visual preview
 				}
@@ -1309,7 +1314,12 @@ class DbReplacer {
 	 * @return array list of array( 'find' => ..., 'replace' => ... ); raw pair first
 	 */
 	private function variants_for( $find, $replace, $context = array() ) {
-		$variants = array( array( 'find' => $find, 'replace' => $replace ) );
+		$variants = array(
+			array(
+				'find'    => $find,
+				'replace' => $replace,
+			),
+		);
 
 		$flags = array(
 			'encoded_urls'  => $this->encoded_urls,
@@ -1541,7 +1551,6 @@ class DbReplacer {
 				// Undecodable / unsafe blob: leave the value exactly as-is.
 				$args['cleanStr'] = $this->bfarRemoveSpcialCharsFlag( $args['str'] );
 			}
-
 		} elseif ( is_array( $args['str'] ) ) {
 
 			$flag      = array();
@@ -1645,7 +1654,6 @@ class DbReplacer {
 				$args['str']      = $replaced;
 				$args['cleanStr'] = $this->bfarRemoveSpcialCharsFlag( $replaced );
 			}
-
 		} else {
 
 			// bool / null / anything not string-replaceable — leave untouched.

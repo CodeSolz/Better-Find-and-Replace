@@ -30,23 +30,23 @@ class RTAFAR_CustomAjax {
 	 */
 	private function allowed_methods() {
 		return array(
-			'aihandler@savesettings' => array(
+			'aihandler@savesettings'                       => array(
 				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\aiHandler', 'saveSettings' ),
 				'cap'      => 'manage_options',
 			),
-			'aihandler@getaisuggestion' => array(
+			'aihandler@getaisuggestion'                    => array(
 				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\aiHandler', 'getAiSuggestion' ),
 				'cap'      => 'manage_options',
 			),
-			'aihandler@testconnection' => array(
+			'aihandler@testconnection'                     => array(
 				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\aiHandler', 'testConnection' ),
 				'cap'      => 'manage_options',
 			),
-			'aihandler@listmodels' => array(
+			'aihandler@listmodels'                         => array(
 				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\aiHandler', 'listModels' ),
 				'cap'      => 'manage_options',
 			),
-			'masking@add_masking_rule' => array(
+			'masking@add_masking_rule'                     => array(
 				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\Masking', 'add_masking_rule' ),
 				'cap'      => 'manage_options',
 			),
@@ -66,15 +66,15 @@ class RTAFAR_CustomAjax {
 				'callback' => array( '\RealTimeAutoFindReplace\admin\options\functions\DbFuncReplaceInDb', 'get_page_builders_select_options' ),
 				'cap'      => 'manage_options',
 			),
-			'dbreplacer@db_string_replace' => array(
+			'dbreplacer@db_string_replace'                 => array(
 				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\DbReplacer', 'db_string_replace' ),
 				'cap'      => 'manage_options',
 			),
-			'mediaimagereplacer@handlemediareplace' => array(
+			'mediaimagereplacer@handlemediareplace'        => array(
 				'callback' => array( '\RealTimeAutoFindReplace\admin\functions\MediaImageReplacer', 'handleMediaReplace' ),
 				'cap'      => 'manage_options',
 			),
-		);	
+		);
 	}
 
 	/**
@@ -114,8 +114,8 @@ class RTAFAR_CustomAjax {
 		foreach ( $allowed_methods as $key => $cfg ) {
 			$norm_key = strtolower( preg_replace( '/[^a-z0-9@_\\\:-]/i', '', $key ) );
 			// ensure shape and defaults
-			$callback = isset( $cfg['callback'] ) ? $cfg['callback'] : null;
-			$cap      = isset( $cfg['cap'] ) ? $cfg['cap'] : 'manage_options';
+			$callback            = isset( $cfg['callback'] ) ? $cfg['callback'] : null;
+			$cap                 = isset( $cfg['cap'] ) ? $cfg['cap'] : 'manage_options';
 			$lookup[ $norm_key ] = array(
 				'callback' => $callback,
 				'cap'      => $cap,
@@ -133,7 +133,7 @@ class RTAFAR_CustomAjax {
 			);
 		}
 
-		$entry = $lookup[ $norm_method_key ];
+		$entry        = $lookup[ $norm_method_key ];
 		$required_cap = $entry['cap'] ?? 'manage_options';
 		if ( ! current_user_can( $required_cap ) ) {
 			wp_send_json(
@@ -164,7 +164,7 @@ class RTAFAR_CustomAjax {
 					array(
 						'status' => false,
 						'title'  => __( 'Error!', 'real-time-auto-find-and-replace' ),
-						'text'   => $result->get_error_message()
+						'text'   => $result->get_error_message(),
 					)
 				);
 			}
@@ -176,12 +176,14 @@ class RTAFAR_CustomAjax {
 			wp_send_json_success( $result );
 		} catch ( \Throwable $t ) {
 			// Leading `\` anchors to global — bare Throwable in a namespaced file does not catch.
-			error_log( sprintf(
-				'rtafar : ajax handler error in %s at %s:%d',
-				get_class( $t ),
-				$t->getFile(),
-				$t->getLine()
-			) );
+			error_log(
+				sprintf(
+					'rtafar : ajax handler error in %s at %s:%d',
+					get_class( $t ),
+					$t->getFile(),
+					$t->getLine()
+				)
+			);
 			wp_send_json(
 				array(
 					'status' => false,
@@ -190,7 +192,6 @@ class RTAFAR_CustomAjax {
 				)
 			);
 		}
-
 	}
 
 	/**
@@ -218,6 +219,4 @@ class RTAFAR_CustomAjax {
 
 		return null;
 	}
-
-
 }

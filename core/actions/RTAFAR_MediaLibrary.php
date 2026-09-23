@@ -53,7 +53,7 @@ class RTAFAR_MediaLibrary {
 	 * Inject the "Replace media" link into the list-view row actions.
 	 *
 	 * @param array    $actions
-	 * @param \WP_Post  $post
+	 * @param \WP_Post $post
 	 * @return array
 	 */
 	public function add_row_action( $actions, $post ) {

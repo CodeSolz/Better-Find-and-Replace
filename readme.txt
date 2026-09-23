@@ -3,8 +3,8 @@ Contributors: codesolz, m.tuhin
 Tags: database, search replace, search, replace, search and replace
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 5.2
-Tested up to: 7.0
-Stable tag: 2.0.0
+Tested up to: 7.1
+Stable tag: 2.0.1
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses
 

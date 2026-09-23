@@ -49,7 +49,7 @@ class AboutUs {
 					'Know what changed before a failure',
 					'Get alerts before problems cost you leads',
 					'Links failures to the update that caused them',
-					'See which update may have caused a failure'
+					'See which update may have caused a failure',
 				),
 				'pro_url'     => 'https://codesolz.net/our-products/wordpress-plugin/watchspire/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page',
 				// No plugin page yet — point at the WordPress.org search until the listing is live.
@@ -95,7 +95,7 @@ class AboutUs {
 				'pro_url'     => 'https://codesolz.net/our-products/wordpress-plugins/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page',
 				'wporg_url'   => 'https://wordpress.org/plugins/merchant-feed-booster-lite-for-woocommerce/',
 			),
-			
+
 		);
 	}
 
@@ -105,14 +105,14 @@ class AboutUs {
 	 * @return string
 	 */
 	public function generate_page() {
-		$plugins            = $this->get_plugins_data();
-		$products_url       = 'https://codesolz.net/our-products/wordpress-plugins/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
-		$docs_url           = 'https://docs.codesolz.net/better-find-and-replace/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
-		$website_url        = 'https://www.codesolz.net/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
-		$support_url        = 'https://codesolz.net/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
-		$wporg_url          = 'https://wordpress.org/plugins/real-time-auto-find-and-replace';
-		$upgrade_url        = 'https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
-		$community_url      = 'https://codesolz.net/forum/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
+		$plugins       = $this->get_plugins_data();
+		$products_url  = 'https://codesolz.net/our-products/wordpress-plugins/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
+		$docs_url      = 'https://docs.codesolz.net/better-find-and-replace/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
+		$website_url   = 'https://www.codesolz.net/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
+		$support_url   = 'https://codesolz.net/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
+		$wporg_url     = 'https://wordpress.org/plugins/real-time-auto-find-and-replace';
+		$upgrade_url   = 'https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
+		$community_url = 'https://codesolz.net/forum/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page';
 
 		ob_start();
 		?>
@@ -120,8 +120,8 @@ class AboutUs {
 		<div class="rtafar-about-wrap">
 
 			<!-- ================================================
-			     HERO SECTION
-			     ================================================ -->
+				HERO SECTION
+				================================================ -->
 			<div class="rtafar-about-hero">
 				<div class="rtafar-hero-grid">
 					<div class="rtafar-hero-copy">
@@ -168,8 +168,8 @@ class AboutUs {
 			</div>
 
 			<!-- ================================================
-			     FEATURED PLUGIN – BETTER FIND & REPLACE
-			     ================================================ -->
+				FEATURED PLUGIN – BETTER FIND & REPLACE
+				================================================ -->
 			<div class="rtafar-section-header">
 				<div class="rtafar-section-label">Currently Installed</div>
 				<h2 class="rtafar-section-title">Your Active Plugin</h2>
@@ -221,8 +221,8 @@ class AboutUs {
 			</div>
 
 			<!-- ================================================
-			     PLUGIN GRID
-			     ================================================ -->
+				PLUGIN GRID
+				================================================ -->
 			<div class="rtafar-section-header">
 				<div class="rtafar-section-label"><?php esc_html_e( 'Plugin Ecosystem', 'real-time-auto-find-and-replace' ); ?></div>
 				<h2 class="rtafar-section-title"><?php esc_html_e( 'More Smart WordPress Tools', 'real-time-auto-find-and-replace' ); ?></h2>
@@ -267,8 +267,8 @@ class AboutUs {
 			</div>
 
 			<!-- ================================================
-			     TRUST / FOOTER SECTION
-			     ================================================ -->
+				TRUST / FOOTER SECTION
+				================================================ -->
 			<div class="rtafar-trust-section">
 				<div class="rtafar-trust-logo">Code<span>Solz</span></div>
 				<h2 class="rtafar-trust-tagline"><?php esc_html_e( 'Building WordPress Tools Developers Trust', 'real-time-auto-find-and-replace' ); ?></h2>

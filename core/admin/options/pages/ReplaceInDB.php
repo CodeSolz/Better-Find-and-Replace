@@ -180,7 +180,7 @@ class ReplaceInDB {
 				'custom_attributes' => array(
 					'disabled' => 'disabled',
 				),
-				'desc_tip'          => __( 'Check this checkbox, if you want find and replace to also match URLs stored in escaped or encoded form. e.g : JSON-escaped (https:\/\/) and percent-encoded (https%3A%2F%2F) variants, like the ones Elementor and other page builders store inside JSON.', 'real-time-auto-find-and-replace' ),
+				'desc_tip'          => __( 'Check this checkbox, if you want find and replace to also match URLs stored in escaped or encoded form. e.g : JSON-escaped (https:\/\/) and percent-encoded (https%3A%1$2F%2$2F) variants, like the ones Elementor and other page builders store inside JSON.', 'real-time-auto-find-and-replace' ),
 			),
 			'cs_db_string_replace[url_formats]'      => array(
 				'wrapper_class'     => 'url-only-filter force-hidden',
@@ -222,7 +222,7 @@ class ReplaceInDB {
 			'method'           => array(
 				'id'    => 'method',
 				'type'  => 'hidden',
-				'value' => "DbReplacer@db_string_replace",
+				'value' => 'DbReplacer@db_string_replace',
 			),
 			'swal_title'       => array(
 				'id'    => 'swal_title',

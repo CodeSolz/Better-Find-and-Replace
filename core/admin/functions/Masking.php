@@ -27,15 +27,15 @@ class Masking {
 	 */
 	public function add_masking_rule( $user_query ) {
 
-		if ( !current_user_can( 'manage_options' ) && !current_user_can( Util::bfar_nav_cap('add_masking_rule') ) ) {
+		if ( ! current_user_can( 'manage_options' ) && ! current_user_can( Util::bfar_nav_cap( 'add_masking_rule' ) ) ) {
 			return wp_send_json(
 				array(
 					'status' => false,
 					'title'  => __( 'Access Denied', 'real-time-auto-find-and-replace' ),
-                'text'   => __( 'You do not have permission to perform this action.', 'real-time-auto-find-and-replace' ),
+					'text'   => __( 'You do not have permission to perform this action.', 'real-time-auto-find-and-replace' ),
 				)
 			);
-        }
+		}
 
 		$res_type      = isset( $user_query['res_no_json'] ) ? $user_query['res_no_json'] : '';
 		$user_query    = $user_query['cs_masking_rule'];

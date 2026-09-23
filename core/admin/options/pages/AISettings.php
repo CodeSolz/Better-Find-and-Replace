@@ -47,7 +47,7 @@ class AISettings {
 
 		$args['content'] = $content;
 
-		$hidden_fields = array(
+		$hidden_fields         = array(
 			'method'           => array(
 				'id'    => 'method',
 				'type'  => 'hidden',
@@ -148,9 +148,9 @@ class AISettings {
 		$is_connected = ( ! empty( $cfg['api_key'] ) && isset( $cfg['auth_type'] ) && $cfg['auth_type'] === 'oauth' );
 
 		if ( $is_connected ) {
-			$meta         = OAuthManager::meta( $slug );
-			$user_id      = isset( $meta['user_id'] ) ? $meta['user_id'] : '';
-			$disconnect   = wp_nonce_url(
+			$meta       = OAuthManager::meta( $slug );
+			$user_id    = isset( $meta['user_id'] ) ? $meta['user_id'] : '';
+			$disconnect = wp_nonce_url(
 				add_query_arg(
 					array(
 						'action'   => RTAFAR_AiOauth::ACTION_DISCONNECT,
@@ -279,7 +279,7 @@ class AISettings {
 		$base_url = isset( $cfg['base_url'] ) && $cfg['base_url'] !== '' ? $cfg['base_url'] : ( isset( $p['base_url'] ) ? $p['base_url'] : '' );
 		$model    = isset( $cfg['model'] ) && $cfg['model'] !== '' ? $cfg['model'] : ( isset( $p['default_model'] ) ? $p['default_model'] : '' );
 
-		$header  = sprintf(
+		$header = sprintf(
 			'<div class="rtafar-ai-panel-header">
 				<h4>%1$s</h4>
 				<p class="rtafar-ai-panel-notes">%2$s</p>

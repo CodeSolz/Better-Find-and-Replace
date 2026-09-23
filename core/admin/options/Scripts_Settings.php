@@ -38,7 +38,6 @@ class Scripts_Settings {
 				true
 			);
 
-			
 			wp_enqueue_script(
 				'ratfar.ai.features',
 				CS_RTAFAR_PLUGIN_ASSET_URI . 'js/rtafar.ai.min.js',
@@ -83,7 +82,6 @@ class Scripts_Settings {
 			);
 		}
 
-		
 		if ( apply_filters( 'bfrp_should_load_page_assets', false, $page_id, $rtafr_menu ) ) {
 				wp_enqueue_script(
 					'rtafar.app.admin.min',
@@ -93,7 +91,6 @@ class Scripts_Settings {
 					true
 				);
 		}
-
 
 		if ( ( isset( $rtafr_menu['media_replacer'] ) && $page_id == $rtafr_menu['media_replacer'] )
 			) {
@@ -138,15 +135,15 @@ class Scripts_Settings {
 	 * @param [type] $page_id
 	 * @param [type] $pages
 	 * @return void
-	 */	
+	 */
 	public static function bfrpShouldLoadPageAssets( $should_load, $page_id, $pages ) {
-		//default plugin pages
-		$target_pages = [
+		// default plugin pages
+		$target_pages = array(
 			$pages['add_masking_rule'] ?? '',
 			$pages['replace_in_db'] ?? '',
 			$pages['brafp_license'] ?? '',
 			$pages['ai_settings'] ?? '',
-		];
+		);
 
 		// pre_print( $target_pages);
 
@@ -162,12 +159,12 @@ class Scripts_Settings {
 	 * @return void
 	 */
 	public static function bfrpShouldLoadFormAssets( $should_load, $page_id, $pages ) {
-		//default plugin pages
-		$target_pages = [
+		// default plugin pages
+		$target_pages = array(
 			$pages['add_masking_rule'] ?? '',
 			$pages['replace_in_db'] ?? '',
 			$pages['media_replacer'] ?? '',
-		];
+		);
 
 		return $should_load || in_array( $page_id, $target_pages, true );
 	}

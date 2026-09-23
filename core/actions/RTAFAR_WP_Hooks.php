@@ -175,11 +175,13 @@ class RTAFAR_WP_Hooks {
 		$result = @\preg_replace( $pattern, $replace, $buffer );
 		if ( null === $result ) {
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				error_log( sprintf(
-					'rtafar: preg_replace failed (rule_id=%d, preg_last_error=%d)',
-					(int) $rule_id,
-					preg_last_error()
-				) );
+				error_log(
+					sprintf(
+						'rtafar: preg_replace failed (rule_id=%d, preg_last_error=%d)',
+						(int) $rule_id,
+						preg_last_error()
+					)
+				);
 			}
 			return $buffer;
 		}

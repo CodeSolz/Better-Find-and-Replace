@@ -30,7 +30,7 @@ class ProviderRegistry {
 	public static function all() {
 		return array(
 
-			'openai' => array(
+			'openai'      => array(
 				'slug'          => 'openai',
 				'name'          => 'OpenAI',
 				'class'         => '\\RealTimeAutoFindReplace\\admin\\functions\\ai\\Providers\\OpenAi',
@@ -61,7 +61,7 @@ class ProviderRegistry {
 				'notes'         => 'Industry standard. Pay-as-you-go API keys.',
 			),
 
-			'anthropic' => array(
+			'anthropic'   => array(
 				'slug'          => 'anthropic',
 				'name'          => 'Anthropic Claude',
 				'class'         => '\\RealTimeAutoFindReplace\\admin\\functions\\ai\\Providers\\Anthropic',
@@ -89,7 +89,7 @@ class ProviderRegistry {
 				'notes'         => 'Best-in-class reasoning. Pay-as-you-go API keys.',
 			),
 
-			'gemini' => array(
+			'gemini'      => array(
 				'slug'          => 'gemini',
 				'name'          => 'Google Gemini',
 				'class'         => '\\RealTimeAutoFindReplace\\admin\\functions\\ai\\Providers\\Gemini',
@@ -123,7 +123,7 @@ class ProviderRegistry {
 				'notes'         => 'Generous free tier. Get a free API key in seconds via AI Studio.',
 			),
 
-			'groq' => array(
+			'groq'        => array(
 				'slug'          => 'groq',
 				'name'          => 'Groq',
 				'class'         => '\\RealTimeAutoFindReplace\\admin\\functions\\ai\\Providers\\Groq',
@@ -150,7 +150,7 @@ class ProviderRegistry {
 				'notes'         => 'Free tier with very fast inference (open-weight models).',
 			),
 
-			'mistral' => array(
+			'mistral'     => array(
 				'slug'          => 'mistral',
 				'name'          => 'Mistral',
 				'class'         => '\\RealTimeAutoFindReplace\\admin\\functions\\ai\\Providers\\Mistral',
@@ -178,7 +178,7 @@ class ProviderRegistry {
 				'notes'         => 'Free tier on La Plateforme.',
 			),
 
-			'openrouter' => array(
+			'openrouter'  => array(
 				'slug'          => 'openrouter',
 				'name'          => 'OpenRouter',
 				'class'         => '\\RealTimeAutoFindReplace\\admin\\functions\\ai\\Providers\\OpenRouter',
@@ -200,15 +200,15 @@ class ProviderRegistry {
 				),
 				'models_legacy' => array(
 					'meta-llama/llama-3.1-8b-instruct:free' => 'nvidia/nemotron-3.5-lightning:free',
-					'google/gemma-2-9b-it:free'             => 'liquid/lfm-2.5-2.6b:free',
-					'mistralai/mistral-7b-instruct:free'    => 'liquid/lfm-2.5-2.6b:free',
-					'openai/gpt-4o-mini'                    => 'openai/gpt-6-astra',
-					'anthropic/claude-3.5-haiku'            => 'anthropic/claude-fable-5.1',
+					'google/gemma-2-9b-it:free'          => 'liquid/lfm-2.5-2.6b:free',
+					'mistralai/mistral-7b-instruct:free' => 'liquid/lfm-2.5-2.6b:free',
+					'openai/gpt-4o-mini'                 => 'openai/gpt-6-astra',
+					'anthropic/claude-3.5-haiku'         => 'anthropic/claude-fable-5.1',
 				),
 				'notes'         => 'Single login for 100+ models (OpenAI, Anthropic, Llama, Gemma, Mistral…). Sign in with your OpenRouter account — no API key to copy. Free models rotate often; use "Refresh from API" for the current list.',
 			),
 
-			'deepseek' => array(
+			'deepseek'    => array(
 				'slug'          => 'deepseek',
 				'name'          => 'DeepSeek',
 				'class'         => '\\RealTimeAutoFindReplace\\admin\\functions\\ai\\Providers\\DeepSeek',
@@ -230,7 +230,7 @@ class ProviderRegistry {
 				'notes'         => 'Very low cost per token.',
 			),
 
-			'xai' => array(
+			'xai'         => array(
 				'slug'          => 'xai',
 				'name'          => 'xAI Grok',
 				'class'         => '\\RealTimeAutoFindReplace\\admin\\functions\\ai\\Providers\\XAi',
@@ -274,7 +274,7 @@ class ProviderRegistry {
 				'notes'         => 'Free tier on Inference Providers. OpenAI-compatible router endpoint. Availability depends on which inference provider currently serves the repo.',
 			),
 
-			'ollama' => array(
+			'ollama'      => array(
 				'slug'          => 'ollama',
 				'name'          => 'Ollama (Local)',
 				'class'         => '\\RealTimeAutoFindReplace\\admin\\functions\\ai\\Providers\\Ollama',

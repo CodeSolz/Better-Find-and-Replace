@@ -103,7 +103,7 @@ class FormBuilder {
 	 */
 	private function generate_field( $field_name, $field, $field_id ) {
 
-		$input  = '<div class="label"><label class="label-'.$field_id.'" for="cs_field_'.$field_id.'" >';
+		$input  = '<div class="label"><label class="label-' . $field_id . '" for="cs_field_' . $field_id . '" >';
 		$input .= $this->generate_title( $field );
 		$input .= '</label></div>';
 		$input .= '<div class="input-group">';
@@ -147,7 +147,7 @@ class FormBuilder {
 					$input .= '</span>';
 				}
 
-				$misFieldNo++;
+				++$misFieldNo;
 			}
 		}
 
@@ -291,7 +291,7 @@ class FormBuilder {
 	 */
 	private function generate_textarea_field( $field_name, $field, $field_id ) {
 		$input_item = $this->generate_attribute( $field_name, $field, $field_id );
-		$val = isset( $field['value'] ) ? $field['value'] : '';
+		$val        = isset( $field['value'] ) ? $field['value'] : '';
 		return "<textarea {$input_item}>" . esc_textarea( $val ) . '</textarea>';
 	}
 
@@ -407,7 +407,7 @@ class FormBuilder {
 	 * Generate title
 	 */
 	private function generate_title( $field ) {
-		return isset( $field['title'] ) ?  $field['title'] : '&nbsp';
+		return isset( $field['title'] ) ? $field['title'] : '&nbsp';
 	}
 
 	/**
@@ -426,7 +426,8 @@ class FormBuilder {
 	 * @param type $class
 	 * @return string
 	 */
-	private function attr_class( $class ) { return ' class="' . esc_attr( $class ) . '" '; }
+	private function attr_class( $class ) {
+		return ' class="' . esc_attr( $class ) . '" '; }
 
 
 	/**
@@ -435,7 +436,8 @@ class FormBuilder {
 	 * @param type $placeholder
 	 * @return string
 	 */
-	private function attr_placeholder( $txt ) { return ' placeholder="' . esc_attr( $txt ) . '" '; }
+	private function attr_placeholder( $txt ) {
+		return ' placeholder="' . esc_attr( $txt ) . '" '; }
 
 	/**
 	 * attr name
@@ -443,7 +445,8 @@ class FormBuilder {
 	 * @param type $field_name
 	 * @return string
 	 */
-	private function attr_name( $name ) { return ' name="' . esc_attr( $name ) . '" '; }
+	private function attr_name( $name ) {
+		return ' name="' . esc_attr( $name ) . '" '; }
 
 
 	/**
@@ -452,7 +455,8 @@ class FormBuilder {
 	 * @param type $field_id
 	 * @return string
 	 */
-	private function attr_id( $field_id ) { return ' id="cs_field_' . esc_attr( $field_id ) . '" '; }
+	private function attr_id( $field_id ) {
+		return ' id="cs_field_' . esc_attr( $field_id ) . '" '; }
 
 
 	/**
@@ -505,7 +509,7 @@ class FormBuilder {
 		}
 	}
 
-	
+
 
 
 	/**

@@ -164,49 +164,49 @@ class Screen {
 	 */
 	private static function script_strings() {
 		return array(
-			'working'        => __( 'Working...', 'real-time-auto-find-and-replace' ),
-			'failed'         => __( 'Something went wrong. Please try again.', 'real-time-auto-find-and-replace' ),
-			'cancel'         => __( 'Cancel', 'real-time-auto-find-and-replace' ),
+			'working'         => __( 'Working...', 'real-time-auto-find-and-replace' ),
+			'failed'          => __( 'Something went wrong. Please try again.', 'real-time-auto-find-and-replace' ),
+			'cancel'          => __( 'Cancel', 'real-time-auto-find-and-replace' ),
 
 			// The scan.
-			'scanStarted'    => __( 'Scan started. It runs in the background - you can carry on working, or leave this page and come back.', 'real-time-auto-find-and-replace' ),
-			'scanFinished'   => __( 'Scan finished. Refreshing the list...', 'real-time-auto-find-and-replace' ),
+			'scanStarted'     => __( 'Scan started. It runs in the background - you can carry on working, or leave this page and come back.', 'real-time-auto-find-and-replace' ),
+			'scanFinished'    => __( 'Scan finished. Refreshing the list...', 'real-time-auto-find-and-replace' ),
 			/* translators: 1: URLs checked so far, 2: URLs to check in total */
-			'scanProgress'   => __( '%1$s of %2$s URLs scanned', 'real-time-auto-find-and-replace' ),
+			'scanProgress'    => __( '%1$s of %2$s URLs scanned', 'real-time-auto-find-and-replace' ),
 
 			// Row actions.
-			'ignoreTitle'    => __( 'Ignore this link?', 'real-time-auto-find-and-replace' ),
-			'ignoreText'     => __( 'It moves to the Ignored list and future scans will not report it again. Nothing on your site changes.', 'real-time-auto-find-and-replace' ),
-			'ignoreConfirm'  => __( 'Ignore it', 'real-time-auto-find-and-replace' ),
+			'ignoreTitle'     => __( 'Ignore this link?', 'real-time-auto-find-and-replace' ),
+			'ignoreText'      => __( 'It moves to the Ignored list and future scans will not report it again. Nothing on your site changes.', 'real-time-auto-find-and-replace' ),
+			'ignoreConfirm'   => __( 'Ignore it', 'real-time-auto-find-and-replace' ),
 
-			'unignoreTitle'  => __( 'Put this link back on the list?', 'real-time-auto-find-and-replace' ),
-			'unignoreText'   => __( 'It goes back to Needs attention and future scans will report it again.', 'real-time-auto-find-and-replace' ),
+			'unignoreTitle'   => __( 'Put this link back on the list?', 'real-time-auto-find-and-replace' ),
+			'unignoreText'    => __( 'It goes back to Needs attention and future scans will report it again.', 'real-time-auto-find-and-replace' ),
 			'unignoreConfirm' => __( 'Put it back', 'real-time-auto-find-and-replace' ),
 
-			'recheckTitle'   => __( 'Check this link again?', 'real-time-auto-find-and-replace' ),
-			'recheckText'    => __( 'The URL is checked again and the row is updated with what comes back. Nothing on your site is changed.', 'real-time-auto-find-and-replace' ),
-			'recheckConfirm' => __( 'Check it now', 'real-time-auto-find-and-replace' ),
+			'recheckTitle'    => __( 'Check this link again?', 'real-time-auto-find-and-replace' ),
+			'recheckText'     => __( 'The URL is checked again and the row is updated with what comes back. Nothing on your site is changed.', 'real-time-auto-find-and-replace' ),
+			'recheckConfirm'  => __( 'Check it now', 'real-time-auto-find-and-replace' ),
 
-			'unlinkTitle'    => __( 'Remove this link?', 'real-time-auto-find-and-replace' ),
-			'unlinkText'     => __( 'The link is removed and its text stays exactly where it is. You will see what changes before anything is written.', 'real-time-auto-find-and-replace' ),
-			'unlinkConfirm'  => __( 'Remove the link', 'real-time-auto-find-and-replace' ),
+			'unlinkTitle'     => __( 'Remove this link?', 'real-time-auto-find-and-replace' ),
+			'unlinkText'      => __( 'The link is removed and its text stays exactly where it is. You will see what changes before anything is written.', 'real-time-auto-find-and-replace' ),
+			'unlinkConfirm'   => __( 'Remove the link', 'real-time-auto-find-and-replace' ),
 
 			// Replace URL.
-			'replaceTitle'   => __( 'Replace this URL', 'real-time-auto-find-and-replace' ),
-			'replaceCurrent' => __( 'Broken URL', 'real-time-auto-find-and-replace' ),
-			'replaceLabel'   => __( 'Replace it with', 'real-time-auto-find-and-replace' ),
-			'replaceHint'    => __( 'A full address, or a path on this site such as /about-us/. You will see what changes before anything is written.', 'real-time-auto-find-and-replace' ),
-			'replaceConfirm' => __( 'Preview the change', 'real-time-auto-find-and-replace' ),
-			'replaceEmpty'   => __( 'Enter the URL this link should point at.', 'real-time-auto-find-and-replace' ),
-			'replaceInvalid' => __( 'That does not look like a URL or a path. Try https://example.com/page or /page/.', 'real-time-auto-find-and-replace' ),
-			'replaceSame'    => __( 'That is the URL that is already there.', 'real-time-auto-find-and-replace' ),
+			'replaceTitle'    => __( 'Replace this URL', 'real-time-auto-find-and-replace' ),
+			'replaceCurrent'  => __( 'Broken URL', 'real-time-auto-find-and-replace' ),
+			'replaceLabel'    => __( 'Replace it with', 'real-time-auto-find-and-replace' ),
+			'replaceHint'     => __( 'A full address, or a path on this site such as /about-us/. You will see what changes before anything is written.', 'real-time-auto-find-and-replace' ),
+			'replaceConfirm'  => __( 'Preview the change', 'real-time-auto-find-and-replace' ),
+			'replaceEmpty'    => __( 'Enter the URL this link should point at.', 'real-time-auto-find-and-replace' ),
+			'replaceInvalid'  => __( 'That does not look like a URL or a path. Try https://example.com/page or /page/.', 'real-time-auto-find-and-replace' ),
+			'replaceSame'     => __( 'That is the URL that is already there.', 'real-time-auto-find-and-replace' ),
 
 			// The preview, shown before anything is written.
-			'previewTitle'   => __( 'Apply this change?', 'real-time-auto-find-and-replace' ),
-			'previewFrom'    => __( 'Now', 'real-time-auto-find-and-replace' ),
-			'previewTo'      => __( 'After', 'real-time-auto-find-and-replace' ),
-			'previewApply'   => __( 'Apply the change', 'real-time-auto-find-and-replace' ),
-			'previewNote'    => __( 'This edits the post it was found in. It can be undone from Restore Database.', 'real-time-auto-find-and-replace' ),
+			'previewTitle'    => __( 'Apply this change?', 'real-time-auto-find-and-replace' ),
+			'previewFrom'     => __( 'Now', 'real-time-auto-find-and-replace' ),
+			'previewTo'       => __( 'After', 'real-time-auto-find-and-replace' ),
+			'previewApply'    => __( 'Apply the change', 'real-time-auto-find-and-replace' ),
+			'previewNote'     => __( 'This edits the post it was found in. It can be undone from Restore Database.', 'real-time-auto-find-and-replace' ),
 		);
 	}
 

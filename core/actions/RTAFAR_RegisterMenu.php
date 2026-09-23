@@ -131,7 +131,7 @@ class RTAFAR_RegisterMenu {
 		$ordered = array();
 		foreach ( $desired_order as $slug ) {
 			if ( isset( $by_slug[ $slug ] ) ) {
-				$ordered[]              = $by_slug[ $slug ];
+				$ordered[] = $by_slug[ $slug ];
 				unset( $by_slug[ $slug ] );
 			}
 		}
@@ -209,8 +209,6 @@ class RTAFAR_RegisterMenu {
 			CS_RTAFAR_PLUGIN_ASSET_URI . 'img/icon-24x24.png',
 			57
 		);
-
-		
 
 		$this->rtafr_menus['add_masking_rule'] = add_submenu_page(
 			CS_RTAFAR_PLUGIN_IDENTIFIER,
@@ -340,7 +338,7 @@ class RTAFAR_RegisterMenu {
 			'sub_title' => __( 'The real-time masking find and replace rules will be applied prior to the website being rendered in the browser. Additionally, the database replacement rules will take effect in the database.', 'real-time-auto-find-and-replace' ),
 		);
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap('add_masking_rule') ) ) {
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap( 'add_masking_rule' ) ) ) {
 			$AddNewRule = $this->pages->AddNewRule();
 			if ( is_object( $AddNewRule ) ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -365,7 +363,7 @@ class RTAFAR_RegisterMenu {
 			'sub_title' => __( 'The real-time find and replace rules will be executed before the website is displayed in the browser. The database replacement will take effect in the database permanently.', 'real-time-auto-find-and-replace' ),
 		);
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap('all_masking_rules') ) ) {
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap( 'all_masking_rules' ) ) ) {
 			$AllMaskingRules = $this->pages->AllMaskingRules();
 			if ( is_object( $AllMaskingRules ) ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -395,7 +393,7 @@ class RTAFAR_RegisterMenu {
 			'sub_title' => __( 'Instantly and permanently replace strings across your database tables.', 'real-time-auto-find-and-replace' ),
 		);
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap('replace_in_db') ) ) {
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap( 'replace_in_db' ) ) ) {
 			$Default_Settings = $this->pages->ReplaceInDB();
 			if ( is_object( $Default_Settings ) ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -460,7 +458,7 @@ class RTAFAR_RegisterMenu {
 			'sub_title' => __( 'You can restore data to database what you have replaced', 'real-time-auto-find-and-replace' ),
 		);
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap('restore_in_db') ) ) {
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap( 'restore_in_db' ) ) ) {
 			?>
 				<img src="<?php echo \esc_html( CS_RTAFAR_PLUGIN_ASSET_URI ); ?>img/restore-db-pro.png" style="width: 99%" />
 			<?php
@@ -487,8 +485,8 @@ class RTAFAR_RegisterMenu {
 			'sub_title' => __( 'Search for specific media files by name and easily replace them with new uploads', 'real-time-auto-find-and-replace' ),
 		);
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap('media_replacer') ) ) {
-			
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap( 'media_replacer' ) ) ) {
+
 			$MediaReplacer = $this->pages->MediaReplacer();
 			if ( \is_object( $MediaReplacer ) ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -496,7 +494,6 @@ class RTAFAR_RegisterMenu {
 			} else {
 				echo wp_kses( $MediaReplacer, Util::cs_allowed_html() );
 			}
-
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( \is_object( $AccessDenied ) ) {
@@ -519,8 +516,8 @@ class RTAFAR_RegisterMenu {
 			$get_settings = array();
 		}
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap('ai_settings') ) ) {
-			
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) || current_user_can( Util::bfar_nav_cap( 'ai_settings' ) ) ) {
+
 			$AISettings = $this->pages->AISettings();
 			if ( \is_object( $AISettings ) ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -528,7 +525,6 @@ class RTAFAR_RegisterMenu {
 			} else {
 				echo wp_kses( $AISettings, Util::cs_allowed_html() );
 			}
-
 		} else {
 			$AccessDenied = $this->pages->AccessDenied();
 			if ( \is_object( $AccessDenied ) ) {

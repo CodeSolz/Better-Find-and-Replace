@@ -517,22 +517,25 @@ class Util {
 	 *
 	 * @return String or array
 	 */
-	public static function bfar_nav_cap( $cap_key = ""  ){
-		$nav_caps = \apply_filters( "bfrp_nav_caps", array(
-			'add_masking_rule'  => 'bfar_menu_add_new_rule',
-			'all_masking_rules' => 'bfar_menu_all_replacement_rules',
-			'replace_in_db'     => 'bfar_menu_replace_in_database',
-			'restore_in_db'     => 'bfar_menu_restore_in_database',
-			'media_replacer'     => 'bfar_menu_media_replacer',
-			'ai_settings'      => 'bfar_menu_ai_settings',
-			'ai_content_refresher' => 'bfar_menu_ai_content_refresher',
-			'maintenance_dashboard' => 'bfar_menu_maintenance_dashboard',
-			'content_health'   => 'bfar_menu_content_health',
-			'redirects'        => 'bfar_menu_redirects',
-			'content_tools'    => 'bfar_menu_content_tools',
-			'code_inserts'     => 'bfar_menu_code_inserts',
-		));
+	public static function bfar_nav_cap( $cap_key = '' ) {
+		$nav_caps = \apply_filters(
+			'bfrp_nav_caps',
+			array(
+				'add_masking_rule'      => 'bfar_menu_add_new_rule',
+				'all_masking_rules'     => 'bfar_menu_all_replacement_rules',
+				'replace_in_db'         => 'bfar_menu_replace_in_database',
+				'restore_in_db'         => 'bfar_menu_restore_in_database',
+				'media_replacer'        => 'bfar_menu_media_replacer',
+				'ai_settings'           => 'bfar_menu_ai_settings',
+				'ai_content_refresher'  => 'bfar_menu_ai_content_refresher',
+				'maintenance_dashboard' => 'bfar_menu_maintenance_dashboard',
+				'content_health'        => 'bfar_menu_content_health',
+				'redirects'             => 'bfar_menu_redirects',
+				'content_tools'         => 'bfar_menu_content_tools',
+				'code_inserts'          => 'bfar_menu_code_inserts',
+			)
+		);
 
-		return !empty( $cap_key ) && isset( $nav_caps[$cap_key] ) ? $nav_caps[$cap_key] : $nav_caps;
+		return ! empty( $cap_key ) && isset( $nav_caps[ $cap_key ] ) ? $nav_caps[ $cap_key ] : $nav_caps;
 	}
 }

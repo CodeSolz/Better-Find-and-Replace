@@ -188,7 +188,7 @@ class Activate {
 				array( '%d' )
 			);
 			if ( false === $updated ) {
-				$failed++;
+				++$failed;
 			}
 		}
 

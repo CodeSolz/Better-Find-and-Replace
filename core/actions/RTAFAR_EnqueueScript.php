@@ -76,8 +76,8 @@ class RTAFAR_EnqueueScript {
 					),
 					admin_url()
 				),
-				'pimg' => CS_RTAFAR_PLUGIN_ASSET_URI . 'img/new-media-placeholder250x207.svg',
-				'opimg' => CS_RTAFAR_PLUGIN_ASSET_URI . 'img/old-media-placeholder250x207.svg'
+				'pimg'            => CS_RTAFAR_PLUGIN_ASSET_URI . 'img/new-media-placeholder250x207.svg',
+				'opimg'           => CS_RTAFAR_PLUGIN_ASSET_URI . 'img/old-media-placeholder250x207.svg',
 			)
 		);
 	}

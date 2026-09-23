@@ -35,7 +35,7 @@ class Settings {
 
 		// Legacy { api_key, language_model } shape → new shape.
 		if ( isset( $raw['api_key'] ) && ! isset( $raw['providers'] ) ) {
-			$migrated = self::defaults();
+			$migrated                        = self::defaults();
 			$migrated['providers']['openai'] = array(
 				'auth_type' => 'api_key',
 				'api_key'   => (string) $raw['api_key'],
@@ -44,7 +44,7 @@ class Settings {
 				'model'     => isset( $raw['language_model'] ) ? (string) $raw['language_model'] : self::defaultModelFor( 'openai' ),
 				'base_url'  => '',
 			);
-			$migrated['active_provider'] = 'openai';
+			$migrated['active_provider']     = 'openai';
 			update_option( self::OPTION_KEY, $migrated );
 			return $migrated;
 		}
@@ -89,17 +89,17 @@ class Settings {
 
 	/** Merges with existing config for that provider. */
 	public static function saveProvider( $slug, array $providerConfig ) {
-		$all = self::get();
+		$all      = self::get();
 		$existing = isset( $all['providers'][ $slug ] ) ? $all['providers'][ $slug ] : array();
 
-		$merged = array_merge( $existing, self::sanitizeProviderConfig( $providerConfig ) );
+		$merged                    = array_merge( $existing, self::sanitizeProviderConfig( $providerConfig ) );
 		$all['providers'][ $slug ] = $merged;
 
 		return self::save( $all );
 	}
 
 	public static function setActiveProvider( $slug ) {
-		$all = self::get();
+		$all                    = self::get();
 		$all['active_provider'] = self::sanitizeSlug( $slug );
 		return self::save( $all );
 	}

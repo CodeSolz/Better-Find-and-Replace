@@ -16,7 +16,7 @@ class OpenRouter extends OpenAiCompatibleProvider {
 	}
 
 	protected function authHeaders() {
-		$headers = parent::authHeaders();
+		$headers                 = parent::authHeaders();
 		$headers['HTTP-Referer'] = home_url( '/' );
 		$headers['X-Title']      = get_bloginfo( 'name' );
 		return $headers;

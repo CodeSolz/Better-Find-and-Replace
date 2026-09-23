@@ -27,8 +27,8 @@ class RTAFAR_Hooks {
 		add_filter( 'bfrp_select_tables', array( $this, 'getAllTblList' ), 10 );
 
 		/** should load common page assets */
-		add_filter( 'bfrp_should_load_page_assets', array( $this, 'bfrpShouldLoadPageAssets'), 10, 3 );
-		add_filter( 'bfrp_should_load_form_assets', array( $this, 'bfrpShouldLoadFormAssets'), 10, 3 );
+		add_filter( 'bfrp_should_load_page_assets', array( $this, 'bfrpShouldLoadPageAssets' ), 10, 3 );
+		add_filter( 'bfrp_should_load_form_assets', array( $this, 'bfrpShouldLoadFormAssets' ), 10, 3 );
 	}
 
 	/**
