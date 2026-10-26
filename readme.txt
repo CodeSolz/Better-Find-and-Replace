@@ -1,6 +1,6 @@
 === Better Find and Replace - AI-Powered Suggestions ===
 Contributors: codesolz, m.tuhin
-Tags: database, search replace, search, replace, search and replace
+Tags: search replace, search replace database, search and replace, update database urls, migration
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 5.2
 Tested up to: 7.1
@@ -202,6 +202,14 @@ code block in find field*
 11. Media replacer
 
 == Changelog ==
+
+= 2.0.1 =
+
+* Updated compatibility with the latest WordPress version.
+* Improved site health and broken link detection.
+* Enhanced AI-powered URL replacement suggestions.
+* Improved redirects and content replacement workflows.
+* Minor fixes and performance improvements.
 
 = Version: 2.0.0 ( September 07, 2026 ) =
 * **New:** Site Health dashboard — an overall health score for your site, a count of every kind of problem found, and an activity log of every change the plugin has made.
