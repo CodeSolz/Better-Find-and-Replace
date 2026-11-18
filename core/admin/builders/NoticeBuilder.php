@@ -71,9 +71,14 @@ class NoticeBuilder {
 	public function action_admin_notices() {
 
 		global $my_admin_page, $rtafr_menu;
-		$screen = get_current_screen();
+		$screen = \function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
-		if ( \in_array( $screen->id, $rtafr_menu ) ) {
+		// admin_notices can fire outside a normal admin page (page builders, CLI), where
+		// there is no screen and our menus were never registered.
+		if ( ! $screen ) {
+			return;
+		}
+		if ( \is_array( $rtafr_menu ) && \in_array( $screen->id, $rtafr_menu ) ) {
 			return;
 		}
 

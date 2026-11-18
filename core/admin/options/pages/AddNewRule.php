@@ -47,6 +47,53 @@ class AddNewRule {
 	}
 
 	/**
+	 * Rule types, grouped (the form's select and the abilities use the same list). Keys ending in
+	 * "_disabled…" are Pro-only placeholders shown to free users.
+	 *
+	 * @return array
+	 */
+	public static function rule_type_options() {
+		return apply_filters(
+			'bfrp_masking_rule_options',
+			array(
+				'hasGroup' => array(
+					__( 'Realtime Masking  (no effect in Database)', 'real-time-auto-find-and-replace' ) => array(
+						'plain'                        => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
+						'regex'                        => __( 'Regular Expression - Managed', 'real-time-auto-find-and-replace' ),
+						'regexCustom'                  => __( 'Regular Expression - Custom', 'real-time-auto-find-and-replace' ),
+						'ajaxContent'                  => __( 'jQuery / Ajax - Basic', 'real-time-auto-find-and-replace' ),
+						'ajaxContentAdvanced_disabled' => __( 'jQuery / Ajax - Advanced - pro version only', 'real-time-auto-find-and-replace' ),
+						'multiByte'                    => __( 'Multibyte characters ( lang: Arabic / Chinese etc)', 'real-time-auto-find-and-replace' ),
+						'htmlTags_disabled234'         => __( 'Replace HTML tag(s) - pro version only (pro PRO & above)', 'real-time-auto-find-and-replace' ),
+						'advance_regex_disabled'       => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterShortCodes_disabled'    => __( 'Shortcode   - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterOldComments_disabled'   => __( 'Old Comments  - pro version only', 'real-time-auto-find-and-replace' ),
+					),
+					__( 'Database Replacement (affect in Database)', 'real-time-auto-find-and-replace' ) => array(
+						'filterAutoPost_disabled' => __( 'Auto / New Post (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
+						'filterComment_disabled'  => __( 'New Comment (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Where a rule applies (the form's select and the abilities use the same list).
+	 *
+	 * @return array
+	 */
+	public static function location_options() {
+		return apply_filters(
+			'bfrp_masking_location_options',
+			array(
+				'all'                       => __( 'All over the website', 'real-time-auto-find-and-replace' ),
+				'specificPagePost_disabled' => __( 'On specific page or post - pro version only', 'real-time-auto-find-and-replace' ),
+			)
+		);
+	}
+
+	/**
 	 * Generate add new coin page
 	 *
 	 * @param type $args
@@ -122,29 +169,7 @@ class AddNewRule {
 				'required'    => true,
 				/* translators: %s: rule type (e.g., regular expression, string, etc.) */
 				'placeholder' => __( 'Please select %s rule type', 'real-time-auto-find-and-replace' ),
-				'options'     => apply_filters(
-					'bfrp_masking_rule_options',
-					array(
-						'hasGroup' => array(
-							__( 'Realtime Masking  (no effect in Database)', 'real-time-auto-find-and-replace' ) => array(
-								'plain'                  => __( 'Plain Text', 'real-time-auto-find-and-replace' ),
-								'regex'                  => __( 'Regular Expression - Managed', 'real-time-auto-find-and-replace' ),
-								'regexCustom'            => __( 'Regular Expression - Custom', 'real-time-auto-find-and-replace' ),
-								'ajaxContent'            => __( 'jQuery / Ajax - Basic', 'real-time-auto-find-and-replace' ),
-								'ajaxContentAdvanced_disabled' => __( 'jQuery / Ajax - Advanced - pro version only', 'real-time-auto-find-and-replace' ),
-								'multiByte'              => __( 'Multibyte characters ( lang: Arabic / Chinese etc)', 'real-time-auto-find-and-replace' ),
-								'htmlTags_disabled234'   => __( 'Replace HTML tag(s) - pro version only (pro PRO & above)', 'real-time-auto-find-and-replace' ),
-								'advance_regex_disabled' => __( 'Advance Regular Expression (multiple lines at once / code blocks ) - pro version only', 'real-time-auto-find-and-replace' ),
-								'filterShortCodes_disabled' => __( 'Shortcode   - pro version only', 'real-time-auto-find-and-replace' ),
-								'filterOldComments_disabled' => __( 'Old Comments  - pro version only', 'real-time-auto-find-and-replace' ),
-							),
-							__( 'Database Replacement (affect in Database)', 'real-time-auto-find-and-replace' ) => array(
-								'filterAutoPost_disabled' => __( 'Auto / New Post (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
-								'filterComment_disabled'  => __( 'New Comment (replace before inserting into Database)  - pro version only', 'real-time-auto-find-and-replace' ),
-							),
-						),
-					)
-				),
+				'options'     => self::rule_type_options(),
 				'value'       => FormBuilder::get_value( 'type', $option, '' ),
 				'desc_tip'    => __( 'Select find and replacement rule\'s type. e.g : Plain Text', 'real-time-auto-find-and-replace' ),
 			),
@@ -177,13 +202,7 @@ class AddNewRule {
 				'class'         => 'form-control where-to-replace-select',
 				'required'      => true,
 				'placeholder'   => __( 'Please select where to replace', 'real-time-auto-find-and-replace' ),
-				'options'       => apply_filters(
-					'bfrp_masking_location_options',
-					array(
-						'all'                       => __( 'All over the website', 'real-time-auto-find-and-replace' ),
-						'specificPagePost_disabled' => __( 'On specific page or post - pro version only', 'real-time-auto-find-and-replace' ),
-					)
-				),
+				'options'       => self::location_options(),
 				'value'         => FormBuilder::get_value( 'where_to_replace', $option, '' ),
 				'desc_tip'      => __( 'Select rule\'s type. e.g : All over the website', 'real-time-auto-find-and-replace' ),
 			),

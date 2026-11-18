@@ -40,6 +40,34 @@ class AboutUs {
 	private function get_plugins_data() {
 		return array(
 			array(
+				'title'       => 'Aisleza – 3D Virtual Store for WooCommerce',
+				'description' => 'Turn your WooCommerce catalog into a walk-in 3D store. Categories become aisles, products sit on real shelves with price tags, and shoppers fill a trolley that is your real WooCommerce cart.',
+				'icon_file'   => 'aisleza.png',
+				'subtitle'    => 'Let shoppers walk through your store',
+				'features'    => array(
+					'Build aisles from your product categories',
+					'Products on shelves with live prices & sale tags',
+					'Uses your real WooCommerce cart & checkout',
+					'Works with keyboard, mouse, and touch joystick',
+				),
+				'pro_url'     => 'https://aisleza.com/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page',
+				'wporg_url'   => 'https://wordpress.org/plugins/aisleza-3d-virtual-store-for-woocommerce/',
+			),
+			array(
+				'title'       => 'PressHelm AI Site Developer',
+				'description' => 'Give your WordPress site its own AI developer. Ask in plain words from Telegram, Claude, or ChatGPT, and it builds pages, posts, products, menus, forms, and SEO on your real site, with approvals and one-tap undo.',
+				'icon_file'   => 'presshelm-ai.png',
+				'subtitle'    => 'Your AI developer for WordPress content',
+				'features'    => array(
+					'Edit your site from Telegram, Claude, or ChatGPT',
+					'Pages, products, images, menus, forms & SEO',
+					'Approve important changes before they run',
+					'Undo any change with one tap',
+				),
+				'pro_url'     => 'https://presshelmai.com/?utm_source=plugin-about&utm_medium=wp-admin&utm_campaign=about-page',
+				'wporg_url'   => 'https://wordpress.org/plugins/presshelm-ai/',
+			),
+			array(
 				'title'       => 'WatchSpire',
 				'description' => 'Catch silent WordPress failures before they cost you leads or sales. WatchSpire monitors forms, checkout, email delivery, uptime, SSL, and more then alerts you when something goes wrong.',
 				'icon_file'   => 'watchspire.png',

@@ -4,7 +4,7 @@
  * Plugin Name:       Better Find and Replace
  * Plugin URI:        https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/
  * Description:       Find, fix, replace, and update content across your site with powerful search and replace tools, AI-powered suggestions, broken link detection, redirects, site health checks, media replacement, and more.
- * Version:           2.0.1
+ * Version:           2.0.2
  * Author:            CodeSolz
  * Author URI:        https://www.codesolz.net
  * License:           GPL-3.0+
@@ -41,7 +41,7 @@ if ( ! class_exists( 'Real_Time_Auto_Find_And_Replace' ) ) {
 		 *
 		 * @var String
 		 */
-		private static $version = '2.0.1';
+		private static $version = '2.0.2';
 
 		/**
 		 * Hold version

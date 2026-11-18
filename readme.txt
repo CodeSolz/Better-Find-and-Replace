@@ -4,7 +4,7 @@ Tags: search replace, search replace database, search and replace, update databa
 Donate link: https://codesolz.net/our-products/wordpress-plugin/real-time-auto-find-and-replace/?utm_source=wordpress.org&utm_medium=README_DONATE_BTN
 Requires at least: 5.2
 Tested up to: 7.1
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses
 
@@ -202,6 +202,11 @@ code block in find field*
 11. Media replacer
 
 == Changelog ==
+
+= Version: 2.0.2 ( November 19, 2026 ) =
+* **New:** AI assistants and other tools that use the WordPress Abilities API can list, read, create, update and delete replacement rules. They go through the same permission checks and validation as the admin screens, and every change returns the previous version of the rule.
+* **Fix:** A fatal error when admin notices were shown outside a normal admin screen, such as inside a page builder editor or from WP-CLI.
+* **Update:** The About Us page now features two new CodeSolz plugins: Aisleza – 3D Virtual Store for WooCommerce and PressHelm AI Site Developer.
 
 = 2.0.1 =
 

@@ -135,7 +135,7 @@ class Masking {
 	}
 
 	/** Returns true on success or an error message string. */
-	private static function validate_rule( $find, $type ) {
+	public static function validate_rule( $find, $type ) {
 		$is_regex = in_array( $type, array( 'regex', 'regexCustom', 'advance_regex' ), true );
 
 		if ( ! $is_regex ) {

@@ -1,3 +1,15 @@
+### Version: 2.0.2 ( November 19, 2026 ) ###
+* **New:** AI assistants and other tools that use the WordPress Abilities API can list, read, create, update and delete replacement rules. They go through the same permission checks and validation as the admin screens, and every change returns the previous version of the rule.
+* **Fix:** A fatal error when admin notices were shown outside a normal admin screen, such as inside a page builder editor or from WP-CLI.
+* **Update:** The About Us page now features two new CodeSolz plugins: Aisleza – 3D Virtual Store for WooCommerce and PressHelm AI Site Developer.
+
+### Version: 2.0.1 ( September 23, 2026 ) ###
+* **Update:** Compatibility with the latest WordPress version.
+* **Update:** Improved site health and broken link detection.
+* **Update:** Better AI-powered URL replacement suggestions.
+* **Update:** Improved redirects and content replacement workflows.
+* **Fix:** Minor fixes and performance improvements.
+
 ### Version: 2.0.0 ( September 07, 2026 ) ###
 * **New:** Site Health dashboard — an overall health score for your site, a count of every kind of problem found, and an activity log of every change the plugin has made.
 * **New:** Content Health screen — broken links and missing media in one list, showing the page each problem was found on, the link text, how many times it is used, and how urgent it is.
